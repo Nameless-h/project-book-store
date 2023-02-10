@@ -1,7 +1,7 @@
 #include<iostream>
 using namespace std;
 int main(){
-    cout<<"hello word";
+    cout<<"hello wordadasdsadasdawdvddsbsbss";
     int a;
     cout<<"Nhap a:";
     cin>>a;
