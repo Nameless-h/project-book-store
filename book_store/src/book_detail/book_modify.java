@@ -64,7 +64,7 @@ public class book_modify {
     }
     
     public static void addBook(){
-        
+        System.out.println("book_detail.book_modify.addBook()");
     }
     public static void editBook(book bk_id){
         
