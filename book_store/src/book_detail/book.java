@@ -9,19 +9,20 @@ package book_detail;
  * @author JN_PC
  */
 public class book {
-     private int maSach;
+    private int maSach;
     private String tenSach;
-    private int maTacgia;
+    private int tacGia;
     private int maTheloai;
     private int maNXB;
     private String namXB;
     private int soLuong;
     private int giaTien;
 
-    public book(int maSach, String tenSach, int maTacgia, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public book(int maSach, String tenSach, int tacGia, int maTheloai, int maNXB, String namXB, int soLuong,
+            int giaTien) {
         this.maSach = maSach;
         this.tenSach = tenSach;
-        this.maTacgia = maTacgia;
+        this.tacGia = tacGia;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;
         this.namXB = namXB;
@@ -29,9 +30,9 @@ public class book {
         this.giaTien = giaTien;
     }
 
-    public book(String tenSach, int maTacgia, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public book(String tenSach, int tacGia, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
         this.tenSach = tenSach;
-        this.maTacgia = maTacgia;
+        this.tacGia = tacGia;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;
         this.namXB = namXB;
@@ -53,7 +54,8 @@ public class book {
 
     @Override
     public String toString() {
-        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTacgia=" + maTacgia + ", maTheloai=" + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
+        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", tacGia=" + tacGia + ", maTheloai="
+                + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
     }
 
     public void setTenSach(String tenSach) {
@@ -64,12 +66,12 @@ public class book {
         return tenSach;
     }
 
-    public int getMaTacgia() {
-        return maTacgia;
+    public int gettacGia() {
+        return tacGia;
     }
 
-    public void setMaTacgia(int maTacgia) {
-        this.maTacgia = maTacgia;
+    public void settacGia(int tacGia) {
+        this.tacGia = tacGia;
     }
 
     public int getMaTheloai() {
