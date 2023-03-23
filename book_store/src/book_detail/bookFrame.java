@@ -3,7 +3,6 @@ package book_detail;
 import java.awt.Color;
 import java.awt.Font;
 import java.lang.Math;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import the_loai.*;
 import javax.swing.JButton;
@@ -15,86 +14,26 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.MouseInputAdapter;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
-import org.w3c.dom.events.MouseEvent;
 
 import NXB.NXB;
 import NXB.nxb_modify;
 
 public class bookFrame {
-  DefaultTableModel tableModel;
+  Font fo = new Font("Time New Roman", Font.BOLD, 20);
+  Font searchFo = new Font("Time New Roman", Font.PLAIN, 15);
 
   public bookFrame() {
     init();
   }
 
   public void init() {
-    Font fo = new Font("Time New Roman", Font.BOLD, 20);
-    Font searchFo = new Font("Time New Roman", Font.PLAIN, 15);
     fr = new JFrame("book frame");
     // create table
     scrollPaneBook = new JScrollPane();
     scrollPaneNxb = new JScrollPane();
-    bookTbl = new javax.swing.JTable();
-    bookTbl.setFont(new Font("Time New Roman", Font.PLAIN, 18));
-    bookTbl.getTableHeader().setFont(fo);
-    /* create table */
-    bookTbl.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][] {
-        },
-        new String[] {
-            "Mã sách", "Tên sách", "Tác giả", "Thể loại", "Nhà xuất bản", "Năm xuất bản", "Số lượng", "Giá tiền"
-        }) {
-      Class[] types = new Class[] {
-          java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
-          java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
-      };
-
-      public Class getColumnClass(int columnIndex) {
-        return types[columnIndex];
-      }
-
-      @Override
-      public boolean isCellEditable(int row, int column) {
-        // all cells false
-        return false;
-      }
-    });
-    /* end create table */
-
-    nxbTbl = new javax.swing.JTable();
-    nxbTbl.setFont(new Font("Time New Roman", Font.PLAIN, 18));
-    nxbTbl.getTableHeader().setFont(fo);
-    /* create table */
-    nxbTbl.setModel(new javax.swing.table.DefaultTableModel(
-        new Object[][] {
-        },
-        new String[] {
-            "Mã nxb", "Tên nxb", "Hotmail", "Hotline", "Địa chỉ"
-        }) {
-      Class[] types = new Class[] {
-          java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
-          java.lang.String.class
-      };
-
-      public Class getColumnClass(int columnIndex) {
-        return types[columnIndex];
-      }
-
-      @Override
-      public boolean isCellEditable(int row, int column) {
-        // all cells false
-        return false;
-      }
-    });
-    /* end create table */
 
     // init panel
     detail_panel = new JPanel();
@@ -146,6 +85,7 @@ public class bookFrame {
       }
     });
     sanPhamBtn = new JButton("Sản phẩm");
+
     sanPhamBtn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         try {
@@ -279,12 +219,10 @@ public class bookFrame {
       scrollPaneBook.setBounds(0, (int) Math.floor(800 * 0.57), 1070, (int) Math.floor(800 * 0.43));
       scrollPaneBook.setVisible(true);
       scrollPaneBook.setBackground(Color.orange);
-      scrollPaneBook.setViewportView(bookTbl);
 
       scrollPaneNxb.setBounds(0, (int) Math.floor(800 * 0.57), 1070, (int) Math.floor(800 * 0.43));
       scrollPaneNxb.setVisible(false);
       scrollPaneNxb.setBackground(Color.orange);
-      scrollPaneNxb.setViewportView(nxbTbl);
 
       /* add component */
       detail_panel.add(tenSach);
@@ -349,8 +287,6 @@ public class bookFrame {
   }
 
   // Variables declaration - do not modify
-  private javax.swing.JTable bookTbl;
-  private javax.swing.JTable nxbTbl;
   private JScrollPane scrollPaneBook;
   private JScrollPane scrollPaneNxb;
   private JFrame fr;
@@ -413,7 +349,6 @@ public class bookFrame {
   private void switchToNxb() throws Exception {
     detail_panel.setVisible(false);
     nxb_panel.setVisible(true);
-    DefaultTableModel dm = (DefaultTableModel) nxbTbl.getModel();
 
     scrollPaneBook.setVisible(false);
     scrollPaneNxb.setVisible(true);
@@ -425,10 +360,9 @@ public class bookFrame {
     nxb_panel.setVisible(false);
     detail_panel.setVisible(true);
 
-    DefaultTableModel dm = (DefaultTableModel) bookTbl.getModel();
-
     scrollPaneBook.setVisible(true);
     scrollPaneNxb.setVisible(false);
+
     showBookList();
 
   }
@@ -436,16 +370,41 @@ public class bookFrame {
   private void showBookList() throws Exception {
 
     try {
-
+      JTable bookTbl = new JTable();
       // in ra danh sach book
+      bookTbl.setFont(new Font("Time New Roman", Font.PLAIN, 18));
+      bookTbl.getTableHeader().setFont(fo);
+      /* create table */
+      bookTbl.setModel(new javax.swing.table.DefaultTableModel(
+          new Object[][] {
+          },
+          new String[] {
+              "Mã sách", "Tên sách", "Tác giả", "Thể loại", "Nhà xuất bản", "Năm xuất bản", "Số lượng", "Giá tiền"
+          }) {
+        Class[] types = new Class[] {
+            java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
+            java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+        };
+
+        public Class getColumnClass(int columnIndex) {
+          return types[columnIndex];
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int column) {
+          // all cells false
+          return false;
+        }
+      });
+      /* end create table */
       ArrayList<book> list = book_modify.allBook();
-      DefaultTableModel model = (DefaultTableModel) bookTbl.getModel();
-      model.setRowCount(0);
+      DefaultTableModel bookModel = (DefaultTableModel) bookTbl.getModel();
+
       for (book tmp : list) {
         Theloai theLoaiTmp = The_loai_modify.getTheloai(tmp.getMaTheloai());
         NXB nxbTmp = nxb_modify.getNXB(tmp.getMaNXB());
 
-        model.addRow(new Object[] {
+        bookModel.addRow(new Object[] {
             tmp.getMaSach(), tmp.getTenSach(),
             tmp.gettacGia(), theLoaiTmp.getTenTheloai(),
             nxbTmp.getTenNXB(), tmp.getNamXB(),
@@ -453,22 +412,56 @@ public class bookFrame {
       }
       // set event khi click vao san pham
 
-      bookTbl.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        // xu ly event khi click vao san pham
-        public void valueChanged(ListSelectionEvent evt) {
-          int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
-          book selectedBook = book_modify.getbook(selectedBookID);
-          txttenSach.setText(selectedBook.getTenSach());
-          // cbbTheloai.setText(selectedBook.the_loai());
-          txtTacgia.setText(selectedBook.getTenSach());
-          // cbbNXB.setText(selectedBook.getTenSach());
-          txtNamxb.setText(selectedBook.getTenSach());
-          txtGiatien.setText(selectedBook.getTenSach());
-          txtSoluong.setText(selectedBook.getTenSach());
-        }
+      /*
+       * bookTbl.getSelectionModel().addListSelectionListener(new
+       * ListSelectionListener() {
+       * // xu ly event khi click vao san pham
+       * public void valueChanged(ListSelectionEvent evt) {
+       * 
+       * 
+       * int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
+       * book selectedBook = book_modify.getbook(selectedBookID);
+       * 
+       * txttenSach.setText(selectedBook.getTenSach());
+       * // cbbTheloai.setText(selectedBook.the_loai());
+       * txtTacgia.setText(selectedBook.getTenSach());
+       * // cbbNXB.setText(selectedBook.getTenSach());
+       * txtNamxb.setText(selectedBook.getTenSach());
+       * txtGiatien.setText(selectedBook.getTenSach());
+       * txtSoluong.setText(selectedBook.getTenSach());
+       * 
+       * System.out.println("hello book");
+       * }
+       * 
+       * });
+       */
 
+      bookTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+
+        @Override
+        public void mouseClicked(java.awt.event.MouseEvent evt) {
+          int row = bookTbl.rowAtPoint(evt.getPoint());
+          int col = bookTbl.columnAtPoint(evt.getPoint());
+          if (row >= 0 && col >= 0) {
+
+            int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
+            System.out.println(selectedBookID);
+
+            book selectedBook = book_modify.getbook(selectedBookID);
+
+            txttenSach.setText(selectedBook.getTenSach());
+            // cbbTheloai.setText(selectedBook.the_loai());
+            txtTacgia.setText(selectedBook.getTenSach());
+            // cbbNXB.setText(selectedBook.getTenSach());
+            txtNamxb.setText(selectedBook.getTenSach());
+            txtGiatien.setText(selectedBook.getTenSach());
+            txtSoluong.setText(selectedBook.getTenSach());
+
+          }
+        }
       });
 
+      scrollPaneBook.setViewportView(bookTbl);
     } catch (Exception e) {
       // TODO: handle exception
       e.printStackTrace();
@@ -477,26 +470,58 @@ public class bookFrame {
   }
 
   private void showNxbList() {
+    /* create table */
+    JTable nxbTbl = new JTable();
+    nxbTbl.setFont(new Font("Time New Roman", Font.PLAIN, 18));
+    nxbTbl.getTableHeader().setFont(fo);
+    /* create table */
+    nxbTbl.setModel(new javax.swing.table.DefaultTableModel(
+        new Object[][] {
+        },
+        new String[] {
+            "Mã nxb", "Tên nxb", "Hotmail", "Hotline", "Địa chỉ"
+        }) {
+      Class[] types = new Class[] {
+          java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class,
+          java.lang.String.class
+      };
 
+      public Class getColumnClass(int columnIndex) {
+        return types[columnIndex];
+      }
+
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        // all cells false
+        return false;
+      }
+    });
+    /* end create table */
     // in ra danh sach nxb
     ArrayList<NXB> list = nxb_modify.allNXB();
-    DefaultTableModel model = (DefaultTableModel) nxbTbl.getModel();
-    model.setRowCount(0);
+    DefaultTableModel nxbModel = (DefaultTableModel) nxbTbl.getModel();
     for (NXB tmp : list) {
 
-      model.addRow(new Object[] {
+      nxbModel.addRow(new Object[] {
           tmp.getMaNXB(), tmp.getTenNXB(),
           tmp.getEmail(), tmp.getDiaChi(), tmp.getDiaChi() });
     }
     // end in ra danh sach nxb
 
-    nxbTbl.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-      // xu ly event khi click vao nxb
-      public void valueChanged(ListSelectionEvent evt) {
-        // System.out.println(nxbTbl.getValueAt(nxbTbl.getSelectedRow(),
-        // nxbTbl.getSelectedColumn()).toString());
+    nxbTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        int row = nxbTbl.rowAtPoint(evt.getPoint());
+        int col = nxbTbl.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+          System.out.println("hello");
+
+        }
       }
     });
+
+    scrollPaneNxb.setViewportView(nxbTbl);
     setCellsAlignment(nxbTbl, SwingConstants.CENTER);
 
   }
