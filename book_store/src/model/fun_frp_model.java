@@ -3,7 +3,10 @@ package model;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import function_user.fun_group;
@@ -38,5 +41,8 @@ public class fun_frp_model {
 		for(int i=0;i<list.size();i++) {
 			model.addRow(new Object[] {list.get(i).getMa(),list.get(i).getTen(),list.get(i).getDatecrt(),list.get(i).getDateup()});
 		}
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment( JLabel.CENTER );
+        table_1.getColumnModel().getColumn(0).setCellRenderer( centerRenderer);
 	}
 }

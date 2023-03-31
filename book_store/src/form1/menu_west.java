@@ -19,10 +19,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.event.AncestorListener;
 
 import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
+    menu obj;
     JLabel title;
 
     String[] list = { "Function group", "Chuc nang 2", "Chuc nang 3", "Chuc nang 4" };
@@ -30,11 +32,25 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
     int temp=0;
-    public menu_west(JFrame frame) {
-        init(frame);
+    public menu_west(menu obj) {
+        this.obj=obj;
+        init();
     }
+    public void change_panel(String s){
 
-    private void init(JFrame frame) {
+        if(s.equalsIgnoreCase("FUnction group")){
+                group_function pan_grp_fun=new group_function(obj);
+                JPanel p1=new JPanel();
+                pan_grp_fun.setBounds(0,0,1000,700);
+                p1.setBackground(Color.red);
+                obj.pan_center.removeAll();
+                obj.pan_center.add(pan_grp_fun);
+                obj.pan_center.repaint();
+                obj.pan_center.revalidate();
+
+        }
+    }
+    private void init() {
         this.setPreferredSize(new Dimension(300, 700));
         // this.setBackground(new Color(50,168, 76));
         this.setBackground(Color.black);
@@ -68,49 +84,30 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
             lab_menu[i].setBackground(Color.black);
             // lab_menu[i].setBorder(BorderFactory.createLineBorder(Color.black));
             lab_menu[i].addMouseListener(this);
-            lab_menu[i].addMouseListener(new MouseAdapter(){
-                public void mouseClicked(MouseEvent evt){
-                    hide_main(evt);
-                }
-    
-                public void hide_main(MouseEvent evt) {
-                    group_function panel1=new group_function();
-                    frame.add(panel1,BorderLayout.CENTER);
-
-                }
-            });
+            // lab_menu[i].addActionListener(new ActionListener());
             pan_menu.add(lab_menu[i]);
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        for (int i = 0; i < list.length; i++) {
-            if (e.getSource() == lab_menu[i]) {
-                lab_menu[i].setBackground(new Color(54, 54, 54));
-                lab_menu[i].setFont(new Font("Segoe UI", 1, 30));
-                lab_menu[i].setForeground(Color.white);
-                list2[i] = 1;
-            } else {
-                list2[i] = 0;
-                lab_menu[i].setBackground(Color.black);
-                lab_menu[i].setForeground(Color.white);
-                lab_menu[i].setFont(new Font("Segoe UI", 0, 20));
-            }
-            
-        }
+        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        for (int i = 0; i < list.length; i++) {
+            if (e.getSource() == lab_menu[i]) {
+                change_panel(lab_menu[i].getText());
+            }
+
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        // // TODO Auto-generated method stub
+        // throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
     }
 
     @Override
@@ -142,8 +139,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        System.out.println(e.getActionCommand());
     }
-    
 }
 

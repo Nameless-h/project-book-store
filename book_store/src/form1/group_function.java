@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import model.fun_frp_model;
 
 public class group_function extends JPanel implements MouseListener{
+    menu obj;
     JLabel lab1,add_fun;
     JTable tab_fun;
     JScrollPane sp;
@@ -27,7 +28,16 @@ public class group_function extends JPanel implements MouseListener{
     
     
     fun_frp_model fun_frp_model=new fun_frp_model();
-    public group_function(){
+    public void change_add_fun_grp(){
+        add_group_function pan1=new add_group_function();
+        pan1.setBounds(0,0,1000,700);
+        obj.pan_center.removeAll();
+        obj.pan_center.add(pan1);
+        obj.pan_center.repaint();
+        obj.pan_center.revalidate();
+    }
+    public group_function(menu obj){
+        this.obj=obj;
         init();
     }
     private void init(){
@@ -76,8 +86,9 @@ public class group_function extends JPanel implements MouseListener{
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+      if(e.getSource()==add_fun){
+        change_add_fun_grp();
+      }
     }
     @Override
     public void mouseReleased(MouseEvent e) {
