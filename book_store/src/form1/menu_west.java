@@ -32,26 +32,25 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
     int temp=0;
-    public menu_west(menu obj) {
+    public menu_west(menu obj,int width,int heigh) {
         this.obj=obj;
-        init();
+        init(width,heigh);
     }
     public void change_panel(String s){
 
         if(s.equalsIgnoreCase("FUnction group")){
                 group_function pan_grp_fun=new group_function(obj);
-                JPanel p1=new JPanel();
                 pan_grp_fun.setBounds(0,0,1000,700);
-                p1.setBackground(Color.red);
                 obj.pan_center.removeAll();
                 obj.pan_center.add(pan_grp_fun);
                 obj.pan_center.repaint();
                 obj.pan_center.revalidate();
+                System.out.println(obj.hih_center);
 
         }
     }
-    private void init() {
-        this.setPreferredSize(new Dimension(300, 700));
+    private void init(int width,int heigh) {
+        this.setPreferredSize(new Dimension(width,heigh));
         // this.setBackground(new Color(50,168, 76));
         this.setBackground(Color.black);
         this.setLayout(null);

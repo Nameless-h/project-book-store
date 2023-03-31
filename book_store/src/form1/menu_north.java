@@ -18,11 +18,11 @@ public class menu_north extends JPanel implements MouseListener {
     JLabel lab_close;
     
     
-    public menu_north(JFrame frame){
-        init();
+    public menu_north(JFrame frame,int width,int heigh){
+        init(width,heigh);
     }
-    private void init(){
-        this.setPreferredSize(new Dimension(0,30));
+    private void init(int width,int heigh){
+        this.setPreferredSize(new Dimension(width,heigh));
         this.setBackground(Color.white);
         this.setLayout(new FlowLayout(FlowLayout.RIGHT,5,0));
         lab_close=new JLabel("Close");

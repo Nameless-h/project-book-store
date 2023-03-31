@@ -45,6 +45,7 @@ public class group_function extends JPanel implements MouseListener{
         this.setPreferredSize(new Dimension(700,700));
         this.setBackground(new Color(54,54,54));
         //set layout cho panel
+        
         this.setLayout(null);
         //tao moi va thiet ke jlabel lap 1(title cua panel group_fun)
         lab1=new JLabel("Function groups");
