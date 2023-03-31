@@ -5,12 +5,7 @@
 package connect;
 
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
-import com.mysql.cj.jdbc.Driver;
+import java.sql.*;
 
 public class JDBCUtil {
 	public static Connection getConnection() {
@@ -18,10 +13,10 @@ public class JDBCUtil {
 		
 		try {
 			// Đăng ký MySQL Driver với DriverManager
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			// DriverManager.registerDriver( new com.mysql.jdbc.Driver());
 			
 			// Các thông số
-			String url = "jdbc:mySQL://localhost:3306/store_book";
+			String url = "jdbc:mySQL://localhost:3306/bookstore";
                         String username = "root";
 			String password = "";
 			
@@ -58,8 +53,9 @@ public class JDBCUtil {
 			e.printStackTrace();
 		}
 	}
+	
         public static void main(String[] args) {
                Connection con = JDBCUtil.getConnection();
-            System.out.println(con);
-    }
+				printInfo(con);
+		}
 }

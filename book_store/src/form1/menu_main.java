@@ -65,12 +65,12 @@ public class menu_main {
     }
     
     private void init(user_login user) {
-        user_function user_fun=chucnang_user_functionDAO.selectById(user.getMatk());
-        ArrayList<String> list_chucnang_user=chucnang_user.user_fun(user_fun);
-        user_info user_info=chucnang_user_infoDAO.selectById(user.getMatk());
+        // user_function user_fun=chucnang_user_functionDAO.selectById(user.getMatk());
+        // ArrayList<String> list_chucnang_user=chucnang_user.user_fun(user_fun);
+        // user_info user_info=chucnang_user_infoDAO.selectById(user.getMatk());
         
         
-        Integer height=(480/(list_chucnang_user.size()));
+        // Integer height=(480/(list_chucnang_user.size()));
         
         
         
@@ -92,13 +92,13 @@ public class menu_main {
         pan_chucnang.setBackground(new java.awt.Color(0,75,158));
         pan_background.add(pan_chucnang);
         //set cac nut chuc nag vao panel chuc nang
-        for(int i=0;i<list_chucnang_user.size();i++)
-        {
+        // for(int i=0;i<list_chucnang_user.size();i++)
+        // {
             
-            JButton bun_temp=new JButton(list_chucnang_user.get(i));
-            bun_temp.setPreferredSize(new Dimension(350,60));
-            pan_chucnang.add(bun_temp);
-        }
+        //     JButton bun_temp=new JButton(list_chucnang_user.get(i));
+        //     bun_temp.setPreferredSize(new Dimension(350,60));
+        //     pan_chucnang.add(bun_temp);
+        // }
         //set title chuong trinh
         lab_title_menu_main.setBounds(250,10,400,50);
         lab_title_menu_main.setForeground(Color.white);
@@ -128,7 +128,7 @@ public class menu_main {
     public static void main(String[] args) {
         user_login user=new user_login("kh3566","1","1","1");
         //user_login user=new user_login("admin0001","1","1","1");
-        menu_main frame=new menu_main(user);
+        new menu_main(user);
     }
 
     
