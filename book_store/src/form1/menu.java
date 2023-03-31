@@ -25,7 +25,7 @@ public class menu extends JFrame{
         pan_center=new menu_center(user);
         pan_west=new menu_west(this);
         pan_north=new menu_north(this);
-        pan_gr_fun=new group_function();
+        pan_gr_fun=new group_function(this);
         pan_add_gr_fun=new add_group_function();
         this.add(pan_north,BorderLayout.NORTH);
         this.add(pan_west,BorderLayout.WEST);
