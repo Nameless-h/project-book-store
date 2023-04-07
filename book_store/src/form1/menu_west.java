@@ -21,13 +21,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.event.AncestorListener;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
+// import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
 
-    String[] list = { "Function group", "Chuc nang 2", "Chuc nang 3", "Chuc nang 4" };
+    String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
@@ -38,7 +38,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     }
     public void change_panel(String s){
 
-        if(s.equalsIgnoreCase("FUnction group")){
+        if(s.equalsIgnoreCase("Function group")){
                 group_function pan_grp_fun=new group_function(obj);
                 pan_grp_fun.setBounds(0,0,1000,700);
                 obj.pan_center.removeAll();
@@ -48,6 +48,17 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 System.out.println(obj.hih_center);
 
         }
+        else
+        if(s.equalsIgnoreCase("Quan li nhan vien")){
+            pan_staff pan_user=new pan_staff(obj);
+
+            pan_user.setBounds(0,0,1000,700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(pan_user);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+
+    }
     }
     private void init(int width,int heigh) {
         this.setPreferredSize(new Dimension(width,heigh));
@@ -98,6 +109,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
                 change_panel(lab_menu[i].getText());
+                lab_menu[i].setBackground(new Color(54,54,54));
             }
 
         }

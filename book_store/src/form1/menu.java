@@ -18,7 +18,7 @@ public class menu extends JFrame{
         this.setLayout(new BorderLayout());
         this.setLocation(100,50);
         this.setUndecorated(true);
-        //set do rong ,chieu cao cac panel
+                //set do rong ,chieu cao cac panel
         wd_nort=0;
         hih_nort=30;
         wd_west=300;
@@ -31,6 +31,7 @@ public class menu extends JFrame{
         pan_north=new menu_north(this,wd_nort,hih_nort);
         pan_gr_fun=new group_function(this);
         pan_add_gr_fun=new add_group_function();
+        pan_add_user =new add_user();
         this.add(pan_north,BorderLayout.NORTH);
         this.add(pan_west,BorderLayout.WEST);
         this.add(pan_center,BorderLayout.CENTER);

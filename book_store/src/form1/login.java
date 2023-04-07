@@ -12,7 +12,7 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu.Separator;
 import user.user_login;
-import model.user_model;
+import model.staff_model;
 
 
 
@@ -46,7 +46,7 @@ public class login {
         JPanel pan_for_pass=new JPanel();
         JLabel title_for_pass=new JLabel();
         //goi chuc nang cua user_login
-        user_model chucnang_user=new user_model();
+        staff_model chucnang_user=new staff_model();
     public login() {
         init();
     }
