@@ -21,7 +21,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import model.staff_model;
+
+import model.user_model;
 import user.user_login;
 /**
  *
@@ -57,7 +58,7 @@ public class signup {
         JLabel lab_icon_user_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/user2.png")));
         JLabel lab_icon_showpass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/show_password.png")));
         JLabel lab_icon_dispass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/password.png")));
-        staff_model chucnang_user=new staff_model();
+        user_model chucnang_user=new user_model();
     public signup() {
         init();
     }

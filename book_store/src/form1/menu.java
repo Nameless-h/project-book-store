@@ -28,10 +28,9 @@ public class menu extends JFrame{
         //them cac panel 
         pan_center=new menu_center(user,wd_center,hih_center);
         pan_west=new menu_west(this,wd_west,hih_west);
-        pan_north=new menu_north(this,wd_nort,hih_nort);
+        pan_north=new menu_north(this);
         pan_gr_fun=new group_function(this);
         pan_add_gr_fun=new add_group_function();
-        pan_add_user =new add_user();
         this.add(pan_north,BorderLayout.NORTH);
         this.add(pan_west,BorderLayout.WEST);
         this.add(pan_center,BorderLayout.CENTER);
