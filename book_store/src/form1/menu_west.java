@@ -23,11 +23,13 @@ import javax.swing.event.AncestorListener;
 
 import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
+import GUI.adminGUI.manageEmployeeGUI;
+
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
 
-    String[] list = { "Function group", "Chuc nang 2", "Chuc nang 3", "Chuc nang 4" };
+    String[] list = { "Function group", "Chuc nang 2", "Quan ly nhan vien", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
@@ -47,6 +49,14 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 obj.pan_center.add(pan_grp_fun);
                 obj.pan_center.repaint();
                 obj.pan_center.revalidate();
+
+        } else if(s.equalsIgnoreCase("Quan ly nhan vien")){
+            manageEmployeeGUI qlnv = new manageEmployeeGUI();
+            qlnv.setBounds(0,0,1100,670);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(qlnv);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
 
         }
     }

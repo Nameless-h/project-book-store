@@ -2,7 +2,6 @@ package GUI.adminGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
@@ -15,27 +14,33 @@ import java.awt.Cursor;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import javax.swing.SwingConstants;
-import javax.xml.namespace.QName;
+
+import GUI.Mybutton.addbutton;
+import GUI.Mybutton.deletebutton;
+import GUI.Mybutton.editbutton;
 
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
-public class manageEmployeeGUI extends JFrame implements ActionListener{
+public class manageEmployeeGUI extends JPanel implements ActionListener{
     // private employeeTable employ_table;
     JTextField headerSearchInput;
     JButton headerSearchBtn;
     public manageEmployeeGUI() {
-
+        System.out.print("manage employee");
+        // setSize(1000, 700);
+        setLayout(new BorderLayout());
         // header
         JPanel header = new JPanel();
         header.setBackground(Color.red);
         header.setLayout(new FlowLayout());
 
         // header title
-        JLabel headerTitle = new JLabel("THE EMPLOYEE MANGAGEMENT", SwingConstants.CENTER);
+        JLabel headerTitle = new JLabel("Quan ly nhan vien", SwingConstants.CENTER);
         headerTitle.setFont(new Font("Arial", Font.PLAIN, 24));
         headerTitle.setPreferredSize(new Dimension(500, 40));
         headerTitle.setForeground(Color.white);
@@ -49,14 +54,14 @@ public class manageEmployeeGUI extends JFrame implements ActionListener{
         header.add(headerSearch);
 
         // header search input
-        headerSearchInput = new JTextField("Type to search...");
+        headerSearchInput = new JTextField("Nhap de tim kiem...");
         headerSearchInput.setPreferredSize(new Dimension(500, 0));
         headerSearchInput.setFont(new Font("Arial", Font.PLAIN, 20));
         headerSearchInput.setBorder(BorderFactory.createEmptyBorder());
         inputSearchFocus(headerSearchInput);
         
         // header search button
-        headerSearchBtn = new JButton("Search");
+        headerSearchBtn = new JButton("Tim");
         headerSearchBtn.setForeground(Color.white);
         headerSearchBtn.setBackground(Color.black);
         headerSearchBtn.setPreferredSize(new Dimension(100, 0));
@@ -69,42 +74,49 @@ public class manageEmployeeGUI extends JFrame implements ActionListener{
 
         headerSearch.add(headerSearchInput,BorderLayout.WEST);
         headerSearch.add(headerSearchBtn,BorderLayout.EAST);
-
-        // form
-        JPanel leftFormEmployee = new JPanel();
-        leftFormEmployee.setBackground(Color.white);
-        // leftFormEmployee.setLayout(new FlowLayout());
-        String arrLabelInfo[] = {"ID","Name","Age"};
-
-        JLabel labels[] = new JLabel[arrLabelInfo.length];
-        JTextField inputs[] = new JTextField[arrLabelInfo.length];
-
         
-        for (int i = 0; i < arrLabelInfo.length; i++) {
-            labels[i] = new JLabel(arrLabelInfo[i]);
-            labels[i].setPreferredSize(new Dimension(100,50));
-            inputs[i] = new JTextField();
-            inputs[i].setPreferredSize(new Dimension(150,30));
-            leftFormEmployee.add(labels[i]);
-            leftFormEmployee.add(inputs[i]);
-        } 
-
         // list
         JPanel rightListEmployee = new employeeTable();
-        // rightListEmployee.setBackground(Color.pink);
-        // employ_table = new employeeTable();
-        // rightListEmployee.add(employ_table);
+        rightListEmployee.setBackground(Color.lightGray);
+
+        // form
+        JPanel leftFormEmployee = ((employeeTable) rightListEmployee).showLeftForm();
+        leftFormEmployee.setBackground(Color.lightGray);
 
 
         // CRUD bar
         JPanel crudBar = new JPanel();
-        crudBar.setBackground(Color.green);
+        crudBar.setBackground(Color.darkGray);
+        JButton addButton = new addbutton();
+        JButton deButton = new deletebutton();
+        JButton editButton = new editbutton();
+
+        //button add, delete, edit
+        addButton.setPreferredSize(new Dimension(100, 50));
+        deButton.setPreferredSize(new Dimension(100, 50));
+        editButton.setPreferredSize(new Dimension(100, 50));
+
+        addButton.setFocusable(false);
+        addButton.setBorder(BorderFactory.createEmptyBorder());
+        addButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        deButton.setFocusable(false);
+        deButton.setBorder(BorderFactory.createEmptyBorder());
+        deButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        editButton.setFocusable(false);
+        editButton.setBorder(BorderFactory.createEmptyBorder());
+        editButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        crudBar.add(addButton);
+        crudBar.add(deButton);
+        crudBar.add(editButton);
 
         // set size for borderLayout
         header.setPreferredSize(new Dimension(0, 100));
-        leftFormEmployee.setPreferredSize(new Dimension(335, 0));
-        rightListEmployee.setPreferredSize(new Dimension(650, 0));
-        crudBar.setPreferredSize(new Dimension(0, 100));
+        leftFormEmployee.setPreferredSize(new Dimension(295, 0));
+        rightListEmployee.setPreferredSize(new Dimension(710, 0));
+        crudBar.setPreferredSize(new Dimension(0, 60));
 
         add(header, BorderLayout.NORTH);
         add(leftFormEmployee, BorderLayout.WEST);
@@ -112,25 +124,26 @@ public class manageEmployeeGUI extends JFrame implements ActionListener{
         add(crudBar, BorderLayout.SOUTH);
 
         // this.setUndecorated(true);
-        setSize(1000, 700);
-        setResizable(false);
-        setLocationRelativeTo(null);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        // setLayout(null);
+        // setResizable(false);
+        // setLocationRelativeTo(null);
+        // setVisible(true);
+        // setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
     public void inputSearchFocus(JTextField input) {
         input.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (input.getText().equals("Type to search...")) {
+                if (input.getText().equals("Nhap de tim kiem...")) {
                     input.setText("");
                 }           
             }
             @Override
             public void focusLost(FocusEvent e) {
                 if (input.getText().isEmpty() || input.getText() == "") {
-                    input.setText("Type to search...");
+                    input.setText("Nhap de tim kiem...");
                 }
             }
         });
@@ -148,7 +161,11 @@ public class manageEmployeeGUI extends JFrame implements ActionListener{
     }
 
     public static void main(String[] args) {
+        /* try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
 
+        } */
         new manageEmployeeGUI();
     }
 
