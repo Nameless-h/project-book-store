@@ -79,7 +79,17 @@ public class user_info {
     public void setQuyenhan(String quyenhan) {
         this.quyenhan = quyenhan;
     }
-
+    public String[] getuser_infoStrings(user_info user){
+        String[] data=new String[7];
+        data[0]=user.getMaTk();
+        data[1]=user.getTen();
+        data[2]=user.getSdt();
+        data[3]=user.getGioitinh();
+        data[4]=user.getNgaysinh();
+        data[5]=user.getDiachi();
+        data[6]=user.getQuyenhan();
+        return data;
+    }
     @Override
     public String toString() {
         return "user_info{" + "maTk=" + maTk + ", ten=" + ten + ", sdt=" + sdt + ", gioitinh=" + gioitinh + ", ngaysinh=" + ngaysinh + ", diachi=" + diachi + ", quyenhan=" + quyenhan + '}';

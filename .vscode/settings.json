@@ -1,0 +1,23 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "d:\\thuvienjava\\activation.jar",
+        "d:\\thuvienjava\\javax.mail.jar",
+        "d:\\thuvienjava\\mysql-connector-java-8.0.30.jar",
+        "d:\\thuvienjava\\protobuf-java-3.19.4.jar"
+    ],
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "prj_bt_mysql",
+            "database": "bookstore",
+            "username": "root"
+        }
+    ]
+}
