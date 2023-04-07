@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class sale_action extends JPanel {
     public sale_action() {
+        init();
         this.setBackground(Color.GRAY);
         this.setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
-        init();
     }
     public void init() {
         JPanel info_pnl = new JPanel();
