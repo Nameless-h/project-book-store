@@ -21,37 +21,47 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.event.AncestorListener;
 
-import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
+// import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
 
-    String[] list = { "Function group", "Chuc nang 2", "Chuc nang 3", "Chuc nang 4" };
+    String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
     int temp=0;
-    public menu_west(menu obj) {
+    public menu_west(menu obj,int width,int heigh) {
         this.obj=obj;
-        init();
+        init(width,heigh);
     }
     public void change_panel(String s){
 
-        if(s.equalsIgnoreCase("FUnction group")){
+        if(s.equalsIgnoreCase("Function group")){
                 group_function pan_grp_fun=new group_function(obj);
-                JPanel p1=new JPanel();
                 pan_grp_fun.setBounds(0,0,1000,700);
-                p1.setBackground(Color.red);
                 obj.pan_center.removeAll();
                 obj.pan_center.add(pan_grp_fun);
                 obj.pan_center.repaint();
                 obj.pan_center.revalidate();
+                System.out.println(obj.hih_center);
 
         }
+        else
+        if(s.equalsIgnoreCase("Quan li nhan vien")){
+            pan_staff pan_user=new pan_staff(obj);
+
+            pan_user.setBounds(0,0,1000,700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(pan_user);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+
     }
-    private void init() {
-        this.setPreferredSize(new Dimension(300, 700));
+    }
+    private void init(int width,int heigh) {
+        this.setPreferredSize(new Dimension(width,heigh));
         // this.setBackground(new Color(50,168, 76));
         this.setBackground(Color.black);
         this.setLayout(null);
@@ -60,7 +70,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", 3, 38));
         title.setForeground(Color.white);
-        title.setBounds(10, 20, 280, 40);
+        title.setBounds(10, 20, 200, 40);
         // title.setOpaque(true);
         // title.setBackground(Color.gray);
         this.add(title);
@@ -68,7 +78,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         // 50 168 76
         JPanel pan_menu = new JPanel();
         pan_menu.setBackground(Color.black);
-        pan_menu.setBounds(0, 90, 300, 450);
+        pan_menu.setBounds(0, 90, 200, 450);
         pan_menu.setLayout(new FlowLayout(0, 1, 5));
         this.add(pan_menu);
         // set cac menu chuc nang
@@ -77,7 +87,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
             lab_menu[i] = new JLabel(list[i]);
             lab_menu[i].setHorizontalAlignment(SwingConstants.CENTER);
             // lab_menu[i].setFont(new Font("Segoe UI",0,24));
-            lab_menu[i].setPreferredSize(new Dimension(300, 50));
+            lab_menu[i].setPreferredSize(new Dimension(180, 50));
             lab_menu[i].setFont(new Font("Segoe UI", 0, 20));
             lab_menu[i].setForeground(Color.white);
             lab_menu[i].setOpaque(true);
@@ -99,6 +109,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
                 change_panel(lab_menu[i].getText());
+                lab_menu[i].setBackground(new Color(54,54,54));
             }
 
         }
@@ -115,7 +126,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
                 lab_menu[i].setBackground(Color.white);
-                lab_menu[i].setFont(new Font("Segoe UI", 1, 30));
+                lab_menu[i].setFont(new Font("Segoe UI", 1, 21));
                 lab_menu[i].setForeground(Color.black);
             }
 
