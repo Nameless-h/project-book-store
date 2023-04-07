@@ -21,7 +21,7 @@ public class menu extends JFrame{
                 //set do rong ,chieu cao cac panel
         wd_nort=0;
         hih_nort=30;
-        wd_west=300;
+        wd_west=200;
         hih_west=this.HEIGHT-wd_nort;
         wd_center=this.WIDTH-wd_west;
         hih_center=this.HEIGHT-wd_nort;

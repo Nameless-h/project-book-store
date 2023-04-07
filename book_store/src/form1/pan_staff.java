@@ -31,7 +31,7 @@ public class pan_staff extends JPanel implements MouseListener {
     JComboBox com_nhomquyen;
 
 
-    String[] com_nhomquyen_str ={"Quan ly","Nhan vien","Khach hang"};
+    String[] com_nhomquyen_str ={"","ADMIN","NV","KH"};
     String name_font = "Segoe UI";
     Color color_54 = new Color(54, 54, 54);
 
@@ -109,15 +109,17 @@ public class pan_staff extends JPanel implements MouseListener {
 			public void mouseClicked(MouseEvent e) {
                 DefaultTableModel model=(DefaultTableModel)tab_list.getModel();
 				int selectrow=tab_list.getSelectedRow();
+                String temp1=model.getValueAt(selectrow, 6).toString();
+                int temp2=chucnang.vitri_nhomquyen(com_nhomquyen_str, temp1);
 				// String tk=model.getValueAt(selectrow, 1).toString();
 				txt_info_field[0].setText(model.getValueAt(selectrow, 0).toString());
 				txt_info_field[1].setText(model.getValueAt(selectrow, 1).toString());
-				txt_info_field[2].setText(model.getValueAt(selectrow,2).toString());
+				txt_info_field[2].setText(model.getValueAt(selectrow, 2).toString());
 				txt_info_field[3].setText(model.getValueAt(selectrow, 3).toString());
 				txt_info_field[4].setText(model.getValueAt(selectrow, 4).toString());
                 txt_info_field[5].setText(model.getValueAt(selectrow, 5).toString());
-                txt_info_field[6].setText(model.getValueAt(selectrow, 6).toString());
-                
+                com_nhomquyen.setSelectedIndex(temp2);
+                System.out.println();
 				//System.out.println(tk);
 			}
 		});
@@ -151,7 +153,9 @@ public class pan_staff extends JPanel implements MouseListener {
         pan_chucnang.add(bun_xoa);
         tab_list.addMouseListener(this);
     }
-
+    public static void main(String[] args) {
+        
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {

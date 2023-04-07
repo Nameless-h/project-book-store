@@ -11,6 +11,14 @@ import nameclass.customer;
 import nameclass.staff;
 
 public class pan_staff_model {
+    //tra ve vi tri cua nhom quyen
+    public int vitri_nhomquyen(String[] com_nhomquyen_str,String manhomquyen){
+        for(int i=0;i<com_nhomquyen_str.length;i++){
+            if(manhomquyen.equalsIgnoreCase(com_nhomquyen_str[i]))
+             return i;
+        }
+        return 0;
+    }
     //kiem tra nhan vien do thuoc ve tai khaon nao
     public account staff_account(String manhanvien){
         ArrayList<account> list=new ArrayList<>();

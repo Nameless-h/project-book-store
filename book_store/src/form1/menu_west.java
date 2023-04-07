@@ -70,7 +70,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         title.setHorizontalAlignment(SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", 3, 38));
         title.setForeground(Color.white);
-        title.setBounds(10, 20, 280, 40);
+        title.setBounds(10, 20, 200, 40);
         // title.setOpaque(true);
         // title.setBackground(Color.gray);
         this.add(title);
@@ -78,7 +78,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         // 50 168 76
         JPanel pan_menu = new JPanel();
         pan_menu.setBackground(Color.black);
-        pan_menu.setBounds(0, 90, 300, 450);
+        pan_menu.setBounds(0, 90, 200, 450);
         pan_menu.setLayout(new FlowLayout(0, 1, 5));
         this.add(pan_menu);
         // set cac menu chuc nang
@@ -87,7 +87,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
             lab_menu[i] = new JLabel(list[i]);
             lab_menu[i].setHorizontalAlignment(SwingConstants.CENTER);
             // lab_menu[i].setFont(new Font("Segoe UI",0,24));
-            lab_menu[i].setPreferredSize(new Dimension(300, 50));
+            lab_menu[i].setPreferredSize(new Dimension(180, 50));
             lab_menu[i].setFont(new Font("Segoe UI", 0, 20));
             lab_menu[i].setForeground(Color.white);
             lab_menu[i].setOpaque(true);
@@ -126,7 +126,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
                 lab_menu[i].setBackground(Color.white);
-                lab_menu[i].setFont(new Font("Segoe UI", 1, 30));
+                lab_menu[i].setFont(new Font("Segoe UI", 1, 21));
                 lab_menu[i].setForeground(Color.black);
             }
 
