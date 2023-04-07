@@ -26,7 +26,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import model.user_model;
+import model.staff_model;
 import user.*;
 /**
  *
@@ -35,7 +35,7 @@ import user.*;
 public class menu_main {
     user_functionDAO chucnang_user_functionDAO=new user_functionDAO();
     user_infoDAO chucnang_user_infoDAO=new user_infoDAO();
-    user_model chucnang_user=new user_model();
+    staff_model chucnang_user=new staff_model();
     
     
     

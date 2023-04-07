@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 import user.user_info;
 
 public class menu extends JFrame{
-    JPanel pan_north,pan_west,pan_center,pan_gr_fun,pan_add_gr_fun;
-
+    JPanel pan_north,pan_west,pan_center,pan_gr_fun,pan_add_gr_fun,pan_add_user;
+    int temp=1;
     public menu(user_info user){
         init(user);
     }
@@ -18,7 +18,7 @@ public class menu extends JFrame{
         this.setLayout(new BorderLayout());
         this.setLocation(100,50);
         this.setUndecorated(true);
-
+        
 
 
         //them cac panel 
@@ -27,6 +27,7 @@ public class menu extends JFrame{
         pan_north=new menu_north(this);
         pan_gr_fun=new group_function(this);
         pan_add_gr_fun=new add_group_function();
+        pan_add_user =new add_user();
         this.add(pan_north,BorderLayout.NORTH);
         this.add(pan_west,BorderLayout.WEST);
         this.add(pan_center,BorderLayout.CENTER);
