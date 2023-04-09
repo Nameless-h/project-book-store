@@ -10,7 +10,9 @@ package model;
  */
 import user.user_login;
 import DAO.user_loginDAO;
+import java.awt.List;
 import java.util.ArrayList;
+import user.user_function;
 public class user_model {
     user_loginDAO chucnang_user_login=new user_loginDAO();
     
@@ -63,13 +65,33 @@ public class user_model {
         return true;
     }
 //kiem tra email da ton tai hay chua
-public boolean check_email(String email){
-     ArrayList<user_login> list=chucnang_user_login.selecAll();
-        for(int i=0;i<list.size();i++)
+    public boolean check_email(String email){
+         ArrayList<user_login> list=chucnang_user_login.selecAll();
+            for(int i=0;i<list.size();i++)
+            {
+                if(list.get(i).getEmail().equalsIgnoreCase(email))
+                    return false;
+            }
+            return true;
+    }
+//tra ve chuc nang cua tk
+    public ArrayList<String> user_fun(user_function user){
+        ArrayList<String> list = new ArrayList<String>();
+        if(user.getAdministrator().equalsIgnoreCase("1"))
+            list.add("Quản lí tài khoản");
+        if(user.getCustomer().equalsIgnoreCase("1"))
         {
-            if(list.get(i).getEmail().equalsIgnoreCase(email))
-                return false;
+            list.add("Mua hàng");
+            list.add("Giỏ hàng");
+            list.add("Lịch sử mua hàng");
         }
-        return true;
-}
+        if(user.getStatistical().equalsIgnoreCase("1"))
+            list.add("Thống kê");
+        if(user.getImport_assistant().equalsIgnoreCase("1"))
+            list.add("Nhập hàng");
+        if(user.getShop_assistant().equalsIgnoreCase("1"))
+            list.add("Bán hàng");
+//        list.add("Thông tin cá nhân");
+        return list;
+    }
 }
