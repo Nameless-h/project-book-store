@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.lang.model.util.ElementScanner14;
@@ -19,14 +20,18 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.event.AncestorListener;
 
 // import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
+import sale.sale_frame;
+
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
-
     String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
@@ -36,7 +41,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         this.obj=obj;
         init(width,heigh);
     }
-    public void change_panel(String s){
+    public void change_panel(String s) throws IOException{
 
         if(s.equalsIgnoreCase("Function group")){
                 group_function pan_grp_fun=new group_function(obj);
@@ -48,8 +53,23 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 System.out.println(obj.hih_center);
 
         }
-        else
-        if(s.equalsIgnoreCase("Quan li nhan vien")){
+        else if(s.equalsIgnoreCase("Ban hang")){
+                FlatLightLaf.setup();
+                try {
+                    UIManager.setLookAndFeel(new FlatLightLaf());
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                sale_frame pan_grp_fun= new sale_frame();
+                pan_grp_fun.setBounds(0,0,1100,700);
+                obj.pan_center.removeAll();
+                obj.pan_center.add(pan_grp_fun);
+                obj.pan_center.repaint();
+                obj.pan_center.revalidate();
+
+                }
+        }
+        else if(s.equalsIgnoreCase("Quan li nhan vien")){
             pan_staff pan_user=new pan_staff(obj);
 
             pan_user.setBounds(0,0,1000,700);
@@ -58,7 +78,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
             obj.pan_center.repaint();
             obj.pan_center.revalidate();
 
-    }
+        }
     }
     private void init(int width,int heigh) {
         this.setPreferredSize(new Dimension(width,heigh));
