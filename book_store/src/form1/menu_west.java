@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.lang.model.util.ElementScanner14;
@@ -19,15 +20,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.event.AncestorListener;
 
 import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
+
+import com.formdev.flatlaf.FlatLightLaf;
+
+import sale.sale_frame;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
 
-    String[] list = { "Function group", "Chuc nang 2", "Chuc nang 3", "Chuc nang 4" };
+    String[] list = { "Function group", "Chuc nang 2", "Ban hang", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
@@ -36,7 +42,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         this.obj=obj;
         init();
     }
-    public void change_panel(String s){
+    public void change_panel(String s) throws IOException{
 
         if(s.equalsIgnoreCase("FUnction group")){
                 group_function pan_grp_fun=new group_function(obj);
@@ -49,9 +55,24 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 obj.pan_center.revalidate();
 
         }
+        if(s.equalsIgnoreCase("Ban hang")){
+                FlatLightLaf.setup();
+                try {
+                    UIManager.setLookAndFeel(new FlatLightLaf());
+                } catch (Exception e) {
+                    // TODO: handle exception
+                }
+                sale_frame pan_grp_fun= new sale_frame();
+                pan_grp_fun.setBounds(0,0,1100,700);
+                obj.pan_center.removeAll();
+                obj.pan_center.add(pan_grp_fun);
+                obj.pan_center.repaint();
+                obj.pan_center.revalidate();
+
+        }
     }
     private void init() {
-        this.setPreferredSize(new Dimension(300, 700));
+        this.setPreferredSize(new Dimension(200, 700));
         // this.setBackground(new Color(50,168, 76));
         this.setBackground(Color.black);
         this.setLayout(null);
@@ -98,7 +119,12 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     public void mousePressed(MouseEvent e) {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
-                change_panel(lab_menu[i].getText());
+                try {
+                    change_panel(lab_menu[i].getText());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
 
         }

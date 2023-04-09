@@ -18,6 +18,11 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import GUI.Mybutton.addbutton;
+import GUI.Mybutton.deletebutton;
+import GUI.Mybutton.editbutton;
+
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -42,7 +47,7 @@ public class sale_table extends JPanel{
         booktable = new JTable();
         booktable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         scrollPane = new JScrollPane(booktable);
-        scrollPane.setPreferredSize(new Dimension(525,350));
+        scrollPane.setPreferredSize(new Dimension(500,350));
         String columns[] = {"ID","Book name","Quantity","Price","Total"};
         String data[][] = {{"1","What a wonderful world","2","20000","40000"},
                             {"2","What a wonderful world","2","20000","40000"},
@@ -87,10 +92,13 @@ public class sale_table extends JPanel{
         String bookdetail[] = {"Book id","Name","Price","Quantity","Total"};
         inp = new JTextField[bookdetail.length];
         text = new JLabel[bookdetail.length];
+        addbutton addbtn = new addbutton();
+        editbutton editbtn = new editbutton();
+        deletebutton deletebtn = new deletebutton();
         pbookdetail.setLayout(null);
         pbookdetail.setBackground(Color.decode("#272727"));
-        pbookdetail.setPreferredSize(new Dimension(525,350));
-        int xtext=220 , ytext=80 , xinp=330 , yinp=80;
+        pbookdetail.setPreferredSize(new Dimension(500,350));
+        int xtext=220 , ytext=25 , xinp=330 , yinp=25;
         for(int i=0;i<bookdetail.length;i++) {
             text[i] = new JLabel(bookdetail[i]);
             text[i].setBounds(xtext,ytext,100,30);
@@ -114,6 +122,15 @@ public class sale_table extends JPanel{
         image.setIcon(new ImageIcon(img));
         image.setBorder(new LineBorder(new Color(255,30,30),4,true));
         image.setBackground(Color.BLACK);
+
+        int ybtn=290,wbtn=90,hbtn=30;
+        addbtn.setBounds(220,ybtn,wbtn,hbtn);
+        deletebtn.setBounds(320,ybtn,wbtn,hbtn);
+        editbtn.setBounds(420,ybtn,wbtn,hbtn);
+        
+        pbookdetail.add(addbtn);
+        pbookdetail.add(deletebtn);
+        pbookdetail.add(editbtn);
 
         pbookdetail.add(image);
         return pbookdetail;
