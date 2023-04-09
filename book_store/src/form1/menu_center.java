@@ -26,15 +26,15 @@ public class menu_center extends JPanel implements MouseListener {
     JLabel[] lab=new JLabel[list.length];
     JLabel[] lab2=new JLabel[list.length];
     String[] list_info=new String[list.length];
-    public menu_center(user_info user){
+    public menu_center(user_info user,int width,int heigh){
         list_info=user.getuser_infoStrings(user);
-        init();
+        init(width,heigh);
     }
-    private void init(){
+    private void init(int width,int heigh){
         JPanel pan_info=new JPanel();
         // this.setBackground(new Color(144,238,144));
         this.setBackground(new Color(54,54,54));
-        this.setPreferredSize(new Dimension(1000,700));
+        this.setPreferredSize(new Dimension(width,heigh));
         this.setLayout(null);
         //set logo i=user
         logo_user=new JLabel(icon_user);
