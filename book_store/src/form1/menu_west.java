@@ -28,11 +28,12 @@ import javax.swing.event.AncestorListener;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import sale.sale_frame;
+import statistic.statisticGUI;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
     JLabel title;
-    String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
+    String[] list = { "Function group", "Quan li nhan vien", "Ban hang", "Thong ke" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
@@ -67,10 +68,20 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 obj.pan_center.repaint();
                 obj.pan_center.revalidate();
 
-                }
         }
         else if(s.equalsIgnoreCase("Quan li nhan vien")){
-            pan_staff pan_user=new pan_staff(obj);
+            pan_staff pan_statistic=new pan_staff(obj);
+
+            pan_statistic.setBounds(0,0,1000,700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(pan_statistic);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+
+        }
+
+        else if(s.equalsIgnoreCase("Thong ke")){
+            statisticGUI pan_user=new statisticGUI();
 
             pan_user.setBounds(0,0,1000,700);
             obj.pan_center.removeAll();
@@ -128,7 +139,12 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     public void mousePressed(MouseEvent e) {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
-                change_panel(lab_menu[i].getText());
+                try {
+                    change_panel(lab_menu[i].getText());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 lab_menu[i].setBackground(new Color(54,54,54));
             }
 
