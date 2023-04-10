@@ -1,4 +1,4 @@
-package form1;
+package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;

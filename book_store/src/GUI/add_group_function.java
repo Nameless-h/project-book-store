@@ -1,4 +1,4 @@
-package form1;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,11 +29,11 @@ public class add_group_function extends JPanel implements MouseListener  {
     String str_dat_pre = time_present.format(dateFormatter);
     // test
 
-    public add_group_function() {
-        init();
+    public add_group_function(int w,int h) {
+        init(w,h);
     }
 
-    private void init() {
+    private void init(int w,int h) {
 
         // test
         ArrayList<detail_fun_group> list1 = new ArrayList<>();
@@ -52,11 +52,12 @@ public class add_group_function extends JPanel implements MouseListener  {
         list2.add(test3_fu);
 
         // khoi tao panel
+        this.setPreferredSize(new Dimension(w,h));
         this.setBackground(new Color(54, 54, 54));
         this.setLayout(null);
         // set title1
         title1 = new JLabel("Add group function");
-        title1.setBounds(0, 0, 1000, 50);
+        title1.setBounds(0, 0, w, 50);
         title1.setFont(new Font("Segoe UI", 1, 30));
         title1.setOpaque(true);
         title1.setBackground(Color.red);
@@ -184,7 +185,7 @@ public class add_group_function extends JPanel implements MouseListener  {
             pan_fun.add(pan[i]);
         }
         bun_add=new JLabel("ADD");
-        bun_add.setBounds(400,620,200,50);
+        bun_add.setBounds(800,120,200,50);
         bun_add.setOpaque(true);
         bun_add.setForeground(Color.white);
         bun_add.setBackground(Color.red);

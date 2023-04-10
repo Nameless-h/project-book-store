@@ -1,11 +1,11 @@
-package form1;
+package GUI;
 
 import java.awt.*;
 
 import javax.swing.JPanel;
 
 public class add_user extends JPanel{
-    menu obj;
+    menu1 obj;
     public add_user(){
         init();
     }

@@ -1,4 +1,4 @@
-package form1;
+package GUI;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -13,7 +13,7 @@ import model.pan_staff_model;
 import nameclass.customer;
 
 public class pan_staff extends JPanel implements MouseListener {
-    menu obj;
+    menu1 obj;
     pan_staff_model chucnang = new pan_staff_model();
     JPanel pan_list_staff, pan_info,pan_chucnang;
     JLabel title, lab_staff, lab_nhomuyen;
@@ -35,17 +35,18 @@ public class pan_staff extends JPanel implements MouseListener {
     String name_font = "Segoe UI";
     Color color_54 = new Color(54, 54, 54);
 
-    public pan_staff(menu obj) {
+    public pan_staff(menu1 obj,int w,int h) {
         this.obj = obj;
-        init();
+        init(w,h);
     }
 
-    private void init() {
+    private void init(int w,int h){
+        this.setPreferredSize(new Dimension(w,h));
         this.setBackground(new Color(54, 54, 54));
         this.setLayout(null);
         // set title cua panel
         title = new JLabel("Quan li nhan vien");
-        title.setBounds(0, 0, 1000, 50);
+        title.setBounds(0, 0, w, 50);
         title.setFont(new Font(name_font, 1, 30));
         title.setOpaque(true);
         title.setForeground(Color.white);
@@ -99,7 +100,7 @@ public class pan_staff extends JPanel implements MouseListener {
         //set panel det chua bang chua danh sach nhan vien
         pan_list_staff=new JPanel();
         pan_list_staff.setLayout(null);
-        pan_list_staff.setBounds(30,400,950,250);
+        pan_list_staff.setBounds(30,400,w-70,250);
         pan_list_staff.setBackground(Color.red);
         this.add(pan_list_staff);
         // set tabel danh sach nhan vien
@@ -130,7 +131,7 @@ public class pan_staff extends JPanel implements MouseListener {
 		));
         chucnang.show_list_staff(tab_list);
         sp_list_staff=new JScrollPane(tab_list);
-        sp_list_staff.setBounds(0,0,950,250);
+        sp_list_staff.setBounds(0,0,w-70,250);
         pan_list_staff.add(sp_list_staff);
         //set panel chuc nag cac nut them sua xoa
         pan_chucnang=new JPanel();

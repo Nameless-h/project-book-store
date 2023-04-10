@@ -1,4 +1,4 @@
-package form1;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,7 +24,7 @@ import javax.swing.event.AncestorListener;
 // import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
-    menu obj;
+    menu1 obj;
     JLabel title;
 
     String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
@@ -32,27 +32,29 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     JLabel[] lab_menu = new JLabel[list.length];
     public static JFrame temp1=null;
     int temp=0;
-    public menu_west(menu obj,int width,int heigh) {
+    public menu_west(menu1 obj,int width,int heigh) {
         this.obj=obj;
         init(width,heigh);
     }
     public void change_panel(String s){
-
+        int temp_wd=obj.wd_center;
+        int temp_hih=obj.hih_center;
         if(s.equalsIgnoreCase("Function group")){
-                group_function pan_grp_fun=new group_function(obj);
-                pan_grp_fun.setBounds(0,0,1000,700);
+                
+                group_function pan_grp_fun=new group_function(obj,temp_wd,temp_hih);
+                pan_grp_fun.setBounds(0,0,temp_wd,temp_hih);
                 obj.pan_center.removeAll();
                 obj.pan_center.add(pan_grp_fun);
                 obj.pan_center.repaint();
                 obj.pan_center.revalidate();
-                System.out.println(obj.hih_center);
+                System.out.println(temp_wd+""+temp_hih);
 
         }
         else
         if(s.equalsIgnoreCase("Quan li nhan vien")){
-            pan_staff pan_user=new pan_staff(obj);
+            pan_staff pan_user=new pan_staff(obj,temp_wd,temp_hih);
 
-            pan_user.setBounds(0,0,1000,700);
+            pan_user.setBounds(0,0,temp_wd,temp_hih);
             obj.pan_center.removeAll();
             obj.pan_center.add(pan_user);
             obj.pan_center.repaint();
@@ -87,7 +89,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
             lab_menu[i] = new JLabel(list[i]);
             lab_menu[i].setHorizontalAlignment(SwingConstants.CENTER);
             // lab_menu[i].setFont(new Font("Segoe UI",0,24));
-            lab_menu[i].setPreferredSize(new Dimension(180, 50));
+            lab_menu[i].setPreferredSize(new Dimension(200, 50));
             lab_menu[i].setFont(new Font("Segoe UI", 0, 20));
             lab_menu[i].setForeground(Color.white);
             lab_menu[i].setOpaque(true);
