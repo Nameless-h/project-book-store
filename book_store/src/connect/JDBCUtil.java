@@ -4,10 +4,7 @@
  */
 package connect;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class JDBCUtil {
 	public static Connection getConnection() {
@@ -19,7 +16,7 @@ public class JDBCUtil {
 			// Các thông số
 			String url = "jdbc:mySQL://localhost:3306/bookstore";
 			String username = "root";
-			String password = "otakus.a.o711";
+			String password = "";
 
 			// Tạo kết nối
 			c = DriverManager.getConnection(url, username, password);
@@ -57,6 +54,6 @@ public class JDBCUtil {
 
 	public static void main(String[] args) {
 		Connection con = JDBCUtil.getConnection();
-		System.out.println(con);
+		printInfo(con);
 	}
 }

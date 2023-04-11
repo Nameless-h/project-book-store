@@ -4,12 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 
 public class sale_search extends JPanel{
+    private JTextField input;
+    private JButton button;
     public sale_search() {
-        this.setBackground(Color.GRAY);
-        this.setLayout(new BoxLayout(this,BoxLayout.X_AXIS));
         init();
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+        this.setBackground(Color.WHITE);
     }
-    public void init(){
+
+    public void init() {
+        input = new JTextField();
+        button = new JButton("Search");
+        input.setPreferredSize(new Dimension(800,40));
+        button.setPreferredSize(new Dimension(100,40));
+        this.add(input);
+        this.add(button);
+    }
+    /* public void init(){
         JPanel left_pnl = new JPanel();
         JPanel right_pnl = new JPanel();
         JPanel title_pnl = new JPanel();
@@ -67,5 +78,5 @@ public class sale_search extends JPanel{
         
         this.add(left_pnl);
         this.add(right_pnl);
-    }
+    } */
 } 
