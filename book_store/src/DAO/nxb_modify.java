@@ -1,5 +1,6 @@
-package NXB;
+package DAO;
 
+import java.awt.Taskbar.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,19 +11,44 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.StatementEvent;
+import NXB.NXB;
 
-import com.mysql.cj.result.SqlDateValueFactory;
+public class nxb_modify implements DAOinterface<NXB> {
 
-public class nxb_modify {
-  public static ArrayList<NXB> allNXB() {
+  @Override
+  public int insert(NXB t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+  }
+
+  @Override
+  public int update(int t) {
+    throw new UnsupportedOperationException("Unimplemented method 'delete'");
+
+  }
+
+  @Override
+  public int delete(NXB t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'delete'");
+  }
+
+  @Override
+  public int delete_all() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'delete_all'");
+  }
+
+  @Override
+  public ArrayList<NXB> selecAll() {
+    // TODO Auto-generated method stub
     ArrayList<NXB> listNxb = new ArrayList<NXB>();
 
     Connection conn = null;
     Statement statement = null;
 
     try {
-      conn = DriverManager.getConnection("jdbc:mySQL://localhost:3306/test", "root", "otakus.a.o711");
+      conn = DriverManager.getConnection("jdbc:mySQL://localhost:3306/bookstore", "root", "otakus.a.o711");
       statement = conn.createStatement();
       String sql = "SELECT * FROM nxb";
       ResultSet result = statement.executeQuery(sql);
@@ -51,14 +77,16 @@ public class nxb_modify {
     return listNxb;
   }
 
-  public static NXB getNXB(int maNXB) {
+  @Override
+  public NXB selectById(int t) {
+    // TODO Auto-generated method stub
     Connection conn = null;
     PreparedStatement statement = null;
     NXB tmp = null;
     try {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "otakus.a.o711");
+      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "otakus.a.o711");
       statement = conn.prepareStatement("SELECT * FROM NXB WHERE maNXB = (?)");
-      statement.setInt(1, maNXB);
+      statement.setInt(1, t);
       ResultSet result = statement.executeQuery();
       result.next();
       tmp = new NXB(result.getInt("maNXB"),
@@ -80,6 +108,11 @@ public class nxb_modify {
       }
     }
     return tmp;
+  }
 
+  @Override
+  public ArrayList selecByCondition(String condition) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
 }
