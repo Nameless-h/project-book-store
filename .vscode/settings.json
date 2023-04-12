@@ -4,7 +4,8 @@
         "d:\\thuvienjava\\activation.jar",
         "d:\\thuvienjava\\javax.mail.jar",
         "d:\\thuvienjava\\mysql-connector-java-8.0.30.jar",
-        "d:\\thuvienjava\\protobuf-java-3.19.4.jar"
+        "d:\\thuvienjava\\protobuf-java-3.19.4.jar",
+        "d:\\flatlaf-3.1.jar"
     ],
     "sqltools.connections": [
         {

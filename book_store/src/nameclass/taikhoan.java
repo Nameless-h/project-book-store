@@ -1,14 +1,15 @@
 package nameclass;
 
-public class account {
-    String matk,username,password,manhanvien,manhomquyen;
-    public account(){}
-    public account(String matk,String username,String password,String manhanvien,String manhomquyen){
+public class taikhoan {
+    String matk,username,password,manhanvien,manhomquyen,tinhtrang;
+    public taikhoan(){}
+    public taikhoan(String matk,String username,String password,String manhanvien,String manhomquyen,String tinhtrang){
         this.matk=matk;
         this.username=username;
         this.password=password;
         this.manhanvien=manhanvien;
         this.manhomquyen=manhomquyen;
+        this.tinhtrang=tinhtrang;
     }
     public String getManhanvien() {
         return this.manhanvien;
@@ -39,6 +40,12 @@ public class account {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+    public String getTinhtrang() {
+        return tinhtrang;
+    }
+    public void setTinhtrang(String tinhtrang) {
+        this.tinhtrang = tinhtrang;
     }
     @Override
     public String toString() {

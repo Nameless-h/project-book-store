@@ -1,10 +1,11 @@
 package nameclass;
 
-public class customer {
+public class khachhang {
     String ma,ten,gioitinh,diachi,email,sodienthoai;
     int diem;
-    public customer(){}
-    public customer(String ma,String ten,String gioitinh,String diachi,String email,String sodienthoai,int diem){
+    String tinhtrang;
+    public khachhang(){}
+    public khachhang(String ma,String ten,String gioitinh,String diachi,String email,String sodienthoai,int diem,String tinhtrang){
         this.ma=ma;
         this.ten=ten;
         this.gioitinh=gioitinh;
@@ -12,6 +13,7 @@ public class customer {
         this.email=email;
         this.sodienthoai=sodienthoai;
         this.diem=diem;
+        this.tinhtrang=tinhtrang;
     }
     public String getDiachi() {
         return diachi;
@@ -55,7 +57,12 @@ public class customer {
     public void setTen(String ten) {
         this.ten = ten;
     }
-   
+   public String getTinhtrang() {
+       return tinhtrang;
+   }
+   public void setTinhtrang(String tinhtrang) {
+       this.tinhtrang = tinhtrang;
+   }
     @Override
     public String toString() {
         return super.toString();
