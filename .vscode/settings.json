@@ -9,7 +9,8 @@
         "book_store/lib/activation.jar",
         "book_store/lib/javax.mail.jar",
         "book_store/lib/mysql-connector-java-8.0.28.jar",
-        "book_store/lib/protobuf-java-3.19.4.jar"
+        "book_store/lib/protobuf-java-3.19.4.jar",
+        "book_store/lib/LGoodDatePicker-10.4.1.jar"
     ],
     "sqltools.connections": [
         {
