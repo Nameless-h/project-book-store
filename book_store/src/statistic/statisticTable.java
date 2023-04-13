@@ -33,7 +33,7 @@ public class statisticTable extends JPanel{
         t = new JTable();
         t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         scrollpane = new JScrollPane(t);
-        scrollpane.setPreferredSize(new Dimension(700, 500));
+        scrollpane.setPreferredSize(new Dimension(1100, 500));
         String[] headers = columnNames;
         Object[][] tableData = {
             {"1", "Vineet", "22"},
@@ -76,15 +76,19 @@ public class statisticTable extends JPanel{
         t.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         t.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 
-        t.addMouseListener(new MouseAdapter() {
+        /* t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 tableMouseClicked(evt);
             }
-        });
+        }); */
+        
+        // disable table
+        t.setDefaultEditor(Object.class, null);  
+
         return scrollpane;
     }
 
-    public JPanel showLeftForm() {
+    /* public JPanel showLeftForm() {
         JPanel leftForm = new JPanel();
         inputs = new JTextField[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
@@ -96,9 +100,9 @@ public class statisticTable extends JPanel{
             leftForm.add(inputs[i]);
         } 
         return leftForm;
-    }
+    } */
 
-    private void tableMouseClicked(MouseEvent evt) {
+    /* private void tableMouseClicked(MouseEvent evt) {
         int row = t.getSelectedRow();
         String id = (String) t.getValueAt(row, 0);
         inputs[0].setText(id);
@@ -106,6 +110,6 @@ public class statisticTable extends JPanel{
         inputs[1].setText(name);
         String age = (String) t.getValueAt(row, 2);
         inputs[2].setText(age);
-    }
+    } */
 
 }

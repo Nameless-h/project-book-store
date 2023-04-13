@@ -28,7 +28,8 @@ import javax.swing.event.AncestorListener;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import sale.sale_frame;
-import statistic.statisticGUI;
+import statistic.list_statistic;
+import statistic.statistic_sale;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
@@ -70,22 +71,22 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
 
         }
         else if(s.equalsIgnoreCase("Quan li nhan vien")){
-            pan_staff pan_statistic=new pan_staff(obj);
+            pan_staff pan_user=new pan_staff(obj);
 
-            pan_statistic.setBounds(0,0,1000,700);
+            pan_user.setBounds(0,0,1000,700);
             obj.pan_center.removeAll();
-            obj.pan_center.add(pan_statistic);
+            obj.pan_center.add(pan_user);
             obj.pan_center.repaint();
             obj.pan_center.revalidate();
 
         }
 
         else if(s.equalsIgnoreCase("Thong ke")){
-            statisticGUI pan_user=new statisticGUI();
+            list_statistic pan_list_statistic=new list_statistic();
 
-            pan_user.setBounds(0,0,1000,700);
+            pan_list_statistic.setBounds(0,0,1100,670);
             obj.pan_center.removeAll();
-            obj.pan_center.add(pan_user);
+            obj.pan_center.add(pan_list_statistic);
             obj.pan_center.repaint();
             obj.pan_center.revalidate();
 
