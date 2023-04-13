@@ -5,7 +5,6 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import book_detail.book;
+import connect.JDBCUtil;
 
 /**
  *
@@ -58,15 +58,9 @@ public class book_modify implements DAOinterface<book> {
         // TODO Auto-generated method stub
         ArrayList<book> bookList = new ArrayList<book>();
 
-        java.sql.Connection conn = null;
+        java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
         try {
-            // DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-            // Class.forName("com.mysql.cj.jdbc.Driver");
-
-            conn = DriverManager.getConnection(
-                    "jdbc:mySQL://localhost:3306/bookstore", "root", "otakus.a.o711");
-
             String sql = "SELECT * FROM Book";
             statement = conn.createStatement();
 
@@ -100,11 +94,11 @@ public class book_modify implements DAOinterface<book> {
     @Override
     public book selectById(int t) {
         // TODO Auto-generated method stub
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         PreparedStatement statement = null;
         book tmp = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "otakus.a.o711");
+
             statement = conn.prepareStatement("SELECT * FROM book WHERE maSach = (?)");
             statement.setInt(1, t);
             ResultSet result = statement.executeQuery();

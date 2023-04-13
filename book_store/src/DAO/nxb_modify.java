@@ -1,6 +1,5 @@
 package DAO;
 
-import java.awt.Taskbar.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,12 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import NXB.NXB;
+import connect.JDBCUtil;
 
 public class nxb_modify implements DAOinterface<NXB> {
 
   @Override
   public int insert(NXB t) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'insert'");
   }
 
@@ -29,26 +28,22 @@ public class nxb_modify implements DAOinterface<NXB> {
 
   @Override
   public int delete(NXB t) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'delete'");
   }
 
   @Override
   public int delete_all() {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'delete_all'");
   }
 
   @Override
   public ArrayList<NXB> selecAll() {
-    // TODO Auto-generated method stub
     ArrayList<NXB> listNxb = new ArrayList<NXB>();
 
-    Connection conn = null;
+    Connection conn = JDBCUtil.getConnection();
     Statement statement = null;
 
     try {
-      conn = DriverManager.getConnection("jdbc:mySQL://localhost:3306/bookstore", "root", "otakus.a.o711");
       statement = conn.createStatement();
       String sql = "SELECT * FROM nxb";
       ResultSet result = statement.executeQuery(sql);
@@ -62,14 +57,12 @@ public class nxb_modify implements DAOinterface<NXB> {
         listNxb.add(tmp);
       }
     } catch (SQLException e) {
-      // TODO: handle exception
       Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
     } finally {
       if (statement != null) {
         try {
           statement.close();
         } catch (SQLException e) {
-          // TODO: handle exception
           Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
         }
       }
@@ -79,12 +72,10 @@ public class nxb_modify implements DAOinterface<NXB> {
 
   @Override
   public NXB selectById(int t) {
-    // TODO Auto-generated method stub
-    Connection conn = null;
+    Connection conn = JDBCUtil.getConnection();
     PreparedStatement statement = null;
     NXB tmp = null;
     try {
-      conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/bookstore", "root", "otakus.a.o711");
       statement = conn.prepareStatement("SELECT * FROM NXB WHERE maNXB = (?)");
       statement.setInt(1, t);
       ResultSet result = statement.executeQuery();
@@ -95,14 +86,12 @@ public class nxb_modify implements DAOinterface<NXB> {
           result.getString("diaChi"),
           result.getString("sdt"));
     } catch (SQLException e) {
-      // TODO: handle exception
       Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
     } finally {
       if (statement != null) {
         try {
           statement.close();
         } catch (SQLException e) {
-          // TODO: handle exception
           Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
         }
       }
@@ -112,7 +101,6 @@ public class nxb_modify implements DAOinterface<NXB> {
 
   @Override
   public ArrayList selecByCondition(String condition) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
 }

@@ -1,6 +1,8 @@
 package form1;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,9 +15,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -27,7 +33,7 @@ import DAO.tac_gia_modify;
 import NXB.NXB;
 import tac_gia.tacgia;
 
-public class bookFrame implements ActionListener {
+public class bookFrame extends JPanel implements ActionListener, ChangeListener {
   Font fo = new Font("Time New Roman", Font.BOLD, 20);
   Font searchFo = new Font("Time New Roman", Font.PLAIN, 15);
   book_modify mod_bk = new book_modify();
@@ -35,11 +41,12 @@ public class bookFrame implements ActionListener {
   tac_gia_modify mod_tg = new tac_gia_modify();
 
   public bookFrame() {
+    this.setLayout(new BorderLayout());
     init();
+    this.setVisible(true);
   }
 
   public void init() {
-    fr = new JFrame("book frame");
     // create table
     scrollPaneBook = new JScrollPane();
     scrollPaneNxb = new JScrollPane();
@@ -47,19 +54,29 @@ public class bookFrame implements ActionListener {
     detail_panel = new JPanel();
     nxb_panel = new JPanel();
     search_Panel = new JPanel();
-    button_panel = new JPanel();
-
+    button_panel = new JTabbedPane();
+    button_panel.addChangeListener(this);
     // init label of book info
     String[] book_info_label = { "Tên sách: ", "Thể loại: ", "Tác giả: ", "Nhà xuất bản: ", "Năm xuất bản : ",
         "Số lượng: ", "Giá tiền: " };
     book_detail_labels = new JLabel[book_info_label.length];
     int posY = 50;
+    int posY2 = 50;
     for (int i = 0; i < book_info_label.length; i++) {
-      book_detail_labels[i] = new JLabel(book_info_label[i]);
-      book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
-      book_detail_labels[i].setFont(fo);
-      detail_panel.add(book_detail_labels[i]);
-      posY += 50;
+      if (i < 4) {
+        book_detail_labels[i] = new JLabel(book_info_label[i]);
+        book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
+        book_detail_labels[i].setFont(fo);
+        detail_panel.add(book_detail_labels[i]);
+        posY += 50;
+      } else {
+        book_detail_labels[i] = new JLabel(book_info_label[i]);
+        book_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
+        book_detail_labels[i].setFont(fo);
+        detail_panel.add(book_detail_labels[i]);
+        posY2 += 50;
+      }
+
     }
 
     // init label of nxb info
@@ -92,34 +109,6 @@ public class bookFrame implements ActionListener {
     txtsearchTen = new JTextField();
     cbbsearchTheloai = new JComboBox<String>();
     txtsearchTacgia = new JTextField();
-
-    // init button
-    saveBtn = new JButton("Lưu");
-    saveBtn.addActionListener(this);
-    nxbBtn = new JButton("NXB");
-    nxbBtn.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-          switchToNxb();
-        } catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
-    });
-    sanPhamBtn = new JButton("Sản phẩm");
-
-    sanPhamBtn.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-          switchToSanpham();
-        } catch (Exception e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
-      }
-    });
-
     try {
 
       searchTen.setBounds(10, 5, 70, 30);
@@ -131,27 +120,28 @@ public class bookFrame implements ActionListener {
       searchTacgia.setBounds(500, 5, 70, 30);
       searchTacgia.setFont(searchFo);
       /* set param cho text va combobox */
-
-      txttenSach.setBounds(200, 50 - 30, 350, 25);
+      /* -------- book panel --------- */
+      txttenSach.setBounds(200, 50 - 30, 300, 25);
       txttenSach.setFont(new Font("Time New Roman", Font.PLAIN, 20));
 
-      cbbTheloai.setBounds(200, 100 - 30, 350, 25);
+      cbbTheloai.setBounds(200, 100 - 30, 300, 25);
       cbbTheloai.setFont(new Font("Time New Roman", Font.PLAIN, 20));
 
-      cbbTacgia.setBounds(200, 150 - 30, 350, 25);
+      cbbTacgia.setBounds(200, 150 - 30, 300, 25);
       cbbTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 20));
 
-      cbbNXB.setBounds(200, 200 - 30, 350, 25);
+      cbbNXB.setBounds(200, 200 - 30, 300, 25);
       cbbNXB.setFont(new Font("Time New Roman", Font.PLAIN, 20));
 
-      txtNamxb.setBounds(200, 250 - 30, 350, 25);
+      txtNamxb.setBounds(750, 50 - 30, 300, 25);
       txtNamxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
 
-      txtGiatien.setBounds(200, 300 - 30, 350, 25);
-      txtGiatien.setFont(new Font("Time New Roman", Font.PLAIN, 20));
-
-      txtSoluong.setBounds(200, 350 - 30, 350, 25);
+      txtSoluong.setBounds(750, 100 - 30, 300, 25);
       txtSoluong.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+
+      txtGiatien.setBounds(750, 150 - 30, 300, 25);
+      txtGiatien.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      /* -------- book panel --------- */
 
       txtTenNxb.setBounds(200, 50 - 30, 350, 25);
       txtTenNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
@@ -178,31 +168,29 @@ public class bookFrame implements ActionListener {
       txtsearchTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 15));
 
       /* setting cho panel */
-      button_panel.setBounds(0, 0, 1070, (int) Math.floor(800 * 0.05));
-      button_panel.setLayout(null);
-      button_panel.setBackground(new Color(19, 105, 36));
-      saveBtn.setBounds(50, 8, 100, 25);
-      nxbBtn.setBounds(200, 8, 100, 25);
-      sanPhamBtn.setBounds(350, 8, 100, 25);
-
-      detail_panel.setBounds(0, (int) Math.floor(800 * 0.05), 1070, (int) Math.floor(800 * 0.47));
+      // button_panel.setBounds(0, 0, 1100, (int) Math.floor(700 * 0.52));
+      button_panel.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.52)));
       detail_panel.setLayout(null);
       detail_panel.setBackground(new Color(211, 242, 214));
 
-      nxb_panel.setBounds(0, (int) Math.floor(800 * 0.05), 1070, (int) Math.floor(800 * 0.47));
       nxb_panel.setLayout(null);
       nxb_panel.setBackground(new Color(211, 242, 214));
-      nxb_panel.setVisible(false);
 
-      search_Panel.setBounds(0, (int) Math.floor(800 * 0.52), 1070, (int) Math.floor(800 * 0.05));
+      // search_Panel.setBounds(0, (int) Math.floor(700 * 0.52), 1100, (int)
+      // Math.floor(700 * 0.05));
+      search_Panel.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.05)));
       search_Panel.setLayout(null);
       search_Panel.setBackground(new Color(50, 168, 76));
 
-      scrollPaneBook.setBounds(0, (int) Math.floor(800 * 0.57), 1070, (int) Math.floor(800 * 0.43));
+      // scrollPaneBook.setBounds(0, (int) Math.floor(700 * 0.57), 1100, (int)
+      // Math.floor(700 * 0.43));
+      scrollPaneBook.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.43)));
       scrollPaneBook.setVisible(true);
       scrollPaneBook.setBackground(Color.orange);
 
-      scrollPaneNxb.setBounds(0, (int) Math.floor(800 * 0.57), 1070, (int) Math.floor(800 * 0.43));
+      // scrollPaneNxb.setBounds(0, (int) Math.floor(700 * 0.57), 1100, (int)
+      // Math.floor(700 * 0.43));
+      scrollPaneNxb.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.43)));
       scrollPaneNxb.setVisible(false);
       scrollPaneNxb.setBackground(Color.orange);
 
@@ -228,45 +216,35 @@ public class bookFrame implements ActionListener {
       search_Panel.add(cbbsearchTheloai);
       search_Panel.add(txtsearchTacgia);
 
-      button_panel.add(saveBtn);
-      button_panel.add(nxbBtn);
-      button_panel.add(sanPhamBtn);
+      button_panel.add("sách", detail_panel);
+      button_panel.add("nhà xuất bản", nxb_panel);
 
-      fr.add(detail_panel);
-      fr.add(nxb_panel);
-      fr.add(button_panel);
-      fr.getContentPane().add(scrollPaneBook);
-      fr.getContentPane().add(scrollPaneNxb);
-      fr.add(search_Panel);
-      fr.setLayout(null);
-      fr.setLocation(250, 20);
-      fr.setSize(1070, 800);
-      fr.setVisible(true);
-      fr.getContentPane().setBackground(Color.BLUE);
+      this.add(button_panel, BorderLayout.NORTH);
 
+      JPanel container = new JPanel();
+      container.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.43)));
+      container.add(scrollPaneBook);
+      container.add(scrollPaneNxb);
+      this.add(container, BorderLayout.SOUTH);
+      this.add(search_Panel, BorderLayout.CENTER);
       showCbbTheloai();
       showCbbNxb();
-      showBookList();
       showCbbTacgia();
+      showBookList();
+
     } catch (Exception e) {
-      // TODO: handle exception
-      System.out.println("error" + e);
+      e.printStackTrace();
     }
 
-  }
-
-  public static void main(String[] args) {
-    bookFrame fr = new bookFrame();
   }
 
   // Variables declaration - do not modify
   private JScrollPane scrollPaneBook;
   private JScrollPane scrollPaneNxb;
-  private JFrame fr;
   private JPanel detail_panel;
   private JPanel nxb_panel;
   private JPanel search_Panel;
-  private JPanel button_panel;
+  private JTabbedPane button_panel;
   private JLabel[] book_detail_labels;
   private JLabel[] nxb_detail_labels;
   private JLabel searchTen;
@@ -275,13 +253,10 @@ public class bookFrame implements ActionListener {
   private JTextField txttenSach;
   private JComboBox<String> cbbTacgia;
   private JComboBox<String> cbbTheloai;
-  private JButton saveBtn;
-  private JButton nxbBtn;
   private JTextField txtNamxb;
   private JTextField txtSoluong;
   private JTextField txtGiatien;
   private JComboBox<String> cbbNXB;
-  private JButton sanPhamBtn;
   private JTextField txtTenNxb;
   private JTextField txtMailNxb;
   private JTextField txtSdtNxb;
@@ -316,27 +291,6 @@ public class bookFrame implements ActionListener {
       cbbTacgia.addItem(tmp.getTenTacgia());
     }
     cbbNXB.setEnabled(true);
-  }
-
-  private void switchToNxb() throws Exception {
-    detail_panel.setVisible(false);
-    nxb_panel.setVisible(true);
-
-    scrollPaneBook.setVisible(false);
-    scrollPaneNxb.setVisible(true);
-    showNxbList();
-
-  }
-
-  private void switchToSanpham() throws Exception {
-    nxb_panel.setVisible(false);
-    detail_panel.setVisible(true);
-
-    scrollPaneBook.setVisible(true);
-    scrollPaneNxb.setVisible(false);
-
-    showBookList();
-
   }
 
   private void showBookList() throws Exception {
@@ -392,7 +346,6 @@ public class bookFrame implements ActionListener {
           if (row >= 0 && col >= 0) {
 
             int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
-            System.out.println(selectedBookID);
 
             book selectedBook = mod_bk.selectById(selectedBookID);
             NXB nxb_select = mod_nxb.selectById(selectedBook.getMaNXB());
@@ -406,7 +359,6 @@ public class bookFrame implements ActionListener {
             txtNamxb.setText(selectedBook.getNamXB());
             txtGiatien.setText(String.valueOf(selectedBook.getGiaTien()));
             txtSoluong.setText(String.valueOf(selectedBook.getSoLuong()));
-
           }
         }
       });
@@ -494,14 +446,27 @@ public class bookFrame implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
 
-    if (e.getSource() == saveBtn) {
-      System.out.println("click save button");
-      if (nxb_panel.isVisible()) {
-        System.out.println("nxb is visible");
-        
+  }
+
+  @Override
+  public void stateChanged(ChangeEvent e) {
+    JTabbedPane tp = (JTabbedPane) e.getSource();
+    if (tp.getSelectedComponent() == detail_panel) {
+      scrollPaneBook.setVisible(true);
+      scrollPaneNxb.setVisible(false);
+      try {
+        showBookList();
+      } catch (Exception ex) {
+        ex.printStackTrace();
       }
-      if (detail_panel.isVisible()) {
-        System.out.println("san pham is visible");
+
+    } else if (tp.getSelectedComponent() == nxb_panel) {
+      scrollPaneBook.setVisible(false);
+      scrollPaneNxb.setVisible(true);
+      try {
+        showNxbList();
+      } catch (Exception ex) {
+        ex.printStackTrace();
       }
     }
   }

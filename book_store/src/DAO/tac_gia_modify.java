@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
-import javax.sound.sampled.ReverbType;
-
-import com.mysql.cj.result.SqlDateValueFactory;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +41,6 @@ public class tac_gia_modify implements DAOinterface<tacgia> {
 
   @Override
   public ArrayList<tacgia> selecAll() {
-    // TODO Auto-generated method stub
     ArrayList<tacgia> list_tg = new ArrayList<tacgia>();
     Connection conn = JDBCUtil.getConnection();
     Statement stm = null;

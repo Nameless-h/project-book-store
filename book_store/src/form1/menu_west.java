@@ -35,53 +35,64 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
     String[] list = { "Function group", "Quan li nhan vien", "Chuc nang 3", "Chuc nang 4" };
     Integer[] list2 = new Integer[list.length];
     JLabel[] lab_menu = new JLabel[list.length];
-    public static JFrame temp1=null;
-    int temp=0;
-    public menu_west(menu obj,int width,int heigh) {
-        this.obj=obj;
-        init(width,heigh);
+    public static JFrame temp1 = null;
+    int temp = 0;
+
+    public menu_west(menu obj, int width, int heigh) {
+        this.obj = obj;
+        init(width, heigh);
     }
-    public void change_panel(String s) throws IOException{
 
-        if(s.equalsIgnoreCase("Function group")){
-                group_function pan_grp_fun=new group_function(obj);
-                pan_grp_fun.setBounds(0,0,1000,700);
-                obj.pan_center.removeAll();
-                obj.pan_center.add(pan_grp_fun);
-                obj.pan_center.repaint();
-                obj.pan_center.revalidate();
-                System.out.println(obj.hih_center);
+    public void change_panel(String s) throws IOException {
 
-        }
-        else if(s.equalsIgnoreCase("Ban hang")){
-                FlatLightLaf.setup();
-                try {
-                    UIManager.setLookAndFeel(new FlatLightLaf());
-                } catch (Exception e) {
-                    // TODO: handle exception
-                }
-                sale_frame pan_grp_fun= new sale_frame();
-                pan_grp_fun.setBounds(0,0,1100,700);
-                obj.pan_center.removeAll();
-                obj.pan_center.add(pan_grp_fun);
-                obj.pan_center.repaint();
-                obj.pan_center.revalidate();
+        if (s.equalsIgnoreCase("Function group")) {
+            group_function pan_grp_fun = new group_function(obj);
+            pan_grp_fun.setBounds(0, 0, 1000, 700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(pan_grp_fun);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+            System.out.println(obj.hih_center);
 
-                }
-        }
-        else if(s.equalsIgnoreCase("Quan li nhan vien")){
-            pan_staff pan_user=new pan_staff(obj);
-
-            pan_user.setBounds(0,0,1000,700);
+        } else if (s.equalsIgnoreCase("Ban hang")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            sale_frame pan_grp_fun = new sale_frame();
+            pan_grp_fun.setBounds(0, 0, 1100, 700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(pan_grp_fun);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+        } else if (s.equalsIgnoreCase("Quan li nhan vien")) {
+            pan_staff pan_user = new pan_staff(obj);
+            pan_user.setBounds(0, 0, 1000, 700);
             obj.pan_center.removeAll();
             obj.pan_center.add(pan_user);
+            obj.pan_center.repaint();
+            obj.pan_center.revalidate();
+        } else if (s.equalsIgnoreCase("Chuc nang 3")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            bookFrame product_pane = new bookFrame();
+            product_pane.setBounds(0, 0, 1100, 700);
+            obj.pan_center.removeAll();
+            obj.pan_center.add(product_pane);
             obj.pan_center.repaint();
             obj.pan_center.revalidate();
 
         }
     }
-    private void init(int width,int heigh) {
-        this.setPreferredSize(new Dimension(width,heigh));
+
+    private void init(int width, int heigh) {
+        this.setPreferredSize(new Dimension(width, heigh));
         // this.setBackground(new Color(50,168, 76));
         this.setBackground(Color.black);
         this.setLayout(null);
@@ -121,24 +132,28 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         for (int i = 0; i < list.length; i++) {
             if (e.getSource() == lab_menu[i]) {
-                change_panel(lab_menu[i].getText());
-                lab_menu[i].setBackground(new Color(54,54,54));
+                try {
+                    change_panel(lab_menu[i].getText());
+                    lab_menu[i].setBackground(new Color(54, 54, 54));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
-
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         // // TODO Auto-generated method stub
-        // throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        // throw new UnsupportedOperationException("Unimplemented method
+        // 'mouseReleased'");
     }
 
     @Override
@@ -173,4 +188,3 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
         System.out.println(e.getActionCommand());
     }
 }
-
