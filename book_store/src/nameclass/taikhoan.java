@@ -47,6 +47,16 @@ public class taikhoan {
     public void setTinhtrang(String tinhtrang) {
         this.tinhtrang = tinhtrang;
     }
+    public String[] getthongtin(){
+        String[] temp=new String[6];
+        temp[0]=this.getMatk();
+        temp[1]=this.getUsername();
+        temp[2]=this.getPassword();
+        temp[3]=this.getManhanvien();
+        temp[4]=this.getManhomquyen();
+        temp[5]=this.getTinhtrang();
+        return temp;
+    }
     @Override
     public String toString() {
         return "matk="+this.matk+" Username ="+this.username+" Password ="+this.password+" ma nhan vien ="+this.manhanvien+" ma nhom quyen ="+this.manhomquyen;

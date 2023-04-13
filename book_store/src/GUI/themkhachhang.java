@@ -28,7 +28,7 @@ public class themkhachhang extends JPanel{
         pan_info=new JPanel();
         pan_info.setBounds(250,10,obj.w_center-400,obj.h_center-100);
         pan_info.setBackground(color_211);
-        pan_info.setLayout(new FlowLayout(FlowLayout.LEFT,0,10));
+        pan_info.setLayout(new FlowLayout(FlowLayout.LEFT,0,20));
         pan_info.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                                                         "Them khach hang",
                                                             TitledBorder.LEFT,
@@ -61,18 +61,18 @@ public class themkhachhang extends JPanel{
                                                         "Cho phep",
                                                             TitledBorder.LEFT,
                                                             TitledBorder.TOP));;
-        pan_tinhtrang.setPreferredSize(new Dimension(690,100));
-        pan_tinhtrang.setBackground(color_211);
-        pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
-        pan_info.add(pan_tinhtrang);
-        chk_chophep=new JCheckBox("Cho phep",true);
-        chk_chophep.setPreferredSize(new Dimension(150,50));
-        chk_chophep.setFont(new Font(name_font1,1,25));
-        chk_khong=new JCheckBox("Khong cho phep",false);
-        chk_khong.setPreferredSize(new Dimension(250,50));
-        chk_khong.setFont(new Font(name_font1,1,22));
-        pan_tinhtrang.add(chk_chophep);
-        pan_tinhtrang.add(chk_khong);
+        // pan_tinhtrang.setPreferredSize(new Dimension(690,100));
+        // pan_tinhtrang.setBackground(color_211);
+        // pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
+        // pan_info.add(pan_tinhtrang);
+        // chk_chophep=new JCheckBox("Cho phep",true);
+        // chk_chophep.setPreferredSize(new Dimension(150,50));
+        // chk_chophep.setFont(new Font(name_font1,1,25));
+        // chk_khong=new JCheckBox("Khong cho phep",false);
+        // chk_khong.setPreferredSize(new Dimension(250,50));
+        // chk_khong.setFont(new Font(name_font1,1,22));
+        // pan_tinhtrang.add(chk_chophep);
+        // pan_tinhtrang.add(chk_khong);
 
         
         bun_them=new JButton("Sua");

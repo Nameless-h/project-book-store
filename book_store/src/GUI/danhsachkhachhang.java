@@ -6,6 +6,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.quanlikhachhang;
+import nameclass.khachhang;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -113,7 +114,35 @@ public class danhsachkhachhang extends JPanel implements MouseListener{
             obj.center.repaint();
             obj.center.revalidate();
         }
+        else if (e.getSource() == bun_sua) {
+            DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
+            int selectrow = tab_danhsach.getSelectedRow();
+            if (selectrow==-1){
+                JOptionPane.showMessageDialog(null,"Ban chua chon khach hang de sua");
+            }
+            else{
+                // String ma,ten,gioitinh,diachi,email,sodienthoai;
+            String ma = model.getValueAt(selectrow, 1).toString();
+            String ten = model.getValueAt(selectrow, 2).toString();
+            String gt = model.getValueAt(selectrow, 3).toString();
+            String dc = model.getValueAt(selectrow, 4).toString();
+            String email = model.getValueAt(selectrow, 5).toString();
+            String sdt = model.getValueAt(selectrow, 6).toString();
+            String diemstr=model.getValueAt(selectrow,7).toString();
+            int diem = Integer.parseInt(diemstr);
+            String tinhtrang=model.getValueAt(selectrow,8).toString();
+            khachhang temp=new khachhang(ma, ten, gt, dc, email,sdt,diem,tinhtrang);
+            suathongtinkhachhang panel=new suathongtinkhachhang(obj,temp);
+            panel.setBounds(0, 0, obj.w_center, obj.h_center);
+            obj.center.removeAll();
+            obj.center.add(panel);
+            obj.center.repaint();
+            obj.center.revalidate();
+            }
+            // System.out.println(ma+ten);
+        }
     }
+    
     @Override
     public void mouseReleased(MouseEvent e) {
        
