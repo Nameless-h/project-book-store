@@ -6,10 +6,15 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.*;
 
+import com.formdev.flatlaf.FlatLightLaf;
+
 import BUS.quanlinhomquyen;
+import GUI.invoice.InvoiceGUI;
+import GUI.sale.SaleGUI;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
@@ -22,7 +27,7 @@ public class menu extends JPanel implements MouseListener {
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
 
-    public void change_panel(String text) {
+    public void change_panel(String text) throws IOException{
         if (text.equalsIgnoreCase("Nhan vien")) {
             danhsachnhanvien panel = new danhsachnhanvien(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
@@ -57,7 +62,36 @@ public class menu extends JPanel implements MouseListener {
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }
+        }else if(text.equalsIgnoreCase("Ban hang")){
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            SaleGUI salegui= new SaleGUI();
+            salegui.setBounds(0,0,1100,700);
+            obj.center.removeAll();
+            obj.center.add(salegui);
+            obj.center.repaint();
+            obj.center.revalidate();
+            
+
+    }else if(text.equalsIgnoreCase("Hoa don")){
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            InvoiceGUI invoicegui= new InvoiceGUI();
+            invoicegui.setBounds(0,0,1100,700);
+            obj.center.removeAll();
+            obj.center.add(invoicegui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+    }
     }
 
     public menu(main obj) {
@@ -100,7 +134,12 @@ public class menu extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         for (int i = 0; i < list_lab.length; i++) {
             if (e.getSource() == list_lab[i]) {
-                change_panel(list_lab[i].getText());
+                try {
+                    change_panel(list_lab[i].getText());
+                } catch (IOException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 for (int j = 0; j < list_lab2.length; j++)
                     list_lab2[j] = 0;
                 list_lab2[i] = 1;
