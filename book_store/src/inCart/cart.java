@@ -3,29 +3,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package inCart;
-import book_detail.book;
 import java.util.ArrayList;
+
+import DTO.bookDTO;
 /**
  *
  * @author Vi Hao
  */
 public class cart {
-    private ArrayList<book> bookArr = new ArrayList<book>();
+    private ArrayList<bookDTO> bookArr = new ArrayList<bookDTO>();
     private long total;
     
     public long calculateTotal() {
         total = 0;
-        for(book b:bookArr) {
+        for(bookDTO b:bookArr) {
             total += b.getGiaTien();
         }
         return total;
     }
     
-    public void addToCart(book b) {
+    public void addToCart(bookDTO b) {
         bookArr.add(0,b);
     }
     
-    public void delFromCart(book b) {
+    public void delFromCart(bookDTO b) {
         bookArr.remove(b);
     }
     
@@ -34,7 +35,7 @@ public class cart {
     }
     
     public void showCart() {
-        for(book b:bookArr) {
+        for(bookDTO b:bookArr) {
             System.out.println(b.toString());
         }
     }

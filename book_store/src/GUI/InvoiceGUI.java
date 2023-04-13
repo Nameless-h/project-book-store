@@ -1,4 +1,4 @@
-package GUI.invoice;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,7 +14,6 @@ import javax.swing.JTextField;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
-import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;

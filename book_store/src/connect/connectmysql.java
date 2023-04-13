@@ -1,9 +1,9 @@
 package connect;
 
-import java.sql.*;;
+import java.sql.*;
 public class connectmysql {
     private static String MYSQL_JDBC_DRIVER_CLASS = "com.mysql.cj.jdbc.Driver";
-    private static String MYSQL_DB_URL = "jdbc:mysql://localhost:3306/bookstore";
+    private static String MYSQL_DB_URL = "jdbc:mysql://localhost:3307/bookstore";
     private static String MYSQL_DB_USER = "root";
     private static String MYSQL_DB_USER_PASSWORD = "";
     // private static String SQL_QUERY = "Select * from student";

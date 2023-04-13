@@ -25,6 +25,7 @@ import javax.swing.table.TableModel;
 
 import org.w3c.dom.events.MouseEvent;
 
+import DTO.bookDTO;
 import NXB.NXB;
 import NXB.nxb_modify;
 
@@ -438,10 +439,10 @@ public class bookFrame {
     try {
 
       // in ra danh sach book
-      ArrayList<book> list = book_modify.allBook();
+      ArrayList<bookDTO> list = book_modify.allBook();
       DefaultTableModel model = (DefaultTableModel) bookTbl.getModel();
       model.setRowCount(0);
-      for (book tmp : list) {
+      for (bookDTO tmp : list) {
         Theloai theLoaiTmp = The_loai_modify.getTheloai(tmp.getMaTheloai());
         NXB nxbTmp = nxb_modify.getNXB(tmp.getMaNXB());
 
@@ -457,7 +458,7 @@ public class bookFrame {
         // xu ly event khi click vao san pham
         public void valueChanged(ListSelectionEvent evt) {
           int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
-          book selectedBook = book_modify.getbook(selectedBookID);
+          bookDTO selectedBook = book_modify.getbook(selectedBookID);
           txttenSach.setText(selectedBook.getTenSach());
           // cbbTheloai.setText(selectedBook.the_loai());
           txtTacgia.setText(selectedBook.getTenSach());

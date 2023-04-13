@@ -14,13 +14,15 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import DTO.bookDTO;
+
 /**
  *
  * @author JN_PC
  */
 public class book_modify {
-    public static ArrayList<book> allBook() throws Exception {
-        ArrayList<book> bookList = new ArrayList<book>();
+    public static ArrayList<bookDTO> allBook() throws Exception {
+        ArrayList<bookDTO> bookList = new ArrayList<bookDTO>();
 
         java.sql.Connection conn = null;
         Statement statement = null;
@@ -36,7 +38,7 @@ public class book_modify {
 
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-                book b1 = new book(result.getInt("maSach"),
+                bookDTO b1 = new bookDTO(result.getInt("maSach"),
                         result.getString("tenSach"),
                         result.getInt("maTacgia"),
                         result.getInt("maTheloai"),
@@ -66,25 +68,25 @@ public class book_modify {
 
     }
 
-    public static void editBook(book bk_id) {
+    public static void editBook(bookDTO bk_id) {
 
     }
 
-    public static void delBook(book bk_id) {
+    public static void delBook(bookDTO bk_id) {
 
     }
 
-    public static book getbook(int maBook) {
+    public static bookDTO getbook(int maBook) {
         Connection conn = null;
         PreparedStatement statement = null;
-        book tmp = null;
+        bookDTO tmp = null;
         try {
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "otakus.a.o711");
             statement = conn.prepareStatement("SELECT * FROM book WHERE maSach = (?)");
             statement.setInt(1, maBook);
             ResultSet result = statement.executeQuery();
             result.next();
-            tmp = new book(result.getInt("maSach"),
+            tmp = new bookDTO(result.getInt("maSach"),
                     result.getString("tenSach"),
                     result.getInt("maTacgia"),
                     result.getInt("maTheloai"),

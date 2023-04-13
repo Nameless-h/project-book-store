@@ -27,8 +27,8 @@ import javax.swing.event.AncestorListener;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
-import GUI.invoice.InvoiceGUI;
-import GUI.sale.SaleGUI;
+import GUI.InvoiceGUI;
+import GUI.SaleGUI;
 
 public class menu_west extends JPanel implements MouseListener, ActionListener {
     menu obj;
@@ -76,7 +76,7 @@ public class menu_west extends JPanel implements MouseListener, ActionListener {
                 } catch (Exception e) {
                     // TODO: handle exception
                 }
-                InvoiceGUI invoicegui= new InvoiceGUI();
+                InvoiceGUI invoicegui = new InvoiceGUI();
                 invoicegui.setBounds(0,0,1100,700);
                 obj.pan_center.removeAll();
                 obj.pan_center.add(invoicegui);

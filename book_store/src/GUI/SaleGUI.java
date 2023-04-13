@@ -1,4 +1,4 @@
-package GUI.sale;
+package GUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,7 +13,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import GUI.Mytable;
+import BUS.bookBUS;
+import DTO.bookDTO;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -29,6 +30,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     private JPanel searchpnl;
     private JTextField searchinp;
     //book table
+    private bookBUS bookbus = new bookBUS();
     private Mytable booktable;
     //book detail
     private JTextField inp[];
@@ -93,12 +95,13 @@ public class SaleGUI extends JPanel implements ActionListener {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
         booktable.setHeader(new String[]{"ID","Book name","Price","Quantity"});
-        for(int i=0;i<15;i++) {
-            booktable.addRow(new String[]{
-                String.valueOf(i+1),
-                "What a wonderful world "+(i+1),
-                "20000",
-                "5"
+        bookbus.initbookList();
+        for(bookDTO book : bookbus.getbookList()) {
+            booktable.addRow(new Object[]{
+                book.getMaSach(),
+                book.getTenSach(),
+                book.getGiaTien(),
+                book.getSoLuong()
             });
         }
         booktable.setPreferredWidth(0, 25);
@@ -255,8 +258,8 @@ public class SaleGUI extends JPanel implements ActionListener {
         discountinp.setFont(f);
         grandtotalinp.setFont(f);
 
-        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
-        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_us_dollar_30px.png")));
+        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
+        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
         
         cancelbtn.addActionListener(this);
 
@@ -275,11 +278,11 @@ public class SaleGUI extends JPanel implements ActionListener {
     /*------------------------------------------- ACTION -------------------------------------------*/
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
-        String id = (String) booktable.getTable().getValueAt(row, 0);
+        String id = String.valueOf(booktable.getTable().getValueAt(row, 0)) ;
         inp[0].setText(id);
         String name = (String) booktable.getTable().getValueAt(row, 1);
         inp[1].setText(name);
-        String price = (String) booktable.getTable().getValueAt(row, 2);
+        String price = String.valueOf(booktable.getTable().getValueAt(row, 2));
         inp[2].setText(price);
         inp[3].setText("1");
     }
