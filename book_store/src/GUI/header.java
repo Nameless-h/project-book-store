@@ -1,4 +1,4 @@
-package form1;
+package GUI;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -14,17 +14,16 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class menu_north extends JPanel implements MouseListener {
+public class header extends JPanel implements MouseListener {
     JLabel lab_close, lab_hide;
-    menu obj;
+    main obj;
 
-    public menu_north(menu obj) {
+    public header(main obj) {
         this.obj = obj;
         init();
     }
-
     private void init() {
-        this.setPreferredSize(new Dimension(0, 30));
+        this.setPreferredSize(new Dimension(obj.w_head,obj.h_head));
         this.setBackground(Color.white);
         this.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
         // set lab_close

@@ -142,19 +142,19 @@ public class SaleGUI extends JPanel implements ActionListener {
                 inp[i].setEditable(false);
             inputpnl.add(inp[i]);
         }
-        image = new JLabel();
+/*         image = new JLabel();
         image.setBounds(10,10,170,250);
         image.setOpaque(true);
-        BufferedImage bufferedImage = ImageIO.read(new File("D:/Xampp/htdocs/project-NoRenowned-games/assets/img/sky3.jpg"));
+        BufferedImage bufferedImage = ImageIO.read(new File("../../icon/arrow_left.png"));
         Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
         image.setIcon(new ImageIcon(img));
-        image.setBorder(new LineBorder(Color.BLACK,1,true));
+        image.setBorder(new LineBorder(Color.BLACK,1,true)); */
 
         addbtn.setBounds(195,220,330,40);
         addbtn.addActionListener(this);
         
         pbookdetail.add(addbtn);
-        pbookdetail.add(image);
+        //pbookdetail.add(image);
         pbookdetail.add(inputpnl);
         return pbookdetail;
     }

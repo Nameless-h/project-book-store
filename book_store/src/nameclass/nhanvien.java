@@ -1,17 +1,18 @@
 package nameclass;
 
-public class staff {
+public class nhanvien {
     String ma,ten,gioitinh,diachi,email,sodienthoai;
-    public staff(){
+    public nhanvien(){
        
     }
-    public staff(String ma,String ten,String gioitinh,String diachi,String email,String sodienthoai){
+    public nhanvien(String ma,String ten,String gioitinh,String diachi,String email,String sodienthoai){
         this.ma=ma;
         this.ten=ten;
         this.gioitinh=gioitinh;
         this.diachi=diachi;
         this.email=email;
         this.sodienthoai=sodienthoai;
+
 
     }
     public String getDiachi() {
@@ -52,7 +53,16 @@ public class staff {
     public void setTen(String ten) {
         this.ten = ten;
     }
-   
+   public String[] getthongtin(){
+        String[] temp=new String[6];
+        temp[0]=this.getMa();
+        temp[1]=this.getTen();
+        temp[2]=this.getGioitinh();
+        temp[3]=this.getDiachi();
+        temp[4]=this.getEmail();
+        temp[5]=this.getSodienthoai();
+        return temp; 
+   }
     @Override
     public String toString() {
         return super.toString();
