@@ -1,11 +1,12 @@
 package nameclass;
 
 public class nhomquyen {
-    String ma,ten;
+    int ma;
+    String ten;
     public nhomquyen(){
 
     }
-    public nhomquyen(String ma,String ten){
+    public nhomquyen(int ma,String ten){
         this.ma=ma;
         this.ten=ten;
     }
@@ -15,10 +16,10 @@ public class nhomquyen {
     public void setTen(String ten) {
         this.ten = ten;
     }
-    public String getMa() {
+    public int getMa() {
         return ma;
     }
-    public void setMa(String ma) {
+    public void setMa(int ma) {
         this.ma = ma;
     }
 }

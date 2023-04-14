@@ -1,11 +1,12 @@
 package nameclass;
 
 public class nhanvien {
-    String ma,ten,gioitinh,diachi,email,sodienthoai;
+    int ma,gioitinh;
+    String ten,diachi,email,sodienthoai;
     public nhanvien(){
        
     }
-    public nhanvien(String ma,String ten,String gioitinh,String diachi,String email,String sodienthoai){
+    public nhanvien(Integer ma,String ten,Integer gioitinh,String diachi,String email,String sodienthoai){
         this.ma=ma;
         this.ten=ten;
         this.gioitinh=gioitinh;
@@ -19,13 +20,13 @@ public class nhanvien {
         return diachi;
     }
 
-    public String getMa() {
+    public int getMa() {
         return ma;
     }
     public String getEmail() {
         return email;
     }
-    public String getGioitinh() {
+    public int getGioitinh() {
         return gioitinh;
     }
     public String getSodienthoai() {
@@ -41,10 +42,10 @@ public class nhanvien {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setGioitinh(String gioitinh) {
+    public void setGioitinh(int gioitinh) {
         this.gioitinh = gioitinh;
     }
-    public void setMa(String ma) {
+    public void setMa(int ma) {
         this.ma = ma;
     }
     public void setSodienthoai(String sodienthoai) {
@@ -55,9 +56,9 @@ public class nhanvien {
     }
    public String[] getthongtin(){
         String[] temp=new String[6];
-        temp[0]=this.getMa();
+        temp[0]=String.valueOf(this.getMa());
         temp[1]=this.getTen();
-        temp[2]=this.getGioitinh();
+        temp[2]=String.valueOf(this.getGioitinh());
         temp[3]=this.getDiachi();
         temp[4]=this.getEmail();
         temp[5]=this.getSodienthoai();

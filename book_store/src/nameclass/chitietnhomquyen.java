@@ -1,24 +1,25 @@
 package nameclass;
 
 public class chitietnhomquyen {
-    String manhom,machucnang,hanhdong,tinhtrang;
+    int manhom,machucnang,tinhtrang;
+    String hanhdong;
     public chitietnhomquyen(){}
-    public chitietnhomquyen(String manhom,String machucnang,String hanhdong,String tinhtrang){
+    public chitietnhomquyen(int manhom,int machucnang,String hanhdong,int tinhtrang){
         this.manhom=manhom;
         this.machucnang=machucnang;
         this.hanhdong=hanhdong;
         this.tinhtrang=tinhtrang;
     }
-    public String getManhom() {
+    public int getManhom() {
         return manhom;
     }
-    public void setManhom(String manhom) {
+    public void setManhom(int manhom) {
         this.manhom = manhom;
     }
-    public String getMachucnang() {
+    public int getMachucnang() {
         return machucnang;
     }
-    public void setMachucnang(String machucnang) {
+    public void setMachucnang(int machucnang) {
         this.machucnang = machucnang;
     }
     public String getHanhdong() {
@@ -27,10 +28,10 @@ public class chitietnhomquyen {
     public void setHanhdong(String hanhdong) {
         this.hanhdong = hanhdong;
     }
-    public String getTinhtrang() {
+    public int getTinhtrang() {
         return tinhtrang;
     }
-    public void setTinhtrang(String tinhtrang) {
+    public void setTinhtrang(int tinhtrang) {
         this.tinhtrang = tinhtrang;
     }
 }

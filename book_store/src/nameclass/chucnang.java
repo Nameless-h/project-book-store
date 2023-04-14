@@ -1,10 +1,11 @@
 package nameclass;
 
 public class chucnang {
-    String ma,ten;
+    int ma;
+    String ten;
     public chucnang(){}
 
-    public chucnang(String ma,String ten){
+    public chucnang(int ma,String ten){
         this.ma=ma;
         this.ten=ten;
     }
@@ -14,10 +15,10 @@ public class chucnang {
     public void setTen(String ten) {
         this.ten = ten;
     }
-    public String getMa() {
+    public int getMa() {
         return ma;
     }
-    public void setMa(String ma) {
+    public void setMa(int ma) {
         this.ma = ma;
     }
 }

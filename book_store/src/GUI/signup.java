@@ -22,8 +22,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import model.user_model;
-import user.user_login;
+// import model.user_model;
+// import user.user_login;
 /**
  *
  * @author ASUS
@@ -58,7 +58,7 @@ public class signup {
         JLabel lab_icon_user_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/user2.png")));
         JLabel lab_icon_showpass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/show_password.png")));
         JLabel lab_icon_dispass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/password.png")));
-        user_model chucnang_user=new user_model();
+        // user_model chucnang_user=new user_model();
     public signup() {
         init();
     }
@@ -273,29 +273,29 @@ public class signup {
         });
         bun_signup.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent evt){
-                signup_user();
+                // signup_user();
             }
             //dang ky tai khoan
-            private void signup_user() {
-                String username=txt_username_signup.getText();
-                String password=new String(txt_password_signup.getPassword());
-                String verify_password=new String(ver_pass.getPassword());
-                String email=txt_email.getText();
-                if(password.equalsIgnoreCase(verify_password))
-                    if(chucnang_user.check_username(username))
-                        if(chucnang_user.check_email(email))
-                        {
-                            user_login user=new user_login(chucnang_user.spawn_matk(),username,password,email);
-                            chucnang_user.add_user(user);
-                            JOptionPane.showMessageDialog(null,"Dang ky thanh cong");
-                        }
-                        else
-                            JOptionPane.showMessageDialog(null,"Da ton tai email");
-                    else
-                        JOptionPane.showMessageDialog(null,"Da ton tai tai khoan nay");
-                else
-                    JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung");
-            }
+            // private void signup_user() {
+            //     String username=txt_username_signup.getText();
+            //     String password=new String(txt_password_signup.getPassword());
+            //     String verify_password=new String(ver_pass.getPassword());
+            //     String email=txt_email.getText();
+            //     if(password.equalsIgnoreCase(verify_password))
+            //         if(chucnang_user.check_username(username))
+            //             if(chucnang_user.check_email(email))
+            //             {
+            //                 user_login user=new user_login(chucnang_user.spawn_matk(),username,password,email);
+            //                 chucnang_user.add_user(user);
+            //                 JOptionPane.showMessageDialog(null,"Dang ky thanh cong");
+            //             }
+            //             else
+            //                 JOptionPane.showMessageDialog(null,"Da ton tai email");
+            //         else
+            //             JOptionPane.showMessageDialog(null,"Da ton tai tai khoan nay");
+            //     else
+            //         JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung");
+            // }
         });
     }
     public static void main(String[] args) {

@@ -5,19 +5,18 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import DAO.taikhoanDAO;
 import nameclass.taikhoan;
 
 public class quanlitaikhoan {
+    taikhoanDAO chucnang_taikhoan=new taikhoanDAO();
+    public ArrayList<taikhoan> laydanhsach(){
+        ArrayList<taikhoan> list=chucnang_taikhoan.selecAll();
+        return list;
+    }
     public void hienthidanhsach_taikhoan(JTable table) {
-        ArrayList<taikhoan> list = new ArrayList<>();
-        taikhoan ac1 = new taikhoan("TK1", "kiet", "123", "ADMIN1", "q1", "hien");
-        taikhoan ac2 = new taikhoan("TK2", "hoang", "123", "NV1", "q2", "hien");
-        taikhoan ac3 = new taikhoan("TK3", "tuan", "123", "NV2", "q2", "hien");
-        taikhoan ac4 = new taikhoan("Tk4", "hao", "123", "QL1", "q3", "hien");
-        list.add(ac1);
-        list.add(ac2);
-        list.add(ac3);
-        list.add(ac4);
+        ArrayList<taikhoan> list = laydanhsach();
+        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         // them thong tin nhan vien vao bang table

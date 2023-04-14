@@ -11,8 +11,8 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu.Separator;
-import user.user_login;
-import model.user_model;
+// import user.user_login;
+// import model.user_model;
 
 
 
@@ -46,7 +46,7 @@ public class login {
         JPanel pan_for_pass=new JPanel();
         JLabel title_for_pass=new JLabel();
         //goi chuc nang cua user_login
-        user_model chucnang_user=new user_model();
+        // user_model chucnang_user=new user_model();
     public login() {
         init();
     }
@@ -57,7 +57,7 @@ public class login {
         
         //set frame va layout
         frame.setSize(900,550);
-        frame.setLocation(200,100);
+        frame.setLocation(350,150);
         frame.setUndecorated(true);
         frame.setLayout(null);
 //------------------------------------------------------------------------------------------------------
@@ -209,21 +209,21 @@ public class login {
 
             
         });
-        bun_login.addMouseListener(new MouseAdapter(){
-            public void mouseClicked(MouseEvent evt){
-                check_login(evt);
-            }
-            //kiemtra dang nhap
-            private void check_login(MouseEvent evt) {
-                String username=txt_username.getText();
-                String password=new String(txt_password.getPassword());
-                user_login user=new user_login("",username,password,"");
-                if(chucnang_user.check_login(user)!=null)
-                    JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
-                else
-                    JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
-            }
-        });
+        // bun_login.addMouseListener(new MouseAdapter(){
+        //     public void mouseClicked(MouseEvent evt){
+        //         check_login(evt);
+        //     }
+        //     //kiemtra dang nhap
+        //     private void check_login(MouseEvent evt) {
+        //         String username=txt_username.getText();
+        //         String password=new String(txt_password.getPassword());
+        //         user_login user=new user_login("",username,password,"");
+        //         if(chucnang_user.check_login(user)!=null)
+        //             JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+        //         else
+        //             JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
+        //     }
+        // });
     }
     
     public static void main(String[] args) {
