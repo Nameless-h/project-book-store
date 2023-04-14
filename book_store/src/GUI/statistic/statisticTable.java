@@ -1,4 +1,4 @@
-package GUI.adminGUI;
+package GUI.statistic;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -16,49 +16,41 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-
-public class employeeTable extends JPanel {
-    private String[] columnNames = {"ID","Ten","Gioi tinh","Dia chi","Email","So dien thoai","Chuc vu"};
-    private DefaultTableModel employeeTableModel;
+public class statisticTable extends JPanel{
+    private String[] columnNames = {"ID","Ten sach","So luong","Da ban"};
+    private DefaultTableModel tableModel;
     public JTable t;
     private JScrollPane scrollpane;
     JLabel labels[] = new JLabel[columnNames.length];
     JTextField inputs[];
 
     // private JButton
-    public employeeTable() {
-        this.add(initEmployeeTable());
+    public statisticTable() {
+        this.add(initTable());
     }
 
-    public JScrollPane initEmployeeTable() {
+    public JScrollPane initTable() {
         t = new JTable();
         t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         scrollpane = new JScrollPane(t);
-        scrollpane.setPreferredSize(new Dimension(700, 500));
+        scrollpane.setPreferredSize(new Dimension(1100, 500));
         String[] headers = columnNames;
         Object[][] tableData = {
-            {"1", "Vineet", "22"},
-            {"2", "Archana", "31"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"3", "Krishna", "27"},
-            {"4", "Krishna", "27"},
+            {"1", "Vineet", "22","12"},
+            {"2", "Archana", "31","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"4", "Krishna", "27","12"},
         };
-        employeeTableModel = new DefaultTableModel(tableData,headers);
-        t.setModel(employeeTableModel);
+        tableModel = new DefaultTableModel(tableData,headers);
+        t.setModel(tableModel);
         t.setAutoCreateRowSorter(true);
         t.getTableHeader().setBackground(Color.red);
         t.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
@@ -68,24 +60,27 @@ public class employeeTable extends JPanel {
         t.getColumnModel().getColumn(1).setPreferredWidth(120);
         t.getColumnModel().getColumn(2).setPreferredWidth(100);
         t.getColumnModel().getColumn(3).setPreferredWidth(150);
-        t.getColumnModel().getColumn(4).setPreferredWidth(150);
-        t.getColumnModel().getColumn(5).setPreferredWidth(150);
-        t.getColumnModel().getColumn(6).setPreferredWidth(100);
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         t.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        t.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
         t.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
+        t.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
 
-        t.addMouseListener(new MouseAdapter() {
+        /* t.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 tableMouseClicked(evt);
             }
-        });
+        }); */
+        
+        // disable table
+        t.setDefaultEditor(Object.class, null);  
+
         return scrollpane;
     }
 
-    public JPanel showLeftForm() {
+    /* public JPanel showLeftForm() {
         JPanel leftForm = new JPanel();
         inputs = new JTextField[columnNames.length];
         for (int i = 0; i < columnNames.length; i++) {
@@ -97,9 +92,9 @@ public class employeeTable extends JPanel {
             leftForm.add(inputs[i]);
         } 
         return leftForm;
-    }
+    } */
 
-    private void tableMouseClicked(MouseEvent evt) {
+    /* private void tableMouseClicked(MouseEvent evt) {
         int row = t.getSelectedRow();
         String id = (String) t.getValueAt(row, 0);
         inputs[0].setText(id);
@@ -107,7 +102,6 @@ public class employeeTable extends JPanel {
         inputs[1].setText(name);
         String age = (String) t.getValueAt(row, 2);
         inputs[2].setText(age);
-    }
-
+    } */
 
 }

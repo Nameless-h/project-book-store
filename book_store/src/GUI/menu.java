@@ -15,6 +15,7 @@ import com.formdev.flatlaf.FlatLightLaf;
 import BUS.quanlinhomquyen;
 import GUI.invoice.InvoiceGUI;
 import GUI.sale.SaleGUI;
+import GUI.statistic.list_statistic;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
@@ -22,7 +23,7 @@ public class menu extends JPanel implements MouseListener {
     Color color_54 = new Color(54, 54, 54);
     String name_font1 = "Times Roman";
     String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap", "Tai khoan", "Quyen" };
+            "Nha cung cap","Thong ke" ,"Tai khoan", "Quyen" };
     JLabel[] list_lab = new JLabel[list_menu.length];
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
@@ -92,6 +93,14 @@ public class menu extends JPanel implements MouseListener {
             obj.center.revalidate();
 
     }
+    else if (text.equalsIgnoreCase("Thong ke")) {
+            list_statistic panel_Statistic =new list_statistic();
+            panel_Statistic.setBounds(0, 0, obj.w_center, obj.h_center);
+            obj.center.removeAll();
+            obj.center.add(panel_Statistic);
+            obj.center.repaint();
+            obj.center.revalidate();
+        }
     }
 
     public menu(main obj) {

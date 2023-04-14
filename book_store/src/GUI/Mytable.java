@@ -59,7 +59,7 @@ public class Mytable extends JPanel {
         this.setPreferredSize(new Dimension(width,height));
     }
 
-    public void addRow(String[] data) {
+    public void addRow(Object[] data) {
         tableModel.addRow(data);
     }
 
