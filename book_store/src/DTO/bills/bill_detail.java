@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package bills;
+package DTO.bills;
 
 /**
  *
@@ -20,7 +20,7 @@ public class bill_detail {
         this.price = price;
         this.quantity = quantity;
     }
-    
+
     public int getBill_id() {
         return bill_id;
     }
@@ -53,5 +53,4 @@ public class bill_detail {
         this.quantity = quantity;
     }
 
-    
 }

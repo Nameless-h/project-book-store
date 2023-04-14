@@ -13,6 +13,7 @@ import javax.swing.*;
 import com.formdev.flatlaf.FlatLightLaf;
 
 import BUS.quanlinhomquyen;
+import GUI.quanlysanpham.bookFrame;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
@@ -25,7 +26,8 @@ public class menu extends JPanel implements MouseListener {
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
 
-    public void change_panel(String text) throws IOException{
+    public void change_panel(String text) throws IOException {
+
         if (text.equalsIgnoreCase("Nhan vien")) {
             danhsachnhanvien panel = new danhsachnhanvien(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
@@ -33,63 +35,70 @@ public class menu extends JPanel implements MouseListener {
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }
-        else
-        if (text.equalsIgnoreCase("Khach hang")) {
+        } else if (text.equalsIgnoreCase("Khach hang")) {
             danhsachkhachhang panel = new danhsachkhachhang(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }
-        else
-        if (text.equalsIgnoreCase("Quyen")) {
-            danhsachnhomquyen panel =new danhsachnhomquyen(obj);
+        } else if (text.equalsIgnoreCase("Quyen")) {
+            danhsachnhomquyen panel = new danhsachnhomquyen(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }
-        else
-        if (text.equalsIgnoreCase("Tai khoan")) {
-            danhsachtaikhoan panel =new danhsachtaikhoan(obj);
+        } else if (text.equalsIgnoreCase("Tai khoan")) {
+            danhsachtaikhoan panel = new danhsachtaikhoan(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }else if(text.equalsIgnoreCase("Ban hang")){
+        } else if (text.equalsIgnoreCase("Ban hang")) {
             FlatLightLaf.setup();
             try {
                 UIManager.setLookAndFeel(new FlatLightLaf());
             } catch (Exception e) {
                 // TODO: handle exception
             }
-            SaleGUI salegui= new SaleGUI();
-            salegui.setBounds(0,0,1100,700);
+            SaleGUI salegui = new SaleGUI();
+            salegui.setBounds(0, 0, 1100, 700);
             obj.center.removeAll();
             obj.center.add(salegui);
             obj.center.repaint();
             obj.center.revalidate();
-            
 
-    }else if(text.equalsIgnoreCase("Hoa don")){
+        } else if (text.equalsIgnoreCase("Hoa don")) {
             FlatLightLaf.setup();
             try {
                 UIManager.setLookAndFeel(new FlatLightLaf());
             } catch (Exception e) {
                 // TODO: handle exception
             }
-            InvoiceGUI invoicegui= new InvoiceGUI();
-            invoicegui.setBounds(0,0,1100,700);
+            InvoiceGUI invoicegui = new InvoiceGUI();
+            invoicegui.setBounds(0, 0, 1100, 700);
             obj.center.removeAll();
             obj.center.add(invoicegui);
             obj.center.repaint();
             obj.center.revalidate();
 
-    }
+        } else if (text.equalsIgnoreCase("San pham")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            bookFrame bf = new bookFrame();
+            bf.setBounds(0, 0, 1100, 700);
+            obj.center.removeAll();
+            obj.center.add(bf);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+        }
     }
 
     public menu(main obj) {
@@ -121,6 +130,7 @@ public class menu extends JPanel implements MouseListener {
             list_lab[i].addMouseListener(this);
             this.add(list_lab[i]);
         }
+
     }
 
     @Override

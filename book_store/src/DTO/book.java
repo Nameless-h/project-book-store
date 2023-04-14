@@ -8,20 +8,20 @@ package DTO;
  *
  * @author JN_PC
  */
-public class bookDTO {
+public class book {
     private int maSach;
     private String tenSach;
-    private int tacGia;
+    private int maTacgia;
     private int maTheloai;
     private int maNXB;
     private String namXB;
     private int soLuong;
     private int giaTien;
 
-    public bookDTO(int maSach, String tenSach, int tacGia, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public book(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong,
+            int giaTien) {
         this.maSach = maSach;
         this.tenSach = tenSach;
-        this.tacGia = tacGia;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;
         this.namXB = namXB;
@@ -29,9 +29,8 @@ public class bookDTO {
         this.giaTien = giaTien;
     }
 
-    public bookDTO(String tenSach, int tacGia, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public book(String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
         this.tenSach = tenSach;
-        this.tacGia = tacGia;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;
         this.namXB = namXB;
@@ -53,7 +52,7 @@ public class bookDTO {
 
     @Override
     public String toString() {
-        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", tacGia=" + tacGia + ", maTheloai="
+        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTacgia=" + maTacgia + ", maTheloai="
                 + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
     }
 
@@ -63,14 +62,6 @@ public class bookDTO {
 
     public String getTensach() {
         return tenSach;
-    }
-
-    public int gettacGia() {
-        return tacGia;
-    }
-
-    public void settacGia(int tacGia) {
-        this.tacGia = tacGia;
     }
 
     public int getMaTheloai() {

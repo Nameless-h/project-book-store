@@ -2,9 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package the_loai;
-
-import book_detail.book_modify;
+package DAO;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,6 +14,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mysql.cj.jdbc.JdbcConnection;
+
+import DTO.Theloai;
+
 /**
  *
  * @author JN_PC
@@ -24,11 +26,10 @@ public class The_loai_modify {
     public static ArrayList<Theloai> allCate() {
         ArrayList<Theloai> cate = new ArrayList<Theloai>();
 
-        java.sql.Connection conn = null;
+        java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
 
         try {
-            conn = DriverManager.getConnection("jdbc:mySQL://localhost:3306/test", "root", "otakus.a.o711");
             statement = conn.createStatement();
             String sql = "SELECT * FROM theloai";
             ResultSet result = statement.executeQuery(sql);
@@ -54,11 +55,10 @@ public class The_loai_modify {
     }
 
     public static Theloai getTheloai(int maTheloai) {
-        Connection conn = null;
+        Connection conn = JDBCUtil.getConnection();
         PreparedStatement statement = null;
         Theloai tmp = null;
         try {
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "otakus.a.o711");
             statement = conn.prepareStatement("SELECT * FROM theloai WHERE maTheloai = (?)");
             statement.setInt(1, maTheloai);
             ResultSet result = statement.executeQuery();
