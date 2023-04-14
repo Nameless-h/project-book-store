@@ -7,7 +7,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
-import nameclass.*;
+import DTO.*;
 
 public class quanlinhanvien {
     // hien thi danh sach len 1 table duoc truyen va
