@@ -11,10 +11,10 @@ import javax.swing.border.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
-import nameclass.chitietnhomquyen;
-import nameclass.chucnang;
+import DTO.chitietnhomquyen;
+import DTO.chucnang;
 
-public class themnhomquyen extends JPanel implements ItemListener{
+public class themnhomquyen extends JPanel implements ItemListener {
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";

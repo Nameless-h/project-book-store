@@ -9,144 +9,151 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.quanlitaikhoan;
-import nameclass.taikhoan;
+import DTO.taikhoan;
 
 public class danhsachtaikhoan extends JPanel implements MouseListener {
     main obj;
-    Color color_211=new Color(211,211,211);
-    String name_font1="Times Roman";
-    quanlitaikhoan chucnang=new quanlitaikhoan();
-    //-------------------------------
-    String[] collums={"STT","Ma tai khoan","Username","Password","Ma nhan vien","Ma nhom quyen","Tinh trang"};
-    String[] list_timkiem={"Tat ca","Ma tai khoan","Username","Password","Ma nhan vien","Ma nhom quyen","Tinh trang"};
-    //--------------------------------------------
+    Color color_211 = new Color(211, 211, 211);
+    String name_font1 = "Times Roman";
+    quanlitaikhoan chucnang = new quanlitaikhoan();
+    // -------------------------------
+    String[] collums = { "STT", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen", "Tinh trang" };
+    String[] list_timkiem = { "Tat ca", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen",
+            "Tinh trang" };
+    // --------------------------------------------
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
-    JPanel pan_chucnang1,pan_chucnang2,pan_timkiem;
-    JButton bun_them,bun_xoa,bun_sua,bun_timkiem;
-    public danhsachtaikhoan(main obj){
-        this.obj=obj;
+    JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
+    JButton bun_them, bun_xoa, bun_sua, bun_timkiem;
+
+    public danhsachtaikhoan(main obj) {
+        this.obj = obj;
         init(obj);
     }
-    private void init(main obj){
-        this.setPreferredSize(new Dimension(obj.w_center,obj.h_center));
+
+    private void init(main obj) {
+        this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
         this.setLayout(null);
         this.setBackground(color_211);
-        //set panel cac chuc nag co ban them ,xoa,sua,..
-        pan_chucnang1=new JPanel();
-        pan_chucnang1.setBounds(0,0,obj.w_center,50);
+        // set panel cac chuc nag co ban them ,xoa,sua,..
+        pan_chucnang1 = new JPanel();
+        pan_chucnang1.setBounds(0, 0, obj.w_center, 50);
         pan_chucnang1.setBackground(color_211);
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
-        //nut them
-        bun_them=new JButton("Them");
-        bun_them.setPreferredSize(new Dimension(200,40));
-        bun_them.setFont(new Font(name_font1,1,20));
+        // nut them
+        bun_them = new JButton("Them");
+        bun_them.setPreferredSize(new Dimension(200, 40));
+        bun_them.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_them);
-        //nut xoa
-        bun_xoa=new JButton("Xoa");
-        bun_xoa.setPreferredSize(new Dimension(200,40));
-        bun_xoa.setFont(new Font(name_font1,1,20));
+        // nut xoa
+        bun_xoa = new JButton("Xoa");
+        bun_xoa.setPreferredSize(new Dimension(200, 40));
+        bun_xoa.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_xoa);
-        //nut sua
-        bun_sua=new JButton("Sua");
-        bun_sua.setPreferredSize(new Dimension(200,40));
-        bun_sua.setFont(new Font(name_font1,1,20));
+        // nut sua
+        bun_sua = new JButton("Sua");
+        bun_sua.setPreferredSize(new Dimension(200, 40));
+        bun_sua.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_sua);
-        //====
+        // ====
         bun_them.addMouseListener(this);
         bun_sua.addMouseListener(this);
         bun_xoa.addMouseListener(this);
-        //cai dat panel chuc nang 2
-        pan_chucnang2=new JPanel();
-        pan_chucnang2.setBounds(0,60,obj.w_center,100);
+        // cai dat panel chuc nang 2
+        pan_chucnang2 = new JPanel();
+        pan_chucnang2.setBounds(0, 60, obj.w_center, 100);
         pan_chucnang2.setBackground(color_211);
         pan_chucnang2.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang2);
-        //set panel tim kiem
-        pan_timkiem=new JPanel();
-        pan_timkiem.setPreferredSize(new Dimension(500,60));
+        // set panel tim kiem
+        pan_timkiem = new JPanel();
+        pan_timkiem.setPreferredSize(new Dimension(500, 60));
         pan_timkiem.setBackground(color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                                                                "Tim kiem",
-                                                                TitledBorder.LEFT,
-                                                                TitledBorder.TOP));;
-        pan_timkiem.setLayout(new FlowLayout(FlowLayout.LEFT));                                                 
+                "Tim kiem",
+                TitledBorder.LEFT,
+                TitledBorder.TOP));
+        ;
+        pan_timkiem.setLayout(new FlowLayout(FlowLayout.LEFT));
         pan_chucnang2.add(pan_timkiem);
-        //set combo box list tim kiem
-        combo_timkiem=new JComboBox(list_timkiem);
-        combo_timkiem.setPreferredSize(new Dimension(150,30));
+        // set combo box list tim kiem
+        combo_timkiem = new JComboBox(list_timkiem);
+        combo_timkiem.setPreferredSize(new Dimension(150, 30));
         pan_timkiem.add(combo_timkiem);
-        //set text field o tim kiem
-        txt_timkiem=new JTextField();
-        txt_timkiem.setPreferredSize(new Dimension(150,30));
-        txt_timkiem.setFont(new Font(name_font1,1,15));
+        // set text field o tim kiem
+        txt_timkiem = new JTextField();
+        txt_timkiem.setPreferredSize(new Dimension(150, 30));
+        txt_timkiem.setFont(new Font(name_font1, 1, 15));
         pan_timkiem.add(txt_timkiem);
-        //set nut tim kiem
-        bun_timkiem=new JButton("Tim kiem");
-        bun_timkiem.setPreferredSize(new Dimension(100,30));
+        // set nut tim kiem
+        bun_timkiem = new JButton("Tim kiem");
+        bun_timkiem.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_timkiem);
-        //set bang nhan vien
-        tab_danhsach=new JTable();
+        // set bang nhan vien
+        tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
-        tab_danhsach.setModel(new DefaultTableModel(new Object[][]{},collums));
-        
+        tab_danhsach.setModel(new DefaultTableModel(new Object[][] {}, collums));
+
         chucnang.hienthidanhsach_taikhoan(tab_danhsach);
-        thanhcuon=new JScrollPane(tab_danhsach);
-        thanhcuon.setBounds(0,200,obj.w_center,obj.h_center-200);
+        thanhcuon = new JScrollPane(tab_danhsach);
+        thanhcuon.setBounds(0, 200, obj.w_center, obj.h_center - 200);
         this.add(thanhcuon);
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
+
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getSource()==bun_them){
-            themtaikhoan panel=new themtaikhoan(obj);
+        if (e.getSource() == bun_them) {
+            themtaikhoan panel = new themtaikhoan(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
             obj.center.repaint();
             obj.center.revalidate();
-        }
-        else if (e.getSource() == bun_sua) {
+        } else if (e.getSource() == bun_sua) {
             DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
             int selectrow = tab_danhsach.getSelectedRow();
-            if (selectrow==-1){
-                JOptionPane.showMessageDialog(null,"Ban chua chon tai khoan de sua");
-            }
-            else{
+            if (selectrow == -1) {
+                JOptionPane.showMessageDialog(null, "Ban chua chon tai khoan de sua");
+            } else {
                 // String ma,ten,gioitinh,diachi,email,sodienthoai;
-            String matk = model.getValueAt(selectrow, 1).toString();
-            String username = model.getValueAt(selectrow, 2).toString();
-            String pass = model.getValueAt(selectrow, 3).toString();
-            String manv = model.getValueAt(selectrow, 4).toString();
-            String manq = model.getValueAt(selectrow, 5).toString();
-            String tt = model.getValueAt(selectrow, 6).toString();
-            taikhoan temp=new taikhoan(matk, username, pass, manv, manq, tt);
-            suataikhoan panel=new suataikhoan(obj,temp);
-            panel.setBounds(0, 0, obj.w_center, obj.h_center);
-            obj.center.removeAll();
-            obj.center.add(panel);
-            obj.center.repaint();
-            obj.center.revalidate();
+                String matk = model.getValueAt(selectrow, 1).toString();
+                String username = model.getValueAt(selectrow, 2).toString();
+                String pass = model.getValueAt(selectrow, 3).toString();
+                String manv = model.getValueAt(selectrow, 4).toString();
+                String manq = model.getValueAt(selectrow, 5).toString();
+                String tt = model.getValueAt(selectrow, 6).toString();
+                taikhoan temp = new taikhoan(matk, username, pass, manv, manq, tt);
+                suataikhoan panel = new suataikhoan(obj, temp);
+                panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                obj.center.removeAll();
+                obj.center.add(panel);
+                obj.center.repaint();
+                obj.center.revalidate();
             }
             // System.out.println(ma+ten);
         }
     }
+
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
+
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
+
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 }
