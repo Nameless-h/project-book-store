@@ -16,8 +16,7 @@ import java.util.logging.Logger;
 
 import com.mysql.cj.jdbc.JdbcConnection;
 
-import connect.JDBCUtil;
-import the_loai.Theloai;
+import DTO.Theloai;
 
 /**
  *

@@ -1,4 +1,4 @@
-package GUI.invoice;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,51 +14,50 @@ import javax.swing.JTextField;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
-import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
-//import GUI.Mybutton.ImportExcelButton;
 import GUI.Mybutton.searchbutton;
 
 public class InvoiceGUI extends JPanel {
 
-    //action panel
+    // action panel
     private JPanel searchPanel;
     private JTextField datefrom;
     private JTextField dateto;
-    private DatePicker dp1; 
-    private DatePicker dp2; 
+    private DatePicker dp1;
+    private DatePicker dp2;
     private JTextField searchinp;
     private searchbutton searchbtn;
-    
-    //invoice table
+
+    // invoice table
     private Mytable invoiceTable;
 
-    //button panel
+    // button panel
     private JPanel buttonPanel;
     private DetailButton detailbtn;
-    //private ImportExcelButton importbtn;
+    // private ImportExcelButton importbtn;
     private ExportExcelButton exportbtn;
     private ExportPDF pdfbtn;
-    
+
     public InvoiceGUI() {
         init();
     }
+
     public void init() {
-        this.setPreferredSize(new Dimension(1000,700));
+        this.setPreferredSize(new Dimension(1000, 700));
         this.setLayout(new BorderLayout());
-        this.add(searchPanel(),BorderLayout.NORTH);
-        this.add(invoiceTable(),BorderLayout.CENTER);
-        this.add(buttonPanel(),BorderLayout.SOUTH);
+        this.add(searchPanel(), BorderLayout.NORTH);
+        this.add(invoiceTable(), BorderLayout.CENTER);
+        this.add(buttonPanel(), BorderLayout.SOUTH);
     }
 
     public JPanel searchPanel() {
         searchPanel = new JPanel();
-        searchPanel.setPreferredSize(new Dimension(0,60));
-        searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,5));
-        
+        searchPanel.setPreferredSize(new Dimension(0, 60));
+        searchPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 5));
+
         DatePickerSettings pickerSettings = new DatePickerSettings();
         pickerSettings.setVisibleDateTextField(false);
         dp1 = new DatePicker(pickerSettings);
@@ -71,15 +70,15 @@ public class InvoiceGUI extends JPanel {
 
         datefrom = new JTextField();
         datefrom.setBorder(BorderFactory.createTitledBorder("From:"));
-        datefrom.setPreferredSize(new Dimension(150,45));
+        datefrom.setPreferredSize(new Dimension(150, 45));
         dateto = new JTextField();
         dateto.setBorder(BorderFactory.createTitledBorder("To:"));
-        dateto.setPreferredSize(new Dimension(150,45));
+        dateto.setPreferredSize(new Dimension(150, 45));
 
         searchinp = new JTextField();
-        searchinp.setPreferredSize(new Dimension(250,40));
+        searchinp.setPreferredSize(new Dimension(250, 40));
         searchbtn = new searchbutton();
-        searchbtn.setPreferredSize(new Dimension(100,40));
+        searchbtn.setPreferredSize(new Dimension(100, 40));
 
         searchPanel.add(datefrom);
         searchPanel.add(dp1);
@@ -94,16 +93,17 @@ public class InvoiceGUI extends JPanel {
     public Mytable invoiceTable() {
         invoiceTable = new Mytable();
         invoiceTable.setTablesize(1000, 540);
-        invoiceTable.setHeader(new String[]{"No","Invoice ID","Employee ID","Customer ID","Discount(%)","Date create","Total"});
-        for(int i=0;i<15;i++) {
-            invoiceTable.addRow(new String[]{
-                String.valueOf(i+1),
-                String.valueOf(i+1),
-                "2",
-                "3",
-                "50",
-                "2023-01-01",
-                "110.000"
+        invoiceTable.setHeader(new String[] { "No", "Invoice ID", "Employee ID", "Customer ID", "Discount(%)",
+                "Date create", "Total" });
+        for (int i = 0; i < 15; i++) {
+            invoiceTable.addRow(new String[] {
+                    String.valueOf(i + 1),
+                    String.valueOf(i + 1),
+                    "2",
+                    "3",
+                    "50",
+                    "2023-01-01",
+                    "110.000"
             });
         }
         invoiceTable.setPreferredWidth(0, 100);
@@ -115,11 +115,11 @@ public class InvoiceGUI extends JPanel {
         invoiceTable.setPreferredWidth(6, 250);
 
         int align = JLabel.CENTER;
-        invoiceTable.setAlignment(0,align);
-        invoiceTable.setAlignment(1,align);
-        invoiceTable.setAlignment(2,align);
-        invoiceTable.setAlignment(3,align);
-        invoiceTable.setAlignment(4,align);
+        invoiceTable.setAlignment(0, align);
+        invoiceTable.setAlignment(1, align);
+        invoiceTable.setAlignment(2, align);
+        invoiceTable.setAlignment(3, align);
+        invoiceTable.setAlignment(4, align);
         invoiceTable.getTable().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 tableMouseClicked(evt);
@@ -130,22 +130,22 @@ public class InvoiceGUI extends JPanel {
 
     public JPanel buttonPanel() {
         buttonPanel = new JPanel();
-        buttonPanel.setPreferredSize(new Dimension(0,100));
-        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER,20,10));
+        buttonPanel.setPreferredSize(new Dimension(0, 100));
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
 
         detailbtn = new DetailButton();
         exportbtn = new ExportExcelButton();
-        //importbtn = new ImportExcelButton();
+        // importbtn = new ImportExcelButton();
         pdfbtn = new ExportPDF();
-        
-        detailbtn.setPreferredSize(new Dimension(100,45));
-        exportbtn.setPreferredSize(new Dimension(100,45));
-        //importbtn.setPreferredSize(new Dimension(100,45));
-        pdfbtn.setPreferredSize(new Dimension(100,45));
+
+        detailbtn.setPreferredSize(new Dimension(100, 45));
+        exportbtn.setPreferredSize(new Dimension(100, 45));
+        // importbtn.setPreferredSize(new Dimension(100,45));
+        pdfbtn.setPreferredSize(new Dimension(100, 45));
 
         buttonPanel.add(detailbtn);
         buttonPanel.add(exportbtn);
-        //buttonPanel.add(importbtn);
+        // buttonPanel.add(importbtn);
         buttonPanel.add(pdfbtn);
 
         return buttonPanel;

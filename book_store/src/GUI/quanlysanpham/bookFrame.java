@@ -1,14 +1,15 @@
-package GUI;
+package GUI.quanlysanpham;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.Math;
 import java.util.ArrayList;
-import the_loai.*;
+import DTO.Theloai;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -22,16 +23,19 @@ import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import book_detail.book;
+
 import DAO.The_loai_modify;
 import DAO.book_modify;
 import DAO.nxb_modify;
 import DAO.tac_gia_modify;
-import NXB.NXB;
-import tac_gia.tacgia;
+import DTO.NXB;
+import DTO.Theloai;
+import DTO.book;
+import DTO.tacgia;
 
 public class bookFrame extends JPanel implements ActionListener, ChangeListener {
   Font fo = new Font("Time New Roman", Font.BOLD, 20);
@@ -51,11 +55,11 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     scrollPaneBook = new JScrollPane();
     scrollPaneNxb = new JScrollPane();
     // init panel
-    detail_panel = new JPanel();
+    book_panel = new JPanel();
     nxb_panel = new JPanel();
     search_Panel = new JPanel();
-    button_panel = new JTabbedPane();
-    button_panel.addChangeListener(this);
+    tabPane = new JTabbedPane();
+    tabPane.addChangeListener(this);
     // init label of book info
     String[] book_info_label = { "Tên sách: ", "Thể loại: ", "Tác giả: ", "Nhà xuất bản: ", "Năm xuất bản : ",
         "Số lượng: ", "Giá tiền: " };
@@ -67,13 +71,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         book_detail_labels[i] = new JLabel(book_info_label[i]);
         book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
         book_detail_labels[i].setFont(fo);
-        detail_panel.add(book_detail_labels[i]);
+        book_panel.add(book_detail_labels[i]);
         posY += 50;
       } else {
         book_detail_labels[i] = new JLabel(book_info_label[i]);
         book_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
         book_detail_labels[i].setFont(fo);
-        detail_panel.add(book_detail_labels[i]);
+        book_panel.add(book_detail_labels[i]);
         posY2 += 50;
       }
 
@@ -168,10 +172,10 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       txtsearchTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 15));
 
       /* setting cho panel */
-      // button_panel.setBounds(0, 0, 1100, (int) Math.floor(700 * 0.52));
-      button_panel.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.52)));
-      detail_panel.setLayout(null);
-      detail_panel.setBackground(new Color(211, 242, 214));
+      // tabPane.setBounds(0, 0, 1100, (int) Math.floor(700 * 0.52));
+      tabPane.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.52)));
+      book_panel.setLayout(null);
+      book_panel.setBackground(new Color(211, 242, 214));
 
       nxb_panel.setLayout(null);
       nxb_panel.setBackground(new Color(211, 242, 214));
@@ -195,14 +199,19 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       scrollPaneNxb.setBackground(Color.orange);
 
       /* add component */
+      button_panel = new button_panel(150, 250, 800, 50);
+      button_panel.getAddBtn().addActionListener(this);
+      button_panel.getEditBtn().addActionListener(this);
+      button_panel.getDelBtn().addActionListener(this);
 
-      detail_panel.add(txttenSach);
-      detail_panel.add(cbbTheloai);
-      detail_panel.add(cbbTacgia);
-      detail_panel.add(cbbNXB);
-      detail_panel.add(txtNamxb);
-      detail_panel.add(txtSoluong);
-      detail_panel.add(txtGiatien);
+      book_panel.add(txttenSach);
+      book_panel.add(cbbTheloai);
+      book_panel.add(cbbTacgia);
+      book_panel.add(cbbNXB);
+      book_panel.add(txtNamxb);
+      book_panel.add(txtSoluong);
+      book_panel.add(txtGiatien);
+      book_panel.add(button_panel);
 
       nxb_panel.add(txtTenNxb);
       nxb_panel.add(txtMailNxb);
@@ -216,10 +225,10 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       search_Panel.add(cbbsearchTheloai);
       search_Panel.add(txtsearchTacgia);
 
-      button_panel.add("sách", detail_panel);
-      button_panel.add("nhà xuất bản", nxb_panel);
+      tabPane.add("sách", book_panel);
+      tabPane.add("nhà xuất bản", nxb_panel);
 
-      this.add(button_panel, BorderLayout.NORTH);
+      this.add(tabPane, BorderLayout.NORTH);
 
       JPanel container = new JPanel();
       container.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.43)));
@@ -241,10 +250,11 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   // Variables declaration - do not modify
   private JScrollPane scrollPaneBook;
   private JScrollPane scrollPaneNxb;
-  private JPanel detail_panel;
+  private JPanel book_panel;
+  private button_panel button_panel;
   private JPanel nxb_panel;
   private JPanel search_Panel;
-  private JTabbedPane button_panel;
+  private JTabbedPane tabPane;
   private JLabel[] book_detail_labels;
   private JLabel[] nxb_detail_labels;
   private JLabel searchTen;
@@ -445,13 +455,20 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   @Override
   public void actionPerformed(ActionEvent e) {
-
+    if (e.getSource() == button_panel.getAddBtn()) {
+      System.out.println("add book click");
+    } else if (e.getSource() == button_panel.getEditBtn()) {
+      System.out.println("edit book click");
+    } else if (e.getSource() == button_panel.getDelBtn()) {
+      System.out.println("delete book click");
+    }
   }
 
+  // tabbedpane event
   @Override
   public void stateChanged(ChangeEvent e) {
     JTabbedPane tp = (JTabbedPane) e.getSource();
-    if (tp.getSelectedComponent() == detail_panel) {
+    if (tp.getSelectedComponent() == book_panel) {
       scrollPaneBook.setVisible(true);
       scrollPaneNxb.setVisible(false);
       try {

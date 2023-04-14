@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import NXB.NXB;
-import connect.JDBCUtil;
+import DTO.NXB;
 
 public class nxb_modify implements DAOinterface<NXB> {
 

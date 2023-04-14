@@ -1,4 +1,4 @@
-package tac_gia;
+package DTO;
 
 public class tacgia {
   private int maTacgia;

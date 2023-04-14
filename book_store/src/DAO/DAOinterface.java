@@ -10,7 +10,6 @@ package DAO;
  */
 
 import java.util.ArrayList;
-import user.user_login;
 
 public interface DAOinterface<T> {
 	public int insert(T t);

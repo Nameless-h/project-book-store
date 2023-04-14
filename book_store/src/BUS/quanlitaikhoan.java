@@ -5,7 +5,7 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
-import nameclass.taikhoan;
+import DTO.taikhoan;
 
 public class quanlitaikhoan {
     public void hienthidanhsach_taikhoan(JTable table) {
@@ -23,8 +23,9 @@ public class quanlitaikhoan {
         // them thong tin nhan vien vao bang table
         for (int i = 0; i < list.size(); i++) {
 
-            model.addRow(new Object[] { i + 1, list.get(i).getMatk(), list.get(i).getUsername(),list.get(i).getPassword(),
-                    list.get(i).getManhanvien(), list.get(i).getManhomquyen(), list.get(i).getTinhtrang() });
+            model.addRow(
+                    new Object[] { i + 1, list.get(i).getMatk(), list.get(i).getUsername(), list.get(i).getPassword(),
+                            list.get(i).getManhanvien(), list.get(i).getManhomquyen(), list.get(i).getTinhtrang() });
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
