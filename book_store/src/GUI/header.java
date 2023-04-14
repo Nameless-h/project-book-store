@@ -10,38 +10,83 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.concurrent.Flow;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import BUS.quanlinhanvien;
+import DTO.taikhoan;
 
 public class header extends JPanel implements MouseListener {
-    JLabel lab_close, lab_hide;
+    quanlinhanvien chucnang_nhanvien=new quanlinhanvien();
+    JLabel lab_close, lab_hide,lab_exit,lab_ten;
     main obj;
-
-    public header(main obj) {
+    Color color_54 = new Color(54, 54, 54);
+    String name_font1 = "Times Roman";
+    JPanel pan_cuaso,pan_chuongtrinh;
+    ImageIcon icon_exit=new ImageIcon(getClass().getResource("/icon/exit_logo_menu.png"));
+    ImageIcon icon_hide=new ImageIcon(getClass().getResource("/icon/hide.png"));
+    taikhoan tk;
+    public header(main obj,taikhoan tk) {
         this.obj = obj;
+        this.tk=tk;
         init();
     }
     private void init() {
         this.setPreferredSize(new Dimension(obj.w_head,obj.h_head));
-        this.setBackground(Color.white);
-        this.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        this.setBackground(Color.black);
+        this.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //set pan_cuaso
         // set lab_close
+        pan_cuaso=new JPanel();
+        pan_cuaso.setPreferredSize(new Dimension(1100,30));
+        pan_cuaso.setBackground(Color.black);
+        pan_cuaso.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //set pan_chuongtrinh
+        pan_chuongtrinh=new JPanel();
+        pan_chuongtrinh.setPreferredSize(new Dimension(190,30));
+        pan_chuongtrinh.setBackground(Color.black);
+        pan_chuongtrinh.setLayout(new FlowLayout(FlowLayout.LEFT));
         lab_close = new JLabel("Close");
+        lab_close.setForeground(Color.white);
         lab_close.setFont(new Font("Segoe UI", 1, 20));
         lab_close.setPreferredSize(new Dimension(50, 30));
         lab_close.setOpaque(true);
-        lab_close.setBackground(Color.white);
+        lab_close.setBackground(Color.black);
         lab_close.addMouseListener(this);
         // set lab_hide
         lab_hide = new JLabel("Hide");
+        lab_hide.setForeground(Color.white);
         lab_hide.setFont(new Font("Segoe UI", 1, 20));
         lab_hide.setPreferredSize(new Dimension(50, 30));
         lab_hide.setOpaque(true);
-        lab_hide.setBackground(Color.white);
+        lab_hide.setBackground(Color.black);
         lab_hide.addMouseListener(this);
-        this.add(lab_hide);
-        this.add(lab_close);
+        //set lab_exit
+        lab_exit=new JLabel(icon_exit);
+        lab_exit.setPreferredSize(new Dimension(50,30));
+        lab_exit.addMouseListener(this);
+        pan_chuongtrinh.add(lab_exit);
+        //set lab_ten
+        // System.out.println(chucnang_nhanvien.tennhanvien(this.tk.getManhanvien()));
+        lab_ten=new JLabel(chucnang_nhanvien.tennhanvien(this.tk.getManhanvien()));
+        lab_ten.setForeground(Color.white);
+        lab_ten.setPreferredSize(new Dimension(130,30));
+        lab_ten.setFont(new Font(name_font1,1,17));
+        lab_ten.setOpaque(true);
+        lab_ten.setBackground(Color.black);
+        lab_ten.setHorizontalAlignment(SwingConstants.CENTER);
+        pan_chuongtrinh.add(lab_ten);
+        
+        pan_cuaso.add(lab_hide);
+        pan_cuaso.add(lab_close);
+        // this.add(pan_chuongtrinh);
+        this.add(pan_chuongtrinh);
+        this.add(pan_cuaso);
+       
     }
 
     @Override
@@ -50,6 +95,11 @@ public class header extends JPanel implements MouseListener {
             System.exit(0);
         else if (e.getSource() == lab_hide)
             obj.setState(Frame.ICONIFIED);
+        else
+        if(e.getSource()==lab_exit){
+            obj.setVisible(false);
+            new login();
+        }
     }
 
     @Override
@@ -67,16 +117,16 @@ public class header extends JPanel implements MouseListener {
     @Override
     public void mouseEntered(MouseEvent e) {
         if (e.getSource() == lab_close)
-            lab_close.setBackground(Color.gray);
+            lab_close.setBackground(Color.red);
         else
             if (e.getSource() == lab_hide)
-            lab_hide.setBackground(Color.gray);
+            lab_hide.setBackground(Color.red);
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        lab_close.setBackground(Color.white);
-        lab_hide.setBackground(Color.white);
+        lab_close.setBackground(Color.black);
+        lab_hide.setBackground(Color.black);
     }
 }

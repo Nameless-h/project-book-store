@@ -4,8 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 
-import connect.JDBCUtil;
-import nameclass.taikhoan;
+import DAO.*;
+import DTO.*;
 
 public class taikhoanDAO implements DAOinterface<taikhoan>{
         private int check=0;
@@ -29,11 +29,7 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
             return 0;
     }
 
-    @Override
-    public int update(taikhoan t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+
 
     @Override
     public int delete(taikhoan t) {
@@ -86,16 +82,23 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
 		return ketQua;
     }
 
-    @Override
-    public taikhoan selectById(taikhoan t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'selectById'");
-    }
 
     @Override
     public ArrayList<taikhoan> selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
+    }
+
+    @Override
+    public int update(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public taikhoan selectById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'selectById'");
     }
     
 }

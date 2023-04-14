@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import DAO.taikhoanDAO;
-import nameclass.taikhoan;
+import DTO.taikhoan;
 public class test12 {
     public static void main(String[] args ){
         taikhoanDAO chucnang_taikhoan=new taikhoanDAO();
