@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package form1;
+package GUI;
 
 import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
@@ -22,8 +22,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import model.user_model;
-import user.user_login;
+/* import model.user_model;
+import user.user_login; */
 /**
  *
  * @author ASUS
@@ -58,7 +58,7 @@ public class signup {
         JLabel lab_icon_user_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/user2.png")));
         JLabel lab_icon_showpass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/show_password.png")));
         JLabel lab_icon_dispass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/password.png")));
-        user_model chucnang_user=new user_model();
+        //user_model chucnang_user=new user_model();
     public signup() {
         init();
     }
@@ -281,7 +281,7 @@ public class signup {
                 String password=new String(txt_password_signup.getPassword());
                 String verify_password=new String(ver_pass.getPassword());
                 String email=txt_email.getText();
-                if(password.equalsIgnoreCase(verify_password))
+                /* if(password.equalsIgnoreCase(verify_password))
                     if(chucnang_user.check_username(username))
                         if(chucnang_user.check_email(email))
                         {
@@ -294,7 +294,7 @@ public class signup {
                     else
                         JOptionPane.showMessageDialog(null,"Da ton tai tai khoan nay");
                 else
-                    JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung");
+                    JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung"); */
             }
         });
     }

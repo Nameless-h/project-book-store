@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package form1;
+package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -11,8 +11,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu.Separator;
-import user.user_login;
-import model.user_model;
+
 
 
 
@@ -46,7 +45,7 @@ public class login {
         JPanel pan_for_pass=new JPanel();
         JLabel title_for_pass=new JLabel();
         //goi chuc nang cua user_login
-        user_model chucnang_user=new user_model();
+        //user_model chucnang_user=new user_model();
     public login() {
         init();
     }
@@ -217,11 +216,11 @@ public class login {
             private void check_login(MouseEvent evt) {
                 String username=txt_username.getText();
                 String password=new String(txt_password.getPassword());
-                user_login user=new user_login("",username,password,"");
-                if(chucnang_user.check_login(user)!=null)
-                    JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
-                else
-                    JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
+                //user_login user=new user_login("",username,password,"");
+                // if(chucnang_user.check_login(user)!=null)
+                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+                // else
+                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
             }
         });
     }
