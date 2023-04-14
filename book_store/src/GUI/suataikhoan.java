@@ -90,7 +90,7 @@ public class suataikhoan extends JPanel {
         chk_khong = new JCheckBox("Khong cho phep");
         chk_khong.setPreferredSize(new Dimension(250, 50));
         chk_khong.setFont(new Font(name_font1, 1, 22));
-        if (tk.getTinhtrang().equalsIgnoreCase("hien")) {
+        if (tk.getTinhtrang()==1) {
             chk_chophep.setSelected(true);
             chk_khong.setSelected(false);
         } else {

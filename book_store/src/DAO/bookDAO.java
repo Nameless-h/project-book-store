@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import com.mysql.cj.MysqlConnection;
 
-import DTO.bookDTO;
+import DTO.*;
 
 public class bookDAO {
     MySQLConnect mySQL = new MySQLConnect();

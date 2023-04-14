@@ -26,7 +26,7 @@ public class themnhomquyen extends JPanel implements ItemListener {
     JScrollPane thanhkeo;
     JPanel pan_info, pan_chucnang, pan_add;
     JButton bun_sua;
-
+    int id;
     public themnhomquyen(main obj) {
         this.obj = obj;
         init(obj);
@@ -35,16 +35,16 @@ public class themnhomquyen extends JPanel implements ItemListener {
     private void init(main init) {
         ArrayList<chitietnhomquyen> list_chitiet = new ArrayList<>();
         ArrayList<chucnang> list_chucnang = new ArrayList<>();
-        chitietnhomquyen temp1 = new chitietnhomquyen("Q1", "cn1", "Them", "0");
-        chitietnhomquyen temp2 = new chitietnhomquyen("Q1", "cn1", "Sua", "1");
-        chitietnhomquyen temp3 = new chitietnhomquyen("Q1", "cn1", "Xoa", "0");
-        chitietnhomquyen temp4 = new chitietnhomquyen("Q2", "cn2", "Them", "1");
-        chitietnhomquyen temp5 = new chitietnhomquyen("Q2", "cn2", "Sua", "0");
-        chitietnhomquyen temp6 = new chitietnhomquyen("Q2", "cn2", "Xoa", "1");
+        chitietnhomquyen temp1 = new chitietnhomquyen(1, 1, "Them", 0);
+        chitietnhomquyen temp2 = new chitietnhomquyen(1, 1, "Sua", 1);
+        chitietnhomquyen temp3 = new chitietnhomquyen(1, 1, "Xoa", 0);
+        chitietnhomquyen temp4 = new chitietnhomquyen(2, 2, "Them", 1);
+        chitietnhomquyen temp5 = new chitietnhomquyen(2, 2, "Sua", 0);
+        chitietnhomquyen temp6 = new chitietnhomquyen(2, 2, "Xoa", 1);
 
         // --
-        chucnang temp7 = new chucnang("cn1", "Quan li");
-        chucnang temp8 = new chucnang("cn2", "Nhan vien");
+        chucnang temp7 = new chucnang(1, "Quan li");
+        chucnang temp8 = new chucnang(2, "Nhan vien");
         list_chitiet.add(temp1);
         list_chitiet.add(temp2);
         list_chitiet.add(temp3);
@@ -100,21 +100,28 @@ public class themnhomquyen extends JPanel implements ItemListener {
             ;
 
             for (int j = 0; j < list_chitiet.size(); j++) {
-                if (list_chitiet.get(j).getMachucnang().equalsIgnoreCase(list_chucnang.get(i).getMa())) {
+                if (list_chitiet.get(j).getMachucnang()== list_chucnang.get(i).getMa()) {
                     JCheckBox temp = new JCheckBox(list_chitiet.get(j).getHanhdong());
                     temp.setFont(new Font("Segoe UI", 1, 20));
                     temp.setPreferredSize(new Dimension(190, 50));
                     temp.setBackground(color_211);
                     temp.setForeground(Color.black);
-                    if (list_chitiet.get(j).getTinhtrang().equalsIgnoreCase("1"))
-                        temp.setSelected(true);
-                    else
+                    if (list_chitiet.get(j).getTinhtrang()== 1){
+                       
+                        System.out.println(list_chitiet.get(j).getMachucnang());
+                        temp.setSelected(true);}
+                    else{
                         temp.setSelected(false);
+                       
+                    }
                     temp.addItemListener(this);
                     pan[i].add(temp);
                 }
+                
+                
             }
             pan_chucnang.add(pan[i]);
+            
         }
         pan_add = new JPanel();
         pan_add.setBounds(0, 600, obj.w_center, 60);
@@ -129,9 +136,12 @@ public class themnhomquyen extends JPanel implements ItemListener {
 
     @Override
     public void itemStateChanged(ItemEvent e) {
+        System.out.println("Event"+e);
         if (e.getStateChange() == ItemEvent.SELECTED) {
             // Checkbox đã được chọn
-            System.out.println(e.getSource().getClass());
+            // System.out.println(e.getSource().getClass());
+            System.out.println(e.getSource().toString());
+            // System.out.println(id);
         } else {
             // Checkbox không được chọn
             System.out.println(e.getSource());

@@ -124,12 +124,12 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban chua chon tai khoan de sua");
             } else {
                 // String ma,ten,gioitinh,diachi,email,sodienthoai;
-                String matk = model.getValueAt(selectrow, 1).toString();
-                String username = model.getValueAt(selectrow, 2).toString();
-                String pass = model.getValueAt(selectrow, 3).toString();
-                String manv = model.getValueAt(selectrow, 4).toString();
-                String manq = model.getValueAt(selectrow, 5).toString();
-                String tt = model.getValueAt(selectrow, 6).toString();
+               Integer matk =Integer.parseInt(model.getValueAt(selectrow, 1).toString()); 
+               String username =(model.getValueAt(selectrow, 2).toString()); 
+               String pass =(model.getValueAt(selectrow, 3).toString()); 
+               Integer manv =Integer.parseInt(model.getValueAt(selectrow, 4).toString()); 
+               Integer manq =Integer.parseInt(model.getValueAt(selectrow, 5).toString()); 
+               Integer tt =Integer.parseInt(model.getValueAt(selectrow, 6).toString()); 
                 taikhoan temp = new taikhoan(matk, username, pass, manv, manq, tt);
                 suataikhoan panel = new suataikhoan(obj, temp);
                 panel.setBounds(0, 0, obj.w_center, obj.h_center);
