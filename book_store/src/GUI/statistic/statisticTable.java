@@ -48,6 +48,20 @@ public class statisticTable extends JPanel{
             {"3", "Krishna", "27","12"},
             {"3", "Krishna", "27","12"},
             {"4", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"4", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"3", "Krishna", "27","12"},
+            {"4", "Krishna", "27","12"}
         };
         tableModel = new DefaultTableModel(tableData,headers);
         t.setModel(tableModel);

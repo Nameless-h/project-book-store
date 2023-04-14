@@ -25,6 +25,7 @@ import javax.swing.border.TitledBorder;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
+import GUI.Mybutton.morebutton;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
@@ -33,12 +34,15 @@ import java.awt.event.ActionListener;
 public class statistic_sale extends JPanel implements ActionListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
-    private String title_filter[] = {"Khoang ngay","Top ban chay"};//menu title filter
-    private JPanel panel_filter_date,panel_filter_bestSeller;
-    private JTextField inputDateStart,inputDateEnd;
+    private String title_filter[] = {"Khoang ngay","Top ban chay","Khach hang"};//menu title filter
+    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_customer;
+    private JTextField inputDateStart,inputDateEnd,inputCustomer;
     private JLabel dateStart,dateEnd;
+    private LineBorder linedBorderDate,linedBorderBestSeller,linedBorderCustomer;
+    private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCustomer;
     private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
     private JSpinner inputBestSeller = new JSpinner(model);
+    private morebutton selectCustomer = new morebutton();
     public statistic_sale() {
         setLayout(new BorderLayout());
         // header
@@ -60,7 +64,6 @@ public class statistic_sale extends JPanel implements ActionListener{
         headerFilterContainInput.setFont(new Font("Arial", Font.PLAIN, 20));
         
         headerFilterContainInput.setBorder(BorderFactory.createEmptyBorder());
-        // inputSearchFocus(headerSearchInput);
         
         // panel filter date
         panel_filter_date = new JPanel();
@@ -68,12 +71,9 @@ public class statistic_sale extends JPanel implements ActionListener{
         panel_filter_date.setPreferredSize(new Dimension(300, 60));
         panel_filter_date.setBackground(new Color(242, 59, 46));
 
-        LineBorder linedBorderDate = new LineBorder(Color.white);
-        TitledBorder titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
+        linedBorderDate = new LineBorder(Color.white);
+        titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
         titledBorderDate.setTitleJustification(TitledBorder.CENTER);
-        // Border titledBorderDate = BorderFactory.createLineBorder(Color.white,2);
-        // titledBorderDate.setTitleColor(Color.white);
-        // titledBorderDate.set();
         panel_filter_date.setBorder(titledBorderDate);
         
         inputDateStart = new JTextField();
@@ -95,11 +95,9 @@ public class statistic_sale extends JPanel implements ActionListener{
         panel_filter_bestSeller = new JPanel();
         panel_filter_bestSeller.setPreferredSize(new Dimension(160, 60));
         panel_filter_bestSeller.setBackground(new Color(242, 59, 46));
-        // panel_filter_bestSeller.setBorder(BorderFactory.createTitledBorder(title_filter[1]));
 
-
-        LineBorder linedBorderBestSeller = new LineBorder(Color.white);
-        TitledBorder titledBorderBestSeller = BorderFactory.createTitledBorder(linedBorderBestSeller, title_filter[1]);
+        linedBorderBestSeller = new LineBorder(Color.white);
+        titledBorderBestSeller = BorderFactory.createTitledBorder(linedBorderBestSeller, title_filter[1]);
         titledBorderBestSeller.setTitleJustification(TitledBorder.CENTER);
         panel_filter_bestSeller.setBorder(titledBorderBestSeller);
 
@@ -107,6 +105,25 @@ public class statistic_sale extends JPanel implements ActionListener{
         panel_filter_bestSeller.add(inputBestSeller);
 
         headerFilterContainInput.add(panel_filter_bestSeller);
+    
+        //panel filter customer
+        panel_filter_customer = new JPanel();
+        panel_filter_customer.setPreferredSize(new Dimension(160, 60));
+        panel_filter_customer.setBackground(new Color(242, 59, 46));
+
+        linedBorderCustomer = new LineBorder(Color.white);
+        titledBorderCustomer = BorderFactory.createTitledBorder(linedBorderCustomer, title_filter[2]);
+        titledBorderCustomer.setTitleJustification(TitledBorder.CENTER);
+        panel_filter_customer.setBorder(titledBorderCustomer);
+
+        inputCustomer = new JTextField();
+        inputCustomer.setPreferredSize(new Dimension(100, 30));
+        panel_filter_customer.add(inputCustomer);
+
+        selectCustomer.setPreferredSize(new Dimension(30, 30));
+        panel_filter_customer.add(selectCustomer);
+
+        headerFilterContainInput.add(panel_filter_customer);
 
         // header search button
         headerSearchBtn = new JButton("Tim kiem");

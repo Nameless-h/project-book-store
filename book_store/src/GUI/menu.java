@@ -85,7 +85,15 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
-    }
+        } else if (text.equalsIgnoreCase("Thong ke")) {
+            list_statistic statisticgui = new list_statistic();
+            statisticgui.setBounds(0, 0, 1100, 670);
+            obj.center.removeAll();
+            obj.center.add(statisticgui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+        }
     }
 
     public menu(main obj) {
