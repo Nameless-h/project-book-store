@@ -22,41 +22,43 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+/* import model.user_model;
+import user.user_login; */
 /**
  *
  * @author ASUS
  */
 public class signup {
-    JFrame frame = new JFrame();
-    JPanel logo = new JPanel();
-    JLabel exit = new JLabel();
-    JLabel icon_logo = new JLabel();
-    JLabel title_username_signup = new JLabel();
-    JLabel title_password_signup = new JLabel();
-    JTextField txt_username_signup = new JTextField();
-    JPopupMenu.Separator thanhngang5 = new JPopupMenu.Separator();
-    JPopupMenu.Separator thanhngang6 = new JPopupMenu.Separator();
-    JPasswordField txt_password_signup = new JPasswordField();
-    JPanel pan_signup = new JPanel();
-    JLabel title_signup2 = new JLabel("Sign up");
-    JPasswordField check_pass = new JPasswordField();
-    JLabel icon_showpass2 = new JLabel();
-    JLabel icon_dispass2 = new JLabel();
-    JLabel title_ver_pass = new JLabel("Verify password:");
-    JPopupMenu.Separator thanhngang3 = new JPopupMenu.Separator();
-    JPasswordField ver_pass = new JPasswordField();
-    JLabel title_email_signup = new JLabel("Email:");
-    JTextField txt_email = new JTextField();
-    JPopupMenu.Separator thanhngang4 = new JPopupMenu.Separator();
-    ImageIcon icon_email = new ImageIcon(getClass().getResource("/icon/email.png"));
-    JLabel lab_icon_email = new JLabel(icon_email);
-    JButton bun_signup = new JButton("Sign up");
-    ImageIcon icon_return = new ImageIcon(getClass().getResource("/icon/arrow_left.png"));
-    JLabel lab_icon_return = new JLabel(icon_return);
-    JLabel lab_icon_user_signup = new JLabel(new ImageIcon(getClass().getResource("/icon/user2.png")));
-    JLabel lab_icon_showpass_signup = new JLabel(new ImageIcon(getClass().getResource("/icon/show_password.png")));
-    JLabel lab_icon_dispass_signup = new JLabel(new ImageIcon(getClass().getResource("/icon/password.png")));
-
+        JFrame frame=new JFrame();
+        JPanel logo=new JPanel();
+        JLabel exit=new JLabel();
+        JLabel icon_logo=new JLabel();
+        JLabel title_username_signup=new JLabel();
+        JLabel title_password_signup=new JLabel();
+        JTextField txt_username_signup=new JTextField();
+        JPopupMenu.Separator thanhngang5=new JPopupMenu.Separator();
+        JPopupMenu.Separator thanhngang6=new JPopupMenu.Separator();
+        JPasswordField txt_password_signup=new JPasswordField();
+        JPanel pan_signup=new JPanel();
+        JLabel title_signup2=new JLabel("Sign up");
+        JPasswordField check_pass=new JPasswordField();
+        JLabel icon_showpass2=new JLabel();
+        JLabel icon_dispass2=new JLabel();
+        JLabel title_ver_pass=new JLabel("Verify password:");
+        JPopupMenu.Separator thanhngang3=new JPopupMenu.Separator();
+        JPasswordField ver_pass=new JPasswordField();
+        JLabel title_email_signup=new JLabel("Email:");
+        JTextField txt_email=new JTextField();
+        JPopupMenu.Separator thanhngang4=new JPopupMenu.Separator();
+        ImageIcon icon_email=new ImageIcon(getClass().getResource("/icon/email.png"));
+        JLabel lab_icon_email=new JLabel(icon_email);
+        JButton bun_signup=new JButton("Sign up");
+        ImageIcon icon_return=new ImageIcon(getClass().getResource("/icon/arrow_left.png"));
+        JLabel lab_icon_return=new JLabel(icon_return);
+        JLabel lab_icon_user_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/user2.png")));
+        JLabel lab_icon_showpass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/show_password.png")));
+        JLabel lab_icon_dispass_signup=new JLabel(new ImageIcon(getClass().getResource("/icon/password.png")));
+        //user_model chucnang_user=new user_model();
     public signup() {
         init();
     }
@@ -277,25 +279,24 @@ public class signup {
 
             // dang ky tai khoan
             private void signup_user() {
-                String username = txt_username_signup.getText();
-                String password = new String(txt_password_signup.getPassword());
-                String verify_password = new String(ver_pass.getPassword());
-                String email = txt_email.getText();
-                /*
-                 * if (password.equalsIgnoreCase(verify_password))
-                 * if (chucnang_user.check_username(username))
-                 * if (chucnang_user.check_email(email)) {
-                 * user_login user = new user_login(chucnang_user.spawn_matk(), username,
-                 * password, email);
-                 * chucnang_user.add_user(user);
-                 * JOptionPane.showMessageDialog(null, "Dang ky thanh cong");
-                 * } else
-                 * JOptionPane.showMessageDialog(null, "Da ton tai email");
-                 * else
-                 * JOptionPane.showMessageDialog(null, "Da ton tai tai khoan nay");
-                 * else
-                 * JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung");
-                 */
+                String username=txt_username_signup.getText();
+                String password=new String(txt_password_signup.getPassword());
+                String verify_password=new String(ver_pass.getPassword());
+                String email=txt_email.getText();
+                /* if(password.equalsIgnoreCase(verify_password))
+                    if(chucnang_user.check_username(username))
+                        if(chucnang_user.check_email(email))
+                        {
+                            user_login user=new user_login(chucnang_user.spawn_matk(),username,password,email);
+                            chucnang_user.add_user(user);
+                            JOptionPane.showMessageDialog(null,"Dang ky thanh cong");
+                        }
+                        else
+                            JOptionPane.showMessageDialog(null,"Da ton tai email");
+                    else
+                        JOptionPane.showMessageDialog(null,"Da ton tai tai khoan nay");
+                else
+                    JOptionPane.showMessageDialog(null, "Mat khau xac nhan hong dung"); */
             }
         });
     }

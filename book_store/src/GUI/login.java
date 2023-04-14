@@ -42,7 +42,7 @@ public class login {
     JPanel pan_for_pass = new JPanel();
     JLabel title_for_pass = new JLabel();
     // goi chuc nang cua user_login
-    user_model chucnang_user = new user_model();
+    //user_model chucnang_user = new user_model();
 
     public login() {
         init();
@@ -208,13 +208,13 @@ public class login {
 
             // kiemtra dang nhap
             private void check_login(MouseEvent evt) {
-                String username = txt_username.getText();
-                String password = new String(txt_password.getPassword());
-                user_login user = new user_login("", username, password, "");
-                if (chucnang_user.check_login(user) != null)
-                    JOptionPane.showMessageDialog(null, "Dang nhap thanh cong");
-                else
-                    JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
+                String username=txt_username.getText();
+                String password=new String(txt_password.getPassword());
+                //user_login user=new user_login("",username,password,"");
+                // if(chucnang_user.check_login(user)!=null)
+                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+                // else
+                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
             }
         });
     }
