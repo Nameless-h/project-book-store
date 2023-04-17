@@ -18,8 +18,7 @@ public class book {
     private int soLuong;
     private int giaTien;
 
-    public book(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong,
-            int giaTien) {
+    public book(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.maTheloai = maTheloai;
@@ -38,6 +37,15 @@ public class book {
         this.giaTien = giaTien;
     }
 
+    
+
+    
+
+    @Override
+    public String toString() {
+        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTacgia=" + maTacgia + ", maTheloai="
+                + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
+    }
     public int getMaSach() {
         return maSach;
     }
@@ -46,24 +54,12 @@ public class book {
         this.maSach = maSach;
     }
 
-    public String getTenSach() {
-        return tenSach;
-    }
-
-    @Override
-    public String toString() {
-        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTacgia=" + maTacgia + ", maTheloai="
-                + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
-    }
-
     public void setTenSach(String tenSach) {
         this.tenSach = tenSach;
     }
-
-    public String getTensach() {
-        return tenSach;
+    public String getTenSach() {
+            return tenSach;
     }
-
     public int getMaTheloai() {
         return maTheloai;
     }
