@@ -30,8 +30,6 @@ public class main extends JFrame {
     public main(taikhoan tk) {
         this.tk=tk;
         init();
-       
-        System.out.println(this.tk);
     }
 
     private void init() {
@@ -42,7 +40,7 @@ public class main extends JFrame {
         this.setUndecorated(true);
         // them cac panel
         header = new header(this,this.tk);
-        menu = new menu(this);
+        menu = new menu(this,tk);
         center = new welcome(this);
         this.add(header, BorderLayout.NORTH);
         this.add(menu, BorderLayout.WEST);

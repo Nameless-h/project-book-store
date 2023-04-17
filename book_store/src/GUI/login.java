@@ -6,6 +6,8 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,14 +16,17 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu.Separator;
 
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
 import BUS.quanlitaikhoan;
 import DTO.taikhoan;
+import GUI.quanlysanpham.button_panel;
 
 /**
  *
  * @author ASUS
  */
-public class login extends JFrame implements MouseListener {
+public class login extends JFrame implements MouseListener,KeyListener {
     JFrame frame = new JFrame();
     JPanel logo = new JPanel();
     JLabel exit = new JLabel();
@@ -156,6 +161,7 @@ public class login extends JFrame implements MouseListener {
         bun_login.setHorizontalAlignment(SwingConstants.CENTER);
         bun_login.setFont(new java.awt.Font("Segoe UI", 1, 16));
         bun_login.setForeground(Color.blue);
+        bun_login.addKeyListener(this);
         dangnhap.add(bun_login);
         // set dong title dang ky
         title_signup.setBounds(150, 400, 150, 50);
@@ -176,13 +182,7 @@ public class login extends JFrame implements MouseListener {
         for_pass.addMouseListener(this);
         exit.addMouseListener(this);
         this.setVisible(true);
-        
-        
 
-    }
-
-    public static void main(String[] args) {
-        new login();
     }
 
     @Override
@@ -196,10 +196,16 @@ public class login extends JFrame implements MouseListener {
             String username = txt_username.getText();
             String password = new String(txt_password.getPassword());
             taikhoan user = new taikhoan(0, username, password, 0, 0, 0);
-            if ((user=chucnang_taikhoan.kiemtradangnhap(user))!=null) {
-                this.setVisible(false);
+            if ((user = chucnang_taikhoan.kiemtradangnhap(user)) != null) {
+                if(user.getTinhtrang()==1){
+                    this.setVisible(false);
                 // System.out.println(user);
                 new main(user);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan","Canh bao",JOptionPane.WARNING_MESSAGE);
+                }
+                
             } else
                 JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
         } else if (e.getSource() == icon_dispass) {
@@ -232,6 +238,39 @@ public class login extends JFrame implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public static void main(String[] args) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(new FlatMacLightLaf());
+                    UIManager.put("TextComponent.arc", 300);
+                    UIManager.put("Button.arc", 999);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    System.out.println("That bai");
+                }
+            }
+        });
+        new login();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+            System.out.println("Hello");
+        }
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
     }
 
 }

@@ -1,27 +1,33 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
+import BUS.quanlinhanvien;
 import DTO.nhanvien;
 
-public class themnhanvien extends JPanel {
+public class themnhanvien extends JPanel implements MouseListener {
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
     // ------------------------------
-    String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:" };
+    String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:", "Chuc vu" };
+    String[] list_giotinh = { "Nam", "Nu" };
     JLabel[] lab = new JLabel[list_lab.length];
     JTextField[] txt = new JTextField[list_lab.length];
     JPanel pan_info;
-    String ma;
+    Integer ma;
     JButton bun_them;
+    JComboBox com_gioitinh;
+    quanlinhanvien chucnang_nhanvien = new quanlinhanvien();
 
-    public themnhanvien(main obj, String ma) {
+    public themnhanvien(main obj, Integer ma) {
         this.obj = obj;
-        this.ma = "NV" + ma;
+        this.ma = ma;
         init(obj);
     }
 
@@ -47,9 +53,10 @@ public class themnhanvien extends JPanel {
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
             lab[i].setBackground(color_211);
             lab[i].setForeground(Color.black);
+
             txt[i] = new JTextField();
             if (i == 0) {
-                txt[i].setText(ma);
+                txt[i].setText(String.valueOf(ma));
                 txt[i].setEnabled(false);
             }
 
@@ -59,13 +66,61 @@ public class themnhanvien extends JPanel {
 
             pan_info.add(lab[i]);
             pan_info.add(txt[i]);
+
         }
-        bun_them = new JButton("Sua");
+        bun_them = new JButton("Them");
         bun_them.setBounds(400, 590, 300, 50);
         bun_them.setBackground(Color.red);
         bun_them.setFont(new Font(name_font1, 1, 25));
         bun_them.setHorizontalAlignment(SwingConstants.CENTER);
         bun_them.setForeground(Color.white);
+        bun_them.addMouseListener(this);
         this.add(bun_them);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getSource() == bun_them) {
+            String gt_str = txt[2].getText();
+            if (gt_str.equalsIgnoreCase("nam") || gt_str.equalsIgnoreCase("nu")) {
+                int gt = 0;
+                Integer manv = this.ma;
+                String ten = txt[1].getText();
+
+                String dc = txt[3].getText();
+                String email = txt[4].getText();
+                String sdt = txt[5].getText();
+                String cv = txt[6].getText();
+                if (gt_str.equalsIgnoreCase("nam"))
+                    gt = 1;
+                else if (gt_str.equalsIgnoreCase("nu"))
+                    gt = 0;
+                nhanvien nv = new nhanvien(manv, ten, gt, sdt, email, sdt, cv);
+                chucnang_nhanvien.themnhanvien(nv);
+                JOptionPane.showMessageDialog(null, "Them thanh cong");
+            } else
+                JOptionPane.showMessageDialog(null, "Ban nhap gioi tinh bi sai! VUi long nhap lai");
+
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

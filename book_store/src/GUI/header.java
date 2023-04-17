@@ -42,12 +42,12 @@ public class header extends JPanel implements MouseListener {
         //set pan_cuaso
         // set lab_close
         pan_cuaso=new JPanel();
-        pan_cuaso.setPreferredSize(new Dimension(1100,30));
+        pan_cuaso.setPreferredSize(new Dimension(1000,30));
         pan_cuaso.setBackground(Color.black);
         pan_cuaso.setLayout(new FlowLayout(FlowLayout.RIGHT));
         //set pan_chuongtrinh
         pan_chuongtrinh=new JPanel();
-        pan_chuongtrinh.setPreferredSize(new Dimension(190,30));
+        pan_chuongtrinh.setPreferredSize(new Dimension(290,30));
         pan_chuongtrinh.setBackground(Color.black);
         pan_chuongtrinh.setLayout(new FlowLayout(FlowLayout.LEFT));
         lab_close = new JLabel("Close");
@@ -74,11 +74,11 @@ public class header extends JPanel implements MouseListener {
         // System.out.println(chucnang_nhanvien.tennhanvien(this.tk.getManhanvien()));
         lab_ten=new JLabel(chucnang_nhanvien.tennhanvien(this.tk.getManhanvien()));
         lab_ten.setForeground(Color.white);
-        lab_ten.setPreferredSize(new Dimension(130,30));
+        lab_ten.setPreferredSize(new Dimension(200,30));
         lab_ten.setFont(new Font(name_font1,1,17));
         lab_ten.setOpaque(true);
         lab_ten.setBackground(Color.black);
-        lab_ten.setHorizontalAlignment(SwingConstants.CENTER);
+        lab_ten.setHorizontalAlignment(SwingConstants.LEFT);
         pan_chuongtrinh.add(lab_ten);
         
         pan_cuaso.add(lab_hide);
