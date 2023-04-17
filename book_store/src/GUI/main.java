@@ -58,6 +58,5 @@ public class main extends JFrame {
             }
         });
         new main();
-
     }
 }
