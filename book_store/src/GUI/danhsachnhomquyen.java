@@ -20,7 +20,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     String name_font1 = "Times Roman";
     quanlinhomquyen chucnang = new quanlinhomquyen();
     // -------------------------------
-    String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen", "Chi tiet nhom quyen" };
+    String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen","Ngay tao","Ngay cap nhat", "Chi tiet nhom quyen" };
     String[] list_timkiem = { "Tat ca", "Ma nhom quyen", "Ten nhom quyen" };
     // --------------------------------------------
     JComboBox combo_timkiem;
@@ -113,8 +113,9 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
-            
-            themnhomquyen panel = new themnhomquyen(obj);
+            int rowCount = tab_danhsach.getRowCount();
+            Integer ma=Integer.parseInt(tab_danhsach.getValueAt(rowCount-1,1).toString());
+            themnhomquyen panel = new themnhomquyen(obj,ma+1);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
@@ -127,9 +128,11 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null,"Ban chua chon nhom quyen de sua");
             }
             else{
-            String ma = model.getValueAt(selectrow, 1).toString();
+            Integer ma=Integer.parseInt(model.getValueAt(selectrow,1).toString());
             String ten = model.getValueAt(selectrow, 2).toString();
-            suanhomquyen panel = new suanhomquyen(obj,ma,ten);
+            String ngaytao = model.getValueAt(selectrow, 3).toString();
+        
+            suanhomquyen panel = new suanhomquyen(obj,ma,ten,ngaytao);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);

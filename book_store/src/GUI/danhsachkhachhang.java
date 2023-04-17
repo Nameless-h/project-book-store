@@ -113,8 +113,8 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
             int rowCount = tab_danhsach.getRowCount() + 1;
-            String myString = Integer.toString(rowCount);
-            themkhachhang panel = new themkhachhang(obj, myString);
+            
+            themkhachhang panel = new themkhachhang(obj, rowCount);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
@@ -127,15 +127,19 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban chua chon khach hang de sua");
             } else {
                 // String ma,ten,gioitinh,diachi,email,sodienthoai;
-                String ma = model.getValueAt(selectrow, 1).toString();
+                Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
                 String ten = model.getValueAt(selectrow, 2).toString();
-                String gt = model.getValueAt(selectrow, 3).toString();
+                String gt_str = model.getValueAt(selectrow, 3).toString();
+                int gt;
+                if(gt_str.equalsIgnoreCase("Nam"))
+                    gt=1;
+                else
+                    gt=0;
                 String dc = model.getValueAt(selectrow, 4).toString();
                 String email = model.getValueAt(selectrow, 5).toString();
                 String sdt = model.getValueAt(selectrow, 6).toString();
-                String diemstr = model.getValueAt(selectrow, 7).toString();
-                int diem = Integer.parseInt(diemstr);
-                String tinhtrang = model.getValueAt(selectrow, 8).toString();
+                Integer diem = Integer.parseInt(model.getValueAt(selectrow, 7).toString());
+                Integer tinhtrang = Integer.parseInt(model.getValueAt(selectrow, 8).toString());
                 khachhang temp = new khachhang(ma, ten, gt, dc, email, sdt, diem, tinhtrang);
                 suathongtinkhachhang panel = new suathongtinkhachhang(obj, temp);
                 panel.setBounds(0, 0, obj.w_center, obj.h_center);

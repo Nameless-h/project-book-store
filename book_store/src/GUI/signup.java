@@ -22,8 +22,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-/* import model.user_model;
-import user.user_login; */
+// import model.user_model;
+// import user.user_login;
 /**
  *
  * @author ASUS
