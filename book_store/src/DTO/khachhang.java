@@ -1,15 +1,15 @@
 package DTO;
 
 public class khachhang {
-    String ma, ten, gioitinh, diachi, email, sodienthoai;
-    int diem;
-    String tinhtrang;
+    String  ten,  diachi, email, sodienthoai;
+    int gioitinh,ma,diem,tinhtrang;
+    
 
     public khachhang() {
     }
 
-    public khachhang(String ma, String ten, String gioitinh, String diachi, String email, String sodienthoai, int diem,
-            String tinhtrang) {
+    public khachhang(Integer ma, String ten, Integer gioitinh, String diachi, String email, String sodienthoai, int diem,
+            Integer tinhtrang) {
         this.ma = ma;
         this.ten = ten;
         this.gioitinh = gioitinh;
@@ -28,7 +28,7 @@ public class khachhang {
         return diem;
     }
 
-    public String getMa() {
+    public Integer getMa() {
         return ma;
     }
 
@@ -36,7 +36,7 @@ public class khachhang {
         return email;
     }
 
-    public String getGioitinh() {
+    public Integer getGioitinh() {
         return gioitinh;
     }
 
@@ -60,11 +60,11 @@ public class khachhang {
         this.email = email;
     }
 
-    public void setGioitinh(String gioitinh) {
+    public void setGioitinh(Integer gioitinh) {
         this.gioitinh = gioitinh;
     }
 
-    public void setMa(String ma) {
+    public void setMa(Integer ma) {
         this.ma = ma;
     }
 
@@ -76,32 +76,38 @@ public class khachhang {
         this.ten = ten;
     }
 
-    public String getTinhtrang() {
+    public Integer getTinhtrang() {
         return tinhtrang;
     }
 
-    public void setTinhtrang(String tinhtrang) {
+    public void setTinhtrang(Integer tinhtrang) {
         this.tinhtrang = tinhtrang;
     }
 
     public String[] getthongtin() {
         int num = 123;
-        String str = String.valueOf(this.getDiem());
         String[] temp = new String[8];
-        temp[0] = this.getMa();
+        temp[0] = String.valueOf(this.getMa());
         temp[1] = this.getTen();
-        temp[2] = this.getGioitinh();
+        temp[2] = String.valueOf(this.getGioitinh());
         temp[3] = this.getDiachi();
         temp[4] = this.getEmail();
         temp[5] = this.getSodienthoai();
-        temp[6] = str;
-        temp[7] = this.getTinhtrang();
+        temp[6] = String.valueOf(this.getDiem());
+        temp[7] = String.valueOf(this.getTinhtrang());
         return temp;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+         return "Ma="+this.getMa()+
+                "Ten="+this.getTen()+
+                "Gioi tinh="+this.getGioitinh()+
+                "Dia chi="+this.getDiachi()+
+                "Email="+this.getEmail()+
+                "So dien thoai="+this.getSodienthoai()+
+                "Diem="+this.getDiem()+
+                "Tinh trang="+this.getTinhtrang();
     }
 
 }

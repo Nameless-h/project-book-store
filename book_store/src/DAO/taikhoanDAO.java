@@ -17,9 +17,12 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
                 //b2:tao doi tuong statement
                 Statement st=con.createStatement();
                 //b3:thuc thi cau lenh sql
-                String sql="insert into taikhoan(maTk,username,passwd,maNhanVien,maNhomquyen)"+
+                String sql="insert into taikhoan(maTk,username,passwd,maNhanVien,maNhomquyen,trangthai)"+
                             "values('"+t.getMatk()+"','"+t.getUsername()+"','"
-                                                    +t.getPassword()+"','"+t.getManhanvien()+"','"+t.getManhomquyen()+"')";
+                                                    +t.getPassword()+"','"+
+                                                    t.getManhanvien()+"','"+
+                                                    t.getManhomquyen()+"','"+
+                                                    t.getTinhtrang()+"')";
                 this.check += st.executeUpdate(sql);
                 JDBCUtil.closeConnection(con);
             } catch (SQLException e) {
@@ -89,16 +92,52 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
 
-    @Override
-    public int update(int t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+    
 
     @Override
     public taikhoan selectById(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selectById'");
+    }
+
+
+
+    @Override
+    public ArrayList<taikhoan> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+    }
+
+
+
+    @Override
+    public void update(taikhoan t) {
+        int ketQua = 0;
+        try {
+            // Bước 1: tạo kết nối đến CSDL
+            Connection con = JDBCUtil.getConnection();
+
+            // Bước 2: tạo ra đối tượng statement
+            Statement st = con.createStatement();
+
+            
+ // taikhoan(maTk,username,passwd,maNhanVien,maNhomquyen,trangthai)
+            String sql = "UPDATE taikhoan " +
+                    " SET " +
+					"username='"+ t.getUsername()+"'"+
+                    ",passwd="+ t.getPassword()+
+                    ",maNhanVien='"+ t.getManhanvien()+"'"+
+                    ",maNhomquyen='"+ t.getManhomquyen()+"'"+
+                    ",trangthai='"+ t.getTinhtrang()+"'"+
+                    " WHERE maTk='" + t.getMatk() +
+                    "\'";
+
+            ketQua = st.executeUpdate(sql);
+            JDBCUtil.closeConnection(con);
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
     
 }

@@ -1,18 +1,19 @@
 package DTO;
 
 public class chitietnhomquyen {
-    String manhom,machucnang,hanhdong,tinhtrang;
+    int manhom,tinhtrang;
+    String machucnang,hanhdong;
     public chitietnhomquyen(){}
-    public chitietnhomquyen(String manhom,String machucnang,String hanhdong,String tinhtrang){
+    public chitietnhomquyen(int manhom,String machucnang,String hanhdong,int tinhtrang){
         this.manhom=manhom;
         this.machucnang=machucnang;
         this.hanhdong=hanhdong;
         this.tinhtrang=tinhtrang;
     }
-    public String getManhom() {
+    public int getManhom() {
         return manhom;
     }
-    public void setManhom(String manhom) {
+    public void setManhom(int manhom) {
         this.manhom = manhom;
     }
     public String getMachucnang() {
@@ -27,10 +28,17 @@ public class chitietnhomquyen {
     public void setHanhdong(String hanhdong) {
         this.hanhdong = hanhdong;
     }
-    public String getTinhtrang() {
+    public int getTinhtrang() {
         return tinhtrang;
     }
-    public void setTinhtrang(String tinhtrang) {
+    public void setTinhtrang(int tinhtrang) {
         this.tinhtrang = tinhtrang;
+    }
+    @Override
+    public String toString() {
+        return "Ma nhom:"+this.getManhom()+
+                "ma chuc nang:"+this.getMachucnang()+
+                "Hanh dong:"+this.getHanhdong()+
+                "tinh trang"+this.getTinhtrang();
     }
 }

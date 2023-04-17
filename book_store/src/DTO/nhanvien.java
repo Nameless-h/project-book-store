@@ -79,6 +79,12 @@ public class nhanvien {
    }
     @Override
     public String toString() {
-        return super.toString();
+        return "maNV:"+this.getMa()+
+                "ten:"+this.getTen()+
+                "Gioi tinh:"+this.getGioitinh()+
+                "Dia chi:"+this.getDiachi()+
+                "Email:"+this.getEmail()+
+                "Sdt:"+this.getSodienthoai()+
+                "Chuc vu:"+this.getChucvu();
     }
 }

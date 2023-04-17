@@ -28,12 +28,29 @@ public class quanlinhanvien {
         model.setRowCount(0);
         // them thong tin nhan vien vao bang table
         for (int i = 0; i < list.size(); i++) {
-
-            model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), list.get(i).getGioitinh(),
-                    list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai() });
+            String gt;
+            if(list.get(i).getGioitinh()==1)
+            gt="Nam";
+            else
+            gt="Nu";
+            model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                    list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),list.get(i).getChucvu() });
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    }
+    public void themnhanvien(nhanvien nv){
+        list.add(nv);
+        chucnang_nhanvien.insert(nv);
+    }
+    public void suathongtinnhanvien(nhanvien nv){
+        chucnang_nhanvien.update(nv);
+    }
+    public Integer[] danhsachmanhanvien(){
+        Integer[] list_ds=new Integer[list.size()];
+        for(int i=0;i<list_ds.length;i++)
+            list_ds[i]=list.get(i).getMa();
+        return list_ds;
     }
 }

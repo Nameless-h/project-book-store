@@ -39,4 +39,11 @@ public class quanlitaikhoan {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
+    public void themtaikhoan(taikhoan tk){
+        list.add(tk);
+        chucnang_taikhoan.insert(tk);
+    }
+    public void suataikhoan(taikhoan tk){
+        chucnang_taikhoan.update(tk);
+    }
 }

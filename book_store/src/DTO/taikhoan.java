@@ -66,6 +66,6 @@ public class taikhoan {
     @Override
     public String toString() {
         return "matk=" + this.matk + " Username =" + this.username + " Password =" + this.password + " ma nhan vien ="
-                + this.manhanvien + " ma nhom quyen =" + this.manhomquyen;
+                + this.manhanvien + " ma nhom quyen =" + this.manhomquyen+"Tinh trang="+this.getTinhtrang();
     }
 }
