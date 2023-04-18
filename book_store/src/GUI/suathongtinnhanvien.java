@@ -1,18 +1,23 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
+import BUS.quanlinhanvien;
+import DTO.chucnang;
 import DTO.nhanvien;
 
 public class suathongtinnhanvien extends JPanel {
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
+    quanlinhanvien quanlinhanvien = new quanlinhanvien();
     // ------------------------------
-    String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:" };
+    String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:", "Chuc vu" };
     JLabel[] lab = new JLabel[list_lab.length];
     String[] thongtin;
     JTextField[] txt = new JTextField[list_lab.length];
@@ -53,7 +58,12 @@ public class suathongtinnhanvien extends JPanel {
             if (i == 0) {
                 txt[i].setEnabled(false);
             }
-
+            if (i == 2) {
+                if (thongtin[i].equalsIgnoreCase("1"))
+                    txt[i].setText("Nam");
+                else
+                    txt[i].setText("Nu");
+            }
             txt[i].setPreferredSize(new Dimension(400, 50));
             txt[i].setForeground(Color.black);
             txt[i].setFont(new Font(name_font1, 1, 20));
@@ -67,6 +77,24 @@ public class suathongtinnhanvien extends JPanel {
         bun_sua.setFont(new Font(name_font1, 1, 25));
         bun_sua.setHorizontalAlignment(SwingConstants.CENTER);
         bun_sua.setForeground(Color.white);
+        bun_sua.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                int gt = -1;
+                if (txt[2].getText().equalsIgnoreCase("Nam"))
+                    gt = 1;
+                if (txt[2].getText().equalsIgnoreCase("Nu"))
+                    gt = 0;
+                if (gt != -1) {
+                    nhanvien nv = new nhanvien(Integer.parseInt(txt[0].getText()), txt[1].getText(), gt,
+                            txt[3].getText(),
+                            txt[4].getText(), txt[5].getText(), txt[6].getText());
+                    quanlinhanvien.suathongtinnhanvien(nv);
+                    JOptionPane.showMessageDialog(null, "Sua thanh cong");
+                }
+                else
+                    JOptionPane.showMessageDialog(null,"Sai gioi tinh");
+            }
+        });
         this.add(bun_sua);
     }
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public interface DAOinterface<T> {
 	public int insert(T t);
 
-	public int update(int t);
+	public void update(T t);
 
 	public int delete(T t);
 
@@ -23,6 +23,8 @@ public interface DAOinterface<T> {
 	public ArrayList<T> selecAll();
 
 	public T selectById(int t);
+
+	public ArrayList<T> select_all_ById(int t);
 
 	public ArrayList<T> selecByCondition(String condition);
 

@@ -35,7 +35,7 @@ public class Mytable extends JPanel {
     }
     public JTable getTable() {
             return this.table;
-        }
+    }
 
     public DefaultTableModel getTableModel() {
         return this.tableModel;

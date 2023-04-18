@@ -58,7 +58,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
         list_sta_btn[0].setBackground(Color.red);
         list_sta_btn[0].setForeground(Color.white);
 
-        content = new statistic_main();
+        content = new statistic_overview();
         content.setBackground(Color.lightGray);
 
         // set size for borderLayout
@@ -135,7 +135,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
             }
 
             if(e.getSource() == list_sta_btn[0]) {
-                content = new statistic_main();
+                content = new statistic_overview();
                 list_sta_btn[0].setBackground(Color.red);
                 list_sta_btn[0].setForeground(Color.white);
                 System.out.print(list_sta_name[0]);
