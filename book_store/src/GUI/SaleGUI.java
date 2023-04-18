@@ -13,6 +13,9 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
+import BUS.bookBUS;
+import DTO.book;
+import GUI.Mytable;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -28,6 +31,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     private JPanel searchpnl;
     private JTextField searchinp;
     // book table
+    private bookBUS bookbus = new bookBUS();
     private Mytable booktable;
     // book detail
     private JTextField inp[];
@@ -92,12 +96,13 @@ public class SaleGUI extends JPanel implements ActionListener {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
         booktable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity" });
-        for (int i = 0; i < 15; i++) {
-            booktable.addRow(new String[] {
-                    String.valueOf(i + 1),
-                    "What a wonderful world " + (i + 1),
-                    "20000",
-                    "5"
+        bookbus.initbookList();
+        for (book book : bookbus.getbookList()) {
+            booktable.addRow(new Object[] {
+                    book.getMaSach(),
+                    book.getTenSach(),
+                    book.getGiaTien(),
+                    book.getSoLuong()
             });
         }
         booktable.setPreferredWidth(0, 25);
@@ -141,22 +146,20 @@ public class SaleGUI extends JPanel implements ActionListener {
                 inp[i].setEditable(false);
             inputpnl.add(inp[i]);
         }
-        /*
-         * image = new JLabel();
-         * image.setBounds(10,10,170,250);
-         * image.setOpaque(true);
-         * BufferedImage bufferedImage = ImageIO.read(new
-         * File("../../icon/arrow_left.png"));
-         * Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
-         * image.setIcon(new ImageIcon(img));
-         * image.setBorder(new LineBorder(Color.BLACK,1,true));
-         */
+        image = new JLabel();
+        image.setBounds(10, 10, 170, 250);
+        image.setOpaque(true);
+        BufferedImage bufferedImage = ImageIO
+                .read(new File("D:/NAM_2/HK2/Java/project-book-store/book_store/src/img/doraemon.jpg"));
+        Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
+        image.setIcon(new ImageIcon(img));
+        image.setBorder(new LineBorder(Color.BLACK, 1, true));
 
         addbtn.setBounds(195, 220, 330, 40);
         addbtn.addActionListener(this);
 
         pbookdetail.add(addbtn);
-        // pbookdetail.add(image);
+        pbookdetail.add(image);
         pbookdetail.add(inputpnl);
         return pbookdetail;
     }
@@ -277,11 +280,11 @@ public class SaleGUI extends JPanel implements ActionListener {
     /*------------------------------------------- ACTION -------------------------------------------*/
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
-        String id = (String) booktable.getTable().getValueAt(row, 0);
+        String id = String.valueOf(booktable.getTable().getValueAt(row, 0));
         inp[0].setText(id);
         String name = (String) booktable.getTable().getValueAt(row, 1);
         inp[1].setText(name);
-        String price = (String) booktable.getTable().getValueAt(row, 2);
+        String price = String.valueOf(booktable.getTable().getValueAt(row, 2));
         inp[2].setText(price);
         inp[3].setText("1");
     }

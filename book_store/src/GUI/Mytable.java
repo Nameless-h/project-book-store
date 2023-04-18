@@ -29,6 +29,7 @@ public class Mytable extends JPanel {
         table.getTableHeader().setForeground(Color.white);
         table.setRowHeight(50);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        table.setDefaultEditor(Object.class, null);
 
         this.add(pane,BorderLayout.CENTER);
     }
