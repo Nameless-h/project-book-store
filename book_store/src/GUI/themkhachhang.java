@@ -1,24 +1,30 @@
 package GUI;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class themkhachhang extends JPanel{
+import BUS.quanlikhachhang;
+import DTO.khachhang;
+
+public class themkhachhang extends JPanel implements MouseListener{
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
+    quanlikhachhang quanlikhachhang=new quanlikhachhang();
     //------------------------------
     String[] list_lab={"Ma nhan vien:","Ten:","Gioi tinh:","Dia chi:","Email:","SDT:","Diem tich luy:"};
     JLabel[] lab=new JLabel[list_lab.length];
     JTextField[] txt=new JTextField[list_lab.length];
     JPanel pan_info,pan_tinhtrang;
-    String ma;
+    Integer ma;
     JButton bun_them;
     JCheckBox chk_chophep,chk_khong;
-    public themkhachhang(main obj,String ma){
+    public themkhachhang(main obj,Integer ma){
         this.obj=obj;
-        this.ma="KH"+ma;
+        this.ma=ma;
         init(obj);
     }
     private void init(main obj){
@@ -44,7 +50,12 @@ public class themkhachhang extends JPanel{
             lab[i].setForeground(Color.black);
             txt[i]=new JTextField();
             if(i==0){
-                txt[i].setText(ma);
+                txt[i].setText(String.valueOf(ma));
+                txt[i].setEnabled(false);
+            }
+            else
+            if(i==6){
+                txt[i].setText("0");
                 txt[i].setEnabled(false);
             }
                 
@@ -75,12 +86,51 @@ public class themkhachhang extends JPanel{
         // pan_tinhtrang.add(chk_khong);
 
         
-        bun_them=new JButton("Sua");
+        bun_them=new JButton("Them");
         bun_them.setBounds(400,590,300,50);
         bun_them.setBackground(Color.red);
         bun_them.setFont(new Font(name_font1,1,25));
         bun_them.setHorizontalAlignment(SwingConstants.CENTER);
         bun_them.setForeground(Color.white);
+        bun_them.addMouseListener(this);
         this.add(bun_them);
+    }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+       
+    }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(e.getSource()==bun_them){
+            String gt_str = txt[2].getText();
+            if (gt_str.equalsIgnoreCase("nam") || gt_str.equalsIgnoreCase("nu")) {
+                int gt = 0;
+                Integer manv = this.ma;
+                String ten = txt[1].getText();
+
+                String dc = txt[3].getText();
+                String email = txt[4].getText();
+                String sdt = txt[5].getText();
+                if (gt_str.equalsIgnoreCase("nam"))
+                    gt = 1;
+                else if (gt_str.equalsIgnoreCase("nu"))
+                    gt = 0;
+                khachhang kh = new khachhang(manv, ten, gt, dc, email, sdt, 0,1);
+                quanlikhachhang.themkhachhang(kh);
+                JOptionPane.showMessageDialog(null, "Them thanh cong");
+            } else
+                JOptionPane.showMessageDialog(null, "Ban nhap gioi tinh bi sai! VUi long nhap lai");
+        }
+    }
+    @Override
+    public void mouseReleased(MouseEvent e) {
+      
+    }
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }

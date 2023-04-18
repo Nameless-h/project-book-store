@@ -20,8 +20,8 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
 
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
-    String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT" };
-    String[] list_timkiem = { "Tat ca", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT" };
+    String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT","Chuc vu" };
+    String[] list_timkiem = { "Tat ca", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT","Chuc vu" };
     // 0------------------------------------------------------------------------------
     // nhung thanh phan trong panel
     JComboBox combo_timkiem;
@@ -114,8 +114,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
             int rowCount = tab_danhsach.getRowCount() + 1;
-            String myString = Integer.toString(rowCount);
-            themnhanvien panel = new themnhanvien(obj, myString);
+            themnhanvien panel = new themnhanvien(obj, rowCount);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
@@ -128,13 +127,19 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban chua chon nhan vien de sua");
             } else {
                 // String ma,ten,gioitinh,diachi,email,sodienthoai;
-                String ma = model.getValueAt(selectrow, 1).toString();
+                Integer ma =Integer.parseInt( model.getValueAt(selectrow, 1).toString());
                 String ten = model.getValueAt(selectrow, 2).toString();
-                String gt = model.getValueAt(selectrow, 3).toString();
+                String gt_str = model.getValueAt(selectrow, 3).toString();
+                Integer gt;
+                if(gt_str.equalsIgnoreCase("Nam"))
+                    gt=1;
+                else
+                    gt=0;
                 String dc = model.getValueAt(selectrow, 4).toString();
                 String email = model.getValueAt(selectrow, 5).toString();
                 String sdt = model.getValueAt(selectrow, 6).toString();
-                nhanvien temp = new nhanvien(ma, ten, gt, dc, email, sdt);
+                String cv = model.getValueAt(selectrow, 7).toString();
+                nhanvien temp = new nhanvien(ma, ten, gt, dc, email, sdt,cv);
                 suathongtinnhanvien panel = new suathongtinnhanvien(obj, temp);
                 panel.setBounds(0, 0, obj.w_center, obj.h_center);
                 obj.center.removeAll();

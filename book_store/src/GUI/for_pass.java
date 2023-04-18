@@ -53,7 +53,7 @@ public class for_pass {
     private void init() {
          //set frame va layout
         frame.setSize(900,550);
-        frame.setLocation(200,100);
+        frame.setLocation(350, 150);
         frame.setUndecorated(true);
         frame.setLayout(null);
 //------------------------------------------------------------------------------------------------------
