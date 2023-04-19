@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import DAO.bookDAO;
 import DAO.book_modify;
 import DAO.khachhangDAO;
 import DAO.nhanvienDAO;
@@ -68,7 +67,7 @@ public class statistic_overview extends JPanel implements ActionListener{
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-sold-64.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
-                generality_sales = new JLabel("30",JLabel.CENTER);
+                generality_sales = new JLabel("0",JLabel.CENTER);
                 generality_sales.setFont(new Font("Verdana", Font.PLAIN, 30));
                 generality_sales.setForeground(Color.green);
                 generality_sales.setPreferredSize(new Dimension(520,100));
@@ -78,7 +77,7 @@ public class statistic_overview extends JPanel implements ActionListener{
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-shopping-cart-40.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
-                generality_import = new JLabel("13",JLabel.CENTER);
+                generality_import = new JLabel("0",JLabel.CENTER);
                 generality_import.setFont(new Font("Verdana", Font.PLAIN, 30));
                 generality_import.setForeground(Color.green);
                 generality_import.setPreferredSize(new Dimension(520,100));
@@ -129,8 +128,6 @@ public class statistic_overview extends JPanel implements ActionListener{
             generality.add(generality_panels[i]);
         }
 
-        
-        // setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_add_30px.png")));
         add(generality, BorderLayout.CENTER);
     }
 

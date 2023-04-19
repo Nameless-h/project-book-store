@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -17,14 +16,15 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.Cursor;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import GUI.Mybutton.addbutton;
-import GUI.Mybutton.deletebutton;
-import GUI.Mybutton.editbutton;
+import DAO.thong_ke_sach_banDAO;
+import DTO.bookSold;
 import GUI.Mybutton.morebutton;
 
 import java.awt.FlowLayout;
@@ -34,25 +34,28 @@ import java.awt.event.ActionListener;
 public class statistic_sale extends JPanel implements ActionListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
-    private String title_filter[] = {"Khoang ngay","Top ban chay","Khach hang"};//menu title filter
-    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_customer;
-    private JTextField inputDateStart,inputDateEnd,inputCustomer;
+    private String[] columnNames = {"ID","Ten sach","The loai","Gia","Da ban"};
+    private String title_filter[] = {"Khoang ngay","Top ban chay","The loai"};//menu title filter
+    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_category;
+    private JTextField inputDateStart,inputDateEnd,inputcategory;
     private JLabel dateStart,dateEnd;
-    private LineBorder linedBorderDate,linedBorderBestSeller,linedBorderCustomer;
-    private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCustomer;
+    private LineBorder linedBorderDate,linedBorderBestSeller,linedBorderCategory;
+    private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCategory;
     private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
     private JSpinner inputBestSeller = new JSpinner(model);
-    private morebutton selectCustomer = new morebutton();
+    private morebutton selectCategory = new morebutton();
+    private statisticTable bookSoldTable;
     public statistic_sale() {
         setLayout(new BorderLayout());
         // header
         JPanel header = new JPanel();
-        header.setBackground(Color.red);
+        // header.setBackground(Color.lightGray);
         header.setLayout(new BorderLayout());
 
         // header search
         JPanel headerFilter = new JPanel();
         headerFilter.setPreferredSize(new Dimension(600, 40));
+        headerFilter.setBackground(Color.lightGray);
         headerFilter.setLayout(new BorderLayout());
         headerFilter.setFocusable( true );
         header.add(headerFilter);
@@ -60,6 +63,7 @@ public class statistic_sale extends JPanel implements ActionListener{
         // header search contain input
         headerFilterContainInput = new JPanel();
         headerFilterContainInput.setLayout(new FlowLayout(SwingConstants.RIGHT));
+        headerFilterContainInput.setBackground(Color.lightGray);
         headerFilterContainInput.setPreferredSize(new Dimension(800, 0));
         headerFilterContainInput.setFont(new Font("Arial", Font.PLAIN, 20));
         
@@ -106,24 +110,24 @@ public class statistic_sale extends JPanel implements ActionListener{
 
         headerFilterContainInput.add(panel_filter_bestSeller);
     
-        //panel filter customer
-        panel_filter_customer = new JPanel();
-        panel_filter_customer.setPreferredSize(new Dimension(160, 60));
-        panel_filter_customer.setBackground(new Color(242, 59, 46));
+        //panel filter category
+        panel_filter_category = new JPanel();
+        panel_filter_category.setPreferredSize(new Dimension(160, 60));
+        panel_filter_category.setBackground(new Color(242, 59, 46));
 
-        linedBorderCustomer = new LineBorder(Color.white);
-        titledBorderCustomer = BorderFactory.createTitledBorder(linedBorderCustomer, title_filter[2]);
-        titledBorderCustomer.setTitleJustification(TitledBorder.CENTER);
-        panel_filter_customer.setBorder(titledBorderCustomer);
+        linedBorderCategory = new LineBorder(Color.white);
+        titledBorderCategory = BorderFactory.createTitledBorder(linedBorderCategory, title_filter[2]);
+        titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
+        panel_filter_category.setBorder(titledBorderCategory);
 
-        inputCustomer = new JTextField();
-        inputCustomer.setPreferredSize(new Dimension(100, 30));
-        panel_filter_customer.add(inputCustomer);
+        inputcategory = new JTextField();
+        inputcategory.setPreferredSize(new Dimension(100, 30));
+        panel_filter_category.add(inputcategory);
 
-        selectCustomer.setPreferredSize(new Dimension(30, 30));
-        panel_filter_customer.add(selectCustomer);
+        selectCategory.setPreferredSize(new Dimension(30, 30));
+        panel_filter_category.add(selectCategory);
 
-        headerFilterContainInput.add(panel_filter_customer);
+        headerFilterContainInput.add(panel_filter_category);
 
         // header search button
         headerSearchBtn = new JButton("Tim kiem");
@@ -139,9 +143,35 @@ public class statistic_sale extends JPanel implements ActionListener{
         headerFilter.add(headerFilterContainInput,BorderLayout.WEST);
         headerFilter.add(headerSearchBtn,BorderLayout.EAST);
         
-        // list
-        JPanel listSold = new statisticTable();
-        listSold.setBackground(Color.white);
+        // table
+        bookSoldTable = new statisticTable();
+        bookSoldTable.setBackground(Color.lightGray);
+        bookSoldTable.setHeader(columnNames);
+
+        // get table data
+        thong_ke_sach_banDAO bs=new thong_ke_sach_banDAO();
+        ArrayList<bookSold> listBS = bs.selecAll();
+
+        for (bookSold bSold : listBS) {
+            bookSoldTable.addRow(new Object[]{
+                bSold.getBookID(),
+                bSold.getBookName(),
+                bSold.getBookCategory(),
+                bSold.getBookPrice(),
+                bSold.getBookSoldQuantity()
+            });
+        }
+
+        bookSoldTable.setPreferredWidth(0, 50);
+        bookSoldTable.setPreferredWidth(1, 300);
+        bookSoldTable.setPreferredWidth(2, 200);
+        bookSoldTable.setPreferredWidth(3, 200);
+        bookSoldTable.setPreferredWidth(4, 80);
+
+        bookSoldTable.setAlignment(0, JLabel.CENTER);
+        bookSoldTable.setAlignment(2, JLabel.CENTER);
+        bookSoldTable.setAlignment(3, JLabel.CENTER);
+        bookSoldTable.setAlignment(4, JLabel.CENTER);
 
         // barSum
         JPanel barSum = new JPanel();
@@ -165,44 +195,16 @@ public class statistic_sale extends JPanel implements ActionListener{
 
         // set size for borderLayout
         header.setPreferredSize(new Dimension(0, 70));
-        listSold.setPreferredSize(new Dimension(0, 0));
+        bookSoldTable.setPreferredSize(new Dimension(0, 0));
         barSum.setPreferredSize(new Dimension(1000, 50));
 
 
 
         add(header, BorderLayout.NORTH);
-        add(listSold, BorderLayout.CENTER);
+        add(bookSoldTable, BorderLayout.CENTER);
         add(barSum, BorderLayout.SOUTH);
 
     }
-
-    /* public void inputSearchFocus(JTextField input) {
-        input.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (input.getText().equals("Nhap de tim kiem...")) {
-                    input.setText("");
-                }           
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (input.getText().isEmpty() || input.getText() == "") {
-                    input.setText("Nhap de tim kiem...");
-                }
-            }
-        });
-    } */
-
-    /* public void hoverBtn(JButton button) {
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.darkGray);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.black);
-            }
-        });
-    } */
 
     public static void main(String[] args) {
         new statistic_sale();

@@ -34,11 +34,11 @@ public class book_modify implements DAOinterface<book> {
         throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 
-    @Override
+   /*  @Override
     public int update(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
+    } */
 
     @Override
     public int delete(book t) {
@@ -129,5 +129,17 @@ public class book_modify implements DAOinterface<book> {
     public ArrayList<book> selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
+    }
+
+    @Override
+    public void update(book t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public ArrayList<book> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
 }

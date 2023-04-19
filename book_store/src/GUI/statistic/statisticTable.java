@@ -3,12 +3,6 @@ package GUI.statistic;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,11 +11,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class statisticTable extends JPanel{
-    private String[] columnNames = {"ID","Ten sach","So luong","Da ban"};
     private DefaultTableModel tableModel;
     public JTable t;
     private JScrollPane scrollpane;
-    JLabel labels[] = new JLabel[columnNames.length];
     JTextField inputs[];
 
     // private JButton
@@ -30,92 +22,41 @@ public class statisticTable extends JPanel{
     }
 
     public JScrollPane initTable() {
+
         t = new JTable();
         t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        tableModel = new DefaultTableModel();
         scrollpane = new JScrollPane(t);
         scrollpane.setPreferredSize(new Dimension(1100, 500));
-        String[] headers = columnNames;
-        Object[][] tableData = {
-            {"1", "Vineet", "22","12"},
-            {"2", "Archana", "31","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"4", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"4", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"3", "Krishna", "27","12"},
-            {"4", "Krishna", "27","12"}
-        };
-        tableModel = new DefaultTableModel(tableData,headers);
-        t.setModel(tableModel);
+
         t.setAutoCreateRowSorter(true);
         t.getTableHeader().setBackground(Color.red);
-        t.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
         t.getTableHeader().setForeground(Color.white);
+        t.getTableHeader().setFont(new Font("Arial", Font.PLAIN, 16));
         t.setRowHeight(30);
-        t.getColumnModel().getColumn(0).setPreferredWidth(100);
-        t.getColumnModel().getColumn(1).setPreferredWidth(120);
-        t.getColumnModel().getColumn(2).setPreferredWidth(100);
-        t.getColumnModel().getColumn(3).setPreferredWidth(150);
 
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        t.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        t.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        t.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        t.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-
-        /* t.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                tableMouseClicked(evt);
-            }
-        }); */
-        
         // disable table
         t.setDefaultEditor(Object.class, null);  
 
         return scrollpane;
     }
 
-    /* public JPanel showLeftForm() {
-        JPanel leftForm = new JPanel();
-        inputs = new JTextField[columnNames.length];
-        for (int i = 0; i < columnNames.length; i++) {
-            labels[i] = new JLabel(columnNames[i]);
-            labels[i].setPreferredSize(new Dimension(100,50));
-            inputs[i] = new JTextField();
-            inputs[i].setPreferredSize(new Dimension(150,30));
-            leftForm.add(labels[i]);
-            leftForm.add(inputs[i]);
-        } 
-        return leftForm;
-    } */
+    public void setHeader(String[] headers) {
+        tableModel.setColumnIdentifiers(headers);
+        t.setModel(tableModel);
+    }
 
-    /* private void tableMouseClicked(MouseEvent evt) {
-        int row = t.getSelectedRow();
-        String id = (String) t.getValueAt(row, 0);
-        inputs[0].setText(id);
-        String name = (String) t.getValueAt(row, 1);
-        inputs[1].setText(name);
-        String age = (String) t.getValueAt(row, 2);
-        inputs[2].setText(age);
-    } */
+    public void addRow(Object[] data) {
+        tableModel.addRow(data);
+    }
 
+    public void setAlignment(int column, int align) {
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(align);
+        t.getColumnModel().getColumn(column).setCellRenderer(centerRenderer);
+    }
+
+    public void setPreferredWidth(int column , int width){
+        t.getColumnModel().getColumn(column).setPreferredWidth(width);
+    }
 }

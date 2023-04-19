@@ -48,7 +48,7 @@ public class nhanvienDAO implements DAOinterface<nhanvien> {
     }
 
     @Override
-    public ArrayList<nhanvien> selecAll() {
+    public ArrayList<nhanvien>  selecAll() {
         ArrayList<nhanvien> ketQua = new ArrayList<nhanvien>();
 		try {
 			// Bước 1: tạo kết nối đến CSDL

@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,26 +11,13 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import java.awt.Font;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-
-import javax.swing.SwingConstants;
-
-import GUI.Mybutton.addbutton;
-import GUI.Mybutton.deletebutton;
-import GUI.Mybutton.editbutton;
 
 import java.awt.FlowLayout;
 
 public class list_statistic extends JPanel implements MouseListener,ActionListener{
-    private JTextField headerSearchInput;
-    private JButton headerSearchBtn;
     private JPanel content;
     private String[] list_sta_name = {"Tong quat","Ban hang","Nhap hang"};
     private JButton[] list_sta_btn = new JButton[list_sta_name.length];
@@ -40,7 +26,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
         setLayout(new BorderLayout());
         // header
         JPanel list_sta = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        list_sta.setBackground(Color.darkGray);
+        list_sta.setBackground(Color.black);
 
          for (int i = 0; i < list_sta_name.length; i++) {
             list_sta_btn[i] = new JButton(list_sta_name[i]);
@@ -71,36 +57,8 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
     }
     @Override
     public void mousePressed(MouseEvent e) {
-        /* for (int i = 0; i < list_sta_btn.length; i++) {
-            if (e.getSource() == list_sta_btn[i]) {
-                try {
-                    change_panel(list_sta_btn[i].getText());
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                lab_menu[i].setBackground(new Color(54,54,54));
-            }
-
-        } */
         
     }
-    /* public void inputSearchFocus(JTextField input) {
-        input.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (input.getText().equals("Nhap de tim kiem...")) {
-                    input.setText("");
-                }           
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (input.getText().isEmpty() || input.getText() == "") {
-                    input.setText("Nhap de tim kiem...");
-                }
-            }
-        });
-    } */
 
     public void hoverBtn(JButton button) {
         button.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -123,12 +81,8 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
 
         this.remove(content);
         try {
-            /* if(e.getSource() == headerSearchBtn) {
-                System.out.print("Search");
-            } */
-            
             content.removeAll();
-            
+        
             for (int i = 0; i < list_sta_name.length; i++) {
                 list_sta_btn[i].setBackground(Color.white);
                 list_sta_btn[i].setForeground(Color.black);
@@ -154,6 +108,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
                 System.out.print(list_sta_name[2]);
 
             }
+            content.setBackground(Color.lightGray);
             content.setPreferredSize(new Dimension(0, 620));
         } catch (Exception ex) {
             System.out.println(ex);
