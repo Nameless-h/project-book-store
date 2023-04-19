@@ -230,15 +230,18 @@ public class login extends JFrame implements MouseListener,KeyListener {
 
     }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
+            // kiemtra dang nhap
+            private void check_login(MouseEvent evt) {
+                String username=txt_username.getText();
+                String password=new String(txt_password.getPassword());
+                //user_login user=new user_login("",username,password,"");
+                // if(chucnang_user.check_login(user)!=null)
+                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+                // else
+                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
+            }
 
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
+    
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {

@@ -124,13 +124,13 @@ public class SaleGUI extends JPanel implements ActionListener {
     public Mytable bookTable() {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
-        booktable.setHeader(new String[]{"ID","Book name","Price","Quantity"});
+        booktable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity" });
         bookbus.initbookList();
         for(book book : bookbus.getbookList()) {
             booktable.addRow(new Object[]{
                 book.getMaSach(),
                 book.getTenSach(),
-                PriceFormatter.format(book.getGiaTien()),
+                book.getGiaTien(),
                 book.getSoLuong()
             });
         }
@@ -175,19 +175,13 @@ public class SaleGUI extends JPanel implements ActionListener {
                 inp[i].setEditable(false);
             inputpnl.add(inp[i]);
         }
-        try {
-            image = new JLabel();
-            image.setBounds(10,10,170,250);
-            image.setOpaque(true);
-            BufferedImage bufferedImage = ImageIO.read(new File("book_store/src/img/doraemon.jpg"));
-            Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
-            image.setIcon(new ImageIcon(img));
-            image.setBorder(new LineBorder(Color.BLACK,1,true));
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        }
-        
+        image = new JLabel();
+        image.setBounds(10,10,170,250);
+        image.setOpaque(true);
+        BufferedImage bufferedImage = ImageIO.read(new File("D:/NAM_2/HK2/Java/project-book-store/book_store/src/img/doraemon.jpg"));
+        Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
+        image.setIcon(new ImageIcon(img));
+        image.setBorder(new LineBorder(Color.BLACK,1,true));
         
 
         addbtn.setBounds(195, 220, 330, 40);
@@ -299,7 +293,7 @@ public class SaleGUI extends JPanel implements ActionListener {
 
         cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
         paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
-        
+
         cancelbtn.addActionListener(this);
 
         int total = 0;
@@ -400,7 +394,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
-        String id = String.valueOf(booktable.getTable().getValueAt(row, 0)) ;
+        String id = String.valueOf(booktable.getTable().getValueAt(row, 0));
         inp[0].setText(id);
         String name = (String) booktable.getTable().getValueAt(row, 1);
         inp[1].setText(name);
