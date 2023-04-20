@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Arrays;
 
-public class suataikhoan extends JPanel  implements MouseListener,ItemListener{
+public class suataikhoan extends JPanel  implements MouseListener{
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
@@ -37,6 +37,8 @@ public class suataikhoan extends JPanel  implements MouseListener,ItemListener{
     CheckboxGroup cbg = new CheckboxGroup();
     JComboBox com_manhomquyen, com_manhanvien;
     int tinhtrang;
+    JRadioButton  rdb_chophep, rdb_khongchophep;
+    ButtonGroup group;
     public suataikhoan(main obj, taikhoan tk) {
         this.tk = tk;
         this.thongtin = tk.getthongtin();
@@ -116,23 +118,22 @@ public class suataikhoan extends JPanel  implements MouseListener,ItemListener{
         pan_tinhtrang.setBackground(color_211);
         pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
         pan_info.add(pan_tinhtrang);
-        chk_chophep = new JCheckBox("Cho phep");
-        chk_chophep.setPreferredSize(new Dimension(150, 50));
-        chk_chophep.setFont(new Font(name_font1, 1, 25));
-        chk_khong = new JCheckBox("Khong cho phep");
-        chk_khong.setPreferredSize(new Dimension(250, 50));
-        chk_khong.setFont(new Font(name_font1, 1, 22));
-        if (tk.getTinhtrang()==1) {
-            chk_chophep.setSelected(true);
-            chk_khong.setSelected(false);
-        } else {
-            chk_chophep.setSelected(false);
-            chk_khong.setSelected(true);
-        }
-        chk_chophep.addItemListener(this);
-        chk_khong.addItemListener(this);
-        pan_tinhtrang.add(chk_chophep);
-        pan_tinhtrang.add(chk_khong);
+        rdb_chophep = new JRadioButton("Cho phep");
+        rdb_khongchophep = new JRadioButton("Khong cho phep");
+        if (tk.getTinhtrang() == 1)
+            rdb_chophep.setSelected(true);
+        else
+            rdb_khongchophep.setSelected(true);
+        rdb_chophep.setPreferredSize(new Dimension(200, 50));
+        rdb_chophep.setFont(new Font(name_font1, 1, 20));
+        rdb_khongchophep.setPreferredSize(new Dimension(200, 50));
+        rdb_khongchophep.setFont(new Font(name_font1, 1, 20));
+        group = new ButtonGroup();
+        group.add(rdb_chophep);
+        group.add(rdb_khongchophep);
+
+        pan_tinhtrang.add(rdb_chophep);
+        pan_tinhtrang.add(rdb_khongchophep);
 
         bun_them = new JButton("Sua");
         bun_them.setBounds(400, 590, 300, 50);
@@ -157,7 +158,12 @@ public class suataikhoan extends JPanel  implements MouseListener,ItemListener{
             String password=txt[2].getText();
             int mnv_select = Integer.parseInt(com_manhanvien.getSelectedItem().toString());
             int mnq_select = Integer.parseInt(com_manhomquyen.getSelectedItem().toString());
-        taikhoan tk=new taikhoan(ma, username, password, mnv_select,mnq_select,this.tinhtrang);
+            int tt = 1;
+                if (rdb_chophep.isSelected())
+                    tt = 1;
+                if (rdb_khongchophep.isSelected())
+                    tt = 0;
+        taikhoan tk=new taikhoan(ma, username, password, mnv_select,mnq_select,tt);
         quanlitaikhoan.suataikhoan(tk);
         JOptionPane.showMessageDialog(null,"Sua thong tin nhan vien thanh cong");
         }
@@ -178,16 +184,5 @@ public class suataikhoan extends JPanel  implements MouseListener,ItemListener{
         
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        if (chk_chophep.isSelected() && chk_khong.isSelected()) {
-            if (e.getSource() == chk_chophep) {
-                chk_khong.setSelected(false);
-                this.tinhtrang=1;
-            } else {
-                chk_chophep.setSelected(false);
-                this.tinhtrang=0;
-            }
-        }
-    }
+    
 }

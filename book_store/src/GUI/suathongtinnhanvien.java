@@ -24,6 +24,8 @@ public class suathongtinnhanvien extends JPanel {
     JPanel pan_info;
     nhanvien nv;
     JButton bun_sua;
+    JRadioButton rdb_nam, rdb_nu;
+    ButtonGroup group;
 
     public suathongtinnhanvien(main obj, nhanvien nv) {
         this.nv = nv;
@@ -54,22 +56,37 @@ public class suathongtinnhanvien extends JPanel {
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
             lab[i].setBackground(color_211);
             lab[i].setForeground(Color.black);
-            txt[i] = new JTextField(thongtin[i]);
-            if (i == 0) {
-                txt[i].setEnabled(false);
-            }
-            if (i == 2) {
-                if (thongtin[i].equalsIgnoreCase("1"))
-                    txt[i].setText("Nam");
-                else
-                    txt[i].setText("Nu");
-            }
-            txt[i].setPreferredSize(new Dimension(400, 50));
-            txt[i].setForeground(Color.black);
-            txt[i].setFont(new Font(name_font1, 1, 20));
-
             pan_info.add(lab[i]);
-            pan_info.add(txt[i]);
+            if (i == 2) {
+                rdb_nam = new JRadioButton("Nam");
+                rdb_nu = new JRadioButton("Nu");
+                if (nv.getGioitinh() == 1)
+                    rdb_nam.setSelected(true);
+                else
+                    rdb_nu.setSelected(true);
+                rdb_nam.setPreferredSize(new Dimension(200, 50));
+                rdb_nam.setFont(new Font(name_font1, 1, 25));
+                rdb_nu.setPreferredSize(new Dimension(200, 50));
+                rdb_nu.setFont(new Font(name_font1, 1, 25));
+                group = new ButtonGroup();
+                group.add(rdb_nam);
+                group.add(rdb_nu);
+
+                pan_info.add(rdb_nam);
+                pan_info.add(rdb_nu);
+            } else {
+                txt[i] = new JTextField(thongtin[i]);
+                if (i == 0) {
+                    txt[i].setText(String.valueOf(nv.getMa()));
+                    txt[i].setEnabled(false);
+                }
+
+                txt[i].setPreferredSize(new Dimension(400, 50));
+                txt[i].setForeground(Color.black);
+                txt[i].setFont(new Font(name_font1, 1, 20));
+
+                pan_info.add(txt[i]);
+            }
         }
         bun_sua = new JButton("Sua");
         bun_sua.setBounds(400, 590, 300, 50);
@@ -79,20 +96,16 @@ public class suathongtinnhanvien extends JPanel {
         bun_sua.setForeground(Color.white);
         bun_sua.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
-                int gt = -1;
-                if (txt[2].getText().equalsIgnoreCase("Nam"))
+                int gt = 1;
+                if (rdb_nam.isSelected())
                     gt = 1;
-                if (txt[2].getText().equalsIgnoreCase("Nu"))
+                if (rdb_nu.isSelected())
                     gt = 0;
-                if (gt != -1) {
-                    nhanvien nv = new nhanvien(Integer.parseInt(txt[0].getText()), txt[1].getText(), gt,
-                            txt[3].getText(),
-                            txt[4].getText(), txt[5].getText(), txt[6].getText());
-                    quanlinhanvien.suathongtinnhanvien(nv);
-                    JOptionPane.showMessageDialog(null, "Sua thanh cong");
-                }
-                else
-                    JOptionPane.showMessageDialog(null,"Sai gioi tinh");
+                nhanvien nv = new nhanvien(Integer.parseInt(txt[0].getText()), txt[1].getText(), gt,
+                        txt[3].getText(),
+                        txt[4].getText(), txt[5].getText(), txt[6].getText());
+                quanlinhanvien.suathongtinnhanvien(nv);
+                JOptionPane.showMessageDialog(null, "Sua thanh cong");
             }
         });
         this.add(bun_sua);

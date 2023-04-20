@@ -22,6 +22,8 @@ public class themkhachhang extends JPanel implements MouseListener{
     Integer ma;
     JButton bun_them;
     JCheckBox chk_chophep,chk_khong;
+    JRadioButton rdb_nam,rdb_nu;
+    ButtonGroup group ;
     public themkhachhang(main obj,Integer ma){
         this.obj=obj;
         this.ma=ma;
@@ -48,6 +50,22 @@ public class themkhachhang extends JPanel implements MouseListener{
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
             lab[i].setBackground(color_211);
             lab[i].setForeground(Color.black);
+            pan_info.add(lab[i]);
+            if (i == 2) {
+                rdb_nam = new JRadioButton("Nam", true);
+                rdb_nu = new JRadioButton("Nu");
+                rdb_nam.setPreferredSize(new Dimension(200, 50));
+                rdb_nam.setFont(new Font(name_font1, 1, 25));
+                rdb_nu.setPreferredSize(new Dimension(200, 50));
+                rdb_nu.setFont(new Font(name_font1, 1, 25));
+                group = new ButtonGroup();
+                group.add(rdb_nam);
+                group.add(rdb_nu);
+                rdb_nam.addMouseListener(this);
+                rdb_nu.addMouseListener(this);
+                pan_info.add(rdb_nam);
+                pan_info.add(rdb_nu);
+            } else {
             txt[i]=new JTextField();
             if(i==0){
                 txt[i].setText(String.valueOf(ma));
@@ -64,26 +82,16 @@ public class themkhachhang extends JPanel implements MouseListener{
             txt[i].setForeground(Color.black);
             txt[i].setFont(new Font(name_font1,1,20));
             
-            pan_info.add(lab[i]);
+           
             pan_info.add(txt[i]);
+            }
         }
         pan_tinhtrang=new JPanel();
         pan_tinhtrang.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                                                         "Cho phep",
                                                             TitledBorder.LEFT,
                                                             TitledBorder.TOP));;
-        // pan_tinhtrang.setPreferredSize(new Dimension(690,100));
-        // pan_tinhtrang.setBackground(color_211);
-        // pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
-        // pan_info.add(pan_tinhtrang);
-        // chk_chophep=new JCheckBox("Cho phep",true);
-        // chk_chophep.setPreferredSize(new Dimension(150,50));
-        // chk_chophep.setFont(new Font(name_font1,1,25));
-        // chk_khong=new JCheckBox("Khong cho phep",false);
-        // chk_khong.setPreferredSize(new Dimension(250,50));
-        // chk_khong.setFont(new Font(name_font1,1,22));
-        // pan_tinhtrang.add(chk_chophep);
-        // pan_tinhtrang.add(chk_khong);
+
 
         
         bun_them=new JButton("Them");
@@ -102,24 +110,24 @@ public class themkhachhang extends JPanel implements MouseListener{
     @Override
     public void mousePressed(MouseEvent e) {
         if(e.getSource()==bun_them){
-            String gt_str = txt[2].getText();
-            if (gt_str.equalsIgnoreCase("nam") || gt_str.equalsIgnoreCase("nu")) {
-                int gt = 0;
+            int gt=1;
+            if (rdb_nam.isSelected()) {
+                gt=1;
+            }
+            if (rdb_nu.isSelected()) {
+                gt=0;
+            }
                 Integer manv = this.ma;
                 String ten = txt[1].getText();
 
                 String dc = txt[3].getText();
                 String email = txt[4].getText();
                 String sdt = txt[5].getText();
-                if (gt_str.equalsIgnoreCase("nam"))
-                    gt = 1;
-                else if (gt_str.equalsIgnoreCase("nu"))
-                    gt = 0;
+               
                 khachhang kh = new khachhang(manv, ten, gt, dc, email, sdt, 0,1);
                 quanlikhachhang.themkhachhang(kh);
                 JOptionPane.showMessageDialog(null, "Them thanh cong");
-            } else
-                JOptionPane.showMessageDialog(null, "Ban nhap gioi tinh bi sai! VUi long nhap lai");
+           
         }
     }
     @Override
