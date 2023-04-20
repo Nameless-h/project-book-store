@@ -12,11 +12,11 @@ import javax.swing.border.*;
 import BUS.quanlikhachhang;
 import DTO.khachhang;
 
-public class suathongtinkhachhang extends JPanel implements ItemListener,MouseListener {
+public class suathongtinkhachhang extends JPanel implements  MouseListener {
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
-    quanlikhachhang quanlikhachhang =new quanlikhachhang();
+    quanlikhachhang quanlikhachhang = new quanlikhachhang();
     // ------------------------------
     String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:", "Diem tich luy:" };
     JLabel[] lab = new JLabel[list_lab.length];
@@ -28,11 +28,14 @@ public class suathongtinkhachhang extends JPanel implements ItemListener,MouseLi
     JCheckBox chk_chophep, chk_khong;
     khachhang kh;
     int tinhtrang;
+    JRadioButton rdb_nam, rdb_nu, rdb_chophep, rdb_khongchophep;
+    ButtonGroup group1, group2;
+
     public suathongtinkhachhang(main obj, khachhang kh) {
         this.obj = obj;
         this.kh = kh;
         this.thongtin = kh.getthongtin();
-        this.tinhtrang=kh.getTinhtrang();
+        this.tinhtrang = kh.getTinhtrang();
         init(obj);
     }
 
@@ -58,22 +61,38 @@ public class suathongtinkhachhang extends JPanel implements ItemListener,MouseLi
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
             lab[i].setBackground(color_211);
             lab[i].setForeground(Color.black);
-            txt[i] = new JTextField(thongtin[i]);
-            if (i == 0) {
-                txt[i].setEnabled(false);
-            }
-            if (i == 2) {
-                if (thongtin[i].equalsIgnoreCase("1"))
-                    txt[i].setText("Nam");
-                else
-                    txt[i].setText("Nu");
-            }
-            txt[i].setPreferredSize(new Dimension(400, 50));
-            txt[i].setForeground(Color.black);
-            txt[i].setFont(new Font(name_font1, 1, 20));
-
             pan_info.add(lab[i]);
-            pan_info.add(txt[i]);
+            txt[i] = new JTextField(thongtin[i]);
+            if (i == 2) {
+                rdb_nam = new JRadioButton("Nam");
+                rdb_nu = new JRadioButton("Nu");
+                if (kh.getGioitinh() == 1)
+                    rdb_nam.setSelected(true);
+                else
+                    rdb_nu.setSelected(true);
+                rdb_nam.setPreferredSize(new Dimension(200, 50));
+                rdb_nam.setFont(new Font(name_font1, 1, 25));
+                rdb_nu.setPreferredSize(new Dimension(200, 50));
+                rdb_nu.setFont(new Font(name_font1, 1, 25));
+                group1 = new ButtonGroup();
+                group1.add(rdb_nam);
+                group1.add(rdb_nu);
+
+                pan_info.add(rdb_nam);
+                pan_info.add(rdb_nu);
+            } else {
+                txt[i] = new JTextField(thongtin[i]);
+                if (i == 0) {
+                    txt[i].setText(String.valueOf(kh.getMa()));
+                    txt[i].setEnabled(false);
+                }
+
+                txt[i].setPreferredSize(new Dimension(400, 50));
+                txt[i].setForeground(Color.black);
+                txt[i].setFont(new Font(name_font1, 1, 20));
+
+                pan_info.add(txt[i]);
+            }
         }
         pan_tinhtrang = new JPanel();
         pan_tinhtrang.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
@@ -85,23 +104,22 @@ public class suathongtinkhachhang extends JPanel implements ItemListener,MouseLi
         pan_tinhtrang.setBackground(color_211);
         pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
         pan_info.add(pan_tinhtrang);
-        chk_chophep = new JCheckBox("Cho phep");
-        chk_chophep.setPreferredSize(new Dimension(150, 50));
-        chk_chophep.setFont(new Font(name_font1, 1, 25));
-        chk_khong = new JCheckBox("Khong cho phep");
-        chk_khong.setPreferredSize(new Dimension(250, 50));
-        chk_khong.setFont(new Font(name_font1, 1, 22));
-        if (kh.getTinhtrang()==1) {
-            chk_chophep.setSelected(true);
-            chk_khong.setSelected(false);
-        } else {
-            chk_chophep.setSelected(false);
-            chk_khong.setSelected(true);
-        }
-        chk_chophep.addItemListener(this);
-        chk_khong.addItemListener(this);
-        pan_tinhtrang.add(chk_chophep);
-        pan_tinhtrang.add(chk_khong);
+        rdb_chophep = new JRadioButton("Cho phep");
+        rdb_khongchophep = new JRadioButton("Khong cho phep");
+        if (kh.getTinhtrang() == 1)
+            rdb_chophep.setSelected(true);
+        else
+            rdb_khongchophep.setSelected(true);
+        rdb_chophep.setPreferredSize(new Dimension(200, 50));
+        rdb_chophep.setFont(new Font(name_font1, 1, 25));
+        rdb_khongchophep.setPreferredSize(new Dimension(300, 50));
+        rdb_khongchophep.setFont(new Font(name_font1, 1, 25));
+        group2 = new ButtonGroup();
+        group2.add(rdb_chophep);
+        group2.add(rdb_khongchophep);
+
+        pan_tinhtrang.add(rdb_chophep);
+        pan_tinhtrang.add(rdb_khongchophep);
 
         bun_sua = new JButton("Sua");
         bun_sua.setBounds(400, 590, 300, 50);
@@ -113,63 +131,53 @@ public class suathongtinkhachhang extends JPanel implements ItemListener,MouseLi
         this.add(bun_sua);
     }
 
-    private void hienthongtin() {
 
-    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(e.getSource()==bun_sua){
-            int ma=kh.getMa();
-            String ten=txt[1].getText();
-            String gt_str=txt[2].getText();
-            int gt;
-            if(gt_str.equalsIgnoreCase("Nam"))
-                gt=1;
-                else
-            gt=0;
-            String dc=txt[3].getText();
-            String email=txt[4].getText();
-            String sdt=txt[5].getText();
-            int diem=Integer.parseInt(txt[6].getText());
-        khachhang kh=new khachhang(ma, ten, gt, dc, email, sdt, diem, tinhtrang);
-        // System.out.println(kh);
-        quanlikhachhang.suathongtinkhachhang(kh);
-        JOptionPane.showMessageDialog(null,"Sua thong tin nhan vien thanh cong");
+        if (e.getSource() == bun_sua) {
+            int ma = kh.getMa();
+            String ten = txt[1].getText();
+            int gt = 1;
+                if (rdb_nam.isSelected())
+                    gt = 1;
+                if (rdb_nu.isSelected())
+                    gt = 0;
+            String dc = txt[3].getText();
+            String email = txt[4].getText();
+            String sdt = txt[5].getText();
+            int tt = 1;
+                if (rdb_chophep.isSelected())
+                    tt = 1;
+                if (rdb_khongchophep.isSelected())
+                    tt = 0;
+            int diem = Integer.parseInt(txt[6].getText());
+            khachhang kh = new khachhang(ma, ten, gt, dc, email, sdt, diem, tt);
+            // System.out.println(kh);
+            quanlikhachhang.suathongtinkhachhang(kh);
+            JOptionPane.showMessageDialog(null, "Sua thong tin khach hang thanh cong");
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        
+
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        if (chk_chophep.isSelected() && chk_khong.isSelected()) {
-            if (e.getSource() == chk_chophep) {
-                chk_khong.setSelected(false);
-                this.tinhtrang=1;
-            } else {
-                chk_chophep.setSelected(false);
-                this.tinhtrang=0;
-            }
-            // System.out.println(tinhtrang);
-        }
-    }
+    
 }

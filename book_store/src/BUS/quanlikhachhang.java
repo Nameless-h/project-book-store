@@ -37,4 +37,163 @@ public class quanlikhachhang {
     public void suathongtinkhachhang(khachhang kh){
         chucang_khachhang.update(kh);
     }
+    public boolean timkiem_vitri(int tk, String str, JTable table) {
+        boolean kiemtra=false;
+        if(tk==0){
+            hienthidanhsach_khachhang(table);
+            kiemtra=true;
+        }
+        if (tk == 1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            int temp = Integer.parseInt(str);
+            for (int i = 0; i < list.size(); i++) {
+                if (temp == list.get(i).getMa()) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                            kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 2) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (str.equalsIgnoreCase(list.get(i).getTen())) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 3) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            int gt1;
+            if(str.equalsIgnoreCase("Nam"))
+                gt1=1;
+            else
+                gt1=0;
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (gt1 == list.get(i).getGioitinh()) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 4) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+
+
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (str.equalsIgnoreCase(list.get(i).getDiachi())) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 5) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+
+
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (str.equalsIgnoreCase(list.get(i).getEmail())) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 6) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+
+
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (str.equalsIgnoreCase(list.get(i).getSodienthoai())) {
+                    String gt;
+                    if (list.get(i).getGioitinh() == 1)
+                        gt = "Nam";
+                    else
+                        gt = "Nu";
+                    model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
+                        list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
+                        list.get(i).getDiem(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        
+        
+    return kiemtra;
+    }
 }
