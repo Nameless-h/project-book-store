@@ -34,6 +34,12 @@ public class quanlinhomquyen {
             list1[i]=list.get(i).getMa();
         return list1;
     }
+    public String[] danhsach_tennhomquyen(){
+        String[] list2=new String[list.size()];
+        for(int i=0;i<list.size();i++)
+            list2[i]=list.get(i).getTen();
+        return list2;
+    }
     public void themnhomquyen(nhomquyen nq){
         chucnang_nhomquyen.insert(nq);
     }
