@@ -74,7 +74,7 @@ public class menu extends JPanel implements MouseListener {
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("KH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
                         tk_chitietquyen.get(i).getTinhtrang() == 1) {
-                    danhsachkhachhang panel = new danhsachkhachhang(obj);
+                    danhsachkhachhang panel = new danhsachkhachhang(obj,tk_chitietquyen);
                     panel.setBounds(0, 0, obj.w_center, obj.h_center);
                     obj.center.removeAll();
                     obj.center.add(panel);
@@ -90,7 +90,7 @@ public class menu extends JPanel implements MouseListener {
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("QH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
                         tk_chitietquyen.get(i).getTinhtrang() == 1) {
-                    danhsachnhomquyen panel = new danhsachnhomquyen(obj);
+                    danhsachnhomquyen panel = new danhsachnhomquyen(obj,tk_chitietquyen);
                     panel.setBounds(0, 0, obj.w_center, obj.h_center);
                     obj.center.removeAll();
                     obj.center.add(panel);
@@ -106,7 +106,7 @@ public class menu extends JPanel implements MouseListener {
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("TK") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
                         tk_chitietquyen.get(i).getTinhtrang() == 1) {
-                    danhsachtaikhoan panel = new danhsachtaikhoan(obj);
+                    danhsachtaikhoan panel = new danhsachtaikhoan(obj,tk_chitietquyen);
                     panel.setBounds(0, 0, obj.w_center, obj.h_center);
                     obj.center.removeAll();
                     obj.center.add(panel);
@@ -157,7 +157,7 @@ public class menu extends JPanel implements MouseListener {
             bf.setBounds(0, 0, 1100, 700);
 
             obj.center.removeAll();
-            obj.center.add(statisticgui);
+            obj.center.add(bf);
             obj.center.repaint();
             obj.center.revalidate();
 

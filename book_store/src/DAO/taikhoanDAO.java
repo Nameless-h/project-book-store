@@ -111,7 +111,7 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
 
 
     @Override
-    public void update(taikhoan t) {
+    public int update(taikhoan t) {
         int ketQua = 0;
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -138,6 +138,7 @@ public class taikhoanDAO implements DAOinterface<taikhoan>{
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return ketQua;
     }
     
 }
