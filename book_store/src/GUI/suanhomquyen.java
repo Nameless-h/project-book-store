@@ -101,8 +101,10 @@ public class suanhomquyen extends JPanel {
         pan_chucnang = new JPanel();
         pan_chucnang.setBounds(0, 90, obj.w_center, 490);
         pan_chucnang.setBackground(color_211);
-        pan_chucnang.setLayout(new FlowLayout(FlowLayout.LEFT));
-        this.add(pan_chucnang);
+        pan_chucnang.setLayout(new GridLayout(3,5));
+        thanhcuon=new JScrollPane(pan_chucnang);
+        thanhcuon.setBounds(0, 90, obj.w_center, 490);
+        this.add(thanhcuon);
         // thanhkeo=new JScrollPane(pan_chucnang);
         JPanel[] pan = new JPanel[list_chucnang.size()];
         for (int i = 0; i < list_chucnang.size(); i++) {

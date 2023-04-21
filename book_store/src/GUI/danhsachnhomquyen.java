@@ -5,12 +5,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.quanlinhomquyen;
+import DTO.chitietnhomquyen;
 
 import javax.swing.JPanel;
 
@@ -19,6 +21,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
     quanlinhomquyen chucnang = new quanlinhomquyen();
+    ArrayList<chitietnhomquyen> list_ct;
     // -------------------------------
     String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen", "Ngay tao", "Ngay cap nhat", "Chi tiet nhom quyen" };
     String[] list_timkiem = { "Tat ca", "Ma nhom quyen", "Ten nhom quyen" };
@@ -30,8 +33,9 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
     JButton bun_them, bun_xoa, bun_sua, bun_timkiem, bun_lammoi;
 
-    public danhsachnhomquyen(main obj) {
+    public danhsachnhomquyen(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
+        this.list_ct = list_ct;
         init(obj);
     }
 
@@ -118,31 +122,45 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
-            int rowCount = tab_danhsach.getRowCount();
-            Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
-            themnhomquyen panel = new themnhomquyen(obj, ma + 1);
-            panel.setBounds(0, 0, obj.w_center, obj.h_center);
-            obj.center.removeAll();
-            obj.center.add(panel);
-            obj.center.repaint();
-            obj.center.revalidate();
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("QH") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Them"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        int rowCount = tab_danhsach.getRowCount();
+                        Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
+                        themnhomquyen panel = new themnhomquyen(obj, ma + 1);
+                        panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                        obj.center.removeAll();
+                        obj.center.add(panel);
+                        obj.center.repaint();
+                        obj.center.revalidate();
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
         } else if (e.getSource() == bun_sua) {
-            DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
-            int selectrow = tab_danhsach.getSelectedRow();
-            if (selectrow == -1) {
-                JOptionPane.showMessageDialog(null, "Ban chua chon nhom quyen de sua");
-            } else {
-                Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
-                String ten = model.getValueAt(selectrow, 2).toString();
-                String ngaytao = model.getValueAt(selectrow, 3).toString();
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("QH") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Sua"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
+                        int selectrow = tab_danhsach.getSelectedRow();
+                        if (selectrow == -1) {
+                            JOptionPane.showMessageDialog(null, "Ban chua chon nhom quyen de sua");
+                        } else {
+                            Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
+                            String ten = model.getValueAt(selectrow, 2).toString();
+                            String ngaytao = model.getValueAt(selectrow, 3).toString();
 
-                suanhomquyen panel = new suanhomquyen(obj, ma, ten, ngaytao);
-                panel.setBounds(0, 0, obj.w_center, obj.h_center);
-                obj.center.removeAll();
-                obj.center.add(panel);
-                obj.center.repaint();
-                obj.center.revalidate();
-            }
+                            suanhomquyen panel = new suanhomquyen(obj, ma, ten, ngaytao);
+                            panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                            obj.center.removeAll();
+                            obj.center.add(panel);
+                            obj.center.repaint();
+                            obj.center.revalidate();
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
             // System.out.println(ma+ten);
         } else if (e.getSource() == bun_timkiem) {
             int tk = combo_timkiem.getSelectedIndex();

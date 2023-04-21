@@ -116,4 +116,10 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
 
+    @Override
+    public ArrayList<Theloai> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+    }
+
 }

@@ -20,7 +20,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import BUS.quanlitaikhoan;
 import DTO.taikhoan;
-import GUI.quanlysanpham.button_panel;
+
 
 /**
  *
@@ -274,6 +274,18 @@ public class login extends JFrame implements MouseListener,KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
 }
