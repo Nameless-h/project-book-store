@@ -5,19 +5,27 @@ import java.util.*;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import DAO.taikhoanDAO;
 import DTO.taikhoan;
 
 public class quanlitaikhoan {
+    taikhoanDAO chucnang_taikhoan=new taikhoanDAO();
+    ArrayList<taikhoan> list=chucnang_taikhoan.selecAll();
+    public ArrayList<taikhoan> laydanhsach(){
+        ArrayList<taikhoan> list=chucnang_taikhoan.selecAll();
+        return list;
+    }
+    public taikhoan kiemtradangnhap(taikhoan tk){
+        for(int i=0;i<list.size();i++){
+            if(tk.getUsername().equalsIgnoreCase(list.get(i).getUsername())&&
+            tk.getPassword().equalsIgnoreCase(list.get(i).getPassword()))
+                return list.get(i);
+        }
+        return null;
+    }
     public void hienthidanhsach_taikhoan(JTable table) {
-        ArrayList<taikhoan> list = new ArrayList<>();
-        taikhoan ac1 = new taikhoan("TK1", "kiet", "123", "ADMIN1", "q1", "hien");
-        taikhoan ac2 = new taikhoan("TK2", "hoang", "123", "NV1", "q2", "hien");
-        taikhoan ac3 = new taikhoan("TK3", "tuan", "123", "NV2", "q2", "hien");
-        taikhoan ac4 = new taikhoan("Tk4", "hao", "123", "QL1", "q3", "hien");
-        list.add(ac1);
-        list.add(ac2);
-        list.add(ac3);
-        list.add(ac4);
+        //ArrayList<taikhoan> list = laydanhsach();
+        
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         // them thong tin nhan vien vao bang table
@@ -30,5 +38,81 @@ public class quanlitaikhoan {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+    }
+    public void themtaikhoan(taikhoan tk){
+        list.add(tk);
+        chucnang_taikhoan.insert(tk);
+    }
+    public void suataikhoan(taikhoan tk){
+        chucnang_taikhoan.update(tk);
+    }
+    public boolean timkiem_vitri(int tk, String str, JTable table) {
+        boolean kiemtra=false;
+        if(tk==0){
+            hienthidanhsach_taikhoan(table);
+            kiemtra=true;
+        }
+        if (tk == 1) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            int temp = Integer.parseInt(str);
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+                if (temp == list.get(i).getMatk()) {
+
+                    model.addRow(new Object[] { i + 1, list.get(i).getMatk(), list.get(i).getUsername(), list.get(i).getPassword(),
+                        list.get(i).getManhanvien(), list.get(i).getManhomquyen(), list.get(i).getTinhtrang() });
+                            kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 2) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            int temp=Integer.parseInt(str);
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+               
+                if (temp== list.get(i).getManhanvien()) {
+
+                    model.addRow(new Object[] { i + 1, list.get(i).getMatk(), list.get(i).getUsername(), list.get(i).getPassword(),
+                        list.get(i).getManhanvien(), list.get(i).getManhomquyen(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        else
+        if (tk == 3) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            model.setRowCount(0);
+            int temp=Integer.parseInt(str);
+            // them thong tin nhan vien vao bang table
+            for (int i = 0; i < list.size(); i++) {
+               
+                if (temp== list.get(i).getManhomquyen()) {
+
+                    model.addRow(new Object[] { i + 1, list.get(i).getMatk(), list.get(i).getUsername(), list.get(i).getPassword(),
+                        list.get(i).getManhanvien(), list.get(i).getManhomquyen(), list.get(i).getTinhtrang() });
+                    kiemtra=true;
+                }
+
+            }
+            DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        }
+        
+
+        
+    return kiemtra;
     }
 }

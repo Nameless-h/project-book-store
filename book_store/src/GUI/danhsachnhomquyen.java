@@ -20,7 +20,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     String name_font1 = "Times Roman";
     quanlinhomquyen chucnang = new quanlinhomquyen();
     // -------------------------------
-    String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen", "Chi tiet nhom quyen" };
+    String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen", "Ngay tao", "Ngay cap nhat", "Chi tiet nhom quyen" };
     String[] list_timkiem = { "Tat ca", "Ma nhom quyen", "Ten nhom quyen" };
     // --------------------------------------------
     JComboBox combo_timkiem;
@@ -28,7 +28,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_timkiem;
+    JButton bun_them, bun_xoa, bun_sua, bun_timkiem, bun_lammoi;
 
     public danhsachnhomquyen(main obj) {
         this.obj = obj;
@@ -72,7 +72,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         this.add(pan_chucnang2);
         // set panel tim kiem
         pan_timkiem = new JPanel();
-        pan_timkiem.setPreferredSize(new Dimension(500, 60));
+        pan_timkiem.setPreferredSize(new Dimension(600, 60));
         pan_timkiem.setBackground(color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Tim kiem",
@@ -94,6 +94,11 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         bun_timkiem = new JButton("Tim kiem");
         bun_timkiem.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_timkiem);
+        bun_lammoi = new JButton("Lam moi");
+        bun_lammoi.setPreferredSize(new Dimension(100, 30));
+        pan_timkiem.add(bun_lammoi);
+        bun_timkiem.addMouseListener(this);
+        bun_lammoi.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -113,8 +118,9 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
-            
-            themnhomquyen panel = new themnhomquyen(obj);
+            int rowCount = tab_danhsach.getRowCount();
+            Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
+            themnhomquyen panel = new themnhomquyen(obj, ma + 1);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
             obj.center.removeAll();
             obj.center.add(panel);
@@ -123,20 +129,34 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         } else if (e.getSource() == bun_sua) {
             DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
             int selectrow = tab_danhsach.getSelectedRow();
-            if (selectrow==-1){
-                JOptionPane.showMessageDialog(null,"Ban chua chon nhom quyen de sua");
-            }
-            else{
-            String ma = model.getValueAt(selectrow, 1).toString();
-            String ten = model.getValueAt(selectrow, 2).toString();
-            suanhomquyen panel = new suanhomquyen(obj,ma,ten);
-            panel.setBounds(0, 0, obj.w_center, obj.h_center);
-            obj.center.removeAll();
-            obj.center.add(panel);
-            obj.center.repaint();
-            obj.center.revalidate();
+            if (selectrow == -1) {
+                JOptionPane.showMessageDialog(null, "Ban chua chon nhom quyen de sua");
+            } else {
+                Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
+                String ten = model.getValueAt(selectrow, 2).toString();
+                String ngaytao = model.getValueAt(selectrow, 3).toString();
+
+                suanhomquyen panel = new suanhomquyen(obj, ma, ten, ngaytao);
+                panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                obj.center.removeAll();
+                obj.center.add(panel);
+                obj.center.repaint();
+                obj.center.revalidate();
             }
             // System.out.println(ma+ten);
+        } else if (e.getSource() == bun_timkiem) {
+            int tk = combo_timkiem.getSelectedIndex();
+            String str = txt_timkiem.getText();
+            if (chucnang.timkiem_vitri(tk, str, tab_danhsach) == false) {
+                JOptionPane.showMessageDialog(this, "Khong ton tai nhom quyen nay", "Thong bao",
+                        JOptionPane.WARNING_MESSAGE);
+                chucnang.hienthidanhsach_nhomquyen(tab_danhsach);
+            }
+
+        } else if (e.getSource() == bun_lammoi) {
+            txt_timkiem.setText("");
+            chucnang.hienthidanhsach_nhomquyen(tab_danhsach);
+            combo_timkiem.setSelectedIndex(0);
         }
     }
 

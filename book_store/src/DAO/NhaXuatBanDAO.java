@@ -99,7 +99,9 @@ public class NhaXuatBanDAO implements DAOinterface<NhaXuatBan> {
   }
 
   @Override
-  public ArrayList selecByCondition(String condition) {
+  public ArrayList<NhaXuatBan> selecByCondition(String condition) {
+    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
+
 }

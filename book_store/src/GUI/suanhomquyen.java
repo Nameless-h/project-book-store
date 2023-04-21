@@ -2,17 +2,25 @@ package GUI;
 
 import javax.swing.JPanel;
 import java.awt.*;
+import java.awt.event.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.concurrent.Flow;
+
 
 import javax.swing.border.*;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 
+import BUS.quanlichitietnhomquyen;
+import BUS.quanlichucnang;
+import BUS.quanlinhomquyen;
 import DTO.chitietnhomquyen;
 import DTO.chucnang;
+import DTO.nhomquyen;
 
 public class suanhomquyen extends JPanel {
+    quanlichucnang quanlichucnang = new quanlichucnang();
+    quanlinhomquyen quanlinhomquyen = new quanlinhomquyen();
+    quanlichitietnhomquyen quanlichitietnhomquyen = new quanlichitietnhomquyen();
     main obj;
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
@@ -20,40 +28,27 @@ public class suanhomquyen extends JPanel {
     // test
 
     // ----------------------
-    JTextField txt_manhomquyen, txt_tennhomquyen;
+    JTextField txt_manhomquyen, txt_tennhomquyen, txt_ngaytao, txt_ngaycapnhat;
     JScrollPane thanhkeo;
     JPanel pan_info, pan_chucnang, pan_add;
     JButton bun_them;
-    String ma, ten;
-
-    public suanhomquyen(main obj, String ma, String ten) {
-        this.ma = ma;
-        this.ten = ten;
+    JScrollPane thanhcuon;
+    int id;
+    String ten,ngaytao;
+    public suanhomquyen(main obj, int id,String ten,String ngaytao) {
+        this.id = id;
+        this.ten=ten;
+        this.ngaytao=ngaytao;
         this.obj = obj;
         init(obj);
     }
 
     private void init(main init) {
-        ArrayList<chitietnhomquyen> list_chitiet = new ArrayList<>();
-        ArrayList<chucnang> list_chucnang = new ArrayList<>();
-        chitietnhomquyen temp1 = new chitietnhomquyen("Q1", "cn1", "Them", "0");
-        chitietnhomquyen temp2 = new chitietnhomquyen("Q1", "cn1", "Sua", "1");
-        chitietnhomquyen temp3 = new chitietnhomquyen("Q1", "cn1", "Xoa", "0");
-        chitietnhomquyen temp4 = new chitietnhomquyen("Q2", "cn2", "Them", "1");
-        chitietnhomquyen temp5 = new chitietnhomquyen("Q2", "cn2", "Sua", "0");
-        chitietnhomquyen temp6 = new chitietnhomquyen("Q2", "cn2", "Xoa", "1");
-
-        // --
-        chucnang temp7 = new chucnang("cn1", "Quan li");
-        chucnang temp8 = new chucnang("cn2", "Nhan vien");
-        list_chitiet.add(temp1);
-        list_chitiet.add(temp2);
-        list_chitiet.add(temp3);
-        list_chitiet.add(temp4);
-        list_chitiet.add(temp5);
-        list_chitiet.add(temp6);
-        list_chucnang.add(temp7);
-        list_chucnang.add(temp8);
+        ArrayList<chitietnhomquyen> list_chitiet = quanlichitietnhomquyen.danhsachchitietnhomquyen_id(this.id);
+        ArrayList<chucnang> list_chucnang = quanlichucnang.danhsachchucnang();
+        LocalDate currentDate = LocalDate.now();
+        String ngayhientai = currentDate.toString();
+        // System.out.println("Ngày hiện tại là: " + currentDateStr);
         // --------------------------------------------------------
         this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
         this.setLayout(null);
@@ -64,8 +59,8 @@ public class suanhomquyen extends JPanel {
         pan_info.setLayout(new FlowLayout(FlowLayout.CENTER));
         pan_info.setBackground(color_211);
         this.add(pan_info);
-        txt_manhomquyen = new JTextField(ma);
-        txt_manhomquyen.setPreferredSize(new Dimension(300, 60));
+        txt_manhomquyen = new JTextField(String.valueOf(id));
+        txt_manhomquyen.setPreferredSize(new Dimension(200, 60));
         txt_manhomquyen.setFont(new Font(name_font1, 1, 25));
         txt_manhomquyen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ma nhom quyen",
@@ -75,7 +70,7 @@ public class suanhomquyen extends JPanel {
         txt_manhomquyen.setEnabled(false);
         pan_info.add(txt_manhomquyen);
         txt_tennhomquyen = new JTextField(ten);
-        txt_tennhomquyen.setPreferredSize(new Dimension(400, 60));
+        txt_tennhomquyen.setPreferredSize(new Dimension(300, 60));
         txt_tennhomquyen.setFont(new Font(name_font1, 1, 25));
         txt_tennhomquyen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ten nhom quyen",
@@ -83,8 +78,28 @@ public class suanhomquyen extends JPanel {
                 TitledBorder.TOP));
         ;
         pan_info.add(txt_tennhomquyen);
+        txt_ngaytao = new JTextField(ngaytao);
+        txt_ngaytao.setPreferredSize(new Dimension(200, 60));
+        txt_ngaytao.setFont(new Font(name_font1, 1, 25));
+        txt_ngaytao.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
+                "Ngay tao",
+                TitledBorder.LEFT,
+                TitledBorder.TOP));
+        ;
+        txt_ngaytao.setEnabled(false);
+        pan_info.add(txt_ngaytao);
+        txt_ngaycapnhat = new JTextField(ngayhientai);
+        txt_ngaycapnhat.setPreferredSize(new Dimension(200, 60));
+        txt_ngaycapnhat.setFont(new Font(name_font1, 1, 25));
+        txt_ngaycapnhat.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
+                "Ngay cap nhat",
+                TitledBorder.LEFT,
+                TitledBorder.TOP));
+        ;
+        txt_ngaycapnhat.setEnabled(false);
+        pan_info.add(txt_ngaycapnhat);
         pan_chucnang = new JPanel();
-        pan_chucnang.setBounds(0, 100, obj.w_center, 480);
+        pan_chucnang.setBounds(0, 90, obj.w_center, 490);
         pan_chucnang.setBackground(color_211);
         pan_chucnang.setLayout(new FlowLayout(FlowLayout.LEFT));
         this.add(pan_chucnang);
@@ -103,29 +118,66 @@ public class suanhomquyen extends JPanel {
 
             for (int j = 0; j < list_chitiet.size(); j++) {
                 if (list_chitiet.get(j).getMachucnang().equalsIgnoreCase(list_chucnang.get(i).getMa())) {
-                    JCheckBox temp = new JCheckBox(list_chitiet.get(j).getHanhdong());
+                    JCheckBox temp = new JCheckBox(
+                            list_chitiet.get(j).getHanhdong() + " " + list_chucnang.get(i).getMa());
                     temp.setFont(new Font("Segoe UI", 1, 20));
                     temp.setPreferredSize(new Dimension(190, 50));
                     temp.setBackground(color_211);
                     temp.setForeground(Color.black);
-                    if (list_chitiet.get(j).getTinhtrang().equalsIgnoreCase("1"))
-                        temp.setSelected(true);
+                    if(list_chitiet.get(j).getTinhtrang()==1)
+                    temp.setSelected(true);
                     else
-                        temp.setSelected(false);
-
+                    temp.setSelected(false);
+                    temp.addItemListener(new ItemListener() {
+                        public void itemStateChanged(ItemEvent e) {
+                            if (e.getStateChange() == ItemEvent.SELECTED) {
+                                String[] words = temp.getText().split("\\s+");
+                                for (int k = 0; k < list_chitiet.size(); k++) {
+                                    if (list_chitiet.get(k).getMachucnang().equalsIgnoreCase(words[1])
+                                            && list_chitiet.get(k).getHanhdong().equalsIgnoreCase(words[0])) {
+                                        list_chitiet.get(k).setTinhtrang(1);
+                                    }
+                                }
+                            } else {
+                                String[] words = temp.getText().split("\\s+");
+                                for (int k = 0; k < list_chitiet.size(); k++) {
+                                    if (list_chitiet.get(k).getMachucnang().equalsIgnoreCase(words[1])
+                                            && list_chitiet.get(k).getHanhdong().equalsIgnoreCase(words[0])) {
+                                        list_chitiet.get(k).setTinhtrang(0);
+                                    }
+                                }
+                            }
+                        }
+                    });
+                    // temp.addItemListener(this);
                     pan[i].add(temp);
                 }
+
             }
             pan_chucnang.add(pan[i]);
         }
+        // thanhcuon=new JScrollPane(pan_chucnang);
+        // thanhcuon.setBounds(0, 100, obj.w_center, 480);
+        // this.add(thanhcuon);
         pan_add = new JPanel();
         pan_add.setBounds(0, 600, obj.w_center, 60);
         pan_add.setBackground(color_211);
         pan_add.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_add);
-        bun_them = new JButton("Them");
+        bun_them = new JButton("Sua");
         bun_them.setPreferredSize(new Dimension(200, 50));
         bun_them.setFont(new Font(name_font1, 1, 25));
+        bun_them.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+
+                    nhomquyen nq = new nhomquyen(id, txt_tennhomquyen.getText(), ngaytao, ngayhientai);
+                     quanlinhomquyen.suanhomquyen(nq);;
+                     quanlichitietnhomquyen.suachitietnhomquyen(list_chitiet);
+                    JOptionPane.showMessageDialog(null, "Sua nhom quyen thanh cong");
+                
+            }
+        });
         pan_add.add(bun_them);
     }
+
 }

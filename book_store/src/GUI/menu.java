@@ -7,34 +7,51 @@ import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
 import com.formdev.flatlaf.FlatLightLaf;
 
+import BUS.quanlichitietnhomquyen;
 import BUS.quanlinhomquyen;
+import DTO.chitietnhomquyen;
+import DTO.taikhoan;
 import GUI.quanlysanpham.bookFrame;
+import GUI.statistic.list_statistic;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
-
+    taikhoan tk;
+    quanlichitietnhomquyen quanlichitietnhomquyen = new quanlichitietnhomquyen();
+    ArrayList<chitietnhomquyen> tk_chitietquyen;
     Color color_54 = new Color(54, 54, 54);
     String name_font1 = "Times Roman";
     String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap", "Tai khoan", "Quyen" };
+            "Nha cung cap","Thong ke" ,"Tai khoan", "Quyen" };
     JLabel[] list_lab = new JLabel[list_menu.length];
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
 
     public void change_panel(String text) throws IOException {
-
+        int kt_dangnhap = 0;
         if (text.equalsIgnoreCase("Nhan vien")) {
-            danhsachnhanvien panel = new danhsachnhanvien(obj);
-            panel.setBounds(0, 0, obj.w_center, obj.h_center);
-            obj.center.removeAll();
-            obj.center.add(panel);
-            obj.center.repaint();
-            obj.center.revalidate();
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NV") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    danhsachnhanvien panel = new danhsachnhanvien(obj);
+                    panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                    obj.center.removeAll();
+                    obj.center.add(panel);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
+            }
+
         } else if (text.equalsIgnoreCase("Khach hang")) {
             danhsachkhachhang panel = new danhsachkhachhang(obj);
             panel.setBounds(0, 0, obj.w_center, obj.h_center);
@@ -84,25 +101,21 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
-        } else if (text.equalsIgnoreCase("San pham")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
-            bookFrame bf = new bookFrame();
-            bf.setBounds(0, 0, 1100, 700);
+        } else if (text.equalsIgnoreCase("Thong ke")) {
+            list_statistic statisticgui = new list_statistic();
+            statisticgui.setBounds(0, 0, 1100, 670);
             obj.center.removeAll();
-            obj.center.add(bf);
+            obj.center.add(statisticgui);
             obj.center.repaint();
             obj.center.revalidate();
 
         }
     }
 
-    public menu(main obj) {
+    public menu(main obj, taikhoan tk) {
         this.obj = obj;
+        this.tk = tk;
+        this.tk_chitietquyen = quanlichitietnhomquyen.danhsachchitietnhomquyen_id(tk.getManhomquyen());
         init(obj);
     }
 
@@ -146,11 +159,12 @@ public class menu extends JPanel implements MouseListener {
                     change_panel(list_lab[i].getText());
                 } catch (IOException e1) {
                     // TODO Auto-generated catch block
-                    e1.printStackTrace();
+                    // e1.printStackTrace();
                 }
                 for (int j = 0; j < list_lab2.length; j++)
                     list_lab2[j] = 0;
                 list_lab2[i] = 1;
+                mouseExited(e);
             }
 
         }
@@ -165,8 +179,14 @@ public class menu extends JPanel implements MouseListener {
     public void mouseEntered(MouseEvent e) {
         for (int i = 0; i < list_lab.length; i++) {
             if (e.getSource() == list_lab[i]) {
-                list_lab[i].setBackground(Color.black);
-                list_lab[i].setFont(new Font(name_font1, 1, 20));
+                if (list_lab2[i] == 1) {
+                    list_lab[i].setBackground(Color.white);
+                    list_lab[i].setFont(new Font(name_font1, 1, 20));
+                    list_lab[i].setForeground(Color.black);
+                } else {
+                    list_lab[i].setBackground(Color.black);
+                    list_lab[i].setFont(new Font(name_font1, 1, 20));
+                }
             }
         }
     }
@@ -175,11 +195,13 @@ public class menu extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
         for (int i = 0; i < list_lab.length; i++) {
             if (list_lab2[i] == 1) {
-                list_lab[i].setBackground(Color.black);
+                list_lab[i].setBackground(Color.white);
                 list_lab[i].setFont(new Font(name_font1, 1, 20));
+                list_lab[i].setForeground(Color.black);
             } else {
                 list_lab[i].setBackground(color_54);
                 list_lab[i].setFont(new Font(name_font1, 1, 15));
+                list_lab[i].setForeground(Color.white);
             }
 
         }

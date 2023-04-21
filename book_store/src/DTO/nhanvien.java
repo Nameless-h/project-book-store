@@ -1,35 +1,33 @@
 package DTO;
 
 public class nhanvien {
-    String ma, ten, gioitinh, diachi, email, sodienthoai;
-
-    public nhanvien() {
-
+    int ma,gioitinh;
+    String ten,diachi,email,sodienthoai,chucvu;
+    public nhanvien(){
+       
     }
-
-    public nhanvien(String ma, String ten, String gioitinh, String diachi, String email, String sodienthoai) {
+    public nhanvien(Integer ma, String ten, Integer gioitinh, String diachi, String email, String sodienthoai,String chucvu) {
         this.ma = ma;
         this.ten = ten;
         this.gioitinh = gioitinh;
         this.diachi = diachi;
         this.email = email;
         this.sodienthoai = sodienthoai;
-
+        this.chucvu=chucvu;
     }
 
     public String getDiachi() {
         return diachi;
     }
 
-    public String getMa() {
+    public int getMa() {
         return ma;
     }
 
     public String getEmail() {
         return email;
     }
-
-    public String getGioitinh() {
+    public int getGioitinh() {
         return gioitinh;
     }
 
@@ -48,12 +46,10 @@ public class nhanvien {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public void setGioitinh(String gioitinh) {
+    public void setGioitinh(int gioitinh) {
         this.gioitinh = gioitinh;
     }
-
-    public void setMa(String ma) {
+    public void setMa(int ma) {
         this.ma = ma;
     }
 
@@ -64,20 +60,31 @@ public class nhanvien {
     public void setTen(String ten) {
         this.ten = ten;
     }
-
-    public String[] getthongtin() {
-        String[] temp = new String[6];
-        temp[0] = this.getMa();
-        temp[1] = this.getTen();
-        temp[2] = this.getGioitinh();
-        temp[3] = this.getDiachi();
-        temp[4] = this.getEmail();
-        temp[5] = this.getSodienthoai();
-        return temp;
+    public String getChucvu() {
+        return chucvu;
     }
-
+    public void setChucvu(String chucvu) {
+        this.chucvu = chucvu;
+    }
+   public String[] getthongtin(){
+        String[] temp=new String[7];
+        temp[0]=String.valueOf(this.getMa());
+        temp[1]=this.getTen();
+        temp[2]=String.valueOf(this.getGioitinh());
+        temp[3]=this.getDiachi();
+        temp[4]=this.getEmail();
+        temp[5]=this.getSodienthoai();
+        temp[6]=this.getChucvu();
+        return temp; 
+   }
     @Override
     public String toString() {
-        return super.toString();
+        return "maNV:"+this.getMa()+
+                "ten:"+this.getTen()+
+                "Gioi tinh:"+this.getGioitinh()+
+                "Dia chi:"+this.getDiachi()+
+                "Email:"+this.getEmail()+
+                "Sdt:"+this.getSodienthoai()+
+                "Chuc vu:"+this.getChucvu();
     }
 }

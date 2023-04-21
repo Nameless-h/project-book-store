@@ -6,17 +6,27 @@ package GUI;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.*;
 import javax.swing.ImageIcon;
 import javax.swing.JPopupMenu.Separator;
+
+import com.formdev.flatlaf.themes.FlatMacLightLaf;
+
+import BUS.quanlitaikhoan;
+import DTO.taikhoan;
+import GUI.quanlysanpham.button_panel;
 
 /**
  *
  * @author ASUS
  */
-public class login {
+public class login extends JFrame implements MouseListener,KeyListener {
     JFrame frame = new JFrame();
     JPanel logo = new JPanel();
     JLabel exit = new JLabel();
@@ -42,7 +52,7 @@ public class login {
     JPanel pan_for_pass = new JPanel();
     JLabel title_for_pass = new JLabel();
     // goi chuc nang cua user_login
-    user_model chucnang_user = new user_model();
+    quanlitaikhoan chucnang_taikhoan = new quanlitaikhoan();
 
     public login() {
         init();
@@ -51,22 +61,22 @@ public class login {
     private void init() {
 
         // set frame va layout
-        frame.setSize(900, 550);
-        frame.setLocation(200, 100);
-        frame.setUndecorated(true);
-        frame.setLayout(null);
+        this.setSize(900, 550);
+        this.setLocation(350, 150);
+        this.setUndecorated(true);
+        this.setLayout(null);
         // ------------------------------------------------------------------------------------------------------
         // set panel logo
         logo.setLayout(null);
         logo.setBounds(0, 0, 400, 600);
         logo.setBackground(Color.white);
-        frame.add(logo);
+        this.add(logo);
         // ------------------------------------------------------------------------------------------------------
         // set panel dangnhap
         dangnhap.setLayout(null);
         dangnhap.setBounds(400, 0, 500, 600);
         dangnhap.setBackground(Color.blue);
-        frame.add(dangnhap);
+        this.add(dangnhap);
         // ------------------------------------------------------------------------------------------------------
         // logo thoat chuong trinh
         exit.setLayout(null);
@@ -151,6 +161,7 @@ public class login {
         bun_login.setHorizontalAlignment(SwingConstants.CENTER);
         bun_login.setFont(new java.awt.Font("Segoe UI", 1, 16));
         bun_login.setForeground(Color.blue);
+        bun_login.addKeyListener(this);
         dangnhap.add(bun_login);
         // set dong title dang ky
         title_signup.setBounds(150, 400, 150, 50);
@@ -164,102 +175,105 @@ public class login {
         signup.setHorizontalAlignment(SwingConstants.LEFT);
         signup.setFont(new java.awt.Font("Segoe UI", 1, 14));
         dangnhap.add(signup);
+        // them su kien cac nut
+        bun_login.addMouseListener(this);
+        icon_dispass.addMouseListener(this);
+        icon_showpass.addMouseListener(this);
+        for_pass.addMouseListener(this);
+        exit.addMouseListener(this);
+        this.setVisible(true);
 
-        frame.setVisible(true);
-        // tao su kien thoat chuong trinh
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                close_main(evt);
-            }
-        });
-        // tao su dien dang nhap
-        bun_login.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dangnhap();
-            }
-        });
-        icon_dispass.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                show_pass(evt);
-            }
+    }
 
-        });
-        icon_showpass.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                diss_pass(evt);
-            }
+    @Override
+    public void mouseClicked(MouseEvent e) {
 
-        });
-        signup.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                go_signup();
-            }
-        });
-        for_pass.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                go_forpass();
-            }
+    }
 
-        });
-        bun_login.addMouseListener(new MouseAdapter() {
-            public void mouseClicked(MouseEvent evt) {
-                check_login(evt);
-            }
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (e.getSource() == bun_login) {
+            String username = txt_username.getText();
+            String password = new String(txt_password.getPassword());
+            taikhoan user = new taikhoan(0, username, password, 0, 0, 0);
+            if ((user = chucnang_taikhoan.kiemtradangnhap(user)) != null) {
+                if(user.getTinhtrang()==1){
+                    this.setVisible(false);
+                // System.out.println(user);
+                new main(user);
+                }
+                else{
+                    JOptionPane.showMessageDialog(this, "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan","Canh bao",JOptionPane.WARNING_MESSAGE);
+                }
+                
+            } else
+                JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
+        } else if (e.getSource() == icon_dispass) {
+            txt_password.setEchoChar((char) 0);
+            icon_dispass.setVisible(false);
+            icon_showpass.setVisible(true);
+        } else if (e.getSource() == icon_showpass) {
+            txt_password.setEchoChar((char) 8226);
+
+            icon_dispass.setVisible(true);
+            icon_showpass.setVisible(false);
+        } else if (e.getSource() == for_pass) {
+            this.setVisible(false);
+            new for_pass();
+        } else if (e.getSource() == exit) {
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
 
             // kiemtra dang nhap
             private void check_login(MouseEvent evt) {
-                String username = txt_username.getText();
-                String password = new String(txt_password.getPassword());
-                user_login user = new user_login("", username, password, "");
-                if (chucnang_user.check_login(user) != null)
-                    JOptionPane.showMessageDialog(null, "Dang nhap thanh cong");
-                else
-                    JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
+                String username=txt_username.getText();
+                String password=new String(txt_password.getPassword());
+                //user_login user=new user_login("",username,password,"");
+                // if(chucnang_user.check_login(user)!=null)
+                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+                // else
+                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
             }
-        });
-    }
+
+    
 
     public static void main(String[] args) {
-        login frame = new login();
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    UIManager.setLookAndFeel(new FlatMacLightLaf());
+                    UIManager.put("TextComponent.arc", 300);
+                    UIManager.put("Button.arc", 999);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    System.out.println("That bai");
+                }
+            }
+        });
+        new login();
     }
 
-    // su kien thoat chuong trinh
-    private void close_main(java.awt.event.MouseEvent evt) {
-        System.exit(0);
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
     }
 
-    // su kien dang nhap
-    private void dangnhap() {
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+            System.out.println("Hello");
+        }
+        
     }
 
-    // su kien hien password
-    private void show_pass(MouseEvent evt) {
-        txt_password.setEchoChar((char) 0);
-        icon_dispass.setVisible(false);
-        // icon_dispass.setEnabled(false);
-        icon_showpass.setVisible(true);
-        // icon_showpass.setEnabled(true);
-    }
-
-    // su kien an password
-    private void diss_pass(MouseEvent evt) {
-        txt_password.setEchoChar((char) 8226);
-
-        icon_dispass.setVisible(true);
-        // icon_dispass.setEnabled(true);
-        icon_showpass.setVisible(false);
-        // icon_showpass.setEnabled(false);
-    }
-
-    private void go_signup() {
-
-        frame.setVisible(false);
-        signup frame1 = new signup();
-    }
-
-    private void go_forpass() {
-        frame.setVisible(false);
-        for_pass frame1 = new for_pass();
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
     }
 
 }
