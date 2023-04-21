@@ -5,7 +5,6 @@
 package DAO;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,8 +21,37 @@ import DTO.Theloai;
  *
  * @author JN_PC
  */
-public class The_loai_modify {
-    public static ArrayList<Theloai> allCate() {
+public class TheLoaiDAO implements DAOinterface<Theloai> {
+    public static void main(String[] args) {
+        // System.out.println(getTheloai(1).getTenTheloai());
+    }
+
+    @Override
+    public int insert(Theloai t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    }
+
+    @Override
+    public int update(Theloai update_theloai) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public int delete(Theloai theloai) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public int delete_all() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete_all'");
+    }
+
+    @Override
+    public ArrayList<Theloai> selecAll() {
         ArrayList<Theloai> cate = new ArrayList<Theloai>();
 
         java.sql.Connection conn = JDBCUtil.getConnection();
@@ -39,14 +67,14 @@ public class The_loai_modify {
                 cate.add(tl);
             }
         } catch (SQLException e) {
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
 
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
@@ -54,7 +82,8 @@ public class The_loai_modify {
         return cate;
     }
 
-    public static Theloai getTheloai(int maTheloai) {
+    @Override
+    public Theloai selectById(int maTheloai) {
         Connection conn = JDBCUtil.getConnection();
         PreparedStatement statement = null;
         Theloai tmp = null;
@@ -67,23 +96,24 @@ public class The_loai_modify {
                     result.getString("tenTheloai"));
         } catch (SQLException e) {
             // TODO: handle exception
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
                     // TODO: handle exception
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
         return tmp;
-
     }
 
-    public static void main(String[] args) {
-        // System.out.println(getTheloai(1).getTenTheloai());
+    @Override
+    public ArrayList selecByCondition(String condition) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
 
 }

@@ -13,13 +13,13 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DTO.book;
+import DTO.Sach;
 
 /**
  *
  * @author JN_PC
  */
-public class book_modify implements DAOinterface<book> {
+public class SanPhamDAO implements DAOinterface<Sach> {
     public static void update() {
 
     }
@@ -29,19 +29,19 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public int insert(book t) {
+    public int insert(Sach t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 
-   /*  @Override
-    public int update(int t) {
+    @Override
+    public int update(Sach sach_update) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
-    } */
+    }
 
     @Override
-    public int delete(book t) {
+    public int delete(Sach t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
@@ -53,9 +53,9 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public ArrayList<book> selecAll() {
+    public ArrayList<Sach> selecAll() {
         // TODO Auto-generated method stub
-        ArrayList<book> bookList = new ArrayList<book>();
+        ArrayList<Sach> bookList = new ArrayList<Sach>();
 
         java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
@@ -65,7 +65,7 @@ public class book_modify implements DAOinterface<book> {
 
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-                book b1 = new book(result.getInt("maSach"),
+                Sach b1 = new Sach(result.getInt("maSach"),
                         result.getString("tenSach"),
                         result.getInt("maTheloai"),
                         result.getInt("maNXB"),
@@ -77,13 +77,13 @@ public class book_modify implements DAOinterface<book> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -91,18 +91,18 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public book selectById(int t) {
+    public Sach selectById(int t) {
         // TODO Auto-generated method stub
         Connection conn = JDBCUtil.getConnection();
         PreparedStatement statement = null;
-        book tmp = null;
+        Sach tmp = null;
         try {
 
             statement = conn.prepareStatement("SELECT * FROM book WHERE maSach = (?)");
             statement.setInt(1, t);
             ResultSet result = statement.executeQuery();
             result.next();
-            tmp = new book(result.getInt("maSach"),
+            tmp = new Sach(result.getInt("maSach"),
                     result.getString("tenSach"),
                     result.getInt("maTheloai"),
                     result.getInt("maNXB"),
@@ -111,14 +111,14 @@ public class book_modify implements DAOinterface<book> {
                     result.getInt("giaTien"));
         } catch (SQLException e) {
             // TODO: handle exception
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
                     // TODO: handle exception
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
@@ -126,20 +126,8 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public ArrayList<book> selecByCondition(String condition) {
+    public ArrayList<Sach> selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
-    }
-
-    @Override
-    public void update(book t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public ArrayList<book> select_all_ById(int t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
 }

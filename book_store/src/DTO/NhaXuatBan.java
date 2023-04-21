@@ -8,14 +8,14 @@ package DTO;
  *
  * @author JN_PC
  */
-public class NXB {
+public class NhaXuatBan {
     private int maNXB;
     private String tenNXB;
     private String email;
     private String diaChi;
     private String sdt;
 
-    public NXB(int maNXB, String tenNXB, String email, String diaChi, String sdt) {
+    public NhaXuatBan(int maNXB, String tenNXB, String email, String diaChi, String sdt) {
         this.maNXB = maNXB;
         this.tenNXB = tenNXB;
         this.email = email;
@@ -23,7 +23,7 @@ public class NXB {
         this.sdt = sdt;
     }
 
-    public NXB(String tenNXB, String email, String diaChi, String sdt) {
+    public NhaXuatBan(String tenNXB, String email, String diaChi, String sdt) {
         this.tenNXB = tenNXB;
         this.email = email;
         this.diaChi = diaChi;

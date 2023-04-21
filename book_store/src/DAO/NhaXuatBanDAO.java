@@ -10,23 +10,23 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DTO.NXB;
+import DTO.NhaXuatBan;
 
-public class nxb_modify implements DAOinterface<NXB> {
+public class NhaXuatBanDAO implements DAOinterface<NhaXuatBan> {
 
   @Override
-  public int insert(NXB t) {
+  public int insert(NhaXuatBan t) {
     throw new UnsupportedOperationException("Unimplemented method 'insert'");
   }
 
   @Override
-  public int update(int t) {
+  public int update(NhaXuatBan nxb_update) {
     throw new UnsupportedOperationException("Unimplemented method 'delete'");
 
   }
 
   @Override
-  public int delete(NXB t) {
+  public int delete(NhaXuatBan t) {
     throw new UnsupportedOperationException("Unimplemented method 'delete'");
   }
 
@@ -36,8 +36,8 @@ public class nxb_modify implements DAOinterface<NXB> {
   }
 
   @Override
-  public ArrayList<NXB> selecAll() {
-    ArrayList<NXB> listNxb = new ArrayList<NXB>();
+  public ArrayList<NhaXuatBan> selecAll() {
+    ArrayList<NhaXuatBan> listNxb = new ArrayList<NhaXuatBan>();
 
     Connection conn = JDBCUtil.getConnection();
     Statement statement = null;
@@ -47,7 +47,7 @@ public class nxb_modify implements DAOinterface<NXB> {
       String sql = "SELECT * FROM nxb";
       ResultSet result = statement.executeQuery(sql);
       while (result.next()) {
-        NXB tmp = new NXB(result.getInt("maNXB"),
+        NhaXuatBan tmp = new NhaXuatBan(result.getInt("maNXB"),
             result.getString("tenNXB"),
             result.getString("email"),
             result.getString("diaChi"),
@@ -56,13 +56,13 @@ public class nxb_modify implements DAOinterface<NXB> {
         listNxb.add(tmp);
       }
     } catch (SQLException e) {
-      Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+      Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {
       if (statement != null) {
         try {
           statement.close();
         } catch (SQLException e) {
-          Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+          Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
@@ -70,28 +70,28 @@ public class nxb_modify implements DAOinterface<NXB> {
   }
 
   @Override
-  public NXB selectById(int t) {
+  public NhaXuatBan selectById(int t) {
     Connection conn = JDBCUtil.getConnection();
     PreparedStatement statement = null;
-    NXB tmp = null;
+    NhaXuatBan tmp = null;
     try {
       statement = conn.prepareStatement("SELECT * FROM NXB WHERE maNXB = (?)");
       statement.setInt(1, t);
       ResultSet result = statement.executeQuery();
       result.next();
-      tmp = new NXB(result.getInt("maNXB"),
+      tmp = new NhaXuatBan(result.getInt("maNXB"),
           result.getString("tenNXB"),
           result.getString("email"),
           result.getString("diaChi"),
           result.getString("sdt"));
     } catch (SQLException e) {
-      Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+      Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {
       if (statement != null) {
         try {
           statement.close();
         } catch (SQLException e) {
-          Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+          Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
@@ -99,7 +99,9 @@ public class nxb_modify implements DAOinterface<NXB> {
   }
 
   @Override
-  public ArrayList selecByCondition(String condition) {
+  public ArrayList<NhaXuatBan> selecByCondition(String condition) {
+    // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
+
 }
