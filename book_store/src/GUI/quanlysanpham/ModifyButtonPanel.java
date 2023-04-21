@@ -7,12 +7,12 @@ import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
 
-public class button_panel extends JPanel {
+public class ModifyButtonPanel extends JPanel {
   private addbutton addBtn;
   private editbutton editBtn;
   private deletebutton delBtn;
 
-  public button_panel(float posX, float posY, float width, float height) {
+  public ModifyButtonPanel(float posX, float posY, float width, float height) {
     addBtn = new addbutton((int) (width * 0.2), (int) (height * 0.6));
     editBtn = new editbutton((int) (width * 0.2), (int) (height * 0.6));
     delBtn = new deletebutton((int) (width * 0.2), (int) (height * 0.6));
@@ -24,7 +24,7 @@ public class button_panel extends JPanel {
     this.setVisible(true);
   }
 
-  public button_panel(float posX, float posY, float width, float height, float horizonGap, float verticalGap) {
+  public ModifyButtonPanel(float posX, float posY, float width, float height, float horizonGap, float verticalGap) {
     addBtn = new addbutton((int) (width * 0.2), (int) (height * 0.6));
     editBtn = new editbutton((int) (width * 0.2), (int) (height * 0.6));
     delBtn = new deletebutton((int) (width * 0.2), (int) (height * 0.6));
