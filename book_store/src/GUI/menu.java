@@ -143,12 +143,12 @@ public class menu extends JPanel implements MouseListener {
             obj.center.revalidate();
 
         } else if (text.equalsIgnoreCase("San pham")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
-            }
+            // FlatLightLaf.setup();
+            // try {
+            //     UIManager.setLookAndFeel(new FlatLightLaf());
+            // } catch (Exception e) {
+            //     // TODO: handle exception
+            // }
             bookFrame bf = new bookFrame();
             bf.setBounds(0, 0, 1100, 700);
             obj.center.removeAll();
