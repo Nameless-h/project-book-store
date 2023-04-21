@@ -8,7 +8,7 @@ package DTO;
  *
  * @author JN_PC
  */
-public class book {
+public class Sach {
     private int maSach;
     private String tenSach;
     private int maTacgia;
@@ -18,7 +18,7 @@ public class book {
     private int soLuong;
     private int giaTien;
 
-    public book(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong,
+    public Sach(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong,
             int giaTien) {
         this.maSach = maSach;
         this.tenSach = tenSach;
@@ -29,7 +29,7 @@ public class book {
         this.giaTien = giaTien;
     }
 
-    public book(String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public Sach(String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
         this.tenSach = tenSach;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;

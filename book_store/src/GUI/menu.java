@@ -18,6 +18,7 @@ import BUS.quanlinhomquyen;
 import DTO.chitietnhomquyen;
 import DTO.taikhoan;
 import GUI.quanlysanpham.bookFrame;
+import GUI.statistic.list_statistic;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
@@ -44,6 +45,7 @@ public class menu extends JPanel implements MouseListener {
     //-----
     ImageIcon temp=new ImageIcon(getClass().getResource("/icon/store.png"));
     //---
+
     JLabel[] list_lab = new JLabel[list_menu.length];
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
@@ -143,6 +145,7 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
+
         } else if (text.equalsIgnoreCase("San pham")) {
             // FlatLightLaf.setup();
             // try {
@@ -152,8 +155,9 @@ public class menu extends JPanel implements MouseListener {
             // }
             bookFrame bf = new bookFrame();
             bf.setBounds(0, 0, 1100, 700);
+
             obj.center.removeAll();
-            obj.center.add(bf);
+            obj.center.add(statisticgui);
             obj.center.repaint();
             obj.center.revalidate();
 

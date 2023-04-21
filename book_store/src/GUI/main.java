@@ -60,6 +60,7 @@ public class main extends JFrame {
                 }
             }
         });
+        
         taikhoan user=new taikhoan(1,"admin","admin",1,1,1);
         new main(user);
 
