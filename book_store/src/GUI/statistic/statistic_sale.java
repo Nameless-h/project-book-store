@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,12 +15,9 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Cursor;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -40,7 +36,7 @@ public class statistic_sale extends JPanel implements ActionListener{
     private String title_filter[] = {"Khoang ngay","Top ban chay","The loai"};//menu title filter
     private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_category;
     private JTextField inputDateStart,inputDateEnd;
-    private JComboBox inputcategory;
+    // private ;
     private JLabel dateStart,dateEnd;
     private LineBorder linedBorderDate,linedBorderBestSeller,linedBorderCategory;
     private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCategory;
@@ -123,7 +119,7 @@ public class statistic_sale extends JPanel implements ActionListener{
         titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
         panel_filter_category.setBorder(titledBorderCategory);
 
-        inputcategory = new JComboBox();
+        JComboBox inputcategory = new JComboBox(title_filter);
         inputcategory.setPreferredSize(new Dimension(100, 30));
         panel_filter_category.add(inputcategory);
 
