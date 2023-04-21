@@ -130,4 +130,10 @@ public class SanPhamDAO implements DAOinterface<Sach> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
+
+    @Override
+    public ArrayList<Sach> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+    }
 }

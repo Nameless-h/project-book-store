@@ -128,4 +128,10 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
 
+  @Override
+  public ArrayList<tacgia> select_all_ById(int t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+  }
+
 }

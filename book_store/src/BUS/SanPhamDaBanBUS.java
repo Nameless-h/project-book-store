@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import DTO.bill;
 import DTO.chitiethoadon;
 
-public class list_game_sold {
+public class SanPhamDaBanBUS {
     private ArrayList<chitiethoadon> listGameSold;
 
-    public list_game_sold() {
+    public SanPhamDaBanBUS() {
         this.listGameSold = null;
     }
 
-    public list_game_sold(ArrayList<chitiethoadon> list) {
+    public SanPhamDaBanBUS(ArrayList<chitiethoadon> list) {
         this.listGameSold = list;
     }
     

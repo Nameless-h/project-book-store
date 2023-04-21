@@ -38,7 +38,7 @@ public class khachhangDAO implements DAOinterface<khachhang> {
     }
 
     @Override
-    public void update(khachhang t) {
+    public int update(khachhang t) {
         int ketQua = 0;
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -68,6 +68,7 @@ public class khachhangDAO implements DAOinterface<khachhang> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return ketQua;
     }
 
     @Override
@@ -134,6 +135,12 @@ public class khachhangDAO implements DAOinterface<khachhang> {
     public ArrayList<khachhang> selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
+    }
+
+    @Override
+    public ArrayList<khachhang> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
 
 }

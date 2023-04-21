@@ -21,8 +21,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import BUS.TheLoaiBUS;
+import DAO.TheLoaiDAO;
 import DAO.thong_ke_sach_banDAO;
-import DTO.bookSold;
+import DTO.SachBan;
+import DTO.Theloai;
 import GUI.Mybutton.morebutton;
 
 import java.awt.FlowLayout;
@@ -32,7 +35,7 @@ import java.awt.event.ActionListener;
 public class statistic_sale extends JPanel implements ActionListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
-    private String[] columnNames = {"ID","Ten sach","The loai","Gia","Da ban"};
+    private String columnNames[] = {"ID","Ten sach","The loai","Gia","Da ban"};
     private String title_filter[] = {"Khoang ngay","Top ban chay","The loai"};//menu title filter
     private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_category;
     private JTextField inputDateStart,inputDateEnd;
@@ -119,7 +122,22 @@ public class statistic_sale extends JPanel implements ActionListener{
         titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
         panel_filter_category.setBorder(titledBorderCategory);
 
-        JComboBox inputcategory = new JComboBox(title_filter);
+
+        TheLoaiDAO layTheLoai = new TheLoaiDAO();
+        ArrayList<Theloai> dsTheLoai = layTheLoai.selecAll();
+        String category_name[] = new String[dsTheLoai.size()];
+
+        int i = 0;
+        for (Theloai tl : dsTheLoai) {
+            // int n = category_name.length;
+            // String[] newArray = Arrays.copyOf(category_name, n + 1);
+            // category_name[n] = str;
+            category_name[i] = tl.getTenTheloai();
+            i++;
+            // System.out.println(tl.getTenTheloai());
+        }
+
+        JComboBox inputcategory = new JComboBox(category_name);
         inputcategory.setPreferredSize(new Dimension(100, 30));
         panel_filter_category.add(inputcategory);
 
@@ -149,9 +167,9 @@ public class statistic_sale extends JPanel implements ActionListener{
 
         // get table data
         thong_ke_sach_banDAO bs=new thong_ke_sach_banDAO();
-        ArrayList<bookSold> listBS = bs.selecAll();
+        ArrayList<SachBan> listBS = bs.selecAll();
 
-        for (bookSold bSold : listBS) {
+        for (SachBan bSold : listBS) {
             bookSoldTable.addRow(new Object[]{
                 bSold.getBookID(),
                 bSold.getBookName(),

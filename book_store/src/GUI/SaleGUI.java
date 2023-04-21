@@ -20,8 +20,8 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import BUS.PriceFormatter;
-import BUS.bookBUS;
-import DTO.book;
+import BUS.SanPhamBUS;
+import DTO.Sach;
 import DTO.chitiethoadon;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;

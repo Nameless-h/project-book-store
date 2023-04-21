@@ -28,7 +28,7 @@ public class menu extends JPanel implements MouseListener {
     Color color_54 = new Color(54, 54, 54);
     String name_font1 = "Times Roman";
     String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap", "Tai khoan", "Quyen" };
+            "Nha cung cap","Thong ke", "Tai khoan", "Quyen" };
     String[] list_icon={ "/icon/store.png",
                         "/icon/nhaphang.png",
                         "/icon/sanpham.png",
@@ -36,6 +36,7 @@ public class menu extends JPanel implements MouseListener {
                         "/icon/phieunhaphang.png",
                         "/icon/nhanvien.png",
                         "/icon/khachhang.png",
+                        "/icon/nhacungcap.png",
                         "/icon/nhacungcap.png",
                         "/icon/taikhoan.png",
                         "/icon/chucnang.png",

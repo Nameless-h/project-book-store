@@ -24,7 +24,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import DAO.thong_ke_sach_banDAO;
-import DTO.bookSold;
+import DTO.SachBan;
 import GUI.Mybutton.morebutton;
 
 import java.awt.FlowLayout;
@@ -155,9 +155,9 @@ public class statistic_import extends JPanel implements ActionListener{
 
         // get table data
         thong_ke_sach_banDAO bs=new thong_ke_sach_banDAO();
-        ArrayList<bookSold> listBS = bs.selecAll();
+        ArrayList<SachBan> listBS = bs.selecAll();
 
-        for (bookSold bSold : listBS) {
+        for (SachBan bSold : listBS) {
             bookSoldTable.addRow(new Object[]{
                 bSold.getBookID(),
                 bSold.getBookName(),
