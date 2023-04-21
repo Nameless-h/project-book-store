@@ -18,15 +18,14 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
     quanlitaikhoan chucnang = new quanlitaikhoan();
     // -------------------------------
     String[] collums = { "STT", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen", "Tinh trang" };
-    String[] list_timkiem = { "Tat ca", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen",
-            "Tinh trang" };
+    String[] list_timkiem = { "Tat ca", "Ma tai khoan", "Ma nhan vien", "Ma nhom quyen" };
     // --------------------------------------------
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_timkiem;
+    JButton bun_them, bun_xoa, bun_sua, bun_timkiem,bun_lammoi;
 
     public danhsachtaikhoan(main obj) {
         this.obj = obj;
@@ -70,7 +69,7 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         this.add(pan_chucnang2);
         // set panel tim kiem
         pan_timkiem = new JPanel();
-        pan_timkiem.setPreferredSize(new Dimension(500, 60));
+        pan_timkiem.setPreferredSize(new Dimension(600, 60));
         pan_timkiem.setBackground(color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Tim kiem",
@@ -92,6 +91,11 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         bun_timkiem = new JButton("Tim kiem");
         bun_timkiem.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_timkiem);
+        bun_lammoi = new JButton("Lam moi");
+        bun_lammoi.setPreferredSize(new Dimension(100, 30));
+        pan_timkiem.add(bun_lammoi);
+        bun_timkiem.addMouseListener(this);
+        bun_lammoi.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -142,6 +146,20 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
                 obj.center.revalidate();
             }
             // System.out.println(ma+ten);
+        }else if (e.getSource() == bun_timkiem) {
+            int tk = combo_timkiem.getSelectedIndex();
+            String str = txt_timkiem.getText();
+            if (chucnang.timkiem_vitri(tk, str, tab_danhsach) == false) {
+                JOptionPane.showMessageDialog(this, "Khong ton tai tai khoan nay", "Thong bao",
+                        JOptionPane.WARNING_MESSAGE);
+                chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+            }
+
+        }
+        else if(e.getSource()==bun_lammoi){
+            txt_timkiem.setText("");
+            chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+            combo_timkiem.setSelectedIndex(0);
         }
     }
 
