@@ -19,4 +19,6 @@ public class list_game_sold {
     public ArrayList<chitiethoadon> getListGameSold() {
         return this.listGameSold;
     }
+
+    
 }

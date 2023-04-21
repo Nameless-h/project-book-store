@@ -40,13 +40,19 @@ public class thong_ke_sach_banDAO implements DAOinterface<bookSold> {
             String sql = "SELECT maSach,tenSach,giaTien,soLuong FROM book ";
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
-            while (result.next()) {
-               bookSold bs = new bookSold(result.getInt("maSach"),
-                    result.getString("tenSach"), 
-                    "chua co", 
-                    result.getInt("giaTien"),
-                    result.getInt("soLuong")); 
-               bsList.add(bs);
+            if (result.next() == false) { 
+                System.out.println("ResultSet in empty in Java"); 
+            } else { 
+                do { 
+                    bookSold bs = new bookSold(
+                        result.getInt("maSach"),
+                        result.getString("tenSach"), 
+                        "chua co", 
+                        result.getInt("giaTien"),
+                        result.getInt("soLuong")
+                    ); 
+                    bsList.add(bs);
+                } while (result.next()); 
             }
  
          } catch (SQLException ex) {

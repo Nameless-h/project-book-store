@@ -5,7 +5,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -37,7 +39,8 @@ public class statistic_sale extends JPanel implements ActionListener{
     private String[] columnNames = {"ID","Ten sach","The loai","Gia","Da ban"};
     private String title_filter[] = {"Khoang ngay","Top ban chay","The loai"};//menu title filter
     private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_category;
-    private JTextField inputDateStart,inputDateEnd,inputcategory;
+    private JTextField inputDateStart,inputDateEnd;
+    private JComboBox inputcategory;
     private JLabel dateStart,dateEnd;
     private LineBorder linedBorderDate,linedBorderBestSeller,linedBorderCategory;
     private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCategory;
@@ -120,12 +123,12 @@ public class statistic_sale extends JPanel implements ActionListener{
         titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
         panel_filter_category.setBorder(titledBorderCategory);
 
-        inputcategory = new JTextField();
+        inputcategory = new JComboBox();
         inputcategory.setPreferredSize(new Dimension(100, 30));
         panel_filter_category.add(inputcategory);
 
-        selectCategory.setPreferredSize(new Dimension(30, 30));
-        panel_filter_category.add(selectCategory);
+        /* selectCategory.setPreferredSize(new Dimension(30, 30));
+        panel_filter_category.add(selectCategory); */
 
         headerFilterContainInput.add(panel_filter_category);
 
