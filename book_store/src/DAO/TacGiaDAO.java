@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class tac_gia_modify implements DAOinterface<tacgia> {
+public class TacGiaDAO implements DAOinterface<tacgia> {
 
   @Override
   public int insert(tacgia t) {
@@ -22,7 +22,7 @@ public class tac_gia_modify implements DAOinterface<tacgia> {
   }
 
   @Override
-  public int update(int t) {
+  public int update(tacgia tacgia_update) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'update'");
   }
@@ -46,27 +46,29 @@ public class tac_gia_modify implements DAOinterface<tacgia> {
     Statement stm = null;
     try {
       stm = conn.createStatement();
-      String sql = "SELECT tenTacgia FROM tacgia";
+      String sql = "SELECT * FROM tacgia";
       ResultSet result = stm.executeQuery(sql);
       if (!result.next()) {
-        list_tg.add(null);
+        tacgia tmp = new tacgia();
+        list_tg.add(tmp);
         return list_tg;
       } else {
-        while (result.next()) {
+        do {
           tacgia tmp = new tacgia();
+          tmp.setMaTacgia(result.getInt("maTacgia"));
           tmp.setTenTacgia(result.getString("tenTacgia"));
           list_tg.add(tmp);
-        }
+        } while (result.next());
       }
     } catch (SQLException e) {
-      Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
-
+      Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
+      System.err.println("excute query null");
     } finally {
       if (stm != null) {
         try {
           stm.close();
         } catch (SQLException e) {
-          Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+          Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
@@ -106,14 +108,14 @@ public class tac_gia_modify implements DAOinterface<tacgia> {
 
     SQLException e) {
       // TODO: handle exception
-      Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+      Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {
       if (stm != null) {
         try {
           stm.close();
         } catch (SQLException e) {
           // TODO: handle exception
-          Logger.getLogger(nxb_modify.class.getName()).log(Level.SEVERE, null, e);
+          Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
