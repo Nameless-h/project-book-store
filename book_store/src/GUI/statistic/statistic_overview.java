@@ -18,7 +18,7 @@ import javax.swing.SwingConstants;
 import DAO.book_modify;
 import DAO.khachhangDAO;
 import DAO.nhanvienDAO;
-import DTO.book;
+import DTO.Sach;
 import DTO.khachhang;
 import DTO.nhanvien;
 
@@ -42,7 +42,7 @@ public class statistic_overview extends JPanel implements ActionListener{
         String soLuongKH = Integer.toString(listKH.size());
         // lay so luong sach
         book_modify mod_bk = new book_modify();
-        ArrayList<book> listBk = mod_bk.selecAll();
+        ArrayList<Sach> listBk = mod_bk.selecAll();
         String soLuongBook = Integer.toString(listBk.size());
 
 

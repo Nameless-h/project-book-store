@@ -19,7 +19,7 @@ public class SanPhamBUS {
   }
 
   public void listSanPham() {
-    product_list = new ArrayList<>();
+    product_list = new ArrayList<Sach>();
     product_list = spdao.selecAll();
   }
 
@@ -53,4 +53,22 @@ public class SanPhamBUS {
     return null;
   }
 
+  public Sach getBook(int masach){
+    for(Sach b : this.product_list) {
+        if(b.getMaSach() == masach){
+            return b;
+        }
+    }
+    return null;
+  }
+
+  public ArrayList<Sach> searchBooks(String query) {
+    ArrayList<Sach> resultList = new ArrayList<Sach>();
+    this.product_list.forEach((book)->{
+        if(String.valueOf(book.getMaSach()).contains(query) || book.getTenSach().toLowerCase().contains(query.toLowerCase()) ){
+            resultList.add(book);
+        }
+    });
+    return resultList;
+  }
 }
