@@ -130,4 +130,16 @@ public class book_modify implements DAOinterface<book> {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
+
+    @Override
+    public void update(book t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'update'");
+    }
+
+    @Override
+    public ArrayList<book> select_all_ById(int t) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+    }
 }

@@ -14,13 +14,8 @@ public class chitiethoadon {
     private int dongia;
     private int soluong;
 
-    public chitiethoadon(int mahd, int masach, int dongia, int soluong) {
+    public chitiethoadon(int mahd,int masach, int dongia, int soluong) {
         this.mahd = mahd;
-        this.masach = masach;
-        this.dongia = dongia;
-        this.soluong = soluong;
-    }
-    public chitiethoadon(int masach, int dongia, int soluong) {
         this.masach = masach;
         this.dongia = dongia;
         this.soluong = soluong;
@@ -58,4 +53,8 @@ public class chitiethoadon {
         this.soluong = soluong;
     }
 
+    @Override
+    public String toString() {
+        return "("+this.mahd+","+this.masach+","+this.dongia+","+this.soluong+")";
+    }
 }

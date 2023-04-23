@@ -102,4 +102,16 @@ public class nxb_modify implements DAOinterface<NXB> {
   public ArrayList selecByCondition(String condition) {
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
+
+  @Override
+  public void update(NXB t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'update'");
+  }
+
+  @Override
+  public ArrayList<NXB> select_all_ById(int t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+  }
 }

@@ -37,4 +37,29 @@ public class quanlikhachhang {
     public void suathongtinkhachhang(khachhang kh){
         chucang_khachhang.update(kh);
     }
+
+    public ArrayList<khachhang> getListKH() {
+        return this.list;
+    }
+
+    public ArrayList<khachhang> searchKH(String query) {
+        ArrayList<khachhang> resultList = new ArrayList<khachhang>();
+        list.forEach((kh) -> {
+            if( String.valueOf(kh.getMa()).contains(query) || 
+                kh.getTen().toLowerCase().contains(query.toLowerCase()) || 
+                kh.getEmail().toLowerCase().contains(query.toLowerCase()) ||
+                kh.getSodienthoai().contains(query)) {
+                    resultList.add(kh);
+                }
+        });
+        return resultList;
+    }
+
+    public khachhang getKhachHang(int makh) {
+        for (khachhang kh : list){
+            if(kh.getMa() == makh) 
+                return kh;
+        }
+        return null;
+    }
 }

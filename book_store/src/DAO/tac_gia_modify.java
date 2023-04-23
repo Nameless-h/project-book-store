@@ -126,4 +126,16 @@ public class tac_gia_modify implements DAOinterface<tacgia> {
     throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
   }
 
+  @Override
+  public void update(tacgia t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'update'");
+  }
+
+  @Override
+  public ArrayList<tacgia> select_all_ById(int t) {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+  }
+
 }
