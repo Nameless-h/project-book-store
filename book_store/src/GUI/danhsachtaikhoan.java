@@ -3,12 +3,14 @@ package GUI;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.quanlitaikhoan;
+import DTO.chitietnhomquyen;
 import DTO.taikhoan;
 
 public class danhsachtaikhoan extends JPanel implements MouseListener {
@@ -16,20 +18,21 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
     quanlitaikhoan chucnang = new quanlitaikhoan();
+    ArrayList<chitietnhomquyen> list_ct;
     // -------------------------------
     String[] collums = { "STT", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen", "Tinh trang" };
-    String[] list_timkiem = { "Tat ca", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen",
-            "Tinh trang" };
+    String[] list_timkiem = { "Tat ca", "Ma tai khoan", "Ma nhan vien", "Ma nhom quyen" };
     // --------------------------------------------
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_timkiem;
+    JButton bun_them, bun_xoa, bun_sua, bun_timkiem, bun_lammoi;
 
-    public danhsachtaikhoan(main obj) {
+    public danhsachtaikhoan(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
+        this.list_ct = list_ct;
         init(obj);
     }
 
@@ -70,7 +73,7 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         this.add(pan_chucnang2);
         // set panel tim kiem
         pan_timkiem = new JPanel();
-        pan_timkiem.setPreferredSize(new Dimension(500, 60));
+        pan_timkiem.setPreferredSize(new Dimension(600, 60));
         pan_timkiem.setBackground(color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Tim kiem",
@@ -92,6 +95,11 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         bun_timkiem = new JButton("Tim kiem");
         bun_timkiem.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_timkiem);
+        bun_lammoi = new JButton("Lam moi");
+        bun_lammoi.setPreferredSize(new Dimension(100, 30));
+        pan_timkiem.add(bun_lammoi);
+        bun_timkiem.addMouseListener(this);
+        bun_lammoi.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -111,37 +119,64 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
-            int rowCount = tab_danhsach.getRowCount();
-            Integer ma=Integer.parseInt(tab_danhsach.getValueAt(rowCount-1,1).toString());
-            themtaikhoan panel = new themtaikhoan(obj,ma+1);
-            panel.setBounds(0, 0, obj.w_center, obj.h_center);
-            obj.center.removeAll();
-            obj.center.add(panel);
-            obj.center.repaint();
-            obj.center.revalidate();
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("TK") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Them"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        int rowCount = tab_danhsach.getRowCount();
+                        Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
+                        themtaikhoan panel = new themtaikhoan(obj, ma + 1);
+                        panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                        obj.center.removeAll();
+                        obj.center.add(panel);
+                        obj.center.repaint();
+                        obj.center.revalidate();
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
         } else if (e.getSource() == bun_sua) {
-            DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
-            int selectrow = tab_danhsach.getSelectedRow();
-            if (selectrow == -1) {
-                JOptionPane.showMessageDialog(null, "Ban chua chon tai khoan de sua");
-            } else {
-                // String ma,ten,gioitinh,diachi,email,sodienthoai;
-               Integer matk =Integer.parseInt(model.getValueAt(selectrow, 1).toString()); 
-               String username =(model.getValueAt(selectrow, 2).toString()); 
-               String pass =(model.getValueAt(selectrow, 3).toString()); 
-               Integer manv =Integer.parseInt(model.getValueAt(selectrow, 4).toString()); 
-               Integer manq =Integer.parseInt(model.getValueAt(selectrow, 5).toString()); 
-               Integer tt =Integer.parseInt(model.getValueAt(selectrow, 6).toString()); 
-                taikhoan temp = new taikhoan(matk, username, pass, manv, manq, tt);
-                System.out.println(temp);
-                suataikhoan panel = new suataikhoan(obj, temp);
-                panel.setBounds(0, 0, obj.w_center, obj.h_center);
-                obj.center.removeAll();
-                obj.center.add(panel);
-                obj.center.repaint();
-                obj.center.revalidate();
-            }
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("TK") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Sua"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
+                        int selectrow = tab_danhsach.getSelectedRow();
+                        if (selectrow == -1) {
+                            JOptionPane.showMessageDialog(null, "Ban chua chon tai khoan de sua");
+                        } else {
+                            // String ma,ten,gioitinh,diachi,email,sodienthoai;
+                            Integer matk = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
+                            String username = (model.getValueAt(selectrow, 2).toString());
+                            String pass = (model.getValueAt(selectrow, 3).toString());
+                            Integer manv = Integer.parseInt(model.getValueAt(selectrow, 4).toString());
+                            Integer manq = Integer.parseInt(model.getValueAt(selectrow, 5).toString());
+                            Integer tt = Integer.parseInt(model.getValueAt(selectrow, 6).toString());
+                            taikhoan temp = new taikhoan(matk, username, pass, manv, manq, tt);
+                            System.out.println(temp);
+                            suataikhoan panel = new suataikhoan(obj, temp);
+                            panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                            obj.center.removeAll();
+                            obj.center.add(panel);
+                            obj.center.repaint();
+                            obj.center.revalidate();
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
             // System.out.println(ma+ten);
+        } else if (e.getSource() == bun_timkiem) {
+            int tk = combo_timkiem.getSelectedIndex();
+            String str = txt_timkiem.getText();
+            if (chucnang.timkiem_vitri(tk, str, tab_danhsach) == false) {
+                JOptionPane.showMessageDialog(this, "Khong ton tai tai khoan nay", "Thong bao",
+                        JOptionPane.WARNING_MESSAGE);
+                chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+            }
+
+        } else if (e.getSource() == bun_lammoi) {
+            txt_timkiem.setText("");
+            chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+            combo_timkiem.setSelectedIndex(0);
         }
     }
 

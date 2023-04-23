@@ -13,35 +13,33 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import DTO.book;
+import com.mysql.cj.jdbc.JdbcConnection;
+
+import DTO.Theloai;
 
 /**
  *
  * @author JN_PC
  */
-public class book_modify implements DAOinterface<book> {
-    public static void update() {
-
-    }
-
-    public static void main(String[] args) throws Exception {
-        // book_modify.allBook();
+public class TheLoaiDAO implements DAOinterface<Theloai> {
+    public static void main(String[] args) {
+        // System.out.println(getTheloai(1).getTenTheloai());
     }
 
     @Override
-    public int insert(book t) {
+    public int insert(Theloai t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'insert'");
     }
 
     @Override
-    public int update(int t) {
+    public int update(Theloai update_theloai) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
-    public int delete(book t) {
+    public int delete(Theloai theloai) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete'");
     }
@@ -53,72 +51,59 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public ArrayList<book> selecAll() {
-        // TODO Auto-generated method stub
-        ArrayList<book> bookList = new ArrayList<book>();
+    public ArrayList<Theloai> selecAll() {
+        ArrayList<Theloai> cate = new ArrayList<Theloai>();
 
         java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
-        try {
-            String sql = "SELECT * FROM Book";
-            statement = conn.createStatement();
 
+        try {
+            statement = conn.createStatement();
+            String sql = "SELECT * FROM theloai";
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-                book b1 = new book(result.getInt("maSach"),
-                        result.getString("tenSach"),
-                        result.getInt("maTheloai"),
-                        result.getInt("maNXB"),
-                        result.getString("namXB"),
-                        result.getInt("soLuong"),
-                        result.getInt("giaTien"));
-
-                bookList.add(b1);
+                Theloai tl = new Theloai(result.getInt("maTheloai"),
+                        result.getString("tenTheloai"));
+                cate.add(tl);
             }
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
 
-        } catch (SQLException ex) {
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
-                } catch (SQLException ex) {
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException e) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
-        return bookList;
+
+        return cate;
     }
 
     @Override
-    public book selectById(int t) {
-        // TODO Auto-generated method stub
+    public Theloai selectById(int maTheloai) {
         Connection conn = JDBCUtil.getConnection();
         PreparedStatement statement = null;
-        book tmp = null;
+        Theloai tmp = null;
         try {
-
-            statement = conn.prepareStatement("SELECT * FROM book WHERE maSach = (?)");
-            statement.setInt(1, t);
+            statement = conn.prepareStatement("SELECT * FROM theloai WHERE maTheloai = (?)");
+            statement.setInt(1, maTheloai);
             ResultSet result = statement.executeQuery();
             result.next();
-            tmp = new book(result.getInt("maSach"),
-                    result.getString("tenSach"),
-                    result.getInt("maTheloai"),
-                    result.getInt("maNXB"),
-                    result.getString("namXB"),
-                    result.getInt("soLuong"),
-                    result.getInt("giaTien"));
+            tmp = new Theloai(result.getInt("maTheloai"),
+                    result.getString("tenTheloai"));
         } catch (SQLException e) {
             // TODO: handle exception
-            Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         } finally {
             if (statement != null) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
                     // TODO: handle exception
-                    Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, e);
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
@@ -126,20 +111,15 @@ public class book_modify implements DAOinterface<book> {
     }
 
     @Override
-    public ArrayList<book> selecByCondition(String condition) {
+    public ArrayList selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
 
     @Override
-    public void update(book t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
-    }
-
-    @Override
-    public ArrayList<book> select_all_ById(int t) {
+    public ArrayList<Theloai> select_all_ById(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
+
 }

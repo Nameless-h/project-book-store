@@ -48,7 +48,7 @@ public class nhanvienDAO implements DAOinterface<nhanvien> {
     }
 
     @Override
-    public ArrayList<nhanvien> selecAll() {
+    public ArrayList<nhanvien>  selecAll() {
         ArrayList<nhanvien> ketQua = new ArrayList<nhanvien>();
 		try {
 			// Bước 1: tạo kết nối đến CSDL
@@ -108,7 +108,7 @@ public class nhanvienDAO implements DAOinterface<nhanvien> {
 
 
     @Override
-    public void update(nhanvien t) {
+    public int update(nhanvien t) {
         int ketQua = 0;
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -137,6 +137,7 @@ public class nhanvienDAO implements DAOinterface<nhanvien> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return ketQua;
     }
     
 }

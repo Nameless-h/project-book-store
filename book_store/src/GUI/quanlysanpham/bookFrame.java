@@ -5,13 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Frame;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.Math;
 import java.util.ArrayList;
 import DTO.Theloai;
+
+import javax.print.event.PrintServiceAttributeEvent;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,32 +25,37 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicOptionPaneUI.ButtonActionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import DAO.The_loai_modify;
-import DAO.book_modify;
-import DAO.nxb_modify;
-import DAO.tac_gia_modify;
-import DTO.NXB;
+import BUS.NhaXuatBanBUS;
+import BUS.SanPhamBUS;
+import BUS.TacGiaBUS;
+import BUS.TheLoaiBUS;
+import DTO.NhaXuatBan;
 import DTO.Theloai;
-import DTO.book;
+import DTO.Sach;
 import DTO.tacgia;
 
 public class bookFrame extends JPanel implements ActionListener, ChangeListener {
   Font fo = new Font("Time New Roman", Font.BOLD, 20);
   Font searchFo = new Font("Time New Roman", Font.PLAIN, 15);
-  book_modify mod_bk = new book_modify();
-  nxb_modify mod_nxb = new nxb_modify();
-  tac_gia_modify mod_tg = new tac_gia_modify();
+  SanPhamBUS bookBUS = new SanPhamBUS();
+  NhaXuatBanBUS nxbBUS = new NhaXuatBanBUS();
+  TacGiaBUS tacgiaBUS = new TacGiaBUS();
+  TheLoaiBUS tloaiBUS = new TheLoaiBUS();
 
   public bookFrame() {
     this.setLayout(new BorderLayout());
+    bookBUS.listSanPham();
+    nxbBUS.listNhaXuatBan();
+    tacgiaBUS.listTacGia();
+    tloaiBUS.listTheLoai();
+
     init();
     this.setVisible(true);
   }
@@ -199,7 +209,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       scrollPaneNxb.setBackground(Color.orange);
 
       /* add component */
-      button_panel = new button_panel(150, 250, 800, 50);
+      button_panel = new ModifyButtonPanel(150, 250, 800, 50);
       button_panel.getAddBtn().addActionListener(this);
       button_panel.getEditBtn().addActionListener(this);
       button_panel.getDelBtn().addActionListener(this);
@@ -251,7 +261,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private JScrollPane scrollPaneBook;
   private JScrollPane scrollPaneNxb;
   private JPanel book_panel;
-  private button_panel button_panel;
+  private ModifyButtonPanel button_panel;
   private JPanel nxb_panel;
   private JPanel search_Panel;
   private JTabbedPane tabPane;
@@ -274,11 +284,12 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private JTextField txtsearchTen;
   private JComboBox<String> cbbsearchTheloai;
   private JTextField txtsearchTacgia;
+  private AddbookFrame addFrame;
   // End of variables declaration
 
   private void showCbbTheloai() {
     cbbTheloai.removeAllItems();
-    ArrayList<Theloai> data = The_loai_modify.allCate();
+    ArrayList<Theloai> data = tloaiBUS.getDanhTheloaiTheLoai();
     for (Theloai tmp : data) {
       cbbTheloai.addItem(tmp.getTenTheloai());
       cbbsearchTheloai.addItem(tmp.getTenTheloai());
@@ -287,8 +298,8 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   private void showCbbNxb() {
     cbbNXB.removeAllItems();
-    ArrayList<NXB> list = mod_nxb.selecAll();
-    for (NXB tmp : list) {
+    ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
+    for (NhaXuatBan tmp : list) {
       cbbNXB.addItem(tmp.getTenNXB());
     }
     cbbNXB.setEnabled(true);
@@ -296,7 +307,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   private void showCbbTacgia() {
     cbbTacgia.removeAllItems();
-    ArrayList<tacgia> list = mod_tg.selecAll();
+    ArrayList<tacgia> list = tacgiaBUS.getDanhSachTacGia();
     for (tacgia tmp : list) {
       cbbTacgia.addItem(tmp.getTenTacgia());
     }
@@ -333,13 +344,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         }
       });
       // insert value into table
-      ArrayList<book> list = mod_bk.selecAll();
+      ArrayList<Sach> list = bookBUS.getDanhSachSanPham();
       DefaultTableModel bookModel = (DefaultTableModel) bookTbl.getModel();
 
-      for (book tmp : list) {
-        Theloai theLoaiTmp = The_loai_modify.getTheloai(tmp.getMaTheloai());
-        NXB nxbTmp = mod_nxb.selectById(tmp.getMaNXB());
-        tacgia tacgiaTmp = mod_tg.selectById(tmp.getMaSach());
+      for (Sach tmp : list) {
+        Theloai theLoaiTmp = tloaiBUS.timTheLoaiTheoMa(tmp.getMaTheloai());
+        NhaXuatBan nxbTmp = nxbBUS.timNhaXuatBanTheoMa(tmp.getMaNXB());
+        tacgia tacgiaTmp = tacgiaBUS.timTacgiaTheoMaSach(tmp.getMaSach());
         bookModel.addRow(new Object[] {
             tmp.getMaSach(), tmp.getTenSach(),
             tacgiaTmp.getTenTacgia(), theLoaiTmp.getTenTheloai(),
@@ -357,10 +368,10 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
             int selectedBookID = (int) bookTbl.getValueAt(bookTbl.getSelectedRow(), 0);
 
-            book selectedBook = mod_bk.selectById(selectedBookID);
-            NXB nxb_select = mod_nxb.selectById(selectedBook.getMaNXB());
-            Theloai tl_select = The_loai_modify.getTheloai(selectedBook.getMaTheloai());
-            tacgia tg_select = mod_tg.selectById(selectedBook.getMaSach());
+            Sach selectedBook = bookBUS.timTheLoaiTheoMa(selectedBookID);
+            NhaXuatBan nxb_select = nxbBUS.timNhaXuatBanTheoMa(selectedBook.getMaNXB());
+            Theloai tl_select = tloaiBUS.timTheLoaiTheoMa(selectedBook.getMaTheloai());
+            tacgia tg_select = tacgiaBUS.timTacgiaTheoMa(selectedBook.getMaSach());
 
             txttenSach.setText(selectedBook.getTenSach());
             cbbTheloai.setSelectedItem(nxb_select.getTenNXB());
@@ -410,9 +421,9 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     });
     /* end create table */
     // in ra danh sach nxb
-    ArrayList<NXB> list = mod_nxb.selecAll();
+    ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
     DefaultTableModel nxbModel = (DefaultTableModel) nxbTbl.getModel();
-    for (NXB tmp : list) {
+    for (NhaXuatBan tmp : list) {
 
       nxbModel.addRow(new Object[] {
           tmp.getMaNXB(), tmp.getTenNXB(),
@@ -428,7 +439,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         int col = nxbTbl.columnAtPoint(evt.getPoint());
         if (row >= 0 && col >= 0) {
           int selectedNxbID = (int) nxbTbl.getValueAt(nxbTbl.getSelectedRow(), 0);
-          NXB tmp = mod_nxb.selectById(selectedNxbID);
+          NhaXuatBan tmp = nxbBUS.timNhaXuatBanTheoMa(selectedNxbID);
           txtTenNxb.setText(tmp.getTenNXB());
           txtMailNxb.setText(tmp.getEmail());
           txtSdtNxb.setText(tmp.getSdt());
@@ -456,11 +467,28 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == button_panel.getAddBtn()) {
-      System.out.println("add book click");
-    } else if (e.getSource() == button_panel.getEditBtn()) {
+      try {
+        // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
+        if (!addFrame.isDisplayable()) {
+          addFrame.setVisible(true);
+          addFrame.toFront();
+        } else {
+          addFrame.toFront();
+        }
+      } catch (Exception ex) {
+        System.err.println("add frame chua khoi tao, bat dau khoi tao add frame");
+        addFrame = new AddbookFrame(900, 600);
+
+      }
+    }
+    if (e.getSource() == button_panel.getEditBtn()) {
       System.out.println("edit book click");
-    } else if (e.getSource() == button_panel.getDelBtn()) {
+      return;
+    }
+    if (e.getSource() == button_panel.getDelBtn()) {
+
       System.out.println("delete book click");
+      return;
     }
   }
 

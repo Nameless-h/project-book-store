@@ -127,7 +127,7 @@ public class chitietnhomquyenDAO implements DAOinterface<chitietnhomquyen> {
     }
 
     @Override
-    public void update(chitietnhomquyen t) {
+    public int update(chitietnhomquyen t) {
         int ketQua = 0;
 		try {
 			// Bước 1: tạo kết nối đến CSDL
@@ -153,6 +153,7 @@ public class chitietnhomquyenDAO implements DAOinterface<chitietnhomquyen> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        return ketQua;
 		
 
     }

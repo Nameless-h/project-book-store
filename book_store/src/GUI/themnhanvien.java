@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -24,6 +26,8 @@ public class themnhanvien extends JPanel implements MouseListener {
     JButton bun_them;
     JComboBox com_gioitinh;
     quanlinhanvien chucnang_nhanvien = new quanlinhanvien();
+    JRadioButton rdb_nam, rdb_nu;
+    ButtonGroup group;
 
     public themnhanvien(main obj, Integer ma) {
         this.obj = obj;
@@ -53,19 +57,35 @@ public class themnhanvien extends JPanel implements MouseListener {
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
             lab[i].setBackground(color_211);
             lab[i].setForeground(Color.black);
-
-            txt[i] = new JTextField();
-            if (i == 0) {
-                txt[i].setText(String.valueOf(ma));
-                txt[i].setEnabled(false);
-            }
-
-            txt[i].setPreferredSize(new Dimension(400, 50));
-            txt[i].setForeground(Color.black);
-            txt[i].setFont(new Font(name_font1, 1, 20));
-
             pan_info.add(lab[i]);
-            pan_info.add(txt[i]);
+            if (i == 2) {
+                rdb_nam = new JRadioButton("Nam", true);
+                rdb_nu = new JRadioButton("Nu");
+                rdb_nam.setPreferredSize(new Dimension(200, 50));
+                rdb_nam.setFont(new Font(name_font1, 1, 25));
+                rdb_nu.setPreferredSize(new Dimension(200, 50));
+                rdb_nu.setFont(new Font(name_font1, 1, 25));
+                group = new ButtonGroup();
+                group.add(rdb_nam);
+                group.add(rdb_nu);
+                rdb_nam.addMouseListener(this);
+                rdb_nu.addMouseListener(this);
+                pan_info.add(rdb_nam);
+                pan_info.add(rdb_nu);
+            } else {
+                txt[i] = new JTextField();
+                if (i == 0) {
+                    txt[i].setText(String.valueOf(ma));
+                    txt[i].setEnabled(false);
+                }
+
+                txt[i].setPreferredSize(new Dimension(400, 50));
+                txt[i].setForeground(Color.black);
+                txt[i].setFont(new Font(name_font1, 1, 20));
+
+                pan_info.add(txt[i]);
+            }
+            
 
         }
         bun_them = new JButton("Them");
@@ -86,25 +106,23 @@ public class themnhanvien extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
-            String gt_str = txt[2].getText();
-            if (gt_str.equalsIgnoreCase("nam") || gt_str.equalsIgnoreCase("nu")) {
-                int gt = 0;
+            int gt=1;
+            if (rdb_nam.isSelected()) {
+                gt=1;
+            }
+            if (rdb_nu.isSelected()) {
+                gt=0;
+            }
                 Integer manv = this.ma;
                 String ten = txt[1].getText();
-
                 String dc = txt[3].getText();
                 String email = txt[4].getText();
                 String sdt = txt[5].getText();
                 String cv = txt[6].getText();
-                if (gt_str.equalsIgnoreCase("nam"))
-                    gt = 1;
-                else if (gt_str.equalsIgnoreCase("nu"))
-                    gt = 0;
-                nhanvien nv = new nhanvien(manv, ten, gt, sdt, email, sdt, cv);
+                nhanvien nv = new nhanvien(manv, ten, gt, dc, email, sdt, cv);
                 chucnang_nhanvien.themnhanvien(nv);
                 JOptionPane.showMessageDialog(null, "Them thanh cong");
-            } else
-                JOptionPane.showMessageDialog(null, "Ban nhap gioi tinh bi sai! VUi long nhap lai");
+           
 
         }
     }
@@ -123,4 +141,6 @@ public class themnhanvien extends JPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+   
 }

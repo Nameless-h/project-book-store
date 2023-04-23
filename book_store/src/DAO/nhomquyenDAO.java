@@ -99,7 +99,7 @@ public class nhomquyenDAO implements DAOinterface<nhomquyen> {
     }
 
     @Override
-    public void update(nhomquyen t) {
+    public int update(nhomquyen t) {
         int ketQua = 0;
         try {
             // Bước 1: tạo kết nối đến CSDL
@@ -123,6 +123,7 @@ public class nhomquyenDAO implements DAOinterface<nhomquyen> {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return ketQua;
     }
 
 }

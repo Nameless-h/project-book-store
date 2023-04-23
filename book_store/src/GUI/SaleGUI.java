@@ -23,12 +23,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import BUS.PriceFormatter;
-import BUS.bookBUS;
+import BUS.SanPhamBUS;
 import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlikhachhang;
 import DAO.quanlihoadonbanhangDAO;
-import DTO.book;
+import DTO.Sach;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
@@ -76,7 +76,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     private morebutton morebtn;
 
     //action
-    private bookBUS bookbus = new bookBUS();
+    private SanPhamBUS bookbus = new SanPhamBUS();
     private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
     private quanlichitiethoadonbanhang qlcthdbh = new quanlichitiethoadonbanhang();
     private ArrayList<chitiethoadon> listcthd = new ArrayList<chitiethoadon>();
@@ -142,13 +142,13 @@ public class SaleGUI extends JPanel implements ActionListener {
     public Mytable bookTable() {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
-        booktable.setHeader(new String[]{"ID","Book name","Price","Quantity"});
-        bookbus.initbookList();
-        for(book book : bookbus.getbookList()) {
+        booktable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity" });
+        bookbus.listSanPham();
+        for(Sach book : bookbus.getDanhSachSanPham()) {
             booktable.addRow(new Object[]{
                 book.getMaSach(),
                 book.getTenSach(),
-                PriceFormatter.format(book.getGiaTien()),
+                book.getGiaTien(),
                 book.getSoLuong()
             });
         }
@@ -317,7 +317,7 @@ public class SaleGUI extends JPanel implements ActionListener {
 
         cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
         paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
-        
+
         cancelbtn.addActionListener(this);
         paybtn.addActionListener(this);
 
@@ -370,7 +370,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     /*------------------------------------------- ACTION -------------------------------------------*/
     
     private void addtoCart(int masach,int soluong) {
-        book b = bookbus.getBook(masach);
+        Sach b = bookbus.getBook(masach);
         boolean inCart = false;
         int tongsoluong;
 
@@ -400,7 +400,7 @@ public class SaleGUI extends JPanel implements ActionListener {
 
     private void setDataToCartTable(ArrayList<chitiethoadon> list,Mytable t) {
         t.clear();
-        book b = null;
+        Sach b = null;
         int totalprice;
         subtotal = 0;
         double grandtotal = 0;
@@ -422,9 +422,9 @@ public class SaleGUI extends JPanel implements ActionListener {
         grandtotalinp.setText(PriceFormatter.format(grandtotal));
     }
 
-    private void setDataToBookTable(ArrayList<book> list,Mytable t) {
+    private void setDataToBookTable(ArrayList<Sach> list,Mytable t) {
         t.clear();
-        for(book b : list) {
+        for(Sach b : list) {
             t.addRow(new Object[]{
                 String.valueOf(b.getMaSach()),
                 b.getTenSach(),
@@ -451,7 +451,7 @@ public class SaleGUI extends JPanel implements ActionListener {
 
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
-        String id = String.valueOf(booktable.getTable().getValueAt(row, 0)) ;
+        String id = String.valueOf(booktable.getTable().getValueAt(row, 0));
         inp[0].setText(id);
         String name = (String) booktable.getTable().getValueAt(row, 1);
         inp[1].setText(name);

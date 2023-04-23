@@ -24,10 +24,11 @@ public class themtaikhoan extends JPanel implements MouseListener{
     JPanel pan_info;
     Integer[] list_manhomquyen = quanlinhomquyen.danhsach_manhomquyen();
     Integer[] list_manhanvien = quanlinhanvien.danhsachmanhanvien();
+    String[] list_tennhomquyen=quanlinhomquyen.danhsach_tennhomquyen();
     String[] list_lab = { "Ma tai khoan:", "Username:", "Password:", "Ma nhan vien:", "Nhom quyen:" };
     JLabel[] lab = new JLabel[list_lab.length];
     JTextField[] txt = new JTextField[list_lab.length - 1];
-    JComboBox com_manhomquyen, com_manhanvien;
+    JComboBox com_tennhomquyen, com_manhanvien;
     JButton bun_them;
     int id;
 
@@ -55,7 +56,7 @@ public class themtaikhoan extends JPanel implements MouseListener{
         for (int i = 0; i < list_lab.length; i++) {
             lab[i] = new JLabel(list_lab[i]);
             lab[i].setPreferredSize(new Dimension(250, 50));
-            lab[i].setFont(new Font(name_font1, 1, 25));
+            lab[i].setFont(new Font(name_font1, 1, 20));
             pan_info.add(lab[i]);
             if (i == 0) {
                 txt[i] = new JTextField(String.valueOf(id));
@@ -72,12 +73,12 @@ public class themtaikhoan extends JPanel implements MouseListener{
                 com_manhanvien.addMouseListener(this);
                 pan_info.add(com_manhanvien);
             } else if (i == 4) {
-                com_manhomquyen = new JComboBox(list_manhomquyen);
-                com_manhomquyen.setPreferredSize(new Dimension(250, 50));
-                com_manhomquyen.setForeground(Color.black);
-                com_manhomquyen.setFont(new Font(name_font1, 1, 25));
-                com_manhomquyen.addMouseListener(this);
-                pan_info.add(com_manhomquyen);
+                com_tennhomquyen = new JComboBox(list_tennhomquyen);
+                com_tennhomquyen.setPreferredSize(new Dimension(250, 50));
+                com_tennhomquyen.setForeground(Color.black);
+                com_tennhomquyen.setFont(new Font(name_font1, 1, 25));
+                com_tennhomquyen.addMouseListener(this);
+                pan_info.add(com_tennhomquyen);
             } else {
                 txt[i] = new JTextField();
                 txt[i].setPreferredSize(new Dimension(300, 50));
@@ -108,7 +109,7 @@ public class themtaikhoan extends JPanel implements MouseListener{
             String username=txt[1].getText();
             String password=txt[2].getText();
             int mnv_select = Integer.parseInt(com_manhanvien.getSelectedItem().toString());
-            int mnq_select = Integer.parseInt(com_manhomquyen.getSelectedItem().toString());
+            int mnq_select = list_manhomquyen[com_tennhomquyen.getSelectedIndex()];
         taikhoan tk=new taikhoan(ma, username, password, mnv_select,mnq_select,1);
         quanlitaikhoan.themtaikhoan(tk);
         JOptionPane.showMessageDialog(null,"Them tai khoan thanh cong");
