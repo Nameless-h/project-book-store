@@ -27,6 +27,7 @@ import BUS.SanPhamBUS;
 import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlikhachhang;
+import BUS.quanliquydoidiem;
 import DAO.quanlihoadonbanhangDAO;
 import DTO.Sach;
 import DTO.chitiethoadon;
@@ -76,6 +77,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     private morebutton morebtn;
 
     //action
+    private quanliquydoidiem qlqdbus = new quanliquydoidiem();
     private SanPhamBUS bookbus = new SanPhamBUS();
     private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
     private quanlichitiethoadonbanhang qlcthdbh = new quanlichitiethoadonbanhang();
@@ -91,6 +93,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         init();
         nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
         empnameinp.setText(nv.getTen());
+        showFormChonKH();
     }
 
     public void init() throws IOException {
@@ -142,13 +145,13 @@ public class SaleGUI extends JPanel implements ActionListener {
     public Mytable bookTable() {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
-        booktable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity" });
+        booktable.setHeader(new String[] { "Mã", "Tên sách", "Đơn giá", "SL" });
         bookbus.listSanPham();
         for(Sach book : bookbus.getDanhSachSanPham()) {
             booktable.addRow(new Object[]{
                 book.getMaSach(),
                 book.getTenSach(),
-                book.getGiaTien(),
+                PriceFormatter.format(book.getGiaTien()),
                 book.getSoLuong()
             });
         }
@@ -175,7 +178,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         JPanel pbookdetail = new JPanel();
         JPanel inputpnl = new JPanel();
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 13);
-        String bookdetail[] = { "Book id", "Name", "Price", "Quantity" };
+        String bookdetail[] = { "Mã", "Tên sách", "Đơn giá", "Số lượng" };
         inp = new JTextField[bookdetail.length];
         addbtn = new addbutton();
         pbookdetail.setLayout(null);
@@ -245,7 +248,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     public JPanel cartTable() {
         carttable = new Mytable();
         carttable.setTablesize(0, 400);
-        carttable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity", "Total" });
+        carttable.setHeader(new String[] { "Mã", "Tên sách", "Đơn giá", "SL", "Thành tiền" });
         carttable.setPreferredWidth(0, 25);
         carttable.setPreferredWidth(1, 200);
         carttable.setPreferredWidth(2, 100);
@@ -283,12 +286,12 @@ public class SaleGUI extends JPanel implements ActionListener {
         infopnl.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
         infopnl.setPreferredSize(new Dimension(0, 250));
 
-        cusidinp.setBorder(BorderFactory.createTitledBorder("Customer"));
-        empnameinp.setBorder(BorderFactory.createTitledBorder("Employee"));
-        dateinp.setBorder(BorderFactory.createTitledBorder("Due Date"));
-        subtotalinp.setBorder(BorderFactory.createTitledBorder("Subtotal"));
-        discountinp.setBorder(BorderFactory.createTitledBorder("Discount (%)"));
-        grandtotalinp.setBorder(BorderFactory.createTitledBorder("Grand total"));
+        cusidinp.setBorder(BorderFactory.createTitledBorder("Khách hàng"));
+        empnameinp.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
+        dateinp.setBorder(BorderFactory.createTitledBorder("Ngày lập hóa đơn"));
+        subtotalinp.setBorder(BorderFactory.createTitledBorder("Tổng cộng"));
+        discountinp.setBorder(BorderFactory.createTitledBorder("Giảm giá (%)"));
+        grandtotalinp.setBorder(BorderFactory.createTitledBorder("Thành tiền"));
 
         int w = 250, h = 48;
 
@@ -330,8 +333,6 @@ public class SaleGUI extends JPanel implements ActionListener {
         subtotalinp.setText(PriceFormatter.format(total));
         dateinp.setText(java.time.LocalDate.now().toString());
         System.out.println(java.time.LocalDate.now().toString());
-        discountinp.setText("15");
-
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if(empnameinp.getText().equals("") || cusidinp.getText().equals("") || listcthd.isEmpty()) {
@@ -353,15 +354,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         infopnl.add(paybtn);
 
         morebtn.addActionListener((ae) -> {
-            new chonkhachhangGUI(cusidinp).addWindowListener(new WindowAdapter() {
-                public void windowClosed(WindowEvent e) {
-                    int makh = Integer.parseInt(cusidinp.getText()) ;
-                    kh = qlkhbus.getKhachHang(makh);
-                    if(kh != null) {
-                        cusidinp.setText(kh.getTen() + " (" + kh.getMa() + ")");
-                    }
-                }
-            });
+            showFormChonKH();
         });
 
         return infopnl;
@@ -417,8 +410,8 @@ public class SaleGUI extends JPanel implements ActionListener {
             subtotal+=totalprice;
         }
         subtotalinp.setText(PriceFormatter.format(subtotal));
-        double disprice = subtotal * (Math.ceil(Float.parseFloat(discountinp.getText())) / 100);
-        grandtotal = subtotal - disprice;
+        double disprice = (double)subtotal * (double)(Math.ceil(Float.parseFloat(discountinp.getText())) / 100);
+        grandtotal = (double)subtotal - disprice;
         grandtotalinp.setText(PriceFormatter.format(grandtotal));
     }
 
@@ -449,6 +442,20 @@ public class SaleGUI extends JPanel implements ActionListener {
         discountinp.setText("");
     }
 
+    private void showFormChonKH() {
+        new chonkhachhangGUI(cusidinp).addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                int makh = Integer.parseInt(cusidinp.getText()) ;
+                kh = qlkhbus.getKhachHang(makh);
+                if(kh != null) {
+                    cusidinp.setText(kh.getTen());
+                    qlqdbus.initList();
+                    discountinp.setText(String.valueOf(qlqdbus.getGiamgia(kh.getMa())));
+                }
+            }
+        });
+    }
+
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
         String id = String.valueOf(booktable.getTable().getValueAt(row, 0));
@@ -463,26 +470,35 @@ public class SaleGUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addbtn) {
-            int masach = 0;
-            try {
-                masach = Integer.parseInt(inp[0].getText());
-                int soluong = Integer.parseInt(inp[3].getText());
-                if(soluong > 0) {
-                    addtoCart(masach, soluong);
+            if(cusidinp.getText().equals("")) {
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Vui lòng chọn khách hàng !","Thông báo",2);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    showFormChonKH();
                 } else {
-                    JOptionPane.showMessageDialog(this,"Số lượng phải là số dương !");
-                    inp[3].requestFocus();
+                    return;
                 }
-            } catch (NumberFormatException ex) {
-                if(masach == 0) {
-                    JOptionPane.showMessageDialog(this,"Vui lòng chọn sản phẩm trước khi thêm vào giỏ hàng !");
-                } else {
-                    JOptionPane.showMessageDialog(this,"Số lượng phải là số nguyên !");
-                    inp[3].requestFocus();
+            } else {
+                int masach = 0;
+                try {
+                    masach = Integer.parseInt(inp[0].getText());
+                    int soluong = Integer.parseInt(inp[3].getText());
+                    if(soluong > 0) {
+                        addtoCart(masach, soluong);
+                    } else {
+                        JOptionPane.showMessageDialog(this,"Số lượng phải là số dương !");
+                        inp[3].requestFocus();
+                    }
+                } catch (NumberFormatException ex) {
+                    if(masach == 0) {
+                        JOptionPane.showMessageDialog(this,"Vui lòng chọn sản phẩm trước khi thêm vào giỏ hàng !");
+                    } else {
+                        System.out.println(ex);
+                        JOptionPane.showMessageDialog(this,"Số lượng phải là số nguyên !");
+                        inp[3].requestFocus();
+                    }
+                    
                 }
-                
             }
-            
         }
         if (e.getSource() == editbtn) {
             int row = carttable.getTable().getSelectedRow();
@@ -536,10 +552,22 @@ public class SaleGUI extends JPanel implements ActionListener {
         if (e.getSource() == paybtn) {
             System.out.println(dateinp.getText());
             hoadonbanhang hdbh = new hoadonbanhang(kh.getMa(),qlhdbh.getNextID(),nv.getMa(),dateinp.getText(),subtotal,Integer.parseInt(discountinp.getText()));
-            if(qlhdbh.themHoaDon(this,hdbh)) {
+            
+            if(qlhdbh.themHoaDon(this,hdbh)/* them hoa don */) {
+                //them chi tiet hoa don
                 qlcthdbh.themChiTietHoaDon(listcthd);
+                //cap so luong sach
+                for(chitiethoadon cthd: listcthd) {
+                    bookbus.updateSoLuong(cthd.getmasach(),cthd.getsoluong());
+                }
+                //cap diem khach hang
+                qlkhbus.updateDiem(kh.getMa(),kh.getDiem()+1);
                 JOptionPane.showMessageDialog(this,"Thanh toán thành công !","Thông báo",1);
+                //refresh
                 refresh();
+                bookbus.listSanPham();
+                setDataToBookTable(bookbus.getDanhSachSanPham(), booktable);
+
                 return;
             } else {
                 JOptionPane.showMessageDialog(this,"Thanh toán thất bại !","Thông báo",1);

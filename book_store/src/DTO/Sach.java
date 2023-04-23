@@ -46,9 +46,6 @@ public class Sach {
         this.maSach = maSach;
     }
 
-    public String getTenSach() {
-        return tenSach;
-    }
 
     @Override
     public String toString() {
@@ -60,7 +57,7 @@ public class Sach {
         this.tenSach = tenSach;
     }
 
-    public String getTensach() {
+    public String getTenSach() {
         return tenSach;
     }
 

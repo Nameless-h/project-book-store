@@ -109,7 +109,7 @@ public class header extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        //throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
     }
 
     @Override

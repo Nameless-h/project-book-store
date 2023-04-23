@@ -30,10 +30,12 @@ public class quanlikhachhang {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
+
     public void themkhachhang(khachhang kh){
         list.add(kh);
         chucang_khachhang.insert(kh);
     }
+
     public void suathongtinkhachhang(khachhang kh){
         chucang_khachhang.update(kh);
     }
@@ -221,5 +223,15 @@ public class quanlikhachhang {
         
         
     return kiemtra;
+    }
+
+    public void updateDiem(int makh,int diem) {
+        for(khachhang kh : this.list) {
+            if(kh.getMa() == makh) {
+                kh.setDiem(diem);
+                chucang_khachhang.update(kh);
+                break;
+            }
+        }
     }
 }

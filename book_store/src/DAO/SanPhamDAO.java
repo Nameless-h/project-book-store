@@ -35,9 +35,22 @@ public class SanPhamDAO implements DAOinterface<Sach> {
     }
 
     @Override
-    public int update(Sach sach_update) {
+    public int update(Sach sach) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        if(sach != null) {
+            MySQLConnect  mysql = new MySQLConnect();
+            String sql = "UPDATE book SET maTheloai="+sach.getMaTheloai()+","+
+                                        "tenSach='"+sach.getTenSach()+"',"+
+                                        "maNXB="+sach.getMaNXB()+","+
+                                        "soLuong="+sach.getSoLuong()+","+
+                                        "giaTien="+sach.getGiaTien()+
+                                    " WHERE maSach="+sach.getMaSach();
+            System.out.println(sql);
+            mysql.executeUpdate(sql);
+            return 1;
+        } else 
+            return 0;
+        //throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
 
     @Override
@@ -60,7 +73,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
         java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM Book";
+            String sql = "SELECT * FROM book";
             statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(sql);
