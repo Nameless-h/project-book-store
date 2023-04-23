@@ -15,7 +15,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import BUS.quanlikhachhang;
-import DAO.khachhangDAO;
 import DTO.khachhang;
 import GUI.Mybutton.searchbutton;
 
@@ -45,7 +44,8 @@ public class chonkhachhangGUI extends JFrame {
         init();
         this.setVisible(true);
     }
-    public void init() {
+   
+     public void init() {
         this.add(searchPanel(),BorderLayout.NORTH);
         this.add(cusTable(),BorderLayout.CENTER);
         this.add(buttonPanel(),BorderLayout.SOUTH);
