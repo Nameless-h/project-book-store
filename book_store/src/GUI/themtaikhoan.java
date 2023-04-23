@@ -74,7 +74,7 @@ public class themtaikhoan extends JPanel implements MouseListener{
                 pan_info.add(com_manhanvien);
             } else if (i == 4) {
                 com_tennhomquyen = new JComboBox(list_tennhomquyen);
-                com_tennhomquyen.setPreferredSize(new Dimension(250, 50));
+                com_tennhomquyen.setPreferredSize(new Dimension(500, 50));
                 com_tennhomquyen.setForeground(Color.black);
                 com_tennhomquyen.setFont(new Font(name_font1, 1, 25));
                 com_tennhomquyen.addMouseListener(this);
