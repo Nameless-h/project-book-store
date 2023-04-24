@@ -45,7 +45,7 @@ public class statistic_sale extends JPanel implements ActionListener{
     private TitledBorder titledBorderDate,titledBorderBestSeller,titledBorderCategory;
     private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
     private JSpinner inputBestSeller = new JSpinner(model);
-    private morebutton selectCategory = new morebutton();
+    // private morebutton selectCategory = new morebutton();
     private statisticTable bookSoldTable;
     public statistic_sale() {
         setLayout(new BorderLayout());
@@ -129,12 +129,8 @@ public class statistic_sale extends JPanel implements ActionListener{
 
         int i = 0;
         for (Theloai tl : dsTheLoai) {
-            // int n = category_name.length;
-            // String[] newArray = Arrays.copyOf(category_name, n + 1);
-            // category_name[n] = str;
             category_name[i] = tl.getTenTheloai();
             i++;
-            // System.out.println(tl.getTenTheloai());
         }
 
         JComboBox inputcategory = new JComboBox(category_name);

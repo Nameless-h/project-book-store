@@ -28,7 +28,7 @@ public class menu extends JPanel implements MouseListener {
     Color color_54 = new Color(54, 54, 54);
     String name_font1 = "Times Roman";
     String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap","Thong ke", "Tai khoan", "Quyen" };
+            "Nha cung cap", "Tai khoan", "Quyen","Thong ke" };
     String[] list_icon={ "/icon/store.png",
                         "/icon/nhaphang.png",
                         "/icon/sanpham.png",
@@ -37,9 +37,9 @@ public class menu extends JPanel implements MouseListener {
                         "/icon/nhanvien.png",
                         "/icon/khachhang.png",
                         "/icon/nhacungcap.png",
-                        "/icon/nhacungcap.png",
                         "/icon/taikhoan.png",
                         "/icon/chucnang.png",
+                        "/icon/thongke.png",
     };
     ImageIcon[] icons=new ImageIcon[list_icon.length];
     //-----
@@ -57,7 +57,7 @@ public class menu extends JPanel implements MouseListener {
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NV") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
                         tk_chitietquyen.get(i).getTinhtrang() == 1) {
-                    danhsachnhanvien panel = new danhsachnhanvien(obj);
+                    danhsachnhanvien panel = new danhsachnhanvien(obj,tk_chitietquyen);
                     panel.setBounds(0, 0, obj.w_center, obj.h_center);
                     obj.center.removeAll();
                     obj.center.add(panel);
@@ -145,6 +145,7 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
+
         } else if (text.equalsIgnoreCase("Thong ke")) {
             list_statistic statisticgui = new list_statistic();
             statisticgui.setBounds(0, 0, 1100, 670);
@@ -180,7 +181,7 @@ public class menu extends JPanel implements MouseListener {
             icons[i]=new ImageIcon(getClass().getResource(list_icon[i]));
             list_lab[i] = new JLabel(list_menu[i]);
             list_lab[i].setIcon(icons[i]);
-            list_lab[i].setPreferredSize(new Dimension(obj.w_menu, 55));
+            list_lab[i].setPreferredSize(new Dimension(obj.w_menu, 50));
             list_lab[i].setFont(new Font(name_font1, 1, 15));
             list_lab[i].setOpaque(true);
             list_lab[i].setBackground(color_54);

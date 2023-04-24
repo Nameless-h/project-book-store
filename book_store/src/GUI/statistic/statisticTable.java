@@ -59,4 +59,6 @@ public class statisticTable extends JPanel{
     public void setPreferredWidth(int column , int width){
         t.getColumnModel().getColumn(column).setPreferredWidth(width);
     }
+
+   
 }

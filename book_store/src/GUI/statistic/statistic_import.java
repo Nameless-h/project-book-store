@@ -17,21 +17,29 @@ import javax.swing.SpinnerNumberModel;
 import java.awt.Cursor;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
+
 import DAO.thong_ke_sach_banDAO;
 import DTO.SachBan;
+import GUI.chonNhaCungCapGUI;
 import GUI.Mybutton.morebutton;
-
+import GUI.main;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class statistic_import extends JPanel implements ActionListener{
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+public class statistic_import extends JPanel implements ActionListener,KeyListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
     private String title_filter[] = {"Khoang ngay","Top nhap hang nhieu","Nha cung cap"};//menu title filter
@@ -127,9 +135,11 @@ public class statistic_import extends JPanel implements ActionListener{
 
         inputSupplier = new JTextField();
         inputSupplier.setPreferredSize(new Dimension(100, 30));
+        inputSupplier.addKeyListener(this);
         panel_filter_supplier.add(inputSupplier);
 
         selectSupplier.setPreferredSize(new Dimension(30, 30));
+        selectSupplier.addActionListener(this);
         panel_filter_supplier.add(selectSupplier);
 
         headerFilterContainInput.add(panel_filter_supplier);
@@ -210,34 +220,6 @@ public class statistic_import extends JPanel implements ActionListener{
 
     }
 
-    /* public void inputSearchFocus(JTextField input) {
-        input.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (input.getText().equals("Nhap de tim kiem...")) {
-                    input.setText("");
-                }           
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (input.getText().isEmpty() || input.getText() == "") {
-                    input.setText("Nhap de tim kiem...");
-                }
-            }
-        });
-    } */
-
-    /* public void hoverBtn(JButton button) {
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.darkGray);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.black);
-            }
-        });
-    } */
-
     public static void main(String[] args) {
         new statistic_sale();
     }
@@ -249,8 +231,36 @@ public class statistic_import extends JPanel implements ActionListener{
             if(e.getSource() == headerSearchBtn) {
                 System.out.print("Search");
             }
+            if(e.getSource() == selectSupplier) {
+                System.out.print("supplier");
+                new chonNhaCungCapGUI(inputSupplier).addWindowListener(new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                       System.out.print("Closing");
+                        // this.setVisible(false);
+
+                    }
+                });
+                this.setEnabled(false);
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }    
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        this.remove(bookSoldTable);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 }
