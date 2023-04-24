@@ -11,4 +11,9 @@ public class PriceFormatter {
 
         return fmoney.format(num);
     }
+    public static String format(double num) {
+        Locale vietnam = new Locale("vi", "VN");
+        NumberFormat fmoney = NumberFormat.getCurrencyInstance(vietnam);
+        return fmoney.format(num);
+    }
 }

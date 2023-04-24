@@ -11,7 +11,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.TimerTask;
+import java.util.Timer;
 import java.lang.Integer;
+import java.time.LocalDate;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,8 +24,16 @@ import javax.swing.event.DocumentListener;
 
 import BUS.PriceFormatter;
 import BUS.SanPhamBUS;
+import BUS.quanlichitiethoadonbanhang;
+import BUS.quanlihoadonbanhang;
+import BUS.quanlikhachhang;
+import BUS.quanliquydoidiem;
+import DAO.quanlihoadonbanhangDAO;
 import DTO.Sach;
 import DTO.chitiethoadon;
+import DTO.hoadonbanhang;
+import DTO.khachhang;
+import DTO.nhanvien;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -40,7 +51,6 @@ public class SaleGUI extends JPanel implements ActionListener {
     private JTextField searchinp;
     private searchbutton searchbtn;
     //book table
-    private bookBUS bookbus = new bookBUS();
     private Mytable booktable;
     // book detail
     private JTextField inp[];
@@ -67,12 +77,23 @@ public class SaleGUI extends JPanel implements ActionListener {
     private morebutton morebtn;
 
     //action
+    private quanliquydoidiem qlqdbus = new quanliquydoidiem();
+    private SanPhamBUS bookbus = new SanPhamBUS();
+    private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
+    private quanlichitiethoadonbanhang qlcthdbh = new quanlichitiethoadonbanhang();
     private ArrayList<chitiethoadon> listcthd = new ArrayList<chitiethoadon>();
+    private quanlikhachhang qlkhbus = new quanlikhachhang();
+    private khachhang kh;
+    private nhanvien nv;
+    private int subtotal;
 
     /*------------------------------------------- METHOD -------------------------------------------*/
 
     public SaleGUI() throws IOException {
         init();
+        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
+        empnameinp.setText(nv.getTen());
+        showFormChonKH();
     }
 
     public void init() throws IOException {
@@ -124,13 +145,13 @@ public class SaleGUI extends JPanel implements ActionListener {
     public Mytable bookTable() {
         booktable = new Mytable();
         booktable.setTablesize(0, 350);
-        booktable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity" });
-        bookbus.initbookList();
-        for(book book : bookbus.getbookList()) {
+        booktable.setHeader(new String[] { "Mã", "Tên sách", "Đơn giá", "SL" });
+        bookbus.listSanPham();
+        for(Sach book : bookbus.getDanhSachSanPham()) {
             booktable.addRow(new Object[]{
                 book.getMaSach(),
                 book.getTenSach(),
-                book.getGiaTien(),
+                PriceFormatter.format(book.getGiaTien()),
                 book.getSoLuong()
             });
         }
@@ -157,13 +178,13 @@ public class SaleGUI extends JPanel implements ActionListener {
         JPanel pbookdetail = new JPanel();
         JPanel inputpnl = new JPanel();
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 13);
-        String bookdetail[] = { "Book id", "Name", "Price", "Quantity" };
+        String bookdetail[] = { "Mã", "Tên sách", "Đơn giá", "Số lượng" };
         inp = new JTextField[bookdetail.length];
         addbtn = new addbutton();
         pbookdetail.setLayout(null);
         pbookdetail.setPreferredSize(new Dimension(0, 300));
-        inputpnl.setLayout(new GridLayout(3, 2, 5, 40));
-        inputpnl.setBounds(185, 10, 350, 210);
+        inputpnl.setLayout(new GridLayout(4, 1, 5, 5));
+        inputpnl.setBounds(235, 0, 300, 210);
         for (int i = 0; i < bookdetail.length; i++) {
             inp[i] = new JTextField();
             inp[i].setName("input" + i);
@@ -175,16 +196,22 @@ public class SaleGUI extends JPanel implements ActionListener {
                 inp[i].setEditable(false);
             inputpnl.add(inp[i]);
         }
-        image = new JLabel();
-        image.setBounds(10,10,170,250);
-        image.setOpaque(true);
-        BufferedImage bufferedImage = ImageIO.read(new File("D:/NAM_2/HK2/Java/project-book-store/book_store/src/img/doraemon.jpg"));
-        Image img = bufferedImage.getScaledInstance(170, 250, Image.SCALE_DEFAULT);
-        image.setIcon(new ImageIcon(img));
-        image.setBorder(new LineBorder(Color.BLACK,1,true));
+        try {
+            image = new JLabel();
+            image.setBounds(10,0,220,250);
+            image.setOpaque(true);
+            BufferedImage bufferedImage = ImageIO.read(new File("book_store/src/img/doraemon.jpg"));
+            Image img = bufferedImage.getScaledInstance(220, 250, Image.SCALE_DEFAULT);
+            image.setIcon(new ImageIcon(img));
+            image.setBorder(new LineBorder(Color.BLACK,1,true));
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        }
+        
         
 
-        addbtn.setBounds(195, 220, 330, 40);
+        addbtn.setBounds(240, 215, 300, 40);
         addbtn.addActionListener(this);
 
         pbookdetail.add(addbtn);
@@ -221,7 +248,7 @@ public class SaleGUI extends JPanel implements ActionListener {
     public JPanel cartTable() {
         carttable = new Mytable();
         carttable.setTablesize(0, 400);
-        carttable.setHeader(new String[] { "ID", "Book name", "Price", "Quantity", "Total" });
+        carttable.setHeader(new String[] { "Mã", "Tên sách", "Đơn giá", "SL", "Thành tiền" });
         carttable.setPreferredWidth(0, 25);
         carttable.setPreferredWidth(1, 200);
         carttable.setPreferredWidth(2, 100);
@@ -259,14 +286,14 @@ public class SaleGUI extends JPanel implements ActionListener {
         infopnl.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
         infopnl.setPreferredSize(new Dimension(0, 250));
 
-        cusidinp.setBorder(BorderFactory.createTitledBorder("Customer ID"));
-        empnameinp.setBorder(BorderFactory.createTitledBorder("Employee name"));
-        dateinp.setBorder(BorderFactory.createTitledBorder("Due Date"));
-        subtotalinp.setBorder(BorderFactory.createTitledBorder("Subtotal"));
-        discountinp.setBorder(BorderFactory.createTitledBorder("Discount"));
-        grandtotalinp.setBorder(BorderFactory.createTitledBorder("Grand total"));
+        cusidinp.setBorder(BorderFactory.createTitledBorder("Khách hàng"));
+        empnameinp.setBorder(BorderFactory.createTitledBorder("Nhân viên"));
+        dateinp.setBorder(BorderFactory.createTitledBorder("Ngày lập hóa đơn"));
+        subtotalinp.setBorder(BorderFactory.createTitledBorder("Tổng cộng"));
+        discountinp.setBorder(BorderFactory.createTitledBorder("Giảm giá (%)"));
+        grandtotalinp.setBorder(BorderFactory.createTitledBorder("Thành tiền"));
 
-        int w = 250, h = 50;
+        int w = 250, h = 48;
 
         cusidinp.setPreferredSize(new Dimension(200, h));
         empnameinp.setPreferredSize(new Dimension(w, h));
@@ -295,6 +322,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
 
         cancelbtn.addActionListener(this);
+        paybtn.addActionListener(this);
 
         int total = 0;
         int tmp;
@@ -302,8 +330,18 @@ public class SaleGUI extends JPanel implements ActionListener {
             tmp = (int) carttable.getTable().getValueAt(i,5);
             total+= tmp;
         }
-        subtotalinp.setText(String.valueOf(total));
+        subtotalinp.setText(PriceFormatter.format(total));
         dateinp.setText(java.time.LocalDate.now().toString());
+        System.out.println(java.time.LocalDate.now().toString());
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                if(empnameinp.getText().equals("") || cusidinp.getText().equals("") || listcthd.isEmpty()) {
+                    paybtn.setEnabled(false);
+                } else 
+                    paybtn.setEnabled(true);
+            }
+        }, 0, 1000);
+        
 
         infopnl.add(cusidinp);
         infopnl.add(morebtn);
@@ -316,11 +354,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         infopnl.add(paybtn);
 
         morebtn.addActionListener((ae) -> {
-            new chonkhachhangGUI(cusidinp).addWindowListener(new WindowAdapter() {
-                public void windowClosed(WindowEvent e) {
-                    //cusidinp.setText("");
-                }
-            });
+            showFormChonKH();
         });
 
         return infopnl;
@@ -328,8 +362,8 @@ public class SaleGUI extends JPanel implements ActionListener {
 
     /*------------------------------------------- ACTION -------------------------------------------*/
     
-    public void addtoCart(int masach,int soluong) {
-        book b = bookbus.getBook(masach);
+    private void addtoCart(int masach,int soluong) {
+        Sach b = bookbus.getBook(masach);
         boolean inCart = false;
         int tongsoluong;
 
@@ -350,21 +384,23 @@ public class SaleGUI extends JPanel implements ActionListener {
                 JOptionPane.showMessageDialog(this, "Số lượng sản phẩm trong kho không đủ (" + b.getSoLuong() + ")");
                 return;
             }
-            chitiethoadon cthd = new chitiethoadon(masach,b.getGiaTien(),soluong);
+            chitiethoadon cthd = new chitiethoadon(qlhdbh.getNextID(),masach,b.getGiaTien(),soluong);
+            System.out.println(cthd);
             listcthd.add(cthd);
         }
-        setDataToCartTable(listcthd, carttable);
+        setDataToCartTable(listcthd, carttable); 
     }
 
-    public void setDataToCartTable(ArrayList<chitiethoadon> list,Mytable t) {
+    private void setDataToCartTable(ArrayList<chitiethoadon> list,Mytable t) {
         t.clear();
-        book b = null;
+        Sach b = null;
         int totalprice;
-        int subtotal = 0;
+        subtotal = 0;
+        double grandtotal = 0;
         for(chitiethoadon cthd : list){
             b = bookbus.getBook(cthd.getmasach());
             totalprice = b.getGiaTien() * cthd.getsoluong();
-            carttable.getTableModel().addRow(new Object[]{
+            t.addRow(new Object[]{
                 String.valueOf(cthd.getmasach()),
                 b.getTenSach(),
                 PriceFormatter.format(b.getGiaTien()),
@@ -374,12 +410,15 @@ public class SaleGUI extends JPanel implements ActionListener {
             subtotal+=totalprice;
         }
         subtotalinp.setText(PriceFormatter.format(subtotal));
+        double disprice = (double)subtotal * (double)(Math.ceil(Float.parseFloat(discountinp.getText())) / 100);
+        grandtotal = (double)subtotal - disprice;
+        grandtotalinp.setText(PriceFormatter.format(grandtotal));
     }
 
-    public void setDataToBookTable(ArrayList<book> list,Mytable t) {
+    private void setDataToBookTable(ArrayList<Sach> list,Mytable t) {
         t.clear();
-        for(book b : list) {
-            booktable.getTableModel().addRow(new Object[]{
+        for(Sach b : list) {
+            t.addRow(new Object[]{
                 String.valueOf(b.getMaSach()),
                 b.getTenSach(),
                 PriceFormatter.format(b.getGiaTien()),
@@ -388,10 +427,35 @@ public class SaleGUI extends JPanel implements ActionListener {
         }
     }
 
-    public void searchOnchange() {
+    private void searchOnchange() {
         setDataToBookTable(bookbus.searchBooks(searchinp.getText()), booktable);
     }
     
+    private void refresh() {
+        listcthd.clear();
+        carttable.clear();
+        cusidinp.setText("");
+        for(int i=0;i<inp.length;i++) {
+            inp[i].setText("");
+        }
+        setDataToCartTable(listcthd, carttable);
+        discountinp.setText("");
+    }
+
+    private void showFormChonKH() {
+        new chonkhachhangGUI(cusidinp).addWindowListener(new WindowAdapter() {
+            public void windowClosed(WindowEvent e) {
+                int makh = Integer.parseInt(cusidinp.getText()) ;
+                kh = qlkhbus.getKhachHang(makh);
+                if(kh != null) {
+                    cusidinp.setText(kh.getTen());
+                    qlqdbus.initList();
+                    discountinp.setText(String.valueOf(qlqdbus.getGiamgia(kh.getMa())));
+                }
+            }
+        });
+    }
+
     private void tableMouseClicked(MouseEvent evt) {
         int row = booktable.getTable().getSelectedRow();
         String id = String.valueOf(booktable.getTable().getValueAt(row, 0));
@@ -406,9 +470,35 @@ public class SaleGUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addbtn) {
-            int masach = Integer.parseInt(inp[0].getText());
-            int soluong = Integer.parseInt(inp[3].getText());
-            addtoCart(masach, soluong);
+            if(cusidinp.getText().equals("")) {
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Vui lòng chọn khách hàng !","Thông báo",2);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    showFormChonKH();
+                } else {
+                    return;
+                }
+            } else {
+                int masach = 0;
+                try {
+                    masach = Integer.parseInt(inp[0].getText());
+                    int soluong = Integer.parseInt(inp[3].getText());
+                    if(soluong > 0) {
+                        addtoCart(masach, soluong);
+                    } else {
+                        JOptionPane.showMessageDialog(this,"Số lượng phải là số dương !");
+                        inp[3].requestFocus();
+                    }
+                } catch (NumberFormatException ex) {
+                    if(masach == 0) {
+                        JOptionPane.showMessageDialog(this,"Vui lòng chọn sản phẩm trước khi thêm vào giỏ hàng !");
+                    } else {
+                        System.out.println(ex);
+                        JOptionPane.showMessageDialog(this,"Số lượng phải là số nguyên !");
+                        inp[3].requestFocus();
+                    }
+                    
+                }
+            }
         }
         if (e.getSource() == editbtn) {
             int row = carttable.getTable().getSelectedRow();
@@ -447,16 +537,40 @@ public class SaleGUI extends JPanel implements ActionListener {
             }
         }
         if (e.getSource() == cancelbtn) {
-            int dialogResult = JOptionPane.showConfirmDialog (null, "Thanh toán mới?","Warning",1);
-            if(dialogResult == JOptionPane.YES_OPTION){
-                listcthd.clear();
-                carttable.clear();
-                cusidinp.setText("");
-                for(int i=0;i<inp.length;i++) {
-                    inp[i].setText("");
+            if(!listcthd.isEmpty()) {
+                int dialogResult = JOptionPane.showConfirmDialog (null, "Xác nhận hủy thanh toán !","Cảnh báo",2);
+                if(dialogResult == JOptionPane.YES_OPTION){
+                    refresh();
+                } else {
+                    return;
                 }
-                setDataToCartTable(listcthd, carttable);
             } else {
+                JOptionPane.showMessageDialog(this,"Giỏ hàng rỗng !","Thông báo",1);
+                return;
+            }
+        }
+        if (e.getSource() == paybtn) {
+            System.out.println(dateinp.getText());
+            hoadonbanhang hdbh = new hoadonbanhang(kh.getMa(),qlhdbh.getNextID(),nv.getMa(),dateinp.getText(),subtotal,Integer.parseInt(discountinp.getText()));
+            
+            if(qlhdbh.themHoaDon(this,hdbh)/* them hoa don */) {
+                //them chi tiet hoa don
+                qlcthdbh.themChiTietHoaDon(listcthd);
+                //cap so luong sach
+                for(chitiethoadon cthd: listcthd) {
+                    bookbus.updateSoLuong(cthd.getmasach(),cthd.getsoluong());
+                }
+                //cap diem khach hang
+                qlkhbus.updateDiem(kh.getMa(),kh.getDiem()+1);
+                JOptionPane.showMessageDialog(this,"Thanh toán thành công !","Thông báo",1);
+                //refresh
+                refresh();
+                bookbus.listSanPham();
+                setDataToBookTable(bookbus.getDanhSachSanPham(), booktable);
+
+                return;
+            } else {
+                JOptionPane.showMessageDialog(this,"Thanh toán thất bại !","Thông báo",1);
                 return;
             }
         }

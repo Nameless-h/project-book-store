@@ -73,7 +73,7 @@ public class themkhachhang extends JPanel implements MouseListener{
             }
             else
             if(i==6){
-                txt[i].setText("0");
+                txt[i].setText("1");
                 txt[i].setEnabled(false);
             }
                 

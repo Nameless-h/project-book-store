@@ -2,7 +2,7 @@ package BUS;
 
 import java.util.ArrayList;
 
-import DTO.bill;
+//import DTO.bill;
 import DTO.chitiethoadon;
 
 public class SanPhamDaBanBUS {

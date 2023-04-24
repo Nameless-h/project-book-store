@@ -83,9 +83,13 @@ public class chucnangDAO implements DAOinterface<chucnang>{
 
 
     @Override
-    public int update(chucnang t) {
+    public int update(chucnang update_obj) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }
+
+
+
+  
     
 }

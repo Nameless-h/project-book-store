@@ -91,7 +91,7 @@ public class suataikhoan extends JPanel  implements MouseListener{
                     if(list_manhomquyen[k]==tk.getManhomquyen())
                     temp1=k;
                 com_manhomquyen = new JComboBox(list_manhomquyen);
-                com_manhomquyen.setPreferredSize(new Dimension(250, 40));
+                com_manhomquyen.setPreferredSize(new Dimension(500, 40));
                 com_manhomquyen.setForeground(Color.black);
                 com_manhomquyen.setFont(new Font(name_font1, 1, 25));
                 com_manhomquyen.setSelectedIndex(temp1);

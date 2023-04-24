@@ -56,7 +56,7 @@ public class thong_ke_sach_banDAO implements DAOinterface<SachBan> {
             }
  
          } catch (SQLException ex) {
-             Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
          } finally {
              if (statement != null) {
                  try {

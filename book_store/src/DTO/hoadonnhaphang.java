@@ -4,15 +4,17 @@
  */
 package DTO;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ADMIN
  */
-public class import_bill extends bill {
+public class hoadonnhaphang extends hoadon {
     private int publisher_id;
 
-    public import_bill(int publisher_id, int bill_id, int emp_id, String date) {
-        super(bill_id, emp_id, date);
+    public hoadonnhaphang(int publisher_id, int bill_id, int emp_id, String date ,double tongtien) {
+        super(bill_id, emp_id, date,tongtien);
         this.publisher_id = publisher_id;
     }
 

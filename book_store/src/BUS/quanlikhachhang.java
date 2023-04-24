@@ -30,13 +30,41 @@ public class quanlikhachhang {
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
     }
+
     public void themkhachhang(khachhang kh){
         list.add(kh);
         chucang_khachhang.insert(kh);
     }
+
     public void suathongtinkhachhang(khachhang kh){
         chucang_khachhang.update(kh);
     }
+
+    public ArrayList<khachhang> getListKH() {
+        return this.list;
+    }
+
+    public ArrayList<khachhang> searchKH(String query) {
+        ArrayList<khachhang> resultList = new ArrayList<khachhang>();
+        list.forEach((kh) -> {
+            if( String.valueOf(kh.getMa()).contains(query) || 
+                kh.getTen().toLowerCase().contains(query.toLowerCase()) || 
+                kh.getEmail().toLowerCase().contains(query.toLowerCase()) ||
+                kh.getSodienthoai().contains(query)) {
+                    resultList.add(kh);
+                }
+        });
+        return resultList;
+    }
+
+    public khachhang getKhachHang(int makh) {
+        for (khachhang kh : list){
+            if(kh.getMa() == makh) 
+                return kh;
+        }
+        return null;
+    }
+    
     public boolean timkiem_vitri(int tk, String str, JTable table) {
         boolean kiemtra=false;
         if(tk==0){
@@ -195,5 +223,15 @@ public class quanlikhachhang {
         
         
     return kiemtra;
+    }
+
+    public void updateDiem(int makh,int diem) {
+        for(khachhang kh : this.list) {
+            if(kh.getMa() == makh) {
+                kh.setDiem(diem);
+                chucang_khachhang.update(kh);
+                break;
+            }
+        }
     }
 }
