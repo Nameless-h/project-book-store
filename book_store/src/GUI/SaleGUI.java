@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.lang.Integer;
-import java.time.LocalDate;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +27,6 @@ import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlikhachhang;
 import BUS.quanliquydoidiem;
-import DAO.quanlihoadonbanhangDAO;
 import DTO.Sach;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
