@@ -18,23 +18,30 @@ import com.mysql.cj.x.protobuf.MysqlxNotice.Warning;
 import BUS.quanlinhanvien;
 import DTO.chitietnhomquyen;
 import DTO.nhanvien;
+import GUI.icon_lib;
 
 public class danhsachnhanvien extends JPanel implements MouseListener {
     main obj;
     quanlinhanvien chucnang = new quanlinhanvien();
     ArrayList<chitietnhomquyen> list_ct;
+    icon_lib ic_lib = new icon_lib();
     Color color_211 = new Color(211, 211, 211);
     String name_font1 = "Times Roman";
     String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
     String[] list_timkiem = { "Tat ca", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
     // 0------------------------------------------------------------------------------
-    // nhung thanh phan trong panel
+    // lay icon
+    ImageIcon ic_add = ic_lib.icon_add;
+    ImageIcon ic_rm = ic_lib.icon_remove;
+    ImageIcon ic_rp = ic_lib.icon_repair;
+    ImageIcon ic_export_excel = ic_lib.icon_export_excel;
+    // ---------------------------------------------------------------
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_timkiem, bun_lammoi;
+    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_timkiem, bun_lammoi;
 
     public danhsachnhanvien(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
@@ -53,20 +60,26 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
         // nut them
-        bun_them = new JButton("Them");
+        bun_them = new JButton("Them", ic_add);
         bun_them.setPreferredSize(new Dimension(200, 40));
         bun_them.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_them);
         // nut xoa
-        bun_xoa = new JButton("Xoa");
+        bun_xoa = new JButton("Xoa", ic_rm);
         bun_xoa.setPreferredSize(new Dimension(200, 40));
         bun_xoa.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_xoa);
         // nut sua
-        bun_sua = new JButton("Sua");
+        bun_sua = new JButton("Sua", ic_rp);
         bun_sua.setPreferredSize(new Dimension(200, 40));
         bun_sua.setFont(new Font(name_font1, 1, 20));
         pan_chucnang1.add(bun_sua);
+        // bun xuat thong tin ra file excel
+        bun_in_excel = new JButton("Export Excel", ic_export_excel);
+        bun_in_excel.setPreferredSize(new Dimension(200, 40));
+        bun_in_excel.setFont(new Font(name_font1, 1, 20));
+        pan_chucnang1.add(bun_in_excel);
+
         // cai dat panel chuc nang 2
         pan_chucnang2 = new JPanel();
         pan_chucnang2.setBounds(0, 60, obj.w_center, 100);
@@ -97,14 +110,17 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         bun_timkiem = new JButton("Tim kiem");
         bun_timkiem.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_timkiem);
+        // nut lam moi
         bun_lammoi = new JButton("Lam moi");
         bun_lammoi.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_lammoi);
+        // them chuc nang cho cac cut
         bun_sua.addMouseListener(this);
         bun_them.addMouseListener(this);
         bun_xoa.addMouseListener(this);
         bun_timkiem.addMouseListener(this);
         bun_lammoi.addMouseListener(this);
+        bun_in_excel.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -186,6 +202,8 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
             txt_timkiem.setText("");
             chucnang.hienthidanhsach_nhanvien(tab_danhsach);
             combo_timkiem.setSelectedIndex(0);
+        } else if (e.getSource() == bun_in_excel) {
+            chucnang.xuatds_excel();
         }
     }
 
