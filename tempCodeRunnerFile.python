@@ -1,0 +1,63 @@
+import nltk
+import speech_recognition as sr
+from nltk.corpus import wordnet
+
+# download WordNet và phân loại
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
+
+# hàm chuyển đổi từ ngữ tự nhiên thành các từ đồng nghĩa
+def get_synonym(word, pos):
+    synonym = []
+    for syn in wordnet.synsets(word, pos=pos):
+        for lemma in syn.lemmas():
+            synonym.append(lemma.name())
+    return list(set(synonym))
+
+# hàm trả lời các câu hỏi
+def reply(question):
+    # chuyển đổi câu hỏi thành chữ thường
+    question = question.lower()
+    # tách các từ trong câu hỏi
+    words = nltk.word_tokenize(question)
+    # xác định từ loại và đồng nghĩa của từng từ trong câu hỏi
+    word_pos = nltk.pos_tag(words)
+    # tạo danh sách các đồng nghĩa của từng từ và lưu vào một từ điển
+    word_dict = {}
+    for word, pos in word_pos:
+        synonyms = get_synonym(word, pos)
+        word_dict[word] = synonyms
+    # trả lời câu hỏi bằng cách tìm kiếm các từ giống nhau trong câu hỏi và câu trả lời
+    for word, synonyms in word_dict.items():
+        for syn in synonyms:
+            if syn in answer_dict.keys():
+                return answer_dict[syn]
+    # nếu không tìm thấy câu trả lời thì trả về câu "Xin lỗi, tôi không hiểu câu hỏi của bạn"
+    return "Xin lỗi, tôi không hiểu câu hỏi của bạn"
+
+
+# danh sách các câu hỏi và câu trả lời
+answer_dict = {
+    "thời gian": "Bây giờ là mấy giờ?",
+    "tên bạn": "Tôi là trợ lý ảo đơn giản được tạo bằng Python",
+    "tạm biệt": "Chào tạm biệt, hãy quay lại với tôi nếu bạn cần tôi giúp đỡ"
+}
+
+# khởi tạo đối tượng recognizer và microphone
+r = sr.Recognizer()
+mic = sr.Microphone()
+
+# vòng lặp chạy liên tục để lắng nghe và phản hồi câu hỏi của người dùng
+while True:
+    # sử dụng microphone để lắng nghe
+    with mic as source:
+        r.adjust_for_ambient_noise(source)
+        print("Bạn có thể nói điều gì?")
+        audio = r.listen(source)
+    # chuyển đổi âm thanh thành văn bản bằng giọng nói
+    text = r.recognize_google(audio, language='vi-VN')
+    # hiển thị câu hỏi của người dùng
+    print("Bạn đã hỏi: " + text)
+    # trả lời câu hỏi và hiển thị câu trả lời
+    answer = reply(text)
+    print("Trợ lý ảo: " + answer)

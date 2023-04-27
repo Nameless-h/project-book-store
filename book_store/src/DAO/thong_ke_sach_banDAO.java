@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
-
-import DTO.book;
 import DTO.bookSold;
 
 import java.sql.Statement;
@@ -50,13 +48,13 @@ public class thong_ke_sach_banDAO implements DAOinterface<bookSold> {
             }
  
          } catch (SQLException ex) {
-             Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
+            //Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
          } finally {
              if (statement != null) {
                  try {
                      statement.close();
                  } catch (SQLException ex) {
-                     Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
+                     //Logger.getLogger(book_modify.class.getName()).log(Level.SEVERE, null, ex);
                  }
              }
          }
@@ -88,7 +86,7 @@ public class thong_ke_sach_banDAO implements DAOinterface<bookSold> {
     }
 
     @Override
-    public void update(bookSold t) {
+    public int update(bookSold t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'update'");
     }

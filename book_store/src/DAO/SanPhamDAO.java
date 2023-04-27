@@ -124,7 +124,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
         java.sql.Connection conn = JDBCUtil.getConnection();
         Statement statement = null;
         try {
-            String sql = "SELECT * FROM Book";
+            String sql = "SELECT * FROM book";
             statement = conn.createStatement();
 
             ResultSet result = statement.executeQuery(sql);
