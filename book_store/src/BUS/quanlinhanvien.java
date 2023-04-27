@@ -32,6 +32,15 @@ public class quanlinhanvien {
         return null;
     }
 
+    public nhanvien getNhanVien(int manv) {
+        for(nhanvien nv : this.list) {
+            if(nv.getMa() == manv) {
+                return nv;
+            }
+        }
+        return null;
+    }
+
     // hien thi danh sach len 1 table duoc truyen va/
     public void hienthidanhsach_nhanvien(JTable table) {
 

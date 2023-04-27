@@ -30,7 +30,7 @@ public class quanlihoadonbanhangDAO {
             rs.close();
             mySQL.disConnect();
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(quanlihoadonbanhangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
