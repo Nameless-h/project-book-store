@@ -16,22 +16,12 @@ import GUI.setting_frame;
 public class main extends JFrame {
     JPanel header, menu;
     public JPanel center;
-    setting_frame set=new setting_frame();
-    // chieu dai va chieu cao cua frame main
-    // int w = 1300;
-    // int h = 700;
-    // // chieu dai va chieu cao cua header
-    // int w_head = 1300;
-    // int h_head = 40;
-    // // chieu dai va chieu cao cua menu
-    // int w_menu = 200;
-    // int h_menu = 670;
-    // // chieu dai va chieu cao cua giao dien giau
-    // int w_center = 1100;
-    // int h_center = 670;
+    setting_frame set = new setting_frame();
+
     taikhoan tk;
+
     public main(taikhoan tk) {
-        this.tk=tk;
+        this.tk = tk;
         init();
     }
 
@@ -42,8 +32,8 @@ public class main extends JFrame {
         this.setLocation(100, 50);
         this.setUndecorated(true);
         // them cac panel
-        header = new header(this,this.tk);
-        menu = new menu(this,tk);
+        header = new header(this, this.tk);
+        menu = new menu(this, tk);
         center = new welcome(this);
         this.add(header, BorderLayout.NORTH);
         this.add(menu, BorderLayout.WEST);
@@ -63,8 +53,8 @@ public class main extends JFrame {
                 }
             }
         });
-        
-        taikhoan user=new taikhoan(1,"admin","admin",1,1,1);
+
+        taikhoan user = new taikhoan(1, "admin", "admin", 1, 1, 1);
         new main(user);
     }
 }
