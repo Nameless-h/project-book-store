@@ -1,83 +1,90 @@
-package GUI;
+package GUI.quanlikhachhang;
+
+import javax.swing.*;
+import javax.swing.JPanel;
+import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
+
+import BUS.*;
+import DTO.*;
+import GUI.icon_lib;
+import GUI.setting_frame;
+import GUI.main_frame.main;
+import DTO.*;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-import javax.swing.*;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
-
-import BUS.quanlinhomquyen;
-import DTO.chitietnhomquyen;
-
-import javax.swing.JPanel;
-
-public class danhsachnhomquyen extends JPanel implements MouseListener {
+public class danhsachkhachhang extends JPanel implements MouseListener {
     main obj;
-    Color color_211 = new Color(211, 211, 211);
-    String name_font1 = "Times Roman";
-    quanlinhomquyen chucnang = new quanlinhomquyen();
+
+    // Color set.color_211 = new Color(211, 211, 211);
+    // String set.font_time_roman = "Times Roman";
+    icon_lib ic_lib = new icon_lib();
+    setting_frame set = new setting_frame();
+
+    quanlikhachhang chucnang = new quanlikhachhang();
     ArrayList<chitietnhomquyen> list_ct;
     // -------------------------------
-    String[] collums = { "STT", "Ma nhom quyen", "Ten nhom quyen", "Ngay tao", "Ngay cap nhat", "Chi tiet nhom quyen" };
-    String[] list_timkiem = { "Tat ca", "Ma nhom quyen", "Ten nhom quyen" };
-    // --------------------------------------------
+    String[] collums = { "STT", "Ma khach hang", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Diem tich luy",
+            "Tinh trang" };
+    String[] list_timkiem = { "Tat ca", "Ma khach hang", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT" };
+    
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_timkiem, bun_lammoi;
+    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_timkiem, bun_lammoi;
 
-    public danhsachnhomquyen(main obj, ArrayList<chitietnhomquyen> list_ct) {
+    public danhsachkhachhang(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
         this.list_ct = list_ct;
         init(obj);
     }
 
     private void init(main obj) {
-        this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
+        this.setPreferredSize(new Dimension(set.w_center, set.h_center));
         this.setLayout(null);
-        this.setBackground(color_211);
+        this.setBackground(set.color_211);
         // set panel cac chuc nag co ban them ,xoa,sua,..
         pan_chucnang1 = new JPanel();
-        pan_chucnang1.setBounds(0, 0, obj.w_center, 50);
-        pan_chucnang1.setBackground(color_211);
+        pan_chucnang1.setBounds(0, 0, set.w_center, 50);
+        pan_chucnang1.setBackground(set.color_211);
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
         // nut them
-        bun_them = new JButton("Them");
+        bun_them = new JButton("Them",ic_lib.icon_add);
         bun_them.setPreferredSize(new Dimension(200, 40));
-        bun_them.setFont(new Font(name_font1, 1, 20));
+        bun_them.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_them);
         // nut xoa
-        bun_xoa = new JButton("Xoa");
+        bun_xoa = new JButton("Xoa", ic_lib.icon_remove);
         bun_xoa.setPreferredSize(new Dimension(200, 40));
-        bun_xoa.setFont(new Font(name_font1, 1, 20));
+        bun_xoa.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_xoa);
         // nut sua
-        bun_sua = new JButton("Sua");
+        bun_sua = new JButton("Sua", ic_lib.icon_repair);
         bun_sua.setPreferredSize(new Dimension(200, 40));
-        bun_sua.setFont(new Font(name_font1, 1, 20));
+        bun_sua.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_sua);
-        // ---------
-        bun_them.addMouseListener(this);
-        bun_sua.addMouseListener(this);
-        bun_xoa.addMouseListener(this);
+        // nut in excel
+        bun_in_excel = new JButton("Export Excel", ic_lib.icon_export_excel);
+        bun_in_excel.setPreferredSize(new Dimension(200, 40));
+        bun_in_excel.setFont(new Font(set.font_time_roman, 1, 20));
+        pan_chucnang1.add(bun_in_excel);
         // cai dat panel chuc nang 2
         pan_chucnang2 = new JPanel();
-        pan_chucnang2.setBounds(0, 60, obj.w_center, 100);
-        pan_chucnang2.setBackground(color_211);
+        pan_chucnang2.setBounds(0, 60, set.w_center, 100);
+        pan_chucnang2.setBackground(set.color_211);
         pan_chucnang2.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang2);
         // set panel tim kiem
         pan_timkiem = new JPanel();
         pan_timkiem.setPreferredSize(new Dimension(600, 60));
-        pan_timkiem.setBackground(color_211);
+        pan_timkiem.setBackground(set.color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Tim kiem",
                 TitledBorder.LEFT,
@@ -92,7 +99,7 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         // set text field o tim kiem
         txt_timkiem = new JTextField();
         txt_timkiem.setPreferredSize(new Dimension(150, 30));
-        txt_timkiem.setFont(new Font(name_font1, 1, 15));
+        txt_timkiem.setFont(new Font(set.font_time_roman, 1, 15));
         pan_timkiem.add(txt_timkiem);
         // set nut tim kiem
         bun_timkiem = new JButton("Tim kiem");
@@ -101,35 +108,38 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         bun_lammoi = new JButton("Lam moi");
         bun_lammoi.setPreferredSize(new Dimension(100, 30));
         pan_timkiem.add(bun_lammoi);
+        bun_sua.addMouseListener(this);
+        bun_them.addMouseListener(this);
+        bun_xoa.addMouseListener(this);
         bun_timkiem.addMouseListener(this);
         bun_lammoi.addMouseListener(this);
+        bun_in_excel.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         tab_danhsach.setModel(new DefaultTableModel(new Object[][] {}, collums));
-        tab_danhsach.addMouseListener(this);
-        chucnang.hienthidanhsach_nhomquyen(tab_danhsach);
+
+        chucnang.hienthidanhsach_khachhang(tab_danhsach);
         thanhcuon = new JScrollPane(tab_danhsach);
-        thanhcuon.setBounds(0, 200, obj.w_center, obj.h_center - 200);
+        thanhcuon.setBounds(0, 200, set.w_center, set.h_center - 200);
         this.add(thanhcuon);
+
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getSource() == bun_them) {
             for (int i = 0; i < list_ct.size(); i++)
-                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("QH") &&
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("KH") &&
                         list_ct.get(i).getHanhdong().equalsIgnoreCase("Them"))
                     if (list_ct.get(i).getTinhtrang() == 1) {
-                        int rowCount = tab_danhsach.getRowCount();
-                        Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
-                        themnhomquyen panel = new themnhomquyen(obj, ma + 1);
-                        panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                        int rowCount = tab_danhsach.getRowCount() + 1;
+                        themkhachhang panel = new themkhachhang(obj, rowCount);
+                        panel.setBounds(0, 0, set.w_center, set.h_center);
                         obj.center.removeAll();
                         obj.center.add(panel);
                         obj.center.repaint();
@@ -139,42 +149,55 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
                                 JOptionPane.WARNING_MESSAGE);
         } else if (e.getSource() == bun_sua) {
             for (int i = 0; i < list_ct.size(); i++)
-                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("QH") &&
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("KH") &&
                         list_ct.get(i).getHanhdong().equalsIgnoreCase("Sua"))
                     if (list_ct.get(i).getTinhtrang() == 1) {
                         DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
                         int selectrow = tab_danhsach.getSelectedRow();
                         if (selectrow == -1) {
-                            JOptionPane.showMessageDialog(null, "Ban chua chon nhom quyen de sua");
+                            JOptionPane.showMessageDialog(null, "Ban chua chon khach hang de sua");
                         } else {
+                            // String ma,ten,gioitinh,diachi,email,sodienthoai;
                             Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
                             String ten = model.getValueAt(selectrow, 2).toString();
-                            String ngaytao = model.getValueAt(selectrow, 3).toString();
-
-                            suanhomquyen panel = new suanhomquyen(obj, ma, ten, ngaytao);
-                            panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                            String gt_str = model.getValueAt(selectrow, 3).toString();
+                            int gt;
+                            if (gt_str.equalsIgnoreCase("Nam"))
+                                gt = 1;
+                            else
+                                gt = 0;
+                            String dc = model.getValueAt(selectrow, 4).toString();
+                            String email = model.getValueAt(selectrow, 5).toString();
+                            String sdt = model.getValueAt(selectrow, 6).toString();
+                            Integer diem = Integer.parseInt(model.getValueAt(selectrow, 7).toString());
+                            Integer tinhtrang = Integer.parseInt(model.getValueAt(selectrow, 8).toString());
+                            khachhang temp = new khachhang(ma, ten, gt, dc, email, sdt, diem, tinhtrang);
+                            suathongtinkhachhang panel = new suathongtinkhachhang(obj, temp);
+                            panel.setBounds(0, 0, set.w_center, set.h_center);
                             obj.center.removeAll();
                             obj.center.add(panel);
                             obj.center.repaint();
                             obj.center.revalidate();
                         }
+                        // System.out.println(ma+ten);
                     } else
                         JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
                                 JOptionPane.WARNING_MESSAGE);
-            // System.out.println(ma+ten);
         } else if (e.getSource() == bun_timkiem) {
             int tk = combo_timkiem.getSelectedIndex();
             String str = txt_timkiem.getText();
             if (chucnang.timkiem_vitri(tk, str, tab_danhsach) == false) {
-                JOptionPane.showMessageDialog(this, "Khong ton tai nhom quyen nay", "Thong bao",
+                JOptionPane.showMessageDialog(this, "Khong ton tai khach hang nay", "Thong bao",
                         JOptionPane.WARNING_MESSAGE);
-                chucnang.hienthidanhsach_nhomquyen(tab_danhsach);
+                chucnang.hienthidanhsach_khachhang(tab_danhsach);
             }
 
         } else if (e.getSource() == bun_lammoi) {
             txt_timkiem.setText("");
-            chucnang.hienthidanhsach_nhomquyen(tab_danhsach);
+            chucnang.hienthidanhsach_khachhang(tab_danhsach);
             combo_timkiem.setSelectedIndex(0);
+        } else if (e.getSource() == bun_in_excel) {
+            chucnang.xuatds_excel();
         }
     }
 
@@ -185,7 +208,6 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
     }
 
     @Override

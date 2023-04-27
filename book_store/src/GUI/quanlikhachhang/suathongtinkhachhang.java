@@ -1,4 +1,4 @@
-package GUI;
+package GUI.quanlikhachhang;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -11,12 +11,16 @@ import javax.swing.border.*;
 
 import BUS.quanlikhachhang;
 import DTO.khachhang;
+import GUI.*;
+import GUI.main_frame.main;
 
 public class suathongtinkhachhang extends JPanel implements  MouseListener {
     main obj;
-    Color color_211 = new Color(211, 211, 211);
-    String name_font1 = "Times Roman";
+    // Color set.color_211 = new Color(211, 211, 211);
+    // String set.font_time_roman = "Times Roman";
     quanlikhachhang quanlikhachhang = new quanlikhachhang();
+    icon_lib ic_lib = new icon_lib();
+    setting_frame set = new setting_frame();
     // ------------------------------
     String[] list_lab = { "Ma nhan vien:", "Ten:", "Gioi tinh:", "Dia chi:", "Email:", "SDT:", "Diem tich luy:" };
     JLabel[] lab = new JLabel[list_lab.length];
@@ -40,12 +44,12 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
     }
 
     private void init(main obj) {
-        this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
+        this.setPreferredSize(new Dimension(set.w_center, set.h_center));
         this.setLayout(null);
-        this.setBackground(color_211);
+        this.setBackground(set.color_211);
         pan_info = new JPanel();
-        pan_info.setBounds(250, 10, obj.w_center - 400, obj.h_center - 100);
-        pan_info.setBackground(color_211);
+        pan_info.setBounds(250, 10, set.w_center - 400, set.h_center - 100);
+        pan_info.setBackground(set.color_211);
         pan_info.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
         pan_info.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Them khach hang",
@@ -57,9 +61,9 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
 
             lab[i] = new JLabel(list_lab[i]);
             lab[i].setPreferredSize(new Dimension(200, 50));
-            lab[i].setFont(new Font(name_font1, 1, 20));
+            lab[i].setFont(new Font(set.font_time_roman, 1, 20));
             lab[i].setHorizontalAlignment(SwingConstants.LEFT);
-            lab[i].setBackground(color_211);
+            lab[i].setBackground(set.color_211);
             lab[i].setForeground(Color.black);
             pan_info.add(lab[i]);
             txt[i] = new JTextField(thongtin[i]);
@@ -71,9 +75,9 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
                 else
                     rdb_nu.setSelected(true);
                 rdb_nam.setPreferredSize(new Dimension(200, 50));
-                rdb_nam.setFont(new Font(name_font1, 1, 25));
+                rdb_nam.setFont(new Font(set.font_time_roman, 1, 25));
                 rdb_nu.setPreferredSize(new Dimension(200, 50));
-                rdb_nu.setFont(new Font(name_font1, 1, 25));
+                rdb_nu.setFont(new Font(set.font_time_roman, 1, 25));
                 group1 = new ButtonGroup();
                 group1.add(rdb_nam);
                 group1.add(rdb_nu);
@@ -89,7 +93,7 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
 
                 txt[i].setPreferredSize(new Dimension(400, 50));
                 txt[i].setForeground(Color.black);
-                txt[i].setFont(new Font(name_font1, 1, 20));
+                txt[i].setFont(new Font(set.font_time_roman, 1, 20));
 
                 pan_info.add(txt[i]);
             }
@@ -101,7 +105,7 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
                 TitledBorder.TOP));
         ;
         pan_tinhtrang.setPreferredSize(new Dimension(690, 100));
-        pan_tinhtrang.setBackground(color_211);
+        pan_tinhtrang.setBackground(set.color_211);
         pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
         pan_info.add(pan_tinhtrang);
         rdb_chophep = new JRadioButton("Cho phep");
@@ -111,9 +115,9 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
         else
             rdb_khongchophep.setSelected(true);
         rdb_chophep.setPreferredSize(new Dimension(200, 50));
-        rdb_chophep.setFont(new Font(name_font1, 1, 25));
+        rdb_chophep.setFont(new Font(set.font_time_roman, 1, 25));
         rdb_khongchophep.setPreferredSize(new Dimension(300, 50));
-        rdb_khongchophep.setFont(new Font(name_font1, 1, 25));
+        rdb_khongchophep.setFont(new Font(set.font_time_roman, 1, 25));
         group2 = new ButtonGroup();
         group2.add(rdb_chophep);
         group2.add(rdb_khongchophep);
@@ -121,10 +125,10 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
         pan_tinhtrang.add(rdb_chophep);
         pan_tinhtrang.add(rdb_khongchophep);
 
-        bun_sua = new JButton("Sua");
+        bun_sua = new JButton("Sua",ic_lib.icon_repair);
         bun_sua.setBounds(400, 590, 300, 50);
         bun_sua.setBackground(Color.red);
-        bun_sua.setFont(new Font(name_font1, 1, 25));
+        bun_sua.setFont(new Font(set.font_time_roman, 1, 25));
         bun_sua.setHorizontalAlignment(SwingConstants.CENTER);
         bun_sua.setForeground(Color.white);
         bun_sua.addMouseListener(this);

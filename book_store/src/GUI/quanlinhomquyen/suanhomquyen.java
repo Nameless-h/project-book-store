@@ -1,4 +1,4 @@
-package GUI;
+package GUI.quanlinhomquyen;
 
 import javax.swing.JPanel;
 import java.awt.*;
@@ -16,14 +16,16 @@ import BUS.quanlinhomquyen;
 import DTO.chitietnhomquyen;
 import DTO.chucnang;
 import DTO.nhomquyen;
+import GUI.*;
+import GUI.main_frame.main;
 
 public class suanhomquyen extends JPanel {
     quanlichucnang quanlichucnang = new quanlichucnang();
     quanlinhomquyen quanlinhomquyen = new quanlinhomquyen();
     quanlichitietnhomquyen quanlichitietnhomquyen = new quanlichitietnhomquyen();
     main obj;
-    Color color_211 = new Color(211, 211, 211);
-    String name_font1 = "Times Roman";
+    icon_lib ic_lib = new icon_lib();
+    setting_frame set = new setting_frame();
     // ---------------------
     // test
 
@@ -50,18 +52,18 @@ public class suanhomquyen extends JPanel {
         String ngayhientai = currentDate.toString();
         // System.out.println("Ngày hiện tại là: " + currentDateStr);
         // --------------------------------------------------------
-        this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
+        this.setPreferredSize(new Dimension(set.w_center,set.h_center));
         this.setLayout(null);
-        this.setBackground(color_211);
+        this.setBackground(set.color_211);
         // set cac panel nho
         pan_info = new JPanel();
-        pan_info.setBounds(0, 10, obj.w_center, 80);
+        pan_info.setBounds(0, 10, set.w_center, 80);
         pan_info.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pan_info.setBackground(color_211);
+        pan_info.setBackground(set.color_211);
         this.add(pan_info);
         txt_manhomquyen = new JTextField(String.valueOf(id));
         txt_manhomquyen.setPreferredSize(new Dimension(200, 60));
-        txt_manhomquyen.setFont(new Font(name_font1, 1, 25));
+        txt_manhomquyen.setFont(new Font(set.font_time_roman, 1, 25));
         txt_manhomquyen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ma nhom quyen",
                 TitledBorder.LEFT,
@@ -71,7 +73,7 @@ public class suanhomquyen extends JPanel {
         pan_info.add(txt_manhomquyen);
         txt_tennhomquyen = new JTextField(ten);
         txt_tennhomquyen.setPreferredSize(new Dimension(300, 60));
-        txt_tennhomquyen.setFont(new Font(name_font1, 1, 25));
+        txt_tennhomquyen.setFont(new Font(set.font_time_roman, 1, 25));
         txt_tennhomquyen.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ten nhom quyen",
                 TitledBorder.LEFT,
@@ -80,7 +82,7 @@ public class suanhomquyen extends JPanel {
         pan_info.add(txt_tennhomquyen);
         txt_ngaytao = new JTextField(ngaytao);
         txt_ngaytao.setPreferredSize(new Dimension(200, 60));
-        txt_ngaytao.setFont(new Font(name_font1, 1, 25));
+        txt_ngaytao.setFont(new Font(set.font_time_roman, 1, 25));
         txt_ngaytao.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ngay tao",
                 TitledBorder.LEFT,
@@ -90,7 +92,7 @@ public class suanhomquyen extends JPanel {
         pan_info.add(txt_ngaytao);
         txt_ngaycapnhat = new JTextField(ngayhientai);
         txt_ngaycapnhat.setPreferredSize(new Dimension(200, 60));
-        txt_ngaycapnhat.setFont(new Font(name_font1, 1, 25));
+        txt_ngaycapnhat.setFont(new Font(set.font_time_roman, 1, 25));
         txt_ngaycapnhat.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Ngay cap nhat",
                 TitledBorder.LEFT,
@@ -99,18 +101,18 @@ public class suanhomquyen extends JPanel {
         txt_ngaycapnhat.setEnabled(false);
         pan_info.add(txt_ngaycapnhat);
         pan_chucnang = new JPanel();
-        pan_chucnang.setBounds(0, 90, obj.w_center, 490);
-        pan_chucnang.setBackground(color_211);
+        pan_chucnang.setBounds(0, 90, set.w_center, 490);
+        pan_chucnang.setBackground(set.color_211);
         pan_chucnang.setLayout(new GridLayout(3,5));
         thanhcuon=new JScrollPane(pan_chucnang);
-        thanhcuon.setBounds(0, 90, obj.w_center, 490);
+        thanhcuon.setBounds(0, 90, set.w_center, 490);
         this.add(thanhcuon);
         // thanhkeo=new JScrollPane(pan_chucnang);
         JPanel[] pan = new JPanel[list_chucnang.size()];
         for (int i = 0; i < list_chucnang.size(); i++) {
             pan[i] = new JPanel();
             pan[i].setPreferredSize(new Dimension(200, 230));
-            pan[i].setBackground(color_211);
+            pan[i].setBackground(set.color_211);
             pan[i].setLayout(new FlowLayout());
             pan[i].setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                     list_chucnang.get(i).getTen(),
@@ -124,7 +126,7 @@ public class suanhomquyen extends JPanel {
                             list_chitiet.get(j).getHanhdong() + " " + list_chucnang.get(i).getMa());
                     temp.setFont(new Font("Segoe UI", 1, 20));
                     temp.setPreferredSize(new Dimension(190, 50));
-                    temp.setBackground(color_211);
+                    temp.setBackground(set.color_211);
                     temp.setForeground(Color.black);
                     if(list_chitiet.get(j).getTinhtrang()==1)
                     temp.setSelected(true);
@@ -159,16 +161,16 @@ public class suanhomquyen extends JPanel {
             pan_chucnang.add(pan[i]);
         }
         // thanhcuon=new JScrollPane(pan_chucnang);
-        // thanhcuon.setBounds(0, 100, obj.w_center, 480);
+        // thanhcuon.setBounds(0, 100, set.w_center, 480);
         // this.add(thanhcuon);
         pan_add = new JPanel();
-        pan_add.setBounds(0, 600, obj.w_center, 60);
-        pan_add.setBackground(color_211);
+        pan_add.setBounds(0, 600, set.w_center, 60);
+        pan_add.setBackground(set.color_211);
         pan_add.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_add);
-        bun_them = new JButton("Sua");
+        bun_them = new JButton("Sua",ic_lib.icon_repair);
         bun_them.setPreferredSize(new Dimension(200, 50));
-        bun_them.setFont(new Font(name_font1, 1, 25));
+        bun_them.setFont(new Font(set.font_time_roman, 1, 25));
         bun_them.addMouseListener(new MouseAdapter() {
             public void mousePressed(MouseEvent e) {
 
