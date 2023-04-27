@@ -131,6 +131,20 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
+        } else if (text.equalsIgnoreCase("Nhap hang")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            ImportGUI importgui = new ImportGUI();
+            importgui.setBounds(0, 0, 1100, 700);
+            obj.center.removeAll();
+            obj.center.add(importgui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
         } else if (text.equalsIgnoreCase("Hoa don")) {
             FlatLightLaf.setup();
             try {
@@ -142,6 +156,21 @@ public class menu extends JPanel implements MouseListener {
             invoicegui.setBounds(0, 0, 1100, 700);
             obj.center.removeAll();
             obj.center.add(invoicegui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+
+        } else if (text.equalsIgnoreCase("Phieu nhap")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            danhsachhoadonnhaphangGUI dshdnhgui = new danhsachhoadonnhaphangGUI();
+            dshdnhgui.setBounds(0, 0, 1100, 700);
+            obj.center.removeAll();
+            obj.center.add(dshdnhgui);
             obj.center.repaint();
             obj.center.revalidate();
 

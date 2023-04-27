@@ -21,11 +21,11 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import BUS.PriceFormatter;
-import BUS.quanlihoadonbanhang;
-import BUS.quanlikhachhang;
+import BUS.quanlihoadonnhaphang;
+import BUS.quanlinhacungcap;
 import BUS.quanlinhanvien;
-import DTO.hoadonbanhang;
-import DTO.khachhang;
+import DTO.hoadonnhaphang;
+import DTO.nhacungcap;
 import DTO.nhanvien;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
@@ -33,7 +33,7 @@ import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
 import GUI.Mybutton.searchbutton;
 
-public class InvoiceGUI extends JPanel implements ActionListener {
+public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener {
 
     // action panel
     private JPanel searchPanel;
@@ -54,11 +54,11 @@ public class InvoiceGUI extends JPanel implements ActionListener {
     private ExportPDF pdfbtn;
 
     // action
-    private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
+    private quanlihoadonnhaphang qlhdnh = new quanlihoadonnhaphang();
     private quanlinhanvien qlnv = new quanlinhanvien();
-    private quanlikhachhang qlkh = new quanlikhachhang();
+    private quanlinhacungcap qlncc = new quanlinhacungcap();
 
-    public InvoiceGUI() {
+    public danhsachhoadonnhaphangGUI() {
         init();
     }
 
@@ -135,9 +135,9 @@ public class InvoiceGUI extends JPanel implements ActionListener {
     public Mytable invoiceTable() {
         invoiceTable = new Mytable();
         invoiceTable.setTablesize(1000, 540);
-        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên khách hàng","Ngày tạo", "Thành tiền"});
-        qlhdbh.initList();
-        setDataToTable(qlhdbh.getList(),invoiceTable);
+        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhà cung cấp","Ngày tạo", "Thành tiền"});
+        qlhdnh.initList();
+        setDataToTable(qlhdnh.getList(),invoiceTable);
         invoiceTable.setPreferredWidth(0, 50);
         invoiceTable.setPreferredWidth(1, 100);
         invoiceTable.setPreferredWidth(2, 250);
@@ -180,24 +180,23 @@ public class InvoiceGUI extends JPanel implements ActionListener {
     }
 
     //action
-    private void setDataToTable(ArrayList<hoadonbanhang> list,Mytable t) {
+    private void setDataToTable(ArrayList<hoadonnhaphang> list,Mytable t) {
         t.clear();
         int i=1;
-        khachhang kh;
+        nhacungcap ncc;
         nhanvien nv;
-        double tongtien,giamgia,thanhtien;
-        for (hoadonbanhang hdbh : list) {
-            kh=qlkh.getKhachHang(hdbh.getMakh());
-            nv=qlnv.getNhanVien(hdbh.getmanv());
-            tongtien = hdbh.getTongtien();
-            giamgia = (double)hdbh.getGiamgia();
-            thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+        double thanhtien;
+        qlncc.initList();
+        for (hoadonnhaphang hdnh : list) {
+            ncc=qlncc.getNCC(hdnh.getMancc());
+            nv=qlnv.getNhanVien(hdnh.getmanv());
+            thanhtien = hdnh.getTongtien();
             t.addRow(new String[] {
                     String.valueOf(i++),
-                    String.valueOf(hdbh.getmahd()),
+                    String.valueOf(hdnh.getmahd()),
                     nv.getTen(),
-                    kh.getTen(),
-                    hdbh.getngay(),
+                    ncc.getTen(),
+                    hdnh.getngay(),
                     PriceFormatter.format(thanhtien)
             });
         }
@@ -207,8 +206,8 @@ public class InvoiceGUI extends JPanel implements ActionListener {
         if((datefrom.getText().equals("") && !dateto.getText().isEmpty()) || (dateto.getText().equals("") && !datefrom.getText().isEmpty())) {
             JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
             return;
-        } else if(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
-            setDataToTable(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()), invoiceTable);
+        } else if(qlhdnh.searchhoadonnhaphang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
+            setDataToTable(qlhdnh.searchhoadonnhaphang(searchinp.getText(),datefrom.getText(),dateto.getText()), invoiceTable);
         } else {
             JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
             return;
@@ -223,11 +222,11 @@ public class InvoiceGUI extends JPanel implements ActionListener {
         if(e.getSource() == detailbtn) {
             int row = invoiceTable.getTable().getSelectedRow();
             if(row == -1) {
-                JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn để xem chi tiết !","Thông báo",1);
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập để xem chi tiết !","Thông báo",1);
                 return;
             } else {
                 int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
-                new chitiethoadonbanhangGUI(mahd);
+                new chitiethoadonnhaphangGUI(mahd);
             }
         }
     }
