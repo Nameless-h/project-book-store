@@ -72,10 +72,19 @@ public class SanPhamBUS {
     return resultList;
   }
 
-  public void updateSoLuong(int masach,int soluongdaban) {
+  public void updateSoLuongBanHang(int masach,int soluongdaban) {
     for(Sach s : this.product_list) {
       if(s.getMaSach() == masach) {
         s.setSoLuong(s.getSoLuong()-soluongdaban);
+        spdao.update(s);
+        break;
+      }
+    }
+  }
+  public void updateSoLuongNhapHang(int masach,int soluongdanhap) {
+    for(Sach s : this.product_list) {
+      if(s.getMaSach() == masach) {
+        s.setSoLuong(s.getSoLuong()+soluongdanhap);
         spdao.update(s);
         break;
       }
