@@ -1,27 +1,21 @@
 package GUI.quanlysanpham;
 
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import BUS.NhaXuatBanBUS;
 import BUS.TacGiaBUS;
 import BUS.TheLoaiBUS;
-
 import DTO.NhaXuatBan;
 import DTO.Theloai;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+
 import java.util.ArrayList;
 
 public class InputPanel extends JPanel implements ActionListener {
@@ -36,15 +30,7 @@ public class InputPanel extends JPanel implements ActionListener {
   private int button_field_index = 0;
   private int cbb_field_index = 0;
 
-  TheLoaiBUS tloaiBUS = new TheLoaiBUS();
-  NhaXuatBanBUS nxbBUS = new NhaXuatBanBUS();
-  TacGiaBUS tacgiaBUS = new TacGiaBUS();
-
   public InputPanel(String[] label_array, int width, int width_of_label) {
-    nxbBUS.listNhaXuatBan();
-    tacgiaBUS.listTacGia();
-    tloaiBUS.listTheLoai();
-
     this.length_of_input_arr = label_array.length;
     this.setLayout(new BorderLayout(20, 0));
     this.setBackground(Color.white);
@@ -84,7 +70,8 @@ public class InputPanel extends JPanel implements ActionListener {
       if (label_array[i].toLowerCase().equalsIgnoreCase("Tác giả")
           || label_array[i].toLowerCase().equalsIgnoreCase("tac gia")
           || label_array[i].toLowerCase().equalsIgnoreCase("tacgia")) {
-        selectFrame = new TacGiaSelectFrame(tacgiaBUS.getDanhSachTacGia());// init select tac gia frame
+        selectFrame = new TacGiaSelectFrame(bookFrame.tacgiaBUS.getDanhSachTacGia(), 700, 400);// init select tac gia
+                                                                                               // frame
         selectFrame.setVisible(false);
         buttonfield[button_field_index] = new JButton("Chọn tác giả");
         buttonfield[button_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
@@ -99,9 +86,9 @@ public class InputPanel extends JPanel implements ActionListener {
         cbbfield[cbb_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
         // insert data to cbb theloai
         cbbfield[cbb_field_index].removeAllItems();
-        ArrayList<Theloai> data = tloaiBUS.getDanhTheloaiTheLoai();
+        ArrayList<Theloai> data = bookFrame.tloaiBUS.getDanhSachTheLoai();
         for (Theloai tmp : data) {
-          cbbfield[cbb_field_index].addItem(tmp.getTenTheloai());
+          cbbfield[cbb_field_index].addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
         }
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
@@ -113,9 +100,9 @@ public class InputPanel extends JPanel implements ActionListener {
         cbbfield[cbb_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
         // insert data to cbb nha xuat ban
         cbbfield[cbb_field_index].removeAllItems();
-        ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
+        ArrayList<NhaXuatBan> list = bookFrame.nxbBUS.getDanhSachNhaXuatBan();
         for (NhaXuatBan tmp : list) {
-          cbbfield[cbb_field_index].addItem(tmp.getTenNXB());
+          cbbfield[cbb_field_index].addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
         }
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
@@ -127,8 +114,8 @@ public class InputPanel extends JPanel implements ActionListener {
         cbbfield[cbb_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
         // insert data to cbb trang thai
         cbbfield[cbb_field_index].removeAllItems();
-        cbbfield[cbb_field_index].addItem("ẨN");
-        cbbfield[cbb_field_index].addItem("HIỆN");
+        cbbfield[cbb_field_index].addItem("1-HIỆN");
+        cbbfield[cbb_field_index].addItem("0-ẨN");
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
         continue;
@@ -144,26 +131,68 @@ public class InputPanel extends JPanel implements ActionListener {
 
   public boolean checkInput() {
     CheckInput check = new CheckInput();
-    if (!check.checkTenSach(this.textfield[0].getText())) {
-      JOptionPane.showConfirmDialog(this, "Tên sách đang trống", "Lỗi input !", JOptionPane.CLOSED_OPTION);
+    if (!check.checkTen(this.textfield[0].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Tên sách đang trống", "Lỗi input !", JOptionPane.CLOSED_OPTION);
       return false;
     }
     if (!check.checkNamXuatBan(this.textfield[1].getText())) {
-      JOptionPane.showConfirmDialog(this, "Năm xuất bản đang trống", "Lỗi input !", JOptionPane.CLOSED_OPTION);
+      JOptionPane.showConfirmDialog(this.getParent(), "Năm xuất bản không hợp lệ", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
       return false;
     }
     if (!check.checkGiaTien(this.textfield[2].getText())) {
-      JOptionPane.showConfirmDialog(this, "Giá tiền đang trống", "Lỗi input !", JOptionPane.CLOSED_OPTION);
+      JOptionPane.showConfirmDialog(this.getParent(), "Giá tiền không hợp lệ", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
       return false;
     }
     if (!check.checkSelectTacGia(this.selectFrame.getCheckBoxList())) {
-      JOptionPane.showConfirmDialog(this, "Chưa chọn tác giả", "Lỗi input !", JOptionPane.CLOSED_OPTION);
+      JOptionPane.showConfirmDialog(this.getParent(), "Chưa chọn tác giả", "Lỗi input !", JOptionPane.CLOSED_OPTION);
       return false;
     }
     return true;
   }
 
-  public JLabel[] getLabel() {
+  public boolean checkInputNxb() {
+    CheckInput check = new CheckInput();
+    if (!check.checkTen(this.textfield[0].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Tên nhà xuất bản đang trống", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    if (!check.checkHotMail(this.textfield[1].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Hotmail không hợp lệ", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    if (!check.checkHotMailTrung(this.textfield[1].getText(), -1)) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Hotmail đã được sử dụng", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    if (!check.checkHotLine(this.textfield[2].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Hotline không hợp lệ", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    if (!check.checkDiaChi(this.textfield[3].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Địa chỉ không hợp lệ", "Lỗi input !", JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    return true;
+  }
+
+  public boolean checkInputTheLoai() {
+    CheckInput check = new CheckInput();
+    if (!check.checkTen(this.textfield[0].getText())) {
+      JOptionPane.showConfirmDialog(this.getParent(), "Tên thể loại đang trống", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    return true;
+  }
+
+  public JLabel[] getLabels() {
+
     return this.labels;
   }
 

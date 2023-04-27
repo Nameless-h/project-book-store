@@ -28,7 +28,7 @@ public class menu extends JPanel implements MouseListener {
     Color color_54 = new Color(54, 54, 54);
     String name_font1 = "Times Roman";
     String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap","Thong ke" ,"Tai khoan", "Quyen" };
+            "Nha cung cap", "Thong ke", "Tai khoan", "Quyen" };
     JLabel[] list_lab = new JLabel[list_menu.length];
     Integer[] list_lab2 = new Integer[list_menu.length];
     JSeparator thanhnganh;
@@ -78,7 +78,7 @@ public class menu extends JPanel implements MouseListener {
             try {
                 UIManager.setLookAndFeel(new FlatLightLaf());
             } catch (Exception e) {
-                // TODO: handle exception
+                e.printStackTrace();
             }
             SaleGUI salegui = new SaleGUI();
             salegui.setBounds(0, 0, 1100, 700);
@@ -108,7 +108,13 @@ public class menu extends JPanel implements MouseListener {
             obj.center.add(statisticgui);
             obj.center.repaint();
             obj.center.revalidate();
-
+        } else if (text.equalsIgnoreCase("San pham")) {
+            bookFrame spgui = new bookFrame();
+            spgui.setBounds(0, 0, 1100, 670);
+            obj.center.removeAll();
+            obj.center.add(spgui);
+            obj.center.repaint();
+            obj.center.revalidate();
         }
     }
 

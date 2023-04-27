@@ -13,7 +13,7 @@ public class TheLoaiBUS {
 
   }
 
-  public ArrayList<Theloai> getDanhTheloaiTheLoai() {
+  public ArrayList<Theloai> getDanhSachTheLoai() {
     return this.theloai_list;
   }
 
@@ -24,20 +24,25 @@ public class TheLoaiBUS {
 
   public void addTheLoai(Theloai bk) {
     tLoaiDAO.insert(bk);
+    bk.setMaTheloai(tLoaiDAO.getLastInsertId());
     theloai_list.add(bk);
   }
 
   public void delTheLoai(Theloai bk) {
-    theloai_list.remove(bk);
+    for (Theloai tmp : this.theloai_list) {
+      if (tmp.getMaTheloai() == bk.getMaTheloai()) {
+        theloai_list.remove(tmp);
+        break;
+      }
+    }
     tLoaiDAO.delete(bk);
   }
 
   public void editTheLoai(Theloai TheloaiTmp) {
     tLoaiDAO.update(TheloaiTmp);
-    for (Theloai tmp : this.theloai_list) {
-      if (tmp.getMaTheloai() == TheloaiTmp.getMaTheloai()) {
-        delTheLoai(tmp);
-        theloai_list.add(TheloaiTmp);
+    for (int i = 0; i < theloai_list.size(); i++) {
+      if (theloai_list.get(i).getMaTheloai() == TheloaiTmp.getMaTheloai()) {
+        theloai_list.get(i).setTenTheloai(TheloaiTmp.getTenTheloai());
         return;
       }
     }
@@ -49,6 +54,6 @@ public class TheLoaiBUS {
         return tltmp;
       }
     }
-    return null;
+    return new Theloai(0, "Không thuộc thể loại cụ thể");
   }
 }

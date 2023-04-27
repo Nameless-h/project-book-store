@@ -20,13 +20,12 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import BUS.quanlitaikhoan;
 import DTO.taikhoan;
-import GUI.quanlysanpham.button_panel;
 
 /**
  *
  * @author ASUS
  */
-public class login extends JFrame implements MouseListener,KeyListener {
+public class login extends JFrame implements MouseListener, KeyListener {
     JFrame frame = new JFrame();
     JPanel logo = new JPanel();
     JLabel exit = new JLabel();
@@ -197,15 +196,16 @@ public class login extends JFrame implements MouseListener,KeyListener {
             String password = new String(txt_password.getPassword());
             taikhoan user = new taikhoan(0, username, password, 0, 0, 0);
             if ((user = chucnang_taikhoan.kiemtradangnhap(user)) != null) {
-                if(user.getTinhtrang()==1){
+                if (user.getTinhtrang() == 1) {
                     this.setVisible(false);
-                // System.out.println(user);
-                new main(user);
+                    // System.out.println(user);
+                    new main(user);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan", "Canh bao",
+                            JOptionPane.WARNING_MESSAGE);
                 }
-                else{
-                    JOptionPane.showMessageDialog(this, "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan","Canh bao",JOptionPane.WARNING_MESSAGE);
-                }
-                
+
             } else
                 JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
         } else if (e.getSource() == icon_dispass) {
@@ -230,18 +230,16 @@ public class login extends JFrame implements MouseListener,KeyListener {
 
     }
 
-            // kiemtra dang nhap
-            private void check_login(MouseEvent evt) {
-                String username=txt_username.getText();
-                String password=new String(txt_password.getPassword());
-                //user_login user=new user_login("",username,password,"");
-                // if(chucnang_user.check_login(user)!=null)
-                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
-                // else
-                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
-            }
-
-    
+    // kiemtra dang nhap
+    private void check_login(MouseEvent evt) {
+        String username = txt_username.getText();
+        String password = new String(txt_password.getPassword());
+        // user_login user=new user_login("",username,password,"");
+        // if(chucnang_user.check_login(user)!=null)
+        // JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+        // else
+        // JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
+    }
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -260,20 +258,32 @@ public class login extends JFrame implements MouseListener,KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Hello");
         }
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
 }
