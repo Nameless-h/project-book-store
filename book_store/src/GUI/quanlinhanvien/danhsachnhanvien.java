@@ -1,4 +1,4 @@
-package GUI;
+package GUI.quanlinhanvien;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,24 +18,21 @@ import com.mysql.cj.x.protobuf.MysqlxNotice.Warning;
 import BUS.quanlinhanvien;
 import DTO.chitietnhomquyen;
 import DTO.nhanvien;
-import GUI.icon_lib;
+import GUI.*;
+import GUI.main_frame.main;
 
 public class danhsachnhanvien extends JPanel implements MouseListener {
     main obj;
     quanlinhanvien chucnang = new quanlinhanvien();
     ArrayList<chitietnhomquyen> list_ct;
+    //goi thu vien icon 
     icon_lib ic_lib = new icon_lib();
-    Color color_211 = new Color(211, 211, 211);
-    String name_font1 = "Times Roman";
+    //goi thu vien cai dat da co san
+    setting_frame set = new setting_frame();
+
+    // String name_font1 = "Times Roman";
     String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
     String[] list_timkiem = { "Tat ca", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
-    // 0------------------------------------------------------------------------------
-    // lay icon
-    ImageIcon ic_add = ic_lib.icon_add;
-    ImageIcon ic_rm = ic_lib.icon_remove;
-    ImageIcon ic_rp = ic_lib.icon_repair;
-    ImageIcon ic_export_excel = ic_lib.icon_export_excel;
-    // ---------------------------------------------------------------
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
@@ -50,46 +47,46 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
     }
 
     private void init(main obj) {
-        this.setPreferredSize(new Dimension(obj.w_center, obj.h_center));
+        this.setPreferredSize(new Dimension(set.w_center, set.h_center));
         this.setLayout(null);
-        this.setBackground(color_211);
+        this.setBackground(set.color_211);
         // set panel cac chuc nag co ban them ,xoa,sua,..
         pan_chucnang1 = new JPanel();
-        pan_chucnang1.setBounds(0, 0, obj.w_center, 50);
-        pan_chucnang1.setBackground(color_211);
+        pan_chucnang1.setBounds(0, 0, set.w_center, 50);
+        pan_chucnang1.setBackground(set.color_211);
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
         // nut them
-        bun_them = new JButton("Them", ic_add);
+        bun_them = new JButton("Them", ic_lib.icon_add);
         bun_them.setPreferredSize(new Dimension(200, 40));
-        bun_them.setFont(new Font(name_font1, 1, 20));
+        bun_them.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_them);
         // nut xoa
-        bun_xoa = new JButton("Xoa", ic_rm);
+        bun_xoa = new JButton("Xoa", ic_lib.icon_remove);
         bun_xoa.setPreferredSize(new Dimension(200, 40));
-        bun_xoa.setFont(new Font(name_font1, 1, 20));
+        bun_xoa.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_xoa);
         // nut sua
-        bun_sua = new JButton("Sua", ic_rp);
+        bun_sua = new JButton("Sua", ic_lib.icon_repair);
         bun_sua.setPreferredSize(new Dimension(200, 40));
-        bun_sua.setFont(new Font(name_font1, 1, 20));
+        bun_sua.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_sua);
         // bun xuat thong tin ra file excel
-        bun_in_excel = new JButton("Export Excel", ic_export_excel);
+        bun_in_excel = new JButton("Export Excel", ic_lib.icon_export_excel);
         bun_in_excel.setPreferredSize(new Dimension(200, 40));
-        bun_in_excel.setFont(new Font(name_font1, 1, 20));
+        bun_in_excel.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_in_excel);
 
         // cai dat panel chuc nang 2
         pan_chucnang2 = new JPanel();
-        pan_chucnang2.setBounds(0, 60, obj.w_center, 100);
-        pan_chucnang2.setBackground(color_211);
+        pan_chucnang2.setBounds(0, 60, set.w_center, 100);
+        pan_chucnang2.setBackground(set.color_211);
         pan_chucnang2.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang2);
         // set panel tim kiem
         pan_timkiem = new JPanel();
         pan_timkiem.setPreferredSize(new Dimension(600, 60));
-        pan_timkiem.setBackground(color_211);
+        pan_timkiem.setBackground(set.color_211);
         pan_timkiem.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
                 "Tim kiem",
                 TitledBorder.LEFT,
@@ -104,7 +101,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         // set text field o tim kiem
         txt_timkiem = new JTextField();
         txt_timkiem.setPreferredSize(new Dimension(150, 30));
-        txt_timkiem.setFont(new Font(name_font1, 1, 15));
+        txt_timkiem.setFont(new Font(set.font_time_roman, 1, 15));
         pan_timkiem.add(txt_timkiem);
         // set nut tim kiem
         bun_timkiem = new JButton("Tim kiem");
@@ -128,7 +125,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         tab_danhsach.addMouseListener(this);
         chucnang.hienthidanhsach_nhanvien(tab_danhsach);
         thanhcuon = new JScrollPane(tab_danhsach);
-        thanhcuon.setBounds(0, 200, obj.w_center, obj.h_center - 200);
+        thanhcuon.setBounds(0, 200, set.w_center, set.h_center - 200);
         this.add(thanhcuon);
     }
 
@@ -146,7 +143,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                     if (list_ct.get(i).getTinhtrang() == 1) {
                         int rowCount = tab_danhsach.getRowCount() + 1;
                         themnhanvien panel = new themnhanvien(obj, rowCount);
-                        panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                        panel.setBounds(0, 0, set.w_center, set.h_center);
                         obj.center.removeAll();
                         obj.center.add(panel);
                         obj.center.repaint();
@@ -179,7 +176,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                             String cv = model.getValueAt(selectrow, 7).toString();
                             nhanvien temp = new nhanvien(ma, ten, gt, dc, email, sdt, cv);
                             suathongtinnhanvien panel = new suathongtinnhanvien(obj, temp);
-                            panel.setBounds(0, 0, obj.w_center, obj.h_center);
+                            panel.setBounds(0, 0, set.w_center, set.h_center);
                             obj.center.removeAll();
                             obj.center.add(panel);
                             obj.center.repaint();
