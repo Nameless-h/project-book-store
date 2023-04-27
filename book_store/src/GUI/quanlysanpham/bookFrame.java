@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import java.lang.Math;
 import java.util.ArrayList;
 import DTO.Theloai;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -117,29 +119,33 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         (int) Math.floor(700 * 0.1));
     tabPane = new JTabbedPane();
     tabPane.addChangeListener(this);
-    // init label of book info
-    String[] book_info_label = { "Mã sách: ", "Tên sách: ", "Thể loại: ", "Tác giả: ", "Nhà xuất bản: ",
-        "Năm xuất bản : ",
-        "Số lượng: ", "Giá tiền: " };
-    book_detail_labels = new JLabel[book_info_label.length];
     int posY = 50;
     int posY2 = 50;
-    for (int i = 0; i < book_info_label.length; i++) {
-      if (i < 4) {
-        book_detail_labels[i] = new JLabel(book_info_label[i]);
-        book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
-        book_detail_labels[i].setFont(fo);
-        book_panel.add(book_detail_labels[i]);
-        posY += 50;
-      } else {
-        book_detail_labels[i] = new JLabel(book_info_label[i]);
-        book_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
-        book_detail_labels[i].setFont(fo);
-        book_panel.add(book_detail_labels[i]);
-        posY2 += 50;
-      }
-
-    }
+    // init label of book info
+    /*
+     * String[] book_info_label = { "Mã sách: ", "Tên sách: ", "Thể loại: ",
+     * "Tác giả: ", "Nhà xuất bản: ",
+     * "Năm xuất bản : ",
+     * "Số lượng: ", "Giá tiền: " };
+     * book_detail_labels = new JLabel[book_info_label.length];
+     * 
+     * for (int i = 0; i < book_info_label.length; i++) {
+     * if (i < 4) {
+     * book_detail_labels[i] = new JLabel(book_info_label[i]);
+     * book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
+     * book_detail_labels[i].setFont(fo);
+     * book_panel.add(book_detail_labels[i]);
+     * posY += 50;
+     * } else {
+     * book_detail_labels[i] = new JLabel(book_info_label[i]);
+     * book_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
+     * book_detail_labels[i].setFont(fo);
+     * book_panel.add(book_detail_labels[i]);
+     * posY2 += 50;
+     * }
+     * 
+     * }
+     */
 
     // init label of nxb info
     String[] nxb_info_label = { "Mã NXB: ", "Tên nxb:", "Hotmail:", "Hotline:", "Địa chỉ:" };
@@ -202,7 +208,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     txtMailNxb = new JTextField();
     txtSdtNxb = new JTextField();
     txtDiaChiNxb = new JTextField();
-
     txtTenTheLoai = new JTextField();
     txtMaTheLoai = new JTextField();
 
@@ -221,34 +226,43 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       searchTacgia.setFont(searchFo);
       /* set param cho text va combobox */
       /* -------- book panel --------- */
-      txtMaSach.setBounds(200, 50 - 30, 300, 25);
-      txtMaSach.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtMaSach.setBounds(20, 50 - 30, 300, 35);
+      txtMaSach.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtMaSach.setEditable(false);
+      txtMaSach.setBorder(BorderFactory.createTitledBorder("Mã sách"));
+      txtMaSach.setForeground(Color.blue);
 
-      txttenSach.setBounds(200, 100 - 30, 300, 25);
-      txttenSach.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txttenSach.setBounds(20, 100 - 30, 300, 35);
+      txttenSach.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txttenSach.setBorder(BorderFactory.createTitledBorder("Tên sách"));
 
-      cbbTheloai.setBounds(200, 150 - 30, 300, 25);
-      cbbTheloai.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      cbbTheloai.setBounds(20, 150 - 30, 300, 35);
+      cbbTheloai.setFont(new Font("Time New Roman", Font.PLAIN, 18));
+      cbbTheloai.setBorder(BorderFactory.createTitledBorder("Thể loại"));
 
       selectTacgiaFrame = new TacGiaSelectFrame(tacgiaBUS.getDanhSachTacGia(), 700, 400);
       selectTacgiaFrame.setVisible(false);
 
-      selectTacgia.setBounds(200, 200 - 30, 300, 25);
-      selectTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      selectTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      selectTacgia.setBounds(20, 200 - 30, 300, 35);
+      selectTacgia.setBorder(BorderFactory.createTitledBorder("Tác giả"));
 
-      cbbNXB.setBounds(750, 50 - 30, 300, 25);
-      cbbNXB.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      cbbNXB.setBounds(400, 50 - 30, 300, 35);
+      cbbNXB.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      cbbNXB.setBorder(BorderFactory.createTitledBorder("Nhà xuất bản"));
 
-      txtNamxb.setBounds(750, 100 - 30, 300, 25);
-      txtNamxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtNamxb.setBounds(400, 100 - 30, 300, 35);
+      txtNamxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtNamxb.setBorder(BorderFactory.createTitledBorder("Năm xuất bản"));
 
-      txtSoluong.setBounds(750, 150 - 30, 300, 25);
-      txtSoluong.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtSoluong.setBounds(400, 150 - 30, 300, 35);
+      txtSoluong.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtSoluong.setBorder(BorderFactory.createTitledBorder("Số lượng"));
       txtSoluong.setEnabled(false);
 
-      txtGiatien.setBounds(750, 200 - 30, 300, 25);
-      txtGiatien.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtGiatien.setBounds(400, 200 - 30, 300, 35);
+      txtGiatien.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtGiatien.setBorder(BorderFactory.createTitledBorder("Giá tiền"));
       /* -------- book panel --------- */
 
       txtMaNxb.setBounds(200, 50 - 30, 300, 25);
@@ -557,7 +571,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     // in ra danh sach the loai
     DefaultTableModel theLoaiModel = (DefaultTableModel) tLoaiTbl.getModel();
     for (Theloai tmp : tloaiBUS.getDanhSachTheLoai()) {
-      // System.out.println(tmp.getTrangThai());
       if (tmp.getTrangThai() == 1) {
         theLoaiModel.addRow(new Object[] {
             tmp.getMaTheloai(), tmp.getTenTheloai() });
@@ -710,13 +723,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     }
     // click tacgia btn
     if (e.getSource() == selectTacgia) {
-      System.out.println("select tacgia");
+
       selectTacgiaFrame.setVisible(true);
       return;
     }
     // click edit btn
     if (e.getSource() == button_panel_book.getEditBtn()) {
-      System.out.println("edit book click");
+
       if (txtMaSach.getText().equalsIgnoreCase("")) {
         JOptionPane.showConfirmDialog(this,
             "Bạn chưa chọn sản phẩm để chỉnh sửa, hãy chọn 1 sản phẩm trong bảng dưới. ", "Thông báo",
@@ -761,7 +774,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         }
 
         try {
-          System.out.println(bookBUS.timSachTheoMa(21).toString());
           showBookList();
           resetForm();
         } catch (Exception e1) {

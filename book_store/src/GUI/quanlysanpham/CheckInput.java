@@ -108,7 +108,6 @@ public class CheckInput {
 
   public static void main(String[] args) {
     CheckInput chk = new CheckInput();
-    System.out.println(chk.checkHotLine("09767989"));
 
   }
 }
