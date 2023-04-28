@@ -32,6 +32,7 @@ import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
 public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener {
 
@@ -171,6 +172,8 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
         pdfbtn.setPreferredSize(new Dimension(100, 45));
 
         detailbtn.addActionListener(this);
+        exportbtn.addActionListener(this);
+        pdfbtn.addActionListener(this);
 
         buttonPanel.add(detailbtn);
         buttonPanel.add(exportbtn);
@@ -227,6 +230,17 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
             } else {
                 int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
                 new chitiethoadonnhaphangGUI(mahd);
+            }
+        } else if(e.getSource() == exportbtn) {
+            qlhdnh.xuatExcel();
+        } else if(e.getSource() == pdfbtn) {
+            int row = invoiceTable.getTable().getSelectedRow();
+            if(row == -1) {
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập để in !","Thông báo",1);
+                return;
+            } else {
+                int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
+                new WritePDF().writeHoaDonNhapHang(mahd);
             }
         }
     }

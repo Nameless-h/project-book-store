@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import DAO.quanlichitiethoadonbanhangDAO;
 import DTO.chitiethoadon;
+import DTO.hoadonbanhang;
 
 public class quanlichitiethoadonbanhang {
     private ArrayList<chitiethoadon> listcthdbh = new ArrayList<chitiethoadon>();
@@ -26,4 +27,6 @@ public class quanlichitiethoadonbanhang {
     public ArrayList<chitiethoadon> getList() {
         return this.listcthdbh;
     }
+
+      
 }

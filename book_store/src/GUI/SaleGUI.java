@@ -37,6 +37,7 @@ import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
 import GUI.Mybutton.morebutton;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
 public class SaleGUI extends JPanel implements ActionListener {
     /* panel chinh */
@@ -547,8 +548,8 @@ public class SaleGUI extends JPanel implements ActionListener {
             }
         }
         if (e.getSource() == paybtn) {
-            System.out.println(dateinp.getText());
-            hoadonbanhang hdbh = new hoadonbanhang(kh.getMa(),qlhdbh.getNextID(),nv.getMa(),dateinp.getText(),subtotal,Integer.parseInt(discountinp.getText()));
+            int mahd = qlhdbh.getNextID();
+            hoadonbanhang hdbh = new hoadonbanhang(kh.getMa(),mahd,nv.getMa(),dateinp.getText(),subtotal,Integer.parseInt(discountinp.getText()));
             
             if(qlhdbh.themHoaDon(hdbh)/* them hoa don */) {
                 //them chi tiet hoa don
@@ -559,7 +560,12 @@ public class SaleGUI extends JPanel implements ActionListener {
                 }
                 //cap diem khach hang
                 qlkhbus.updateDiem(kh.getMa(),kh.getDiem()+1);
-                JOptionPane.showMessageDialog(this,"Thanh toán thành công !","Thông báo",1);
+                int reply = JOptionPane.showConfirmDialog(getRootPane(),
+                        "Thanh toán thành công, bạn có muốn IN HÓA ĐƠN BÁN HÀNG?", "Thành công",
+                        JOptionPane.YES_NO_OPTION);
+                if(reply == JOptionPane.OK_OPTION) {
+                    new WritePDF().writeHoaDonBanHang(mahd);
+                }
                 //refresh
                 refresh();
                 bookbus.listSanPham();
