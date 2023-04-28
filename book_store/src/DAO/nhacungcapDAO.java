@@ -22,8 +22,8 @@ public class nhacungcapDAO {
                 String diaChi = rs.getString("diaChiNCC");
                 String sdt = rs.getString("sdtNCC");
                 String email = rs.getString("emailNCC");
-
-                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi, sdt, email);
+                int tt = rs.getInt("tinhtrang");
+                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi, sdt, email, tt);
                 listncc.add(ncc);
             }
             rs.close();
@@ -41,7 +41,8 @@ public class nhacungcapDAO {
         sql += "tenNCC='" + ncc.getTen() + "', ";
         sql += "diaChiNCC='" + ncc.getDiaChi() + "', ";
         sql += "sdtNCC='" + ncc.getSDT() + "', ";
-        sql += "emailNCC='" + ncc.getSDT() + "', ";
+        sql += "emailNCC='" + ncc.getEmail() + "', ";
+        sql += "tinhtrang=" + ncc.getTinhtrang();
         sql += " WHERE maNCC=" + ncc.getMa();
         System.out.println(sql);
         mySQL.executeUpdate(sql);
@@ -53,8 +54,20 @@ public class nhacungcapDAO {
         sql += ncc.getMa() + ",";
         sql += "'" + ncc.getTen() + "',";
         sql += "'" + ncc.getDiaChi() + "',";
+        sql += "'" + ncc.getSDT() + "',";
         sql += "'" + ncc.getEmail() + "',";
-        sql += "'" + ncc.getSDT() + "')";
+        sql += "" + ncc.getTinhtrang() + ",)";
+        System.out.println(sql);
+        mySQL.executeUpdate(sql);
+    }
+
+    public void update_tt(int mancc, int tt) {
+        MySQLConnect mySQL = new MySQLConnect();
+        String sql = "UPDATE ncc " +
+                " SET " +
+                "tinhtrang=" + tt + "" +
+                " WHERE maNCC=" + mancc +
+                "";
         System.out.println(sql);
         mySQL.executeUpdate(sql);
     }

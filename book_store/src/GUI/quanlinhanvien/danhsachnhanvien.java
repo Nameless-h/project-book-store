@@ -25,13 +25,14 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
     main obj;
     quanlinhanvien chucnang = new quanlinhanvien();
     ArrayList<chitietnhomquyen> list_ct;
-    //goi thu vien icon 
+    // goi thu vien icon
     icon_lib ic_lib = new icon_lib();
-    //goi thu vien cai dat da co san
+    // goi thu vien cai dat da co san
     setting_frame set = new setting_frame();
 
     // String name_font1 = "Times Roman";
-    String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
+    String[] collums = { "STT", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu",
+            "Tinh trang" };
     String[] list_timkiem = { "Tat ca", "Ma nhan vien", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Chuc vu" };
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
@@ -174,7 +175,8 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                             String email = model.getValueAt(selectrow, 5).toString();
                             String sdt = model.getValueAt(selectrow, 6).toString();
                             String cv = model.getValueAt(selectrow, 7).toString();
-                            nhanvien temp = new nhanvien(ma, ten, gt, dc, email, sdt, cv);
+                            int tt = Integer.parseInt(model.getValueAt(selectrow, 8).toString());
+                            nhanvien temp = new nhanvien(ma, ten, gt, dc, email, sdt, cv, tt);
                             suathongtinnhanvien panel = new suathongtinnhanvien(obj, temp);
                             panel.setBounds(0, 0, set.w_center, set.h_center);
                             obj.center.removeAll();
@@ -195,6 +197,29 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                 chucnang.hienthidanhsach_nhanvien(tab_danhsach);
             }
 
+        } else if (e.getSource() == bun_xoa) {
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("NV") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Sua"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
+                        int selectrow = tab_danhsach.getSelectedRow();
+                        if (selectrow == -1) {
+                            JOptionPane.showMessageDialog(null, "Ban chua chon nhan vien de sua");
+                        } else {
+                            // String ma,ten,gioitinh,diachi,email,sodienthoai;
+                            Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
+                            int selection = JOptionPane.showConfirmDialog(null, "Ban co muon an nahn vien nay ko?",
+                                    "Xac nhan",
+                                    JOptionPane.YES_NO_OPTION);
+                            if (selection == JOptionPane.YES_OPTION) {
+                                chucnang.nutxoa(ma, tab_danhsach);
+                                JOptionPane.showMessageDialog(null, "An thanh cong");
+                            }
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
         } else if (e.getSource() == bun_lammoi) {
             txt_timkiem.setText("");
             chucnang.hienthidanhsach_nhanvien(tab_danhsach);

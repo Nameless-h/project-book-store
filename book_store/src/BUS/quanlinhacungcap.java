@@ -38,7 +38,8 @@ public class quanlinhacungcap {
         // them thong tin nhan vien vao bang table
         for (int i = 0; i < listncc.size(); i++) {
             model.addRow(new Object[] { i + 1, listncc.get(i).getMa(), listncc.get(i).getTen(),
-                    listncc.get(i).getDiaChi(), listncc.get(i).getEmail(), listncc.get(i).getSDT() });
+                    listncc.get(i).getDiaChi(), listncc.get(i).getEmail(), listncc.get(i).getSDT(),
+                    listncc.get(i).getTinhtrang() });
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -51,7 +52,8 @@ public class quanlinhacungcap {
         // them thong tin nhan vien vao bang table
         for (int i = 0; i < listtk.size(); i++) {
             model.addRow(new Object[] { i + 1, listtk.get(i).getMa(), listtk.get(i).getTen(),
-                    listtk.get(i).getDiaChi(), listtk.get(i).getEmail(), listtk.get(i).getSDT() });
+                    listtk.get(i).getDiaChi(), listtk.get(i).getEmail(), listtk.get(i).getSDT(),
+                    listtk.get(i).getTinhtrang() });
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -108,6 +110,7 @@ public class quanlinhacungcap {
                 "Dia chi",
                 "Email",
                 "SDT",
+                "Tinhtrang",
         };
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Danh sách nha cung cap");
@@ -154,6 +157,8 @@ public class quanlinhacungcap {
                     cell.setCellValue(listncc.get(i).getEmail());
                 } else if (cell.getColumnIndex() == 5) {
                     cell.setCellValue(listncc.get(i).getSDT());
+                } else if (cell.getColumnIndex() == 6) {
+                    cell.setCellValue(listncc.get(i).getTinhtrang());
                 }
             }
         }
@@ -187,5 +192,10 @@ public class quanlinhacungcap {
 
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
         }
+    }
+
+    public void nutxoa(int mancc, JTable table) {
+        nccdao.update_tt(mancc, 0);
+        hienthidanhsach_ncc(table);
     }
 }

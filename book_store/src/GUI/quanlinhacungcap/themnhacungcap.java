@@ -46,7 +46,7 @@ public class themnhacungcap extends JPanel implements MouseListener {
         pan_info.setBackground(set.color_211);
         pan_info.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 50));
         pan_info.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                "Them khach hang",
+                "Them nha cung cap",
                 TitledBorder.LEFT,
                 TitledBorder.TOP));
         ;
@@ -98,7 +98,7 @@ public class themnhacungcap extends JPanel implements MouseListener {
             String diachi = txt[2].getText();
             String email = txt[3].getText();
             String sdt = txt[4].getText();
-            nhacungcap temp = new nhacungcap(mancc, ten, diachi, sdt, email);
+            nhacungcap temp = new nhacungcap(mancc, ten, diachi, sdt, email, 1);
             quanlinhacungcap.themnhacungcap(temp);
             JOptionPane.showMessageDialog(null, "Them thanh cong");
 

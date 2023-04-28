@@ -24,11 +24,13 @@ public class suathongtinnhacungcap extends JPanel implements MouseListener {
     JLabel[] lab = new JLabel[list_lab.length];
     JTextField[] txt = new JTextField[list_lab.length];
     String[] thongtin;
-    JPanel pan_info;
+    JPanel pan_info, pan_tinhtrang;
     String ma;
     JButton bun_sua;
     nhacungcap ncc;
-
+    int tinhtrang;
+    JRadioButton rdb_nam, rdb_nu, rdb_chophep, rdb_khongchophep;
+    ButtonGroup group;
 
     public suathongtinnhacungcap(main obj, nhacungcap ncc) {
         this.obj = obj;
@@ -44,9 +46,9 @@ public class suathongtinnhacungcap extends JPanel implements MouseListener {
         pan_info = new JPanel();
         pan_info.setBounds(250, 10, set.w_center - 400, set.h_center - 100);
         pan_info.setBackground(set.color_211);
-        pan_info.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 10));
+        pan_info.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 30));
         pan_info.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-                "Them khach hang",
+                "Sua nha cung cap",
                 TitledBorder.LEFT,
                 TitledBorder.TOP));
         ;
@@ -75,32 +77,32 @@ public class suathongtinnhacungcap extends JPanel implements MouseListener {
             pan_info.add(txt[i]);
 
         }
-        // pan_tinhtrang = new JPanel();
-        // pan_tinhtrang.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
-        // "Cho phep",
-        // TitledBorder.LEFT,
-        // TitledBorder.TOP));
-        // ;
-        // pan_tinhtrang.setPreferredSize(new Dimension(690, 100));
-        // pan_tinhtrang.setBackground(set.color_211);
-        // pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
-        // pan_info.add(pan_tinhtrang);
-        // rdb_chophep = new JRadioButton("Cho phep");
-        // rdb_khongchophep = new JRadioButton("Khong cho phep");
-        // if (ncc.getTinhtrang() == 1)
-        // rdb_chophep.setSelected(true);
-        // else
-        // rdb_khongchophep.setSelected(true);
-        // rdb_chophep.setPreferredSize(new Dimension(200, 50));
-        // rdb_chophep.setFont(new Font(set.font_time_roman, 1, 25));
-        // rdb_khongchophep.setPreferredSize(new Dimension(300, 50));
-        // rdb_khongchophep.setFont(new Font(set.font_time_roman, 1, 25));
-        // group2 = new ButtonGroup();
-        // group2.add(rdb_chophep);
-        // group2.add(rdb_khongchophep);
+        pan_tinhtrang = new JPanel();
+        pan_tinhtrang.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black),
+                "Cho phep",
+                TitledBorder.LEFT,
+                TitledBorder.TOP));
+        ;
+        pan_tinhtrang.setPreferredSize(new Dimension(690, 100));
+        pan_tinhtrang.setBackground(set.color_211);
+        pan_tinhtrang.setLayout(new FlowLayout(FlowLayout.LEFT));
+        pan_info.add(pan_tinhtrang);
+        rdb_chophep = new JRadioButton("Cho phep");
+        rdb_khongchophep = new JRadioButton("Khong cho phep");
+        if (ncc.getTinhtrang() == 1)
+            rdb_chophep.setSelected(true);
+        else
+            rdb_khongchophep.setSelected(true);
+        rdb_chophep.setPreferredSize(new Dimension(200, 50));
+        rdb_chophep.setFont(new Font(set.font_time_roman, 1, 25));
+        rdb_khongchophep.setPreferredSize(new Dimension(300, 50));
+        rdb_khongchophep.setFont(new Font(set.font_time_roman, 1, 25));
+        group = new ButtonGroup();
+        group.add(rdb_chophep);
+        group.add(rdb_khongchophep);
 
-        // pan_tinhtrang.add(rdb_chophep);
-        // pan_tinhtrang.add(rdb_khongchophep);
+        pan_tinhtrang.add(rdb_chophep);
+        pan_tinhtrang.add(rdb_khongchophep);
 
         bun_sua = new JButton("Sua", ic_lib.icon_repair);
         bun_sua.setBounds(400, 590, 300, 50);
@@ -125,8 +127,12 @@ public class suathongtinnhacungcap extends JPanel implements MouseListener {
             String dc = txt[2].getText();
             String email = txt[3].getText();
             String sdt = txt[4].getText();
-
-            nhacungcap ncc = new nhacungcap(ma, ten, dc, email, sdt);
+            int tt = 1;
+            if (rdb_chophep.isSelected())
+                tt = 1;
+            if (rdb_khongchophep.isSelected())
+                tt = 0;
+            nhacungcap ncc = new nhacungcap(ma, ten, dc, email, sdt, tt);
             // System.out.println(ncc);
             quanlinhacungcap.suanhacungcap(ncc);
             JOptionPane.showMessageDialog(null, "Sua thong tin khach hang thanh cong");

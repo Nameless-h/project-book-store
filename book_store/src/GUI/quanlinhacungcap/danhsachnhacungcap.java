@@ -28,7 +28,7 @@ public class danhsachnhacungcap extends JPanel implements MouseListener {
     quanlinhacungcap quanlinhacungcap = new quanlinhacungcap();
     ArrayList<chitietnhomquyen> list_ct;
     // -------------------------------
-    String[] collums = { "STT", "Ma nha cung cap", "Ten nha cung cap", "Dia chi", "Email", "SDT" };
+    String[] collums = { "STT", "Ma nha cung cap", "Ten nha cung cap", "Dia chi", "Email", "SDT", "Tinh trang" };
     String[] list_timkiem = { "Tat ca", "Ma khach hang", "Ten", "Dia chi", "Email", "SDT" };
 
     JComboBox combo_timkiem;
@@ -162,7 +162,8 @@ public class danhsachnhacungcap extends JPanel implements MouseListener {
                             String dc = model.getValueAt(selectrow, 3).toString();
                             String email = model.getValueAt(selectrow, 4).toString();
                             String sdt = model.getValueAt(selectrow, 5).toString();
-                            nhacungcap temp = new nhacungcap(ma, ten, dc, email, sdt);
+                            int tt = Integer.parseInt(model.getValueAt(selectrow, 6).toString());
+                            nhacungcap temp = new nhacungcap(ma, ten, dc, email, sdt, tt);
                             suathongtinnhacungcap panel = new suathongtinnhacungcap(obj, temp);
                             panel.setBounds(0, 0, set.w_center, set.h_center);
                             obj.center.removeAll();
@@ -171,6 +172,29 @@ public class danhsachnhacungcap extends JPanel implements MouseListener {
                             obj.center.revalidate();
                         }
                         // System.out.println(ma+ten);
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
+        } else if (e.getSource() == bun_xoa) {
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("NV") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Sua"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        DefaultTableModel model = (DefaultTableModel) tab_danhsach.getModel();
+                        int selectrow = tab_danhsach.getSelectedRow();
+                        if (selectrow == -1) {
+                            JOptionPane.showMessageDialog(null, "Ban chua chon nhan vien de sua");
+                        } else {
+                            // String ma,ten,gioitinh,diachi,email,sodienthoai;
+                            Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
+                            int selection = JOptionPane.showConfirmDialog(null, "Ban co muon an nahn vien nay ko?",
+                                    "Xac nhan",
+                                    JOptionPane.YES_NO_OPTION);
+                            if (selection == JOptionPane.YES_OPTION) {
+                                quanlinhacungcap.nutxoa(ma, tab_danhsach);
+                                JOptionPane.showMessageDialog(null, "An thanh cong");
+                            }
+                        }
                     } else
                         JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
                                 JOptionPane.WARNING_MESSAGE);
