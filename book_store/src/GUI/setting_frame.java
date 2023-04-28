@@ -16,8 +16,8 @@ public class setting_frame {
     public int w_center = 1100;
     public int h_center = 670;
     //chieu dai va chieu rong giao dien dang nhap
-    // public int w_login=1100;
-    // public int h_login=700;
+    public int w_login=1100;
+    public int h_login=700;
     // q vai cai dat font mau va chu cai
     public Color color_211 = new Color(211, 211, 211);
     public String font_time_roman = "Times Roman";

@@ -86,7 +86,7 @@ public class ImportGUI extends JPanel implements ActionListener {
 
     public ImportGUI() throws IOException {
         init();
-        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
+        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly",1);
         empnameinp.setText(nv.getTen());
     }
 

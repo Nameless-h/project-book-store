@@ -38,11 +38,11 @@ public class suataikhoan extends JPanel implements MouseListener {
     JButton bun_sua;
     JCheckBox chk_chophep, chk_khong;
     CheckboxGroup cbg = new CheckboxGroup();
-    JComboBox com_manhomquyen, com_manhanvien;
+    
     int tinhtrang;
     JRadioButton rdb_chophep, rdb_khongchophep;
     ButtonGroup group;
-
+    JComboBox com_manhomquyen, com_manhanvien;
     public suataikhoan(main obj, taikhoan tk) {
         this.tk = tk;
         this.thongtin = tk.getthongtin();
