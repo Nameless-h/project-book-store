@@ -109,7 +109,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
 
             } 
             else if(e.getSource() == list_sta_btn[3]) {
-                content = new statistic_import();
+                content = new statistic_employee();
                 list_sta_btn[3].setBackground(Color.red);
                 list_sta_btn[3].setForeground(Color.white);
                 System.out.print(list_sta_name[3]);

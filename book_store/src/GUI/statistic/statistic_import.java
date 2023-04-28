@@ -43,8 +43,8 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
     private String title_filter[] = {"Khoang ngay","Top nhap hang nhieu","Nha cung cap"};//menu title filter
-    private String[] columnNames = {"ID","Ten sach","The loai","Gia","So luong nhap"};
-    // private String[] columnNames = {"ID","Ten sach","The loai","Nha cung cap","Gia","So luong nhap"};
+    // private String[] columnNames = {"ID","Ten sach","The loai","Gia","So luong nhap"};
+    private String[] columnNames = {"ID","Ten sach","The loai","Nha cung cap","Gia","So luong nhap"};
     private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_supplier;
     private JTextField inputDateStart,inputDateEnd,inputSupplier;
     private JLabel dateStart,dateEnd;
@@ -178,7 +178,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         }
 
         bookSoldTable.setPreferredWidth(0, 50);
-        bookSoldTable.setPreferredWidth(1, 300);
+        bookSoldTable.setPreferredWidth(1, 200);
         bookSoldTable.setPreferredWidth(2, 200);
         bookSoldTable.setPreferredWidth(3, 200);
         bookSoldTable.setPreferredWidth(4, 100);
