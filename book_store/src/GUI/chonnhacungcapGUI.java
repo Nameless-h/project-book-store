@@ -70,7 +70,7 @@ public class chonnhacungcapGUI extends JFrame {
     public Mytable nccTable() {
         ncctable = new Mytable();
         ncctable.setTablesize(0, 500);
-        ncctable.setHeader(new String[]{"Mã NCC","Họ tên","Địa chỉ","Email","Số điện thoại"});
+        ncctable.setHeader(new String[]{"Mã NCC","Họ tên","Địa chỉ","Email","Số điện thoại","Tình trạng"});
         qlncc.initList();
         setDataToTable(qlncc.getList(), ncctable);
         int width = 200;

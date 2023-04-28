@@ -6,13 +6,15 @@ public class nhacungcap {
     private String diachi;
     private String sdt;
     private String email;
+    private int tinhtrang;
 
-    public nhacungcap(int ma,String ten,String diachi, String sdt,String email) {
+    public nhacungcap(int ma,String ten,String diachi, String sdt,String email,int tinhtrang) {
         this.ma=ma;
         this.ten=ten;
         this.diachi=diachi;
         this.sdt=sdt;
         this.email=email;
+        this.tinhtrang = tinhtrang;
     }
 
     public void setMa(int ma) {
@@ -44,5 +46,11 @@ public class nhacungcap {
     }
     public String getEmail() {
         return this.email;
+    }
+    public void setTinhtrang(int tinhtrang) {
+        this.tinhtrang = tinhtrang;
+    }
+    public int getTinhtrang() {
+        return this.tinhtrang;
     }
 }

@@ -23,8 +23,8 @@ public class nhacungcapDAO {
                 String diaChi = rs.getString("diaChiNCC");
                 String sdt = rs.getString("sdtNCC");
                 String email = rs.getString("emailNCC");
-
-                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi,sdt,email);
+                int tinhtrang = rs.getInt("tinhtrang");
+                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi,sdt,email,tinhtrang);
                 listncc.add(ncc);
             }
             rs.close();
@@ -43,6 +43,7 @@ public class nhacungcapDAO {
         sql += "diaChiNCC='"+ncc.getDiaChi()+"', ";
         sql += "sdtNCC='"+ncc.getSDT()+"', ";
         sql += "emailNCC='"+ncc.getSDT()+"', ";
+        sql += "tinhtrang="+ncc.getTinhtrang();
         sql += " WHERE maNCC="+ncc.getMa();
         System.out.println(sql);
         mySQL.executeUpdate(sql);
