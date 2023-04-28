@@ -20,6 +20,7 @@ import DTO.taikhoan;
 import GUI.InvoiceGUI;
 import GUI.SaleGUI;
 import GUI.quanlikhachhang.danhsachkhachhang;
+import GUI.quanlinhacungcap.danhsachnhacungcap;
 import GUI.quanlinhanvien.danhsachnhanvien;
 import GUI.quanlinhomquyen.danhsachnhomquyen;
 import GUI.quanlitaikhoan.danhsachtaikhoan;
@@ -165,7 +166,6 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
-
         } else if (text.equalsIgnoreCase("Phieu nhap")) {
             FlatLightLaf.setup();
             try {
@@ -179,7 +179,6 @@ public class menu extends JPanel implements MouseListener {
             obj.center.add(dshdnhgui);
             obj.center.repaint();
             obj.center.revalidate();
-
 
         } else if (text.equalsIgnoreCase("San pham")) {
             // FlatLightLaf.setup();
@@ -196,6 +195,22 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
+        } else if (text.equalsIgnoreCase("Nha cung cap")) {
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NCC") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    danhsachnhacungcap panel = new danhsachnhacungcap(obj, tk_chitietquyen);
+                    panel.setBounds(0, 0, set.w_center, set.h_center);
+                    obj.center.removeAll();
+                    obj.center.add(panel);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
+            }
         }
     }
 
