@@ -1,21 +1,14 @@
 {
     "java.project.referencedLibraries": [
-        // "lib/**/*.jar",
-        // "d:\\thuvienjava\\activation.jar",
-        // "d:\\thuvienjava\\javax.mail.jar",
-        // "d:\\thuvienjava\\mysql-connector-java-8.0.30.jar",
-        // "d:\\thuvienjava\\protobuf-java-3.19.4.jar",
-        
         "book_store/lib/activation.jar",
-        
         "book_store/lib/protobuf-java-3.19.4.jar",
         "book_store/lib/org-netbeans-modules-java-j2seproject-copylibstask.jar",
         "book_store/lib/mysql-connector-java-8.0.30.jar",
         "book_store/lib/LGoodDatePicker-10.4.1.jar",
         "book_store/lib/javax.mail.jar",
         "book_store/lib/flatlaf-3.1.1.jar",
-        "book_store/lib/lib_excel/*.jar"
-        // "book_store/lib/*.jar"
+        "book_store/lib/lib_excel/*.jar",
+        "book_store/lib/itextpdf-5.5.12.jar"
     ],
     "sqltools.connections": [
         {

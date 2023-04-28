@@ -36,6 +36,7 @@ import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
 import GUI.Mybutton.morebutton;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
 public class ImportGUI extends JPanel implements ActionListener {
     /* panel chinh */
@@ -517,8 +518,8 @@ public class ImportGUI extends JPanel implements ActionListener {
             }
         }
         if (e.getSource() == paybtn) {
-            System.out.println(dateinp.getText());
-            hoadonnhaphang hdnh = new hoadonnhaphang(ncc.getMa(),qlhdnh.getNextID(),nv.getMa(),dateinp.getText(),grandtotal);
+            int mahd = qlhdnh.getNextID();
+            hoadonnhaphang hdnh = new hoadonnhaphang(ncc.getMa(),mahd,nv.getMa(),dateinp.getText(),grandtotal);
             
             if(qlhdnh.themHoaDon(hdnh)/* them hoa don */) {
                 //them chi tiet hoa don
@@ -527,7 +528,12 @@ public class ImportGUI extends JPanel implements ActionListener {
                 for(chitiethoadon cthd: listcthd) {
                     bookbus.updateSoLuongNhapHang(cthd.getmasach(),cthd.getsoluong());
                 }
-                JOptionPane.showMessageDialog(this,"Nhập hàng thành công !","Thông báo",1);
+                int reply = JOptionPane.showConfirmDialog(getRootPane(),
+                "Nhập hàng thành công, bạn có muốn IN HÓA ĐƠN NHẬP HÀNG?", "Thành công",
+                JOptionPane.YES_NO_OPTION);
+                if(reply == JOptionPane.OK_OPTION) {
+                    new WritePDF().writeHoaDonNhapHang(mahd);
+                }                
                 //refresh
                 refresh();
                 bookbus.listSanPham();

@@ -35,4 +35,29 @@ public class nhacungcapDAO {
         }
         return listncc;
     }
+
+    public void update(nhacungcap ncc) {
+        MySQLConnect mySQL = new MySQLConnect();
+        String sql = "UPDATE ncc SET ";
+        sql += "tenNCC='"+ncc.getTen()+"', ";
+        sql += "diaChiNCC='"+ncc.getDiaChi()+"', ";
+        sql += "sdtNCC='"+ncc.getSDT()+"', ";
+        sql += "emailNCC='"+ncc.getSDT()+"', ";
+        sql += " WHERE maNCC="+ncc.getMa();
+        System.out.println(sql);
+        mySQL.executeUpdate(sql);
+}
+
+    public void insert(nhacungcap ncc) {
+        MySQLConnect mySQL = new MySQLConnect();
+        String sql = "INSERT INTO nhacungcap VALUES (";
+                sql += "'"+ncc.getMa()+"',";
+                sql += "'"+ncc.getTen()+"',";
+                sql += "'"+ncc.getDiaChi()+"',";
+                sql += "'"+ncc.getEmail()+"',";
+                sql += "'"+ncc.getSDT()+"',";
+                sql += "'1')";
+        System.out.println(sql);
+        mySQL.executeUpdate(sql);
+    }
 }
