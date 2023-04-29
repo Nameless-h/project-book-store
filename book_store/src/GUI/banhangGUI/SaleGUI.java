@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -32,6 +32,7 @@ import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -90,7 +91,7 @@ public class SaleGUI extends JPanel implements ActionListener {
 
     public SaleGUI() throws IOException {
         init();
-        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
+        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly",1);
         empnameinp.setText(nv.getTen());
     }
 
@@ -316,8 +317,8 @@ public class SaleGUI extends JPanel implements ActionListener {
         discountinp.setFont(f);
         grandtotalinp.setFont(f);
 
-        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
-        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
+        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
+        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_us_dollar_30px.png")));
 
         cancelbtn.addActionListener(this);
         paybtn.addActionListener(this);
@@ -409,7 +410,8 @@ public class SaleGUI extends JPanel implements ActionListener {
         }
         subtotalinp.setText(PriceFormatter.format(subtotal));
         double disprice = (double)subtotal * (double)(Math.ceil(Float.parseFloat(discountinp.getText())) / 100);
-        grandtotal = (double)subtotal - disprice;
+        grandtotal = Math.ceil(((double)subtotal - disprice)/1000)*1000;
+        System.out.println(grandtotal);
         grandtotalinp.setText(PriceFormatter.format(grandtotal));
     }
 
@@ -449,6 +451,7 @@ public class SaleGUI extends JPanel implements ActionListener {
                     cusidinp.setText(kh.getTen());
                     qlqdbus.initList();
                     discountinp.setText(String.valueOf(qlqdbus.getGiamgia(kh.getMa())));
+                    setDataToCartTable(listcthd, carttable);
                 }
             }
         });

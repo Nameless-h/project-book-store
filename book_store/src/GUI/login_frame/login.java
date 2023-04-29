@@ -5,7 +5,9 @@
 package GUI.login_frame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -22,12 +24,11 @@ import BUS.quanlitaikhoan;
 import DTO.taikhoan;
 import GUI.main_frame.main;
 
-
 /**
  *
  * @author ASUS
  */
-public class login extends JFrame implements MouseListener,KeyListener {
+public class login extends JFrame implements MouseListener, KeyListener {
     JFrame frame = new JFrame();
     JPanel logo = new JPanel();
     JLabel exit = new JLabel();
@@ -64,6 +65,10 @@ public class login extends JFrame implements MouseListener,KeyListener {
         // set frame va layout
         this.setSize(900, 550);
         this.setLocation(350, 150);
+        // Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        // this.setSize(dim.width, dim.height);
+        // this.setLocation(0,0);
+        // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setUndecorated(true);
         this.setLayout(null);
         // ------------------------------------------------------------------------------------------------------
@@ -198,15 +203,16 @@ public class login extends JFrame implements MouseListener,KeyListener {
             String password = new String(txt_password.getPassword());
             taikhoan user = new taikhoan(0, username, password, 0, 0, 0);
             if ((user = chucnang_taikhoan.kiemtradangnhap(user)) != null) {
-                if(user.getTinhtrang()==1){
+                if (user.getTinhtrang() == 1) {
                     this.setVisible(false);
-                // System.out.println(user);
-                new main(user);
+                    // System.out.println(user);
+                    new main(user);
+                } else {
+                    JOptionPane.showMessageDialog(this,
+                            "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan", "Canh bao",
+                            JOptionPane.WARNING_MESSAGE);
                 }
-                else{
-                    JOptionPane.showMessageDialog(this, "Tai khoan ban da bi khoa\nVui long lien he admin de mo khoa tai khoan","Canh bao",JOptionPane.WARNING_MESSAGE);
-                }
-                
+
             } else
                 JOptionPane.showMessageDialog(null, "Dang nhap khong thanh cong");
         } else if (e.getSource() == icon_dispass) {
@@ -231,18 +237,16 @@ public class login extends JFrame implements MouseListener,KeyListener {
 
     }
 
-            // kiemtra dang nhap
-            private void check_login(MouseEvent evt) {
-                String username=txt_username.getText();
-                String password=new String(txt_password.getPassword());
-                //user_login user=new user_login("",username,password,"");
-                // if(chucnang_user.check_login(user)!=null)
-                //     JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
-                // else
-                //     JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
-            }
-
-    
+    // kiemtra dang nhap
+    private void check_login(MouseEvent evt) {
+        String username = txt_username.getText();
+        String password = new String(txt_password.getPassword());
+        // user_login user=new user_login("",username,password,"");
+        // if(chucnang_user.check_login(user)!=null)
+        // JOptionPane.showMessageDialog(null,"Dang nhap thanh cong");
+        // else
+        // JOptionPane.showMessageDialog(null,"Dang nhap khong thanh cong");
+    }
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -261,32 +265,30 @@ public class login extends JFrame implements MouseListener,KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode()==KeyEvent.VK_ENTER){
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             System.out.println("Hello");
         }
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-       
-    }
 
- 
+    }
 
 }

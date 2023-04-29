@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,6 +16,7 @@ import javax.swing.event.DocumentListener;
 
 import BUS.quanlikhachhang;
 import DTO.khachhang;
+import GUI.Mytable;
 import GUI.Mybutton.searchbutton;
 
 public class chonkhachhangGUI extends JFrame {
@@ -70,7 +71,7 @@ public class chonkhachhangGUI extends JFrame {
     public Mytable cusTable() {
         custable = new Mytable();
         custable.setTablesize(0, 500);
-        custable.setHeader(new String[]{"Mã KH","Họ tên","Giới tính","Địa chỉ","Email","Số điện thoại","Điểm","Trạng thái"});
+        custable.setHeader(new String[]{"Mã KH","Họ tên","Giới tính","Địa chỉ","Email","Số điện thoại","Điểm"});
         setDataToTable(qlkhBUS.getListKH(), custable);
         int width = 200;
         custable.setPreferredWidth(1,width);
@@ -85,8 +86,8 @@ public class chonkhachhangGUI extends JFrame {
         buttonpnl = new JPanel();
         buttonpnl.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         buttonpnl.setPreferredSize(new Dimension(0, 50));
-        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../icon/icons8_ok_30px.png")));
-        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
+        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../../icon/icons8_ok_30px.png")));
+        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
         okbtn.setPreferredSize(new Dimension(150, 35));
         cancelbtn.setPreferredSize(new Dimension(150, 35));
         buttonpnl.add(okbtn);
@@ -134,30 +135,26 @@ public class chonkhachhangGUI extends JFrame {
     private void setDataToTable(ArrayList<khachhang> list , Mytable t) {
         t.clear();
         String gt="";
-        String tinhtrang="";
         for (khachhang kh : list) {
-            if(kh.getGioitinh() == 1) {
-                gt="Nam";
+            if(kh.getTinhtrang()==0) {
+                continue;
+            } else {
+                if(kh.getGioitinh() == 1) {
+                    gt="Nam";
+                }
+                else {
+                    gt="Nữ";
+                }
+                t.addRow(new Object[] {
+                    String.valueOf(kh.getMa()),
+                    kh.getTen(),
+                    gt,
+                    kh.getDiachi(),
+                    kh.getEmail(),
+                    kh.getSodienthoai(),
+                    String.valueOf(kh.getDiem())
+                });
             }
-            else {
-                gt="Nữ";
-            }
-            if(kh.getTinhtrang() == 1) {
-                tinhtrang="Hiện";
-            }
-            else {
-                tinhtrang="Ẩn";
-            }
-            t.addRow(new Object[] {
-                String.valueOf(kh.getMa()),
-                kh.getTen(),
-                gt,
-                kh.getDiachi(),
-                kh.getEmail(),
-                kh.getSodienthoai(),
-                String.valueOf(kh.getDiem()),
-                tinhtrang
-            });
         }
     }
 }

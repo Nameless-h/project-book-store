@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -27,6 +27,7 @@ import BUS.quanlinhanvien;
 import DTO.hoadonnhaphang;
 import DTO.nhacungcap;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;

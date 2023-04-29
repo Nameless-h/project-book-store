@@ -16,20 +16,19 @@ public class nhacungcapDAO {
         try {
             String sql = "SELECT * FROM ncc";
             ResultSet rs = mySQL.executeQuery(sql);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 int maNCC = rs.getInt("maNCC");
                 String tenNCC = rs.getString("tenNCC");
                 String diaChi = rs.getString("diaChiNCC");
                 String sdt = rs.getString("sdtNCC");
                 String email = rs.getString("emailNCC");
-                int tinhtrang = rs.getInt("tinhtrang");
-                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi,sdt,email,tinhtrang);
+                int tt = rs.getInt("tinhtrang");
+                nhacungcap ncc = new nhacungcap(maNCC, tenNCC, diaChi, sdt, email, tt);
                 listncc.add(ncc);
             }
             rs.close();
             mySQL.disConnect();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(nhacungcapDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -39,25 +38,36 @@ public class nhacungcapDAO {
     public void update(nhacungcap ncc) {
         MySQLConnect mySQL = new MySQLConnect();
         String sql = "UPDATE ncc SET ";
-        sql += "tenNCC='"+ncc.getTen()+"', ";
-        sql += "diaChiNCC='"+ncc.getDiaChi()+"', ";
-        sql += "sdtNCC='"+ncc.getSDT()+"', ";
-        sql += "emailNCC='"+ncc.getSDT()+"', ";
-        sql += "tinhtrang="+ncc.getTinhtrang();
-        sql += " WHERE maNCC="+ncc.getMa();
+        sql += "tenNCC='" + ncc.getTen() + "', ";
+        sql += "diaChiNCC='" + ncc.getDiaChi() + "', ";
+        sql += "sdtNCC='" + ncc.getSDT() + "', ";
+        sql += "emailNCC='" + ncc.getEmail() + "', ";
+        sql += "tinhtrang=" + ncc.getTinhtrang();
+        sql += " WHERE maNCC=" + ncc.getMa();
         System.out.println(sql);
         mySQL.executeUpdate(sql);
-}
+    }
 
     public void insert(nhacungcap ncc) {
         MySQLConnect mySQL = new MySQLConnect();
-        String sql = "INSERT INTO nhacungcap VALUES (";
-                sql += "'"+ncc.getMa()+"',";
-                sql += "'"+ncc.getTen()+"',";
-                sql += "'"+ncc.getDiaChi()+"',";
-                sql += "'"+ncc.getEmail()+"',";
-                sql += "'"+ncc.getSDT()+"',";
-                sql += "'1')";
+        String sql = "INSERT INTO ncc VALUES (";
+        sql += ncc.getMa() + ",";
+        sql += "'" + ncc.getTen() + "',";
+        sql += "'" + ncc.getDiaChi() + "',";
+        sql += "'" + ncc.getSDT() + "',";
+        sql += "'" + ncc.getEmail() + "',";
+        sql += "" + ncc.getTinhtrang() + ",)";
+        System.out.println(sql);
+        mySQL.executeUpdate(sql);
+    }
+
+    public void update_tt(int mancc, int tt) {
+        MySQLConnect mySQL = new MySQLConnect();
+        String sql = "UPDATE ncc " +
+                " SET " +
+                "tinhtrang=" + tt + "" +
+                " WHERE maNCC=" + mancc +
+                "";
         System.out.println(sql);
         mySQL.executeUpdate(sql);
     }

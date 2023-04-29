@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -16,6 +16,7 @@ import javax.swing.event.DocumentListener;
 
 import BUS.quanlinhacungcap;
 import DTO.nhacungcap;
+import GUI.Mytable;
 import GUI.Mybutton.searchbutton;
 
 public class chonnhacungcapGUI extends JFrame {
@@ -70,7 +71,7 @@ public class chonnhacungcapGUI extends JFrame {
     public Mytable nccTable() {
         ncctable = new Mytable();
         ncctable.setTablesize(0, 500);
-        ncctable.setHeader(new String[]{"Mã NCC","Họ tên","Địa chỉ","Email","Số điện thoại","Tình trạng"});
+        ncctable.setHeader(new String[]{"Mã NCC","Họ tên","Địa chỉ","Email","Số điện thoại"});
         qlncc.initList();
         setDataToTable(qlncc.getList(), ncctable);
         int width = 200;
@@ -86,8 +87,8 @@ public class chonnhacungcapGUI extends JFrame {
         buttonpnl = new JPanel();
         buttonpnl.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         buttonpnl.setPreferredSize(new Dimension(0, 50));
-        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../icon/icons8_ok_30px.png")));
-        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
+        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../../icon/icons8_ok_30px.png")));
+        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
         okbtn.setPreferredSize(new Dimension(150, 35));
         cancelbtn.setPreferredSize(new Dimension(150, 35));
         buttonpnl.add(okbtn);
@@ -135,13 +136,17 @@ public class chonnhacungcapGUI extends JFrame {
     private void setDataToTable(ArrayList<nhacungcap> list , Mytable t) {
         t.clear();
         for (nhacungcap ncc : list) {
-            t.addRow(new Object[] {
-                String.valueOf(ncc.getMa()),
-                ncc.getTen(),
-                ncc.getDiaChi(),
-                ncc.getEmail(),
-                ncc.getSDT(),
-            });
+            if(ncc.getTinhtrang()==0) {
+                continue;
+            } else {
+                t.addRow(new Object[] {
+                    String.valueOf(ncc.getMa()),
+                    ncc.getTen(),
+                    ncc.getDiaChi(),
+                    ncc.getEmail(),
+                    ncc.getSDT()
+                });
+            }
         }
     }
 }

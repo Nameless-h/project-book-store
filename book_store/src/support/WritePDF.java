@@ -191,8 +191,8 @@ public class WritePDF {
             document.add(pdfTable);
             document.add(Chunk.NEWLINE);
 
-            tongGiamgia = hd.getTongtien() * (Math.ceil(hd.getGiamgia()) / 100);
-            tongThanhtien = hd.getTongtien() - tongGiamgia;
+            tongGiamgia = Math.floor((hd.getTongtien() * (Math.ceil(hd.getGiamgia()) / 100))/1000)*1000;
+            tongThanhtien = Math.ceil((hd.getTongtien() - tongGiamgia)/1000)*1000 ;
             Paragraph paraTongThanhTien = new Paragraph(new Phrase("Tổng cộng: " + PriceFormatter.format(tongThanhTien), fontData));
             paraTongThanhTien.setIndentationLeft(380);
             document.add(paraTongThanhTien);
