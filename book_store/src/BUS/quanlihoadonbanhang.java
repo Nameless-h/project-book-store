@@ -137,7 +137,7 @@ public class quanlihoadonbanhang {
             row = sheet.createRow(i + 2);
             tongtien = this.listhdbh.get(i).getTongtien();
             giamgia = (double)this.listhdbh.get(i).getGiamgia();
-            thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+            thanhtien = Math.ceil((tongtien - tongtien * (Math.ceil(giamgia) / 100))/1000)*1000;
             for (int j = 0; j < this.listhdbh.size(); j++) {
                 Cell cell = row.createCell(j);
                 if (cell.getColumnIndex() == 0) {

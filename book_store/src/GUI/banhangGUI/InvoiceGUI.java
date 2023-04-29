@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -27,6 +27,7 @@ import BUS.quanlinhanvien;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
@@ -194,7 +195,7 @@ public class InvoiceGUI extends JPanel implements ActionListener {
             nv=qlnv.getNhanVien(hdbh.getmanv());
             tongtien = hdbh.getTongtien();
             giamgia = (double)hdbh.getGiamgia();
-            thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+            thanhtien = Math.ceil((tongtien - tongtien * (Math.ceil(giamgia) / 100))/1000)*1000;
             t.addRow(new String[] {
                     String.valueOf(i++),
                     String.valueOf(hdbh.getmahd()),

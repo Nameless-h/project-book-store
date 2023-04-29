@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -27,6 +27,7 @@ import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
 import DTO.nhanvien;
+import GUI.Mytable;
 
 public class chitiethoadonbanhangGUI extends JFrame {
     private int mahd;
@@ -201,7 +202,7 @@ public class chitiethoadonbanhangGUI extends JFrame {
                 nv = qlnv.getNhanVien(hd.getmanv());
                 tongtien = hd.getTongtien();
                 giamgia = (double)hd.getGiamgia();
-                thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+                thanhtien = Math.ceil((tongtien - tongtien * (Math.ceil(giamgia) / 100))/1000)*1000;
                 mahdtxt.setText(String.valueOf(this.mahd) );
                 manvtxt.setText(String.valueOf(nv.getMa()));
                 tennvtxt.setText(nv.getTen());

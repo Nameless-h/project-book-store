@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -14,13 +14,14 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import BUS.quanlinhacungcap;
-import DTO.nhacungcap;
+import BUS.quanlikhachhang;
+import DTO.khachhang;
+import GUI.Mytable;
 import GUI.Mybutton.searchbutton;
 
-public class chonnhacungcapGUI extends JFrame {
-    private JTextField nccinp;
-    private quanlinhacungcap qlncc = new quanlinhacungcap();
+public class chonkhachhangGUI extends JFrame {
+    private JTextField makhinp;
+    private quanlikhachhang qlkhBUS = new quanlikhachhang();
 
     //north panel
     private JPanel searchpnl;
@@ -28,26 +29,26 @@ public class chonnhacungcapGUI extends JFrame {
     private searchbutton searchbtn;
 
     //center panel
-    Mytable ncctable;
+    Mytable custable;
 
     //south panel
     private JPanel buttonpnl;
     private JButton okbtn;
     private JButton cancelbtn;
 
-    public chonnhacungcapGUI(JTextField _nccinp) {
-        this.setTitle("Chọn nhà cung cấp");
+    public chonkhachhangGUI(JTextField _makhinp) {
+        this.setTitle("Chọn khách hàng");
         this.setLayout(new BorderLayout());
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
-        this.nccinp = _nccinp;
+        this.makhinp = _makhinp;
         init();
         this.setVisible(true);
     }
    
      public void init() {
         this.add(searchPanel(),BorderLayout.NORTH);
-        this.add(nccTable(),BorderLayout.CENTER);
+        this.add(cusTable(),BorderLayout.CENTER);
         this.add(buttonPanel(),BorderLayout.SOUTH);
     }
 
@@ -67,27 +68,26 @@ public class chonnhacungcapGUI extends JFrame {
         return searchpnl;
     }
 
-    public Mytable nccTable() {
-        ncctable = new Mytable();
-        ncctable.setTablesize(0, 500);
-        ncctable.setHeader(new String[]{"Mã NCC","Họ tên","Địa chỉ","Email","Số điện thoại"});
-        qlncc.initList();
-        setDataToTable(qlncc.getList(), ncctable);
+    public Mytable cusTable() {
+        custable = new Mytable();
+        custable.setTablesize(0, 500);
+        custable.setHeader(new String[]{"Mã KH","Họ tên","Giới tính","Địa chỉ","Email","Số điện thoại","Điểm"});
+        setDataToTable(qlkhBUS.getListKH(), custable);
         int width = 200;
-        ncctable.setPreferredWidth(1,width);
-        ncctable.setPreferredWidth(2,width);
-        ncctable.setPreferredWidth(3,width);
-        ncctable.setPreferredWidth(4,width);
+        custable.setPreferredWidth(1,width);
+        custable.setPreferredWidth(3,width);
+        custable.setPreferredWidth(4,width);
+        custable.setPreferredWidth(5,width-50);
 
-        return ncctable;
+        return custable;
     }
 
     public JPanel buttonPanel() {
         buttonpnl = new JPanel();
         buttonpnl.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         buttonpnl.setPreferredSize(new Dimension(0, 50));
-        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../icon/icons8_ok_30px.png")));
-        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
+        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../../icon/icons8_ok_30px.png")));
+        cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
         okbtn.setPreferredSize(new Dimension(150, 35));
         cancelbtn.setPreferredSize(new Dimension(150, 35));
         buttonpnl.add(okbtn);
@@ -109,14 +109,14 @@ public class chonnhacungcapGUI extends JFrame {
         });
 
         okbtn.addActionListener((ae) -> {
-            int row = ncctable.getTable().getSelectedRow();
+            int row = custable.getTable().getSelectedRow();
             if(row == -1) {
-                JOptionPane.showMessageDialog(this, "Chưa chọn nhà cung cấp nào!");
+                JOptionPane.showMessageDialog(this, "Chưa chọn khách hàng nào!");
             }
             else {
-                String makh= (String) ncctable.getTable().getValueAt(row,0);
+                String makh= (String) custable.getTable().getValueAt(row,0);
                 if(makh != null) {
-                    this.nccinp.setText(makh);
+                    this.makhinp.setText(makh);
                     this.dispose();
                 }
             }
@@ -129,20 +129,32 @@ public class chonnhacungcapGUI extends JFrame {
     }
 
     private void searchOnchange() {
-        setDataToTable(qlncc.searchNCC(searchinp.getText()), ncctable);
+        setDataToTable(qlkhBUS.searchKH(searchinp.getText()), custable);
     }
 
-    private void setDataToTable(ArrayList<nhacungcap> list , Mytable t) {
+    private void setDataToTable(ArrayList<khachhang> list , Mytable t) {
         t.clear();
-        for (nhacungcap ncc : list) {
-            t.addRow(new Object[] {
-                String.valueOf(ncc.getMa()),
-                ncc.getTen(),
-                ncc.getDiaChi(),
-                ncc.getEmail(),
-                ncc.getSDT(),
-            });
+        String gt="";
+        for (khachhang kh : list) {
+            if(kh.getTinhtrang()==0) {
+                continue;
+            } else {
+                if(kh.getGioitinh() == 1) {
+                    gt="Nam";
+                }
+                else {
+                    gt="Nữ";
+                }
+                t.addRow(new Object[] {
+                    String.valueOf(kh.getMa()),
+                    kh.getTen(),
+                    gt,
+                    kh.getDiachi(),
+                    kh.getEmail(),
+                    kh.getSodienthoai(),
+                    String.valueOf(kh.getDiem())
+                });
+            }
         }
     }
 }
-

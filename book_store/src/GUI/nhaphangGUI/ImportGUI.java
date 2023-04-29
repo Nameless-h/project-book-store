@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,6 +31,7 @@ import DTO.chitiethoadon;
 import DTO.hoadonnhaphang;
 import DTO.nhacungcap;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -302,8 +303,8 @@ public class ImportGUI extends JPanel implements ActionListener {
         dateinp.setFont(f);
         grandtotalinp.setFont(f);
 
-        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
-        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
+        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
+        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_us_dollar_30px.png")));
 
         cancelbtn.addActionListener(this);
         paybtn.addActionListener(this);

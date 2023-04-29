@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -24,6 +24,7 @@ import DTO.chitiethoadon;
 import DTO.hoadonnhaphang;
 import DTO.nhacungcap;
 import DTO.nhanvien;
+import GUI.Mytable;
 
 public class chitiethoadonnhaphangGUI extends JFrame {
     private int mahd;

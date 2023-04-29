@@ -17,8 +17,6 @@ import BUS.quanlichitietnhomquyen;
 import BUS.quanlinhomquyen;
 import DTO.chitietnhomquyen;
 import DTO.taikhoan;
-import GUI.InvoiceGUI;
-import GUI.SaleGUI;
 import GUI.quanlikhachhang.danhsachkhachhang;
 import GUI.quanlinhacungcap.danhsachnhacungcap;
 import GUI.quanlinhanvien.danhsachnhanvien;
@@ -27,6 +25,10 @@ import GUI.quanlitaikhoan.danhsachtaikhoan;
 import GUI.quanlysanpham.bookFrame;
 import GUI.statistic.list_statistic;
 import GUI.*;
+import GUI.banhangGUI.InvoiceGUI;
+import GUI.banhangGUI.SaleGUI;
+import GUI.nhaphangGUI.ImportGUI;
+import GUI.nhaphangGUI.danhsachhoadonnhaphangGUI;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
