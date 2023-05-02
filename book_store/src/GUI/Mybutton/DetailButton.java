@@ -5,7 +5,7 @@ import javax.swing.JButton;
 
 public class DetailButton extends JButton {
     public DetailButton() {
-        this.setText("Detail");
+        this.setText("Xem");
         this.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8-analyze-30.png")));
     }
 }

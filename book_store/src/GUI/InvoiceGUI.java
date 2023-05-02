@@ -3,24 +3,37 @@ package GUI;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
+import BUS.PriceFormatter;
+import BUS.quanlihoadonbanhang;
+import BUS.quanlikhachhang;
+import BUS.quanlinhanvien;
+import DTO.hoadonbanhang;
+import DTO.khachhang;
+import DTO.nhanvien;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
 import GUI.Mybutton.searchbutton;
 
-public class InvoiceGUI extends JPanel {
+public class InvoiceGUI extends JPanel implements ActionListener {
 
     // action panel
     private JPanel searchPanel;
@@ -37,9 +50,13 @@ public class InvoiceGUI extends JPanel {
     // button panel
     private JPanel buttonPanel;
     private DetailButton detailbtn;
-    // private ImportExcelButton importbtn;
     private ExportExcelButton exportbtn;
     private ExportPDF pdfbtn;
+
+    // action
+    private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
+    private quanlinhanvien qlnv = new quanlinhanvien();
+    private quanlikhachhang qlkh = new quanlikhachhang();
 
     public InvoiceGUI() {
         init();
@@ -69,16 +86,41 @@ public class InvoiceGUI extends JPanel {
         new DateButton(dp2);
 
         datefrom = new JTextField();
-        datefrom.setBorder(BorderFactory.createTitledBorder("From:"));
+        datefrom.setBorder(BorderFactory.createTitledBorder("Từ:"));
         datefrom.setPreferredSize(new Dimension(150, 45));
         dateto = new JTextField();
-        dateto.setBorder(BorderFactory.createTitledBorder("To:"));
+        dateto.setBorder(BorderFactory.createTitledBorder("Đến:"));
         dateto.setPreferredSize(new Dimension(150, 45));
+        datefrom.setEditable(false);
+        dateto.setEditable(false);
 
         searchinp = new JTextField();
         searchinp.setPreferredSize(new Dimension(250, 40));
         searchbtn = new searchbutton();
         searchbtn.setPreferredSize(new Dimension(100, 40));
+
+
+        searchinp.getDocument().addDocumentListener(new DocumentListener() {
+            public void changedUpdate(DocumentEvent e) {
+                searchOnchange();
+              }
+              public void removeUpdate(DocumentEvent e) {
+                searchOnchange();
+              }
+              public void insertUpdate(DocumentEvent e) {
+                searchOnchange();
+              }
+        });
+        searchbtn.addActionListener((ae) -> {
+            searchOnchange();
+        });
+
+        dp1.addDateChangeListener((dce)->{
+            datefrom.setText(dp1.getDateStringOrEmptyString());
+        });
+        dp2.addDateChangeListener((dce)->{
+            dateto.setText(dp2.getDateStringOrEmptyString());
+        });
 
         searchPanel.add(datefrom);
         searchPanel.add(dp1);
@@ -93,32 +135,19 @@ public class InvoiceGUI extends JPanel {
     public Mytable invoiceTable() {
         invoiceTable = new Mytable();
         invoiceTable.setTablesize(1000, 540);
-        invoiceTable.setHeader(new String[] { "No", "Invoice ID", "Employee ID", "Customer ID", "Discount(%)",
-                "Date create", "Total" });
-        for (int i = 0; i < 15; i++) {
-            invoiceTable.addRow(new String[] {
-                    String.valueOf(i + 1),
-                    String.valueOf(i + 1),
-                    "2",
-                    "3",
-                    "50",
-                    "2023-01-01",
-                    "110.000"
-            });
-        }
-        invoiceTable.setPreferredWidth(0, 100);
+        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên khách hàng","Ngày tạo", "Thành tiền"});
+        qlhdbh.initList();
+        setDataToTable(qlhdbh.getList(),invoiceTable);
+        invoiceTable.setPreferredWidth(0, 50);
         invoiceTable.setPreferredWidth(1, 100);
-        invoiceTable.setPreferredWidth(2, 100);
-        invoiceTable.setPreferredWidth(3, 100);
-        invoiceTable.setPreferredWidth(4, 100);
-        invoiceTable.setPreferredWidth(5, 250);
-        invoiceTable.setPreferredWidth(6, 250);
+        invoiceTable.setPreferredWidth(2, 250);
+        invoiceTable.setPreferredWidth(3, 250);
+        invoiceTable.setPreferredWidth(4, 150);
+        invoiceTable.setPreferredWidth(5, 200);
 
         int align = JLabel.CENTER;
         invoiceTable.setAlignment(0, align);
         invoiceTable.setAlignment(1, align);
-        invoiceTable.setAlignment(2, align);
-        invoiceTable.setAlignment(3, align);
         invoiceTable.setAlignment(4, align);
         invoiceTable.getTable().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
@@ -135,23 +164,72 @@ public class InvoiceGUI extends JPanel {
 
         detailbtn = new DetailButton();
         exportbtn = new ExportExcelButton();
-        // importbtn = new ImportExcelButton();
         pdfbtn = new ExportPDF();
 
         detailbtn.setPreferredSize(new Dimension(100, 45));
         exportbtn.setPreferredSize(new Dimension(100, 45));
-        // importbtn.setPreferredSize(new Dimension(100,45));
         pdfbtn.setPreferredSize(new Dimension(100, 45));
+
+        detailbtn.addActionListener(this);
 
         buttonPanel.add(detailbtn);
         buttonPanel.add(exportbtn);
-        // buttonPanel.add(importbtn);
         buttonPanel.add(pdfbtn);
 
         return buttonPanel;
     }
 
+    //action
+    private void setDataToTable(ArrayList<hoadonbanhang> list,Mytable t) {
+        t.clear();
+        int i=1;
+        khachhang kh;
+        nhanvien nv;
+        double tongtien,giamgia,thanhtien;
+        for (hoadonbanhang hdbh : list) {
+            kh=qlkh.getKhachHang(hdbh.getMakh());
+            nv=qlnv.getNhanVien(hdbh.getmanv());
+            tongtien = hdbh.getTongtien();
+            giamgia = (double)hdbh.getGiamgia();
+            thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+            t.addRow(new String[] {
+                    String.valueOf(i++),
+                    String.valueOf(hdbh.getmahd()),
+                    nv.getTen(),
+                    kh.getTen(),
+                    hdbh.getngay(),
+                    PriceFormatter.format(thanhtien)
+            });
+        }
+    }
+    
+    private void searchOnchange() {
+        if((datefrom.getText().equals("") && !dateto.getText().isEmpty()) || (dateto.getText().equals("") && !datefrom.getText().isEmpty())) {
+            JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
+            return;
+        } else if(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
+            setDataToTable(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()), invoiceTable);
+        } else {
+            JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
+            return;
+        }
+    }
+
     private void tableMouseClicked(MouseEvent evt) {
 
     }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == detailbtn) {
+            int row = invoiceTable.getTable().getSelectedRow();
+            if(row == -1) {
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn để xem chi tiết !","Thông báo",1);
+                return;
+            } else {
+                int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
+                new chitiethoadonbanhangGUI(mahd);
+            }
+        }
+    }
+
 }

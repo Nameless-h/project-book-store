@@ -29,9 +29,9 @@ import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
 import DAO.thong_ke_sach_banDAO;
 import DTO.SachBan;
-import GUI.chonNhaCungCapGUI;
+import GUI.chonnhacungcapGUI;
 import GUI.Mybutton.morebutton;
-import GUI.main;
+import GUI.main_frame.*;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -233,7 +233,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
             }
             if(e.getSource() == selectSupplier) {
                 System.out.print("supplier");
-                new chonNhaCungCapGUI(inputSupplier).addWindowListener(new WindowAdapter() {
+                new chonnhacungcapGUI(inputSupplier).addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
                        System.out.print("Closing");
                         // this.setVisible(false);

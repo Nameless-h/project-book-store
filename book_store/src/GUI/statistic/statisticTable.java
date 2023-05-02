@@ -18,7 +18,6 @@ import GUI.hienThiThongKeNV;
 public class statisticTable extends JPanel{
     private DefaultTableModel tableModel;
     public JTable t;
-    hienThiThongKeNV jtRowData = new hienThiThongKeNV();
     private JScrollPane scrollpane;
     JTextField inputs[];
 
@@ -43,7 +42,7 @@ public class statisticTable extends JPanel{
 
         // disable table
         t.setDefaultEditor(Object.class, null);  
-        t.addMouseListener(new java.awt.event.MouseAdapter() {
+        /* t.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 int row = t.getSelectedRow();
@@ -71,13 +70,17 @@ public class statisticTable extends JPanel{
                 
                 System.out.print(val1 + " " + val2 + " " + val3 + " " + val4 + " " + val5 + "\n");
             }
-        });
+        }); */
         return scrollpane;
     }
 
     public void setHeader(String[] headers) {
         tableModel.setColumnIdentifiers(headers);
         t.setModel(tableModel);
+    }
+
+    public JTable getTable() {
+        return this.t;
     }
 
     public void addRow(Object[] data) {

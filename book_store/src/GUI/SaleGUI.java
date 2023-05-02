@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.lang.Integer;
-import java.time.LocalDate;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -28,7 +27,6 @@ import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlikhachhang;
 import BUS.quanliquydoidiem;
-import DAO.quanlihoadonbanhangDAO;
 import DTO.Sach;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
@@ -93,7 +91,6 @@ public class SaleGUI extends JPanel implements ActionListener {
         init();
         nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
         empnameinp.setText(nv.getTen());
-        showFormChonKH();
     }
 
     public void init() throws IOException {
@@ -178,7 +175,7 @@ public class SaleGUI extends JPanel implements ActionListener {
         JPanel pbookdetail = new JPanel();
         JPanel inputpnl = new JPanel();
         Font f = new Font(Font.SANS_SERIF, Font.BOLD, 13);
-        String bookdetail[] = { "Mã", "Tên sách", "Đơn giá", "Số lượng" };
+        String bookdetail[] = { "Mã sách", "Tên sách", "Đơn giá", "Số lượng" };
         inp = new JTextField[bookdetail.length];
         addbtn = new addbutton();
         pbookdetail.setLayout(null);
@@ -279,8 +276,8 @@ public class SaleGUI extends JPanel implements ActionListener {
         discountinp = new JTextField();
         grandtotalinp = new JTextField();
 
-        paybtn = new JButton("Pay");
-        cancelbtn = new JButton("Cancel");
+        paybtn = new JButton("Thanh toán");
+        cancelbtn = new JButton("Hủy");
         morebtn = new morebutton();
 
         infopnl.setLayout(new FlowLayout(FlowLayout.CENTER, 15, 5));
@@ -553,12 +550,12 @@ public class SaleGUI extends JPanel implements ActionListener {
             System.out.println(dateinp.getText());
             hoadonbanhang hdbh = new hoadonbanhang(kh.getMa(),qlhdbh.getNextID(),nv.getMa(),dateinp.getText(),subtotal,Integer.parseInt(discountinp.getText()));
             
-            if(qlhdbh.themHoaDon(this,hdbh)/* them hoa don */) {
+            if(qlhdbh.themHoaDon(hdbh)/* them hoa don */) {
                 //them chi tiet hoa don
                 qlcthdbh.themChiTietHoaDon(listcthd);
                 //cap so luong sach
                 for(chitiethoadon cthd: listcthd) {
-                    bookbus.updateSoLuong(cthd.getmasach(),cthd.getsoluong());
+                    bookbus.updateSoLuongBanHang(cthd.getmasach(),cthd.getsoluong());
                 }
                 //cap diem khach hang
                 qlkhbus.updateDiem(kh.getMa(),kh.getDiem()+1);

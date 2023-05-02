@@ -85,7 +85,7 @@ public class chonkhachhangGUI extends JFrame {
         buttonpnl = new JPanel();
         buttonpnl.setLayout(new FlowLayout(FlowLayout.CENTER,10,10));
         buttonpnl.setPreferredSize(new Dimension(0, 50));
-        okbtn = new JButton("OK", new ImageIcon(this.getClass().getResource("../icon/icons8_ok_30px.png")));
+        okbtn = new JButton("Chọn", new ImageIcon(this.getClass().getResource("../icon/icons8_ok_30px.png")));
         cancelbtn = new JButton("Hủy", new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
         okbtn.setPreferredSize(new Dimension(150, 35));
         cancelbtn.setPreferredSize(new Dimension(150, 35));

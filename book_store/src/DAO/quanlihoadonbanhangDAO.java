@@ -30,7 +30,7 @@ public class quanlihoadonbanhangDAO {
             rs.close();
             mySQL.disConnect();
         } catch (SQLException ex) {
-            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(quanlihoadonbanhangDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -58,4 +58,23 @@ public class quanlihoadonbanhangDAO {
         return mahd+1;
     }
 
+    public ArrayList<hoadonbanhang> select_group_by_idNV() {
+        ArrayList<hoadonbanhang> list = new ArrayList<hoadonbanhang>();
+        try {
+            String sql = "SELECT maPx,maNhanVien FROM phieuxuat GROUP BY maNhanVien";
+            ResultSet rs = mySQL.executeQuery(sql);
+            while(rs.next())
+            {
+                int mahd = rs.getInt("maPx");
+                int manv = rs.getInt("maNhanVien");
+                hoadonbanhang hd = new hoadonbanhang(0,mahd,manv,"",0,0);
+                list.add(hd);
+            }
+            rs.close();
+            mySQL.disConnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(quanlihoadonbanhangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
 }

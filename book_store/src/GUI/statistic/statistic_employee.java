@@ -8,6 +8,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -27,13 +28,19 @@ import javax.swing.border.TitledBorder;
 
 import com.mysql.cj.x.protobuf.MysqlxNotice.Frame;
 
+import BUS.quanlihoadonbanhang;
+import BUS.quanlinhanvien;
 import DAO.nhanvienDAO;
+import DAO.quanlihoadonbanhangDAO;
 import DAO.thong_ke_sach_banDAO;
 import DTO.SachBan;
+import DTO.hoadon;
+import DTO.hoadonbanhang;
 import DTO.nhanvien;
-import GUI.chonNhaCungCapGUI;
+import GUI.chonnhacungcapGUI;
+import GUI.hienThiThongKeNV;
 import GUI.Mybutton.morebutton;
-import GUI.main;
+import GUI.main_frame.*;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -45,13 +52,13 @@ import java.awt.event.WindowListener;
 public class statistic_employee extends JPanel implements ActionListener,KeyListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
-    private String title_filter[] = {"Khoang ngay","Tim kiem","Xem chi tiet"};//menu title filter
-    private String[] columnNames = {"ID","Ten nhan vien","Chuc vu","Email","Gioi tinh","SDT"};
-    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_supplier;
-    private JTextField inputDateStart,inputDateEnd;
-    private JLabel dateStart,dateEnd;
-    private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
-    private JSpinner inputBestSeller = new JSpinner(model);
+    private String title_filter[] = {"Tim kiem","Xem chi tiet"};//menu title filter
+    private String[] columnNames = {"ID","Ten nhan vien","Chuc vu","Email"};
+    private JPanel panel_filter_bestSeller,panel_filter_supplier;
+    private JTextField inputSearchName;
+    private quanlihoadonbanhangDAO qlhdbh = new quanlihoadonbanhangDAO(); 
+    // private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
+    // private JSpinner inputBestSeller = new JSpinner(model);
     private statisticTable bookSoldTable;
     private morebutton selectSupplier = new morebutton();
 
@@ -79,49 +86,37 @@ public class statistic_employee extends JPanel implements ActionListener,KeyList
         headerFilterContainInput.setBorder(BorderFactory.createEmptyBorder());
         // inputSearchFocus(headerSearchInput);
         
-        // panel filter date
-        panel_filter_date = new JPanel();
-        panel_filter_date.setLayout(new FlowLayout());
-        panel_filter_date.setPreferredSize(new Dimension(300, 60));
-        panel_filter_date.setBackground(new Color(242, 59, 46));
+       
 
-        LineBorder linedBorderDate = new LineBorder(Color.white);
-        TitledBorder titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
-        titledBorderDate.setTitleJustification(TitledBorder.CENTER);
+        // LineBorder linedBorderDate = new LineBorder(Color.white);
+        // TitledBorder titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
+        // titledBorderDate.setTitleJustification(TitledBorder.CENTER);
         // Border titledBorderDate = BorderFactory.createLineBorder(Color.white,2);
         // titledBorderDate.setTitleColor(Color.white);
         // titledBorderDate.set();
-        panel_filter_date.setBorder(titledBorderDate);
         
-        inputDateStart = new JTextField();
-        inputDateStart.setPreferredSize(new Dimension(100, 30));
-        inputDateEnd = new JTextField();
-        inputDateEnd.setPreferredSize(new Dimension(100, 30));
+       
 
-        dateStart = new JLabel("Tu");
-        dateEnd = new JLabel("den");
+    
 
-        panel_filter_date.add(dateStart);
-        panel_filter_date.add(inputDateStart);
-        panel_filter_date.add(dateEnd);
-        panel_filter_date.add(inputDateEnd);
-        
-        headerFilterContainInput.add(panel_filter_date);
+       
 
         //panel filter best seller
         panel_filter_bestSeller = new JPanel();
-        panel_filter_bestSeller.setPreferredSize(new Dimension(160, 60));
+        panel_filter_bestSeller.setPreferredSize(new Dimension(300, 60));
         panel_filter_bestSeller.setBackground(new Color(242, 59, 46));
         // panel_filter_bestSeller.setBorder(BorderFactory.createTitledBorder(title_filter[1]));
 
 
         LineBorder linedBorderBestSeller = new LineBorder(Color.white);
-        TitledBorder titledBorderBestSeller = BorderFactory.createTitledBorder(linedBorderBestSeller, title_filter[1]);
+        TitledBorder titledBorderBestSeller = BorderFactory.createTitledBorder(linedBorderBestSeller, title_filter[0]);
         titledBorderBestSeller.setTitleJustification(TitledBorder.CENTER);
         panel_filter_bestSeller.setBorder(titledBorderBestSeller);
 
-        inputBestSeller.setPreferredSize(new Dimension(100, 30));
-        panel_filter_bestSeller.add(inputBestSeller);
+        // inputBestSeller.setPreferredSize(new Dimension(100, 30));
+        inputSearchName = new JTextField();
+        inputSearchName.setPreferredSize(new Dimension(250, 30));
+        panel_filter_bestSeller.add(inputSearchName);
 
         headerFilterContainInput.add(panel_filter_bestSeller);
 
@@ -131,7 +126,7 @@ public class statistic_employee extends JPanel implements ActionListener,KeyList
         panel_filter_supplier.setBackground(new Color(242, 59, 46));
 
         LineBorder linedBorderSupplier = new LineBorder(Color.white);
-        TitledBorder titledBorderSupplier = BorderFactory.createTitledBorder(linedBorderSupplier, title_filter[2]);
+        TitledBorder titledBorderSupplier = BorderFactory.createTitledBorder(linedBorderSupplier, title_filter[1]);
         titledBorderSupplier.setTitleJustification(TitledBorder.CENTER);
         panel_filter_supplier.setBorder(titledBorderSupplier);
 
@@ -170,25 +165,29 @@ public class statistic_employee extends JPanel implements ActionListener,KeyList
         nhanvienDAO nv=new nhanvienDAO();
         ArrayList<nhanvien> listNV = nv.selecAll();
 
-        for (nhanvien i : listNV) {
-            bookSoldTable.addRow(new Object[]{
-                i.getMa(),
-                i.getTen(),
-                i.getChucvu(),
-                i.getEmail(),
-                i.getGioitinh(),
-                i.getSodienthoai()
-            });
+        for (hoadonbanhang hd : qlhdbh.select_group_by_idNV()) {
+            for (nhanvien i : listNV) {
+                if(hd.getmanv() == i.getMa()) {
+
+                    bookSoldTable.addRow(new Object[]{
+                        i.getMa(),
+                        i.getTen(),
+                        i.getChucvu(),
+                        i.getEmail()
+                    });
+                    break;
+                }
+            }
         }
+
+        
 
         bookSoldTable.setPreferredWidth(0, 50);
         bookSoldTable.setPreferredWidth(1, 200);
         bookSoldTable.setPreferredWidth(2, 150);
         bookSoldTable.setPreferredWidth(3, 200);
-        bookSoldTable.setPreferredWidth(4, 150);
 
         bookSoldTable.setAlignment(0, JLabel.CENTER);
-        bookSoldTable.setAlignment(4, JLabel.CENTER);
 
 
         // barSum
@@ -242,7 +241,17 @@ public class statistic_employee extends JPanel implements ActionListener,KeyList
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
+        if(e.getSource() == selectSupplier) {
+            int row = bookSoldTable.getTable().getSelectedRow();
+            if(row == -1) {
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn nhân viên để xem chi tiết !","Thông báo",1);
+                return;
+            } else {
+                int manv = (int) bookSoldTable.getTable().getModel().getValueAt(row,0);
+                // System.out.print(manv);
+                new hienThiThongKeNV(manv);
+            }
+        }
     }
     
 }

@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import BUS.quanlihoadonbanhang;
+import BUS.quanlihoadonnhaphang;
 import DAO.SanPhamDAO;
 import DAO.khachhangDAO;
 import DAO.nhanvienDAO;
@@ -24,14 +26,19 @@ import DTO.nhanvien;
 
 public class statistic_overview extends JPanel implements ActionListener{
     private JPanel generality,generality_panels[];
-    private String title_name[] = {"So luong ban","So luong nhap","Hoa don","Nhan vien","Khach hang","Sach"};
+    private String title_name[] = {"Hoa don ban","Hoa don nhap","Nhan vien","Khach hang","Sach"};
     private JLabel generality_title[] = new JLabel[title_name.length];
     private ImageIcon icons[] = new ImageIcon[title_name.length];
     private JLabel generality_sales,generality_employ,generality_import;
     public statistic_overview() {
-        // lay so luong ban hang
-        // lay so luong nhap hang  
-        // lay so luong hoa don
+        // lay so luong hoa don ban hang
+        quanlihoadonbanhang bh = new quanlihoadonbanhang();
+        bh.initList();
+        String soLuongBH = Integer.toString(bh.getList().size());
+        // lay so luong hoa don nhap hang  
+        quanlihoadonnhaphang nh = new quanlihoadonnhaphang();
+        nh.initList();
+        String soLuongNH = Integer.toString(nh.getList().size());
         // lay so luong nhan vien
         nhanvienDAO nv=new nhanvienDAO();
         ArrayList<nhanvien> listNV=nv.selecAll();
@@ -64,10 +71,10 @@ public class statistic_overview extends JPanel implements ActionListener{
             generality_title[i].setForeground(Color.white);
 
             if(i == 0) {
-                icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-sold-64.png"));
+                icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-bill-64.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
-                generality_sales = new JLabel("0",JLabel.CENTER);
+                generality_sales = new JLabel(soLuongBH,JLabel.CENTER);
                 generality_sales.setFont(new Font("Verdana", Font.PLAIN, 30));
                 generality_sales.setForeground(Color.green);
                 generality_sales.setPreferredSize(new Dimension(520,100));
@@ -77,23 +84,13 @@ public class statistic_overview extends JPanel implements ActionListener{
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-shopping-cart-40.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
-                generality_import = new JLabel("0",JLabel.CENTER);
+                generality_import = new JLabel(soLuongNH,JLabel.CENTER);
                 generality_import.setFont(new Font("Verdana", Font.PLAIN, 30));
                 generality_import.setForeground(Color.green);
                 generality_import.setPreferredSize(new Dimension(520,100));
                 generality_panels[i].add(generality_import);
                 
             } else if(i == 2) {
-                icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-bill-64.png"));
-                generality_title[i].setIcon(icons[i]);
-                generality_panels[i].add(generality_title[i]);
-                generality_employ = new JLabel("0",JLabel.CENTER);
-                generality_employ.setFont(new Font("Verdana", Font.PLAIN, 30));
-                generality_employ.setForeground(Color.green);
-                generality_employ.setPreferredSize(new Dimension(520,100));
-                generality_panels[i].add(generality_employ);
-
-            } else if(i == 3) {
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-employee-48.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
@@ -103,7 +100,7 @@ public class statistic_overview extends JPanel implements ActionListener{
                 generality_employ.setPreferredSize(new Dimension(520,100));
                 generality_panels[i].add(generality_employ);
 
-            }  else if(i == 4) {
+            }  else if(i == 3) {
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-customer-40.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
@@ -113,7 +110,7 @@ public class statistic_overview extends JPanel implements ActionListener{
                 generality_employ.setPreferredSize(new Dimension(520,100));
                 generality_panels[i].add(generality_employ);
 
-            } else if(i == 5) {
+            } else if(i == 4) {
                 icons[i] = new ImageIcon(this.getClass().getResource("../../icon/icons8-open-book-48.png"));
                 generality_title[i].setIcon(icons[i]);
                 generality_panels[i].add(generality_title[i]);
