@@ -19,7 +19,7 @@ import java.awt.FlowLayout;
 
 public class list_statistic extends JPanel implements MouseListener,ActionListener{
     private JPanel content;
-    private String[] list_sta_name = {"Tong quat","Ban hang","Nhap hang","Nhan vien","Khach hang"};
+    private String[] list_sta_name = {"Tổng quát","Bán hàng","Nhập hàng","Nhân viên","Khách hàng"};
     private JButton[] list_sta_btn = new JButton[list_sta_name.length];
 
     public list_statistic() {
@@ -116,7 +116,7 @@ public class list_statistic extends JPanel implements MouseListener,ActionListen
 
             }
             else if(e.getSource() == list_sta_btn[4]) {
-                content = new statistic_import();
+                content = new statistic_customer();
                 list_sta_btn[4].setBackground(Color.red);
                 list_sta_btn[4].setForeground(Color.white);
                 System.out.print(list_sta_name[4]);

@@ -22,16 +22,18 @@ import BUS.SanPhamBUS;
 import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlinhanvien;
+import DAO.khachhangDAO;
 import DAO.nhanvienDAO;
 import DAO.quanlihoadonbanhangDAO;
 import DTO.Sach;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
+import DTO.khachhang;
 import DTO.nhanvien;
 import GUI.Mybutton.DateButton;
 
-public class hienThiThongKeNV extends JFrame {
-    private int manv;
+public class hienThiThongKeKH extends JFrame {
+    private int makh;
 
     // books table
     private Mytable booktable;
@@ -58,8 +60,8 @@ public class hienThiThongKeNV extends JFrame {
     private SanPhamBUS spbus = new SanPhamBUS();
 
 
-    public hienThiThongKeNV(int maNV) {
-        this.manv = maNV;
+    public hienThiThongKeKH(int makh) {
+        this.makh = makh;
         this.setTitle("Chi tiết thống kê");
         this.setLayout(new BorderLayout());
         this.setSize(1000, 600);
@@ -88,12 +90,12 @@ public class hienThiThongKeNV extends JFrame {
         
         
 
-        manvtxt.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
-        tennvtxt.setBorder(BorderFactory.createTitledBorder("Tên nhân viên"));
+        manvtxt.setBorder(BorderFactory.createTitledBorder("Mã khách hàng"));
+        tennvtxt.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
         sdttxt.setBorder(BorderFactory.createTitledBorder("Số điện thoại"));
         emailtxt.setBorder(BorderFactory.createTitledBorder("Email"));
-        chucvutxt.setBorder(BorderFactory.createTitledBorder("Chức vụ"));
-        doanhthuNVtxt.setBorder(BorderFactory.createTitledBorder("Doanh thu nhân viên"));
+        chucvutxt.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
+        doanhthuNVtxt.setBorder(BorderFactory.createTitledBorder("Doanh thu khách hàng"));
         panel_filter_date.setBorder(BorderFactory.createTitledBorder("Khoảng ngày"));
 
         int w = 250 , h = 50;
@@ -211,7 +213,7 @@ public class hienThiThongKeNV extends JFrame {
         spbus.listSanPham();
         System.out.println("Mang");
         for (hoadonbanhang hd : qlhdbh.list()) {
-            if(hd.getmanv() == this.manv) {
+            if(hd.getMakh() == this.makh) {
                 for(chitiethoadon cthd : list) {
                     if(cthd.getmahd() == 1) {
                         s = spbus.getBook(cthd.getmasach());
@@ -231,11 +233,11 @@ public class hienThiThongKeNV extends JFrame {
     }
 
     private void settext() {
-        nhanvienDAO nv=new nhanvienDAO();
-        ArrayList<nhanvien> listNV=nv.selecAll();   
+        khachhangDAO kh=new khachhangDAO();
+        ArrayList<khachhang> listkh=kh.selecAll();   
         // double tongtien,giamgia,thanhtien;
-        for(nhanvien NV : listNV) {
-            if(NV.getMa() == this.manv) {
+        for(khachhang i : listkh) {
+            if(i.getMa() == this.makh) {
                /*  kh = qlkh.getKhachHang(hd.getMakh());
                 nv = qlnv.getNhanVien(hd.getmanv());
                 tongtien = hd.getTongtien();
@@ -243,11 +245,11 @@ public class hienThiThongKeNV extends JFrame {
                 thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100); */
 
 
-                manvtxt.setText(String.valueOf(this.manv) );
-                tennvtxt.setText(String.valueOf(NV.getTen()));
-                sdttxt.setText(NV.getSodienthoai());
-                emailtxt.setText(String.valueOf(NV.getEmail()));
-                chucvutxt.setText(NV.getChucvu());
+                manvtxt.setText(String.valueOf(this.makh) );
+                tennvtxt.setText(String.valueOf(i.getTen()));
+                sdttxt.setText(i.getSodienthoai());
+                emailtxt.setText(String.valueOf(i.getEmail()));
+                chucvutxt.setText(i.getDiachi());
                 doanhthuNVtxt.setText("");
 
                 /* tongtientxt.setText(PriceFormatter.format(hd.getTongtien()));
@@ -258,3 +260,4 @@ public class hienThiThongKeNV extends JFrame {
         }
     }
 }
+

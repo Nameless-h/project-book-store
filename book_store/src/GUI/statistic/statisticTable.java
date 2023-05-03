@@ -32,7 +32,7 @@ public class statisticTable extends JPanel{
         t.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         tableModel = new DefaultTableModel();
         scrollpane = new JScrollPane(t);
-        scrollpane.setPreferredSize(new Dimension(1100, 500));
+        // scrollpane.setPreferredSize(new Dimension(1100, 500));
 
         t.setAutoCreateRowSorter(true);
         t.getTableHeader().setBackground(Color.red);
@@ -97,5 +97,12 @@ public class statisticTable extends JPanel{
         t.getColumnModel().getColumn(column).setPreferredWidth(width);
     }
     
-    
+    public void setTablesize(int width , int height) {
+        scrollpane.setPreferredSize(new Dimension(width,height));
+    }
+
+    public void clearTable() {
+        tableModel.setRowCount(0);
+        t.setModel(tableModel);
+    }
 }

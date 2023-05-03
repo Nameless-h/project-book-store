@@ -26,7 +26,7 @@ import DTO.nhanvien;
 
 public class statistic_overview extends JPanel implements ActionListener{
     private JPanel generality,generality_panels[];
-    private String title_name[] = {"Hoa don ban","Hoa don nhap","Nhan vien","Khach hang","Sach"};
+    private String title_name[] = {"Hóa đơn bán","Hóa đơn nhập","Nhân viên","Khách hàng","Sách"};
     private JLabel generality_title[] = new JLabel[title_name.length];
     private ImageIcon icons[] = new ImageIcon[title_name.length];
     private JLabel generality_sales,generality_employ,generality_import;

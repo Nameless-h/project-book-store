@@ -61,12 +61,14 @@ public class quanlihoadonbanhangDAO {
     public ArrayList<hoadonbanhang> select_group_by_idNV() {
         ArrayList<hoadonbanhang> list = new ArrayList<hoadonbanhang>();
         try {
-            String sql = "SELECT maPx,maNhanVien FROM phieuxuat GROUP BY maNhanVien";
+            String sql = "SELECT phieuxuat.maNhanVien,SUM(tongGia) as doanhThuNV,nhanvien.tenNhanVien,nhanvien.chucvu FROM phieuxuat JOIN nhanvien ON phieuxuat.maNhanVien = nhanvien.maNhanVien GROUP BY maNhanVien";
             ResultSet rs = mySQL.executeQuery(sql);
             while(rs.next())
             {
                 int mahd = rs.getInt("maPx");
                 int manv = rs.getInt("maNhanVien");
+                String tennv = rs.getString("tenNhanVien");
+                String chucvu = rs.getString("chucvu");
                 hoadonbanhang hd = new hoadonbanhang(0,mahd,manv,"",0,0);
                 list.add(hd);
             }
