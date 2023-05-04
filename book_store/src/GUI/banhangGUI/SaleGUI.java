@@ -26,12 +26,15 @@ import BUS.SanPhamBUS;
 import BUS.quanlichitiethoadonbanhang;
 import BUS.quanlihoadonbanhang;
 import BUS.quanlikhachhang;
+import BUS.quanlinhanvien;
 import BUS.quanliquydoidiem;
+import BUS.quanlitaikhoan;
 import DTO.Sach;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
 import DTO.nhanvien;
+import DTO.taikhoan;
 import GUI.Mytable;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
@@ -83,16 +86,16 @@ public class SaleGUI extends JPanel implements ActionListener {
     private quanlichitiethoadonbanhang qlcthdbh = new quanlichitiethoadonbanhang();
     private ArrayList<chitiethoadon> listcthd = new ArrayList<chitiethoadon>();
     private quanlikhachhang qlkhbus = new quanlikhachhang();
+    private quanlinhanvien qlnv = new quanlinhanvien();
     private khachhang kh;
     private nhanvien nv;
     private int subtotal;
 
     /*------------------------------------------- METHOD -------------------------------------------*/
 
-    public SaleGUI() throws IOException {
+    public SaleGUI(taikhoan tk) throws IOException {
         init();
-        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly",1);
-        empnameinp.setText(nv.getTen());
+        getNhanviendangnhap(tk);
     }
 
     public void init() throws IOException {
@@ -361,6 +364,11 @@ public class SaleGUI extends JPanel implements ActionListener {
 
     /*------------------------------------------- ACTION -------------------------------------------*/
     
+    private void getNhanviendangnhap(taikhoan tk) {
+        nv = qlnv.getNhanVien(tk.getManhanvien());
+        empnameinp.setText(nv.getTen());
+    }
+
     private void addtoCart(int masach,int soluong) {
         Sach b = bookbus.getBook(masach);
         boolean inCart = false;
