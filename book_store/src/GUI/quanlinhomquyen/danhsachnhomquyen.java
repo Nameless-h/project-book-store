@@ -191,14 +191,16 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
                                     JOptionPane.YES_NO_OPTION);
                             if (choice == JOptionPane.YES_OPTION) {
                                 // System.out.println("User clicked Yes button");
-                                chucnang_nq.delete_id(ma);
-                                chucnang_ctnq.delete_id(ma);
-                                chucnang_tk.delete_manhomquyen(ma);
+                                // chucnang_nq.delete_id(ma);
+                                // chucnang_ctnq.delete_id(ma);
+                                // chucnang_tk.delete_manhomquyen(ma);
+                                System.out.println(ma);
                                 quanlinhomquyen.hienthidanhsach_nhomquyen(tab_danhsach);
                             } else {
-                                chucnang_nq.delete_id(ma);
-                                chucnang_ctnq.delete_id(ma);
-                                quanlitaikhoan.suanhomquyen_tk(ma);
+                                // chucnang_nq.delete_id(ma);
+                                // chucnang_ctnq.delete_id(ma);
+                                // quanlitaikhoan.suanhomquyen_tk(ma);
+                                System.out.println(ma);
                                 quanlinhomquyen.hienthidanhsach_nhomquyen(tab_danhsach);
                             }
                         }

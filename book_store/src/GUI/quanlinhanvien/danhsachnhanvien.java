@@ -209,7 +209,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
                         } else {
                             // String ma,ten,gioitinh,diachi,email,sodienthoai;
                             Integer ma = Integer.parseInt(model.getValueAt(selectrow, 1).toString());
-                            int selection = JOptionPane.showConfirmDialog(null, "Ban co muon an nahn vien nay ko?",
+                            int selection = JOptionPane.showConfirmDialog(null, "Ban co muon an nhan vien nay ko?",
                                     "Xac nhan",
                                     JOptionPane.YES_NO_OPTION);
                             if (selection == JOptionPane.YES_OPTION) {

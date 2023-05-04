@@ -182,7 +182,7 @@ public class taikhoanDAO {
             // taikhoan(maTk,username,passwd,maNhanVien,maNhomquyen,trangthai)
             String sql = "UPDATE taikhoan " +
                     " SET " +
-                    "maNhomquyen=" + 6 + "" +
+                    "maNhomquyen=" + 0 + "" +
                     " WHERE maTk='" + ma +
                     "\'";
 
