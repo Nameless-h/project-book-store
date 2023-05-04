@@ -213,6 +213,14 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
+        } else if (text.equalsIgnoreCase("Thong ke")) {
+            list_statistic ls = new list_statistic();
+            ls.setBounds(0, 0, 1100, 670);
+            obj.center.removeAll();
+            obj.center.add(ls);
+            obj.center.repaint();
+            obj.center.revalidate();
+
         }
     }
 

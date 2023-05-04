@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
@@ -15,95 +17,129 @@ import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 import java.awt.Cursor;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import DAO.thong_ke_sach_banDAO;
-import DTO.bookSold;
-import GUI.Mybutton.morebutton;
+import com.github.lgooddatepicker.components.DatePicker;
+import com.github.lgooddatepicker.components.DatePickerSettings;
 
+import BUS.PriceFormatter;
+import DAO.TheLoaiDAO;
+import DAO.thongKeSachDAO;
+import DTO.Theloai;
+import DTO.sachNhap;
+import GUI.nhaphangGUI.chonnhacungcapGUI;
+import GUI.Mybutton.DateButton;
+import GUI.Mybutton.morebutton;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class statistic_import extends JPanel implements ActionListener{
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+public class statistic_import extends JPanel implements ActionListener,KeyListener{
     private JPanel headerFilterContainInput;
     private JButton headerSearchBtn;
-    private String title_filter[] = {"Khoang ngay","Top nhap hang nhieu","Nha cung cap"};//menu title filter
-    private String[] columnNames = {"ID","Ten sach","The loai","Gia","So luong nhap"};
-    // private String[] columnNames = {"ID","Ten sach","The loai","Nha cung cap","Gia","So luong nhap"};
-    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_supplier;
+    private String title_filter[] = {"Khoảng ngày","Top nhập hàng nhiều","Thể loại","Nhà cung cấp"};//menu title filter
+    private String[] columnNames = {"ID","Tên sách","Thể loại","Nhà cung cấp","Giá","Đã nhập"};
+    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_supplier,panel_filter_category;
     private JTextField inputDateStart,inputDateEnd,inputSupplier;
     private JLabel dateStart,dateEnd;
     private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
     private JSpinner inputBestSeller = new JSpinner(model);
     private statisticTable bookSoldTable;
     private morebutton selectSupplier = new morebutton();
+    private JComboBox inputcategory;
+    private float sumImportMoney=0;
+
+    private DatePicker dp1;
+    private DatePicker dp2;
+
+    private JLabel sumNumber;
+    private thongKeSachDAO bs;
+    private ArrayList<sachNhap> listBS;
 
     public statistic_import() {
         setLayout(new BorderLayout());
         // header
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
-
-        // header search
-        JPanel headerFilter = new JPanel();
-        headerFilter.setPreferredSize(new Dimension(600, 40));
-        headerFilter.setLayout(new BorderLayout());
-        headerFilter.setBackground(Color.lightGray);
-        headerFilter.setFocusable( true );
-        header.add(headerFilter);
+        header.setBackground(Color.lightGray);
 
         // header search contain input
         headerFilterContainInput = new JPanel();
-        headerFilterContainInput.setLayout(new FlowLayout(SwingConstants.RIGHT));
         headerFilterContainInput.setBackground(Color.lightGray);
-        headerFilterContainInput.setPreferredSize(new Dimension(800, 0));
+        headerFilterContainInput.setPreferredSize(new Dimension(1000, 0));
+        headerFilterContainInput.setLayout(new FlowLayout(SwingConstants.RIGHT));
         headerFilterContainInput.setFont(new Font("Arial", Font.PLAIN, 20));
         
         headerFilterContainInput.setBorder(BorderFactory.createEmptyBorder());
-        // inputSearchFocus(headerSearchInput);
-        
+
         // panel filter date
         panel_filter_date = new JPanel();
         panel_filter_date.setLayout(new FlowLayout());
-        panel_filter_date.setPreferredSize(new Dimension(300, 60));
+        panel_filter_date.setPreferredSize(new Dimension(380, 65));
         panel_filter_date.setBackground(new Color(242, 59, 46));
 
         LineBorder linedBorderDate = new LineBorder(Color.white);
         TitledBorder titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
         titledBorderDate.setTitleJustification(TitledBorder.CENTER);
-        // Border titledBorderDate = BorderFactory.createLineBorder(Color.white,2);
-        // titledBorderDate.setTitleColor(Color.white);
-        // titledBorderDate.set();
+        
         panel_filter_date.setBorder(titledBorderDate);
         
         inputDateStart = new JTextField();
+        inputDateStart.setHorizontalAlignment(JTextField.CENTER);
         inputDateStart.setPreferredSize(new Dimension(100, 30));
         inputDateEnd = new JTextField();
+        inputDateEnd.setHorizontalAlignment(JTextField.CENTER);
         inputDateEnd.setPreferredSize(new Dimension(100, 30));
+        inputDateStart.setEditable(false);
+        inputDateEnd.setEditable(false);
 
-        dateStart = new JLabel("Tu");
-        dateEnd = new JLabel("den");
+        DatePickerSettings pickerSettings = new DatePickerSettings();
+        pickerSettings.setVisibleDateTextField(false);
+        dp1 = new DatePicker(pickerSettings);
+        dp2 = new DatePicker(pickerSettings.copySettings());
+        dp1.setDateToToday();
+        dp2.setDateToToday();
+
+        new DateButton(dp1);
+        new DateButton(dp2);
+
+        dateStart = new JLabel("Từ");
+        dateEnd = new JLabel("đến");
+        dp1.setBackground(new Color(242, 59, 46));
+        dp1.setOpaque(false);
+        dp2.setBackground(new Color(242, 59, 46));
+        dp2.setOpaque(false);
+
+        dp1.addDateChangeListener((dce)->{
+            inputDateStart.setText(dp1.getDateStringOrEmptyString());
+        });
+        dp2.addDateChangeListener((dce)->{
+            inputDateEnd.setText(dp2.getDateStringOrEmptyString());
+        });
 
         panel_filter_date.add(dateStart);
         panel_filter_date.add(inputDateStart);
+        panel_filter_date.add(dp1);
         panel_filter_date.add(dateEnd);
         panel_filter_date.add(inputDateEnd);
+        panel_filter_date.add(dp2);
         
         headerFilterContainInput.add(panel_filter_date);
 
         //panel filter best seller
         panel_filter_bestSeller = new JPanel();
-        panel_filter_bestSeller.setPreferredSize(new Dimension(160, 60));
+        panel_filter_bestSeller.setPreferredSize(new Dimension(130, 65));
         panel_filter_bestSeller.setBackground(new Color(242, 59, 46));
-        // panel_filter_bestSeller.setBorder(BorderFactory.createTitledBorder(title_filter[1]));
-
 
         LineBorder linedBorderBestSeller = new LineBorder(Color.white);
         TitledBorder titledBorderBestSeller = BorderFactory.createTitledBorder(linedBorderBestSeller, title_filter[1]);
@@ -111,73 +147,118 @@ public class statistic_import extends JPanel implements ActionListener{
         panel_filter_bestSeller.setBorder(titledBorderBestSeller);
 
         inputBestSeller.setPreferredSize(new Dimension(100, 30));
+        JFormattedTextField tf = ((JSpinner.DefaultEditor) inputBestSeller.getEditor()).getTextField();
+        tf.setEditable(false);
         panel_filter_bestSeller.add(inputBestSeller);
 
         headerFilterContainInput.add(panel_filter_bestSeller);
 
+         //panel filter category
+        panel_filter_category = new JPanel();
+        panel_filter_category.setPreferredSize(new Dimension(120, 65));
+        panel_filter_category.setBackground(new Color(242, 59, 46));
+       
+        LineBorder linedBorderCategory = new LineBorder(Color.white);
+        TitledBorder titledBorderCategory = BorderFactory.createTitledBorder(linedBorderCategory, title_filter[2]);
+        titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
+        panel_filter_category.setBorder(titledBorderCategory);
+
+        TheLoaiDAO layTheLoai = new TheLoaiDAO();
+        ArrayList<Theloai> dsTheLoai = layTheLoai.selecAll();
+        String category_name[] = new String[dsTheLoai.size()+1];
+
+        category_name[0] = "Tất cả";
+        int i = 1;
+        for (Theloai tl : dsTheLoai) {
+            category_name[i] = tl.getTenTheloai();
+            i++;
+        }
+
+        inputcategory = new JComboBox(category_name);
+        inputcategory.setPreferredSize(new Dimension(100, 30));
+        panel_filter_category.add(inputcategory);
+
+        headerFilterContainInput.add(panel_filter_category);
+
         //panel filter supplier
         panel_filter_supplier = new JPanel();
-        panel_filter_supplier.setPreferredSize(new Dimension(160, 60));
+        panel_filter_supplier.setPreferredSize(new Dimension(130, 65));
         panel_filter_supplier.setBackground(new Color(242, 59, 46));
 
         LineBorder linedBorderSupplier = new LineBorder(Color.white);
-        TitledBorder titledBorderSupplier = BorderFactory.createTitledBorder(linedBorderSupplier, title_filter[2]);
+        TitledBorder titledBorderSupplier = BorderFactory.createTitledBorder(linedBorderSupplier, title_filter[3]);
         titledBorderSupplier.setTitleJustification(TitledBorder.CENTER);
         panel_filter_supplier.setBorder(titledBorderSupplier);
 
         inputSupplier = new JTextField();
-        inputSupplier.setPreferredSize(new Dimension(100, 30));
+        inputSupplier.setPreferredSize(new Dimension(80, 30));
+        inputSupplier.addKeyListener(this);
+        inputSupplier.setHorizontalAlignment(JTextField.CENTER);
+        inputSupplier.setEditable(false);
+        
         panel_filter_supplier.add(inputSupplier);
 
         selectSupplier.setPreferredSize(new Dimension(30, 30));
+        selectSupplier.addActionListener(this);
         panel_filter_supplier.add(selectSupplier);
 
         headerFilterContainInput.add(panel_filter_supplier);
 
         // header search button
-        headerSearchBtn = new JButton("Tim kiem");
+        headerSearchBtn = new JButton("Tìm");
         headerSearchBtn.setForeground(Color.white);
         headerSearchBtn.setBackground(new Color(242, 59, 46));
-        headerSearchBtn.setPreferredSize(new Dimension(100, 0));
+        headerSearchBtn.setPreferredSize(new Dimension(100, 40));
         headerSearchBtn.setFocusable(false);
-        headerSearchBtn.setFont(new Font("Arial", Font.PLAIN, 20));
-        headerSearchBtn.setBorder(BorderFactory.createEmptyBorder());
+        headerSearchBtn.setFont(new Font("Arial", Font.PLAIN, 18));
         headerSearchBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
         headerSearchBtn.addActionListener(this);
 
-        headerFilter.add(headerFilterContainInput,BorderLayout.WEST);
-        headerFilter.add(headerSearchBtn,BorderLayout.EAST);
-        
+        headerSearchBtn.addActionListener((ae) -> {
+            searchOnClick();
+        });
+
+        headerFilterContainInput.add(headerSearchBtn);
+        header.add(headerFilterContainInput,BorderLayout.WEST);
+
         // table
         bookSoldTable = new statisticTable();
+        bookSoldTable.setTablesize(1100,500);
         bookSoldTable.setBackground(Color.lightGray);
         bookSoldTable.setHeader(columnNames);
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
 
         // get table data
-        thong_ke_sach_banDAO bs=new thong_ke_sach_banDAO();
-        ArrayList<bookSold> listBS = bs.selecAll();
+        bs=new thongKeSachDAO();
+        listBS = bs.selectBookImport("2000-01-01",formattedDate,category_name[0],"",0);
+        
+        inputDateStart.setText("2000-01-01");
+        inputDateEnd.setText(formattedDate);
 
-        for (bookSold bSold : listBS) {
+        for (sachNhap bSold : listBS) {
             bookSoldTable.addRow(new Object[]{
                 bSold.getBookID(),
                 bSold.getBookName(),
                 bSold.getBookCategory(),
-                bSold.getBookPrice(),
-                bSold.getBookSoldQuantity()
+                bSold.getSupplierName(),
+                PriceFormatter.format(bSold.getBookPrice()),
+                bSold.getBookImportQuantity()
             });
+            sumImportMoney += bSold.getBookImportQuantity() * bSold.getBookPrice();
         }
 
         bookSoldTable.setPreferredWidth(0, 50);
-        bookSoldTable.setPreferredWidth(1, 300);
+        bookSoldTable.setPreferredWidth(1, 200);
         bookSoldTable.setPreferredWidth(2, 200);
         bookSoldTable.setPreferredWidth(3, 200);
         bookSoldTable.setPreferredWidth(4, 100);
 
         bookSoldTable.setAlignment(0, JLabel.CENTER);
         bookSoldTable.setAlignment(2, JLabel.CENTER);
-        bookSoldTable.setAlignment(3, JLabel.CENTER);
         bookSoldTable.setAlignment(4, JLabel.CENTER);
-
+        bookSoldTable.setAlignment(5, JLabel.CENTER);
 
         // barSum
         JPanel barSum = new JPanel();
@@ -185,13 +266,13 @@ public class statistic_import extends JPanel implements ActionListener{
         barSum.setLayout(null);
         barSum.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
-        JLabel sumTitle = new JLabel("Tong tien nhap vao:");
-        sumTitle.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel sumTitle = new JLabel("Tổng tiền nhập vào:");
+        sumTitle.setFont(new Font("Arial", Font.PLAIN, 22));
         sumTitle.setBackground(Color.green);
 
-        JLabel sumNumber = new JLabel("2.000.000.000d");
-        sumNumber.setFont(new Font("Arial", Font.PLAIN, 18));
-        sumTitle.setBackground(Color.green);
+        sumNumber = new JLabel(PriceFormatter.format(sumImportMoney));
+        sumNumber.setFont(new Font("Arial", Font.PLAIN, 24));
+        sumNumber.setForeground(Color.green);
 
         sumTitle.setBounds(50, 0, 200, 50);
         sumNumber.setBounds(900, 0, 300, 50);
@@ -210,36 +291,37 @@ public class statistic_import extends JPanel implements ActionListener{
 
     }
 
-    /* public void inputSearchFocus(JTextField input) {
-        input.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (input.getText().equals("Nhap de tim kiem...")) {
-                    input.setText("");
-                }           
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (input.getText().isEmpty() || input.getText() == "") {
-                    input.setText("Nhap de tim kiem...");
-                }
-            }
-        });
-    } */
+    private void setDataToTable(ArrayList<sachNhap> list,statisticTable t) {
+        t.clearTable();
+        sumImportMoney = 0;
+        for (sachNhap bSold : list) {
+            t.addRow(new Object[]{
+                bSold.getBookID(),
+                bSold.getBookName(),
+                bSold.getBookCategory(),
+                bSold.getSupplierName(),
+                PriceFormatter.format(bSold.getBookPrice()),
+                bSold.getBookImportQuantity()
+            });
+            sumImportMoney += bSold.getBookImportQuantity()*bSold.getBookPrice();
+        }
+        sumNumber.setText(PriceFormatter.format(sumImportMoney));
+    }
 
-    /* public void hoverBtn(JButton button) {
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.darkGray);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(Color.black);
-            }
-        });
-    } */
-
-    public static void main(String[] args) {
-        new statistic_sale();
+    private void searchOnClick() {
+        
+        if((inputDateStart.getText().equals("") || inputDateEnd.getText().isEmpty()) || (inputDateEnd.getText().equals("") || inputDateStart.getText().isEmpty())) {
+            JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
+            return;
+        } else if(inputSupplier.getText().equals("") || inputSupplier.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Nhà cung cấp bị thiếu!","Thông báo",1);
+            return;
+        } else if(bs.selectBookImport(inputDateStart.getText(),inputDateEnd.getText(),(String) inputcategory.getSelectedItem(),inputSupplier.getText(),(Integer) inputBestSeller.getValue()) != null) {
+            setDataToTable(bs.selectBookImport(inputDateStart.getText(),inputDateEnd.getText(),(String) inputcategory.getSelectedItem(),inputSupplier.getText(),(Integer) inputBestSeller.getValue()), bookSoldTable);
+        } else {
+            JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
+            return;
+        }
     }
 
     @Override
@@ -249,8 +331,34 @@ public class statistic_import extends JPanel implements ActionListener{
             if(e.getSource() == headerSearchBtn) {
                 System.out.print("Search");
             }
+            if(e.getSource() == selectSupplier) {
+                System.out.print("supplier");
+                new chonnhacungcapGUI(inputSupplier).addWindowListener(new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                       System.out.print("Closing");
+                    }
+                });
+                this.setEnabled(false);
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }    
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        this.remove(bookSoldTable);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'keyReleased'");
     }
 }

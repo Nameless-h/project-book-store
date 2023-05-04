@@ -135,6 +135,13 @@ public class chonnhacungcapGUI extends JFrame {
 
     private void setDataToTable(ArrayList<nhacungcap> list , Mytable t) {
         t.clear();
+        t.addRow(new Object[] {
+            "0",
+            "Tất cả",
+            "",
+            "",
+            "",
+        });
         for (nhacungcap ncc : list) {
             if(ncc.getTinhtrang()==0) {
                 continue;
