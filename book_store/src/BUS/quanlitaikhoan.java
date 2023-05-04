@@ -122,8 +122,8 @@ public class quanlitaikhoan {
 
     public void suanhomquyen_tk(int ma) {
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getManhanvien() == ma) {
-                chucnang_taikhoan.update_nq_ao(ma);
+            if (list.get(i).getManhomquyen() == ma) {
+                chucnang_taikhoan.update_nq_ao(list.get(i).getMatk());
             }
         }
     }
