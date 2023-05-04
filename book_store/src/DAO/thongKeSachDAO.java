@@ -1,29 +1,22 @@
 package DAO;
 
-import java.sql.Connection;
-// import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.time.LocalDate;
-import java.time.LocalDateTime;  
 import java.time.format.DateTimeFormatter;  
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;    
 
-import DAO.SanPhamDAO;
 import DTO.SachBan;
 import DTO.khachhang;
 import DTO.nhanvien;
 import DTO.sachNhap;
 
 import java.sql.Statement;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 
 public class thongKeSachDAO implements DAOinterface<SachBan> {
     public thongKeSachDAO() {
@@ -315,6 +308,126 @@ public class thongKeSachDAO implements DAOinterface<SachBan> {
             }
         }
         return list;
+    }
+
+    public ArrayList<SachBan> chiTietThongKeKH(String dateStart,String dateEnd,int cusID) {
+        ArrayList<SachBan> bsList = new ArrayList<SachBan>();
+
+        java.sql.Connection conn = JDBCUtil.getConnection();
+        Statement statement = null;
+        try {
+            String sql = "";
+            Date date1;
+            Date date2;
+            try {
+                date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStart);
+                date2 = new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
+                if(date1.after(date2)) {
+                    return null;
+                } 
+            } catch (ParseException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+            
+            
+            if (dateStart.isEmpty() || dateEnd.isEmpty()) {
+                dateStart = "2000-01-01";
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                dateEnd = currentDate.format(formatter);
+            }
+            sql = "SELECT phieuxuat.maKhachhang,SUM(phieuxuat_chitiet.soLuong) as tongSL,book.tenSach,donGia,SUM(phieuxuat_chitiet.soLuong*donGia) as thanhTien FROM phieuxuat JOIN phieuxuat_chitiet ON phieuxuat.maPx = phieuxuat_chitiet.maPx JOIN khachhang ON khachhang.maKhachhang = phieuxuat.maKhachhang JOIN book ON book.maSach = phieuxuat_chitiet.maSach WHERE phieuxuat.ngayXuat BETWEEN '" + dateStart +"' AND '" + dateEnd +"' AND phieuxuat.maKhachhang = '" + cusID +"' GROUP BY phieuxuat_chitiet.maSach";
+            System.out.println(sql);
+            statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            if (result.next() == false) { 
+                System.out.println("ResultSet in empty in Java"); 
+            } else { 
+                do { 
+                    SachBan bs = new SachBan(
+                        result.getInt("maKhachhang"),
+                        result.getString("tenSach"), 
+                        result.getString("tongSL"), 
+                        result.getInt("donGia"),
+                        result.getInt("thanhTien")
+                    ); 
+                    bsList.add(bs);
+                } while (result.next()); 
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(quanlihoadonbanhangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return bsList;
+    }
+
+    public ArrayList<SachBan> chiTietThongKeNV(String dateStart,String dateEnd,int emID) {
+        ArrayList<SachBan> bsList = new ArrayList<SachBan>();
+
+        java.sql.Connection conn = JDBCUtil.getConnection();
+        Statement statement = null;
+        try {
+            String sql = "";
+            Date date1;
+            Date date2;
+            try {
+                date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateStart);
+                date2 = new SimpleDateFormat("yyyy-MM-dd").parse(dateEnd);
+                if(date1.after(date2)) {
+                    return null;
+                } 
+            } catch (ParseException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            }
+            
+            
+            if (dateStart.isEmpty() || dateEnd.isEmpty()) {
+                dateStart = "2000-01-01";
+                LocalDate currentDate = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                dateEnd = currentDate.format(formatter);
+            }
+            sql = "SELECT phieunhap.maNhanVien,SUM(phieunhap_chitiet.soLuong) as tongSL,book.tenSach,donGia,SUM(phieunhap_chitiet.soLuong*donGia) as thanhTien FROM phieunhap JOIN phieunhap_chitiet ON phieunhap.maPn = phieunhap_chitiet.maPn JOIN nhanvien ON nhanvien.maNhanVien = phieunhap.maNhanVien JOIN book ON book.maSach = phieunhap_chitiet.maSach WHERE phieunhap.ngayNhap BETWEEN '" + dateStart +"' AND '" + dateEnd +"' AND phieunhap.maNhanVien = '" + emID +"' GROUP BY phieunhap_chitiet.maSach";
+            System.out.println(sql);
+            statement = conn.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            if (result.next() == false) { 
+                System.out.println("ResultSet in empty in Java"); 
+            } else { 
+                do { 
+                    SachBan bs = new SachBan(
+                        result.getInt("maNhanVien"),
+                        result.getString("tenSach"), 
+                        result.getString("tongSL"), 
+                        result.getInt("donGia"),
+                        result.getInt("thanhTien")
+                    ); 
+                    bsList.add(bs);
+                } while (result.next()); 
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(quanlihoadonbanhangDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return bsList;
     }
 
     @Override

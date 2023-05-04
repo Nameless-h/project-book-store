@@ -2,15 +2,21 @@ package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -20,19 +26,18 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import BUS.PriceFormatter;
 import BUS.SanPhamBUS;
 import BUS.quanlichitiethoadonbanhang;
-import BUS.quanlihoadonbanhang;
 import BUS.quanlinhanvien;
 import DAO.khachhangDAO;
-import DAO.nhanvienDAO;
 import DAO.quanlihoadonbanhangDAO;
+import DAO.thongKeSachDAO;
 import DTO.Sach;
+import DTO.SachBan;
 import DTO.chitiethoadon;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
-import DTO.nhanvien;
 import GUI.Mybutton.DateButton;
 
-public class hienThiThongKeKH extends JFrame {
+public class hienThiThongKeKH extends JFrame implements ActionListener {
     private int makh;
 
     // books table
@@ -49,6 +54,7 @@ public class hienThiThongKeKH extends JFrame {
     private JTextField doanhthuNVtxt;
     private JTextField inputDateStart,inputDateEnd;
     private JLabel dateStart,dateEnd;
+    private JButton headerSearchBtn;
 
     private DatePicker dp1;
     private DatePicker dp2;
@@ -58,7 +64,10 @@ public class hienThiThongKeKH extends JFrame {
     private quanlihoadonbanhangDAO qlhdbh = new quanlihoadonbanhangDAO(); 
     private quanlinhanvien qlnv = new quanlinhanvien();
     private SanPhamBUS spbus = new SanPhamBUS();
+    private thongKeSachDAO sach;
+    private ArrayList<SachBan> listBS;
 
+    private int sumRevenue = 0;
 
     public hienThiThongKeKH(int makh) {
         this.makh = makh;
@@ -87,15 +96,14 @@ public class hienThiThongKeKH extends JFrame {
         emailtxt = new JTextField();
         chucvutxt = new JTextField();
         doanhthuNVtxt = new JTextField();
+        headerSearchBtn = new JButton("Tìm");
         
-        
-
         manvtxt.setBorder(BorderFactory.createTitledBorder("Mã khách hàng"));
         tennvtxt.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
         sdttxt.setBorder(BorderFactory.createTitledBorder("Số điện thoại"));
         emailtxt.setBorder(BorderFactory.createTitledBorder("Email"));
         chucvutxt.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
-        doanhthuNVtxt.setBorder(BorderFactory.createTitledBorder("Doanh thu khách hàng"));
+        doanhthuNVtxt.setBorder(BorderFactory.createTitledBorder("Khách hàng chi trả"));
         panel_filter_date.setBorder(BorderFactory.createTitledBorder("Khoảng ngày"));
 
         int w = 250 , h = 50;
@@ -105,8 +113,7 @@ public class hienThiThongKeKH extends JFrame {
 
         panel_filter_date.setLayout(new FlowLayout());
         panel_filter_date.setPreferredSize(new Dimension(400, 60));
-        // panel_filter_date.setBackground(new Color(242, 59, 46));
-
+    
         inputDateStart = new JTextField();
         inputDateStart.setPreferredSize(new Dimension(100, 30));
         inputDateEnd = new JTextField();
@@ -116,6 +123,8 @@ public class hienThiThongKeKH extends JFrame {
         dateEnd = new JLabel("đến");
         dateStart.setFont(f);
         dateEnd.setFont(f);
+        inputDateStart.setEditable(false);
+        inputDateEnd.setEditable(false);
 
         DatePickerSettings pickerSettings = new DatePickerSettings();
         pickerSettings.setVisibleDateTextField(false);
@@ -154,6 +163,7 @@ public class hienThiThongKeKH extends JFrame {
         emailtxt.setPreferredSize(new Dimension(w, h));
         chucvutxt.setPreferredSize(new Dimension(w, h));
         doanhthuNVtxt.setPreferredSize(new Dimension(w, h));
+        headerSearchBtn.setPreferredSize(new Dimension(100, 40));
 
         manvtxt.setFont(f);
         tennvtxt.setFont(f);
@@ -162,6 +172,7 @@ public class hienThiThongKeKH extends JFrame {
         chucvutxt.setFont(f);
         doanhthuNVtxt.setFont(f);
         panel_filter_date.setFont(f);
+        headerSearchBtn.setFont(f);
 
         manvtxt.setEditable(false);
         tennvtxt.setEditable(false);
@@ -170,6 +181,18 @@ public class hienThiThongKeKH extends JFrame {
         chucvutxt.setEditable(false);
         doanhthuNVtxt.setEditable(false);
         
+
+        headerSearchBtn.setForeground(Color.white);
+        headerSearchBtn.setBackground(new Color(242, 59, 46));
+        headerSearchBtn.setFocusable(false);
+        headerSearchBtn.setFont(new Font("Arial", Font.PLAIN, 20));
+        headerSearchBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        headerSearchBtn.addActionListener(this);
+
+        headerSearchBtn.addActionListener((ae) -> {
+            searchOnClick();
+        });
+
         settext();
 
         infopnl.add(manvtxt);
@@ -179,6 +202,7 @@ public class hienThiThongKeKH extends JFrame {
         infopnl.add(chucvutxt);
         infopnl.add(doanhthuNVtxt);
         infopnl.add(panel_filter_date);
+        infopnl.add(headerSearchBtn);
 
         return infopnl;
     }
@@ -186,50 +210,65 @@ public class hienThiThongKeKH extends JFrame {
     public Mytable bookTable() {
         booktable = new Mytable();
         booktable.setTablesize(0, 400);
-        booktable.setHeader(new String[]{"Mã HD","Mã sách","Tên sách","Số lượng","Đơn giá","Thành tiền"});
-        qlcthdbh.initList();
-        setDataToTable(qlcthdbh.getList(), booktable);
+        booktable.setHeader(new String[]{"STT","Tên sách","Số lượng","Đơn giá","Thành tiền"});
+        
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        
+        sach = new thongKeSachDAO();
+        listBS = sach.chiTietThongKeKH("2000-01-01",formattedDate,this.makh);
+        
+        inputDateStart.setText("2000-01-01");
+        inputDateEnd.setText(formattedDate);
+
+        setDataToTable(listBS, booktable);
         booktable.setPreferredWidth(0,100);
-        booktable.setPreferredWidth(1,100);
-        booktable.setPreferredWidth(2,300);
-        booktable.setPreferredWidth(3,100);
-        booktable.setPreferredWidth(4,200);
-        booktable.setPreferredWidth(5,250);
+        booktable.setPreferredWidth(1,300);
+        booktable.setPreferredWidth(2,100);
+        booktable.setPreferredWidth(3,200);
+        booktable.setPreferredWidth(4,250);
 
         int align = JLabel.CENTER;
         booktable.setAlignment(0, align);
-        booktable.setAlignment(1, align);
+        booktable.setAlignment(2, align);
         booktable.setAlignment(3, align);
         booktable.setAlignment(4, align);
-        booktable.setAlignment(5, align);
 
         return booktable;
     }
 
-    private void setDataToTable(ArrayList<chitiethoadon> list , Mytable t) {
+    private void setDataToTable(ArrayList<SachBan> list , Mytable t) {
         t.clear();
-        int i=1;
-        Sach s;
-        spbus.listSanPham();
-        System.out.println("Mang");
-        for (hoadonbanhang hd : qlhdbh.list()) {
-            if(hd.getMakh() == this.makh) {
-                for(chitiethoadon cthd : list) {
-                    if(cthd.getmahd() == 1) {
-                        s = spbus.getBook(cthd.getmasach());
-                        t.addRow(new Object[] {
-                            String.valueOf(hd.getmahd()),
-                            String.valueOf(cthd.getmasach()),
-                            s.getTenSach(),
-                            String.valueOf(cthd.getsoluong()),
-                            PriceFormatter.format(cthd.getdongia()), 
-                            PriceFormatter.format(cthd.getsoluong()*cthd.getdongia())
-                        });
-                    }
-                }
+        int i = 1;
+        sumRevenue=0;
+        System.out.println(list);
+        for (SachBan s : list) {
+            if (s.getBookID() == this.makh){
+                t.addRow(new Object[]{
+                    i,
+                    s.getBookName(),
+                    s.getBookCategory(),
+                    s.getBookPrice(),
+                    PriceFormatter.format(s.getBookSoldQuantity())
+                });
+                sumRevenue += s.getBookSoldQuantity();
+                i++;
             }
         }
-        
+        doanhthuNVtxt.setText(PriceFormatter.format(sumRevenue));
+    }
+
+    private void searchOnClick() {
+        if((inputDateStart.getText().equals("") || inputDateEnd.getText().isEmpty()) || (inputDateEnd.getText().equals("") || inputDateStart.getText().isEmpty())) {
+            JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
+            return;
+        } else if(sach.chiTietThongKeKH(inputDateStart.getText(),inputDateEnd.getText(),this.makh) != null) {
+            setDataToTable(sach.chiTietThongKeKH(inputDateStart.getText(),inputDateEnd.getText(),this.makh), booktable);
+        } else {
+            JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
+            return;
+        }
     }
 
     private void settext() {
@@ -258,6 +297,12 @@ public class hienThiThongKeKH extends JFrame {
                 break;
             }
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
     }
 }
 

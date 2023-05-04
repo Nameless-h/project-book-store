@@ -206,6 +206,9 @@ public class statistic_sale extends JPanel implements ActionListener{
         // get table data
         bs=new thongKeSachDAO();
         listBS = bs.selectBookSold("2000-01-01",formattedDate,category_name[0],0);
+        
+        inputDateStart.setText("2000-01-01");
+        inputDateEnd.setText(formattedDate);
 
         for (SachBan bSold : listBS) {
             bookSoldTable.addRow(new Object[]{

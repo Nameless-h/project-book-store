@@ -233,6 +233,9 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         // get table data
         bs=new thongKeSachDAO();
         listBS = bs.selectBookImport("2000-01-01",formattedDate,category_name[0],"",0);
+        
+        inputDateStart.setText("2000-01-01");
+        inputDateEnd.setText(formattedDate);
 
         for (sachNhap bSold : listBS) {
             bookSoldTable.addRow(new Object[]{
