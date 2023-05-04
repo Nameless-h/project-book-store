@@ -11,6 +11,7 @@ public class icon_lib {
     public ImageIcon icon_hide = new ImageIcon(getClass().getResource("/icon/hide1.png"));
     public ImageIcon icon_email = new ImageIcon(getClass().getResource("/icon/email.png"));
     public ImageIcon icon_return = new ImageIcon(getClass().getResource("/icon/arrow_left.png"));
+    public ImageIcon back_ground =new ImageIcon(getClass().getResource("/icon/background1.png"));
     // list icon menu
     public ImageIcon icon_store = new ImageIcon(getClass().getResource("/icon/store.png"));
     public ImageIcon icon_nhaphang = new ImageIcon(getClass().getResource("/icon/nhaphang.png"));

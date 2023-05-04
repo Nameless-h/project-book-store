@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,11 +31,13 @@ import DTO.chitiethoadon;
 import DTO.hoadonnhaphang;
 import DTO.nhacungcap;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
 import GUI.Mybutton.morebutton;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
 public class ImportGUI extends JPanel implements ActionListener {
     /* panel chinh */
@@ -85,7 +87,7 @@ public class ImportGUI extends JPanel implements ActionListener {
 
     public ImportGUI() throws IOException {
         init();
-        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly");
+        nv = new nhanvien(1,"Mach Hao Tuan",1,"Guang Dong","tuanhaomach123@gmail.com","0938446999","quan ly",1);
         empnameinp.setText(nv.getTen());
     }
 
@@ -301,8 +303,8 @@ public class ImportGUI extends JPanel implements ActionListener {
         dateinp.setFont(f);
         grandtotalinp.setFont(f);
 
-        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_cancel_30px_1.png")));
-        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../icon/icons8_us_dollar_30px.png")));
+        cancelbtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_cancel_30px_1.png")));
+        paybtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8_us_dollar_30px.png")));
 
         cancelbtn.addActionListener(this);
         paybtn.addActionListener(this);
@@ -517,8 +519,8 @@ public class ImportGUI extends JPanel implements ActionListener {
             }
         }
         if (e.getSource() == paybtn) {
-            System.out.println(dateinp.getText());
-            hoadonnhaphang hdnh = new hoadonnhaphang(ncc.getMa(),qlhdnh.getNextID(),nv.getMa(),dateinp.getText(),grandtotal);
+            int mahd = qlhdnh.getNextID();
+            hoadonnhaphang hdnh = new hoadonnhaphang(ncc.getMa(),mahd,nv.getMa(),dateinp.getText(),grandtotal);
             
             if(qlhdnh.themHoaDon(hdnh)/* them hoa don */) {
                 //them chi tiet hoa don
@@ -527,7 +529,12 @@ public class ImportGUI extends JPanel implements ActionListener {
                 for(chitiethoadon cthd: listcthd) {
                     bookbus.updateSoLuongNhapHang(cthd.getmasach(),cthd.getsoluong());
                 }
-                JOptionPane.showMessageDialog(this,"Nhập hàng thành công !","Thông báo",1);
+                int reply = JOptionPane.showConfirmDialog(getRootPane(),
+                "Nhập hàng thành công, bạn có muốn IN HÓA ĐƠN NHẬP HÀNG?", "Thành công",
+                JOptionPane.YES_NO_OPTION);
+                if(reply == JOptionPane.OK_OPTION) {
+                    new WritePDF().writeHoaDonNhapHang(mahd);
+                }                
                 //refresh
                 refresh();
                 bookbus.listSanPham();

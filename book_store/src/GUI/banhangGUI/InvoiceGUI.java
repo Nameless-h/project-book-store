@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -21,19 +21,21 @@ import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 
 import BUS.PriceFormatter;
-import BUS.quanlihoadonnhaphang;
-import BUS.quanlinhacungcap;
+import BUS.quanlihoadonbanhang;
+import BUS.quanlikhachhang;
 import BUS.quanlinhanvien;
-import DTO.hoadonnhaphang;
-import DTO.nhacungcap;
+import DTO.hoadonbanhang;
+import DTO.khachhang;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
-public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener {
+public class InvoiceGUI extends JPanel implements ActionListener {
 
     // action panel
     private JPanel searchPanel;
@@ -54,11 +56,11 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
     private ExportPDF pdfbtn;
 
     // action
-    private quanlihoadonnhaphang qlhdnh = new quanlihoadonnhaphang();
+    private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
     private quanlinhanvien qlnv = new quanlinhanvien();
-    private quanlinhacungcap qlncc = new quanlinhacungcap();
+    private quanlikhachhang qlkh = new quanlikhachhang();
 
-    public danhsachhoadonnhaphangGUI() {
+    public InvoiceGUI() {
         init();
     }
 
@@ -135,9 +137,9 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
     public Mytable invoiceTable() {
         invoiceTable = new Mytable();
         invoiceTable.setTablesize(1000, 540);
-        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên nhà cung cấp","Ngày tạo", "Thành tiền"});
-        qlhdnh.initList();
-        setDataToTable(qlhdnh.getList(),invoiceTable);
+        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên khách hàng","Ngày tạo", "Thành tiền"});
+        qlhdbh.initList();
+        setDataToTable(qlhdbh.getList(),invoiceTable);
         invoiceTable.setPreferredWidth(0, 50);
         invoiceTable.setPreferredWidth(1, 100);
         invoiceTable.setPreferredWidth(2, 250);
@@ -171,6 +173,8 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
         pdfbtn.setPreferredSize(new Dimension(100, 45));
 
         detailbtn.addActionListener(this);
+        exportbtn.addActionListener(this);
+        pdfbtn.addActionListener(this);
 
         buttonPanel.add(detailbtn);
         buttonPanel.add(exportbtn);
@@ -180,23 +184,24 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
     }
 
     //action
-    private void setDataToTable(ArrayList<hoadonnhaphang> list,Mytable t) {
+    private void setDataToTable(ArrayList<hoadonbanhang> list,Mytable t) {
         t.clear();
         int i=1;
-        nhacungcap ncc;
+        khachhang kh;
         nhanvien nv;
-        double thanhtien;
-        qlncc.initList();
-        for (hoadonnhaphang hdnh : list) {
-            ncc=qlncc.getNCC(hdnh.getMancc());
-            nv=qlnv.getNhanVien(hdnh.getmanv());
-            thanhtien = hdnh.getTongtien();
+        double tongtien,giamgia,thanhtien;
+        for (hoadonbanhang hdbh : list) {
+            kh=qlkh.getKhachHang(hdbh.getMakh());
+            nv=qlnv.getNhanVien(hdbh.getmanv());
+            tongtien = hdbh.getTongtien();
+            giamgia = (double)hdbh.getGiamgia();
+            thanhtien = Math.ceil((tongtien - tongtien * (Math.ceil(giamgia) / 100))/1000)*1000;
             t.addRow(new String[] {
                     String.valueOf(i++),
-                    String.valueOf(hdnh.getmahd()),
+                    String.valueOf(hdbh.getmahd()),
                     nv.getTen(),
-                    ncc.getTen(),
-                    hdnh.getngay(),
+                    kh.getTen(),
+                    hdbh.getngay(),
                     PriceFormatter.format(thanhtien)
             });
         }
@@ -206,8 +211,8 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
         if((datefrom.getText().equals("") && !dateto.getText().isEmpty()) || (dateto.getText().equals("") && !datefrom.getText().isEmpty())) {
             JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
             return;
-        } else if(qlhdnh.searchhoadonnhaphang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
-            setDataToTable(qlhdnh.searchhoadonnhaphang(searchinp.getText(),datefrom.getText(),dateto.getText()), invoiceTable);
+        } else if(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
+            setDataToTable(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()), invoiceTable);
         } else {
             JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
             return;
@@ -222,11 +227,22 @@ public class danhsachhoadonnhaphangGUI extends JPanel implements ActionListener 
         if(e.getSource() == detailbtn) {
             int row = invoiceTable.getTable().getSelectedRow();
             if(row == -1) {
-                JOptionPane.showMessageDialog(this,"Vui lòng chọn phiếu nhập để xem chi tiết !","Thông báo",1);
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn để xem chi tiết !","Thông báo",1);
                 return;
             } else {
                 int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
-                new chitiethoadonnhaphangGUI(mahd);
+                new chitiethoadonbanhangGUI(mahd);
+            }
+        } else if(e.getSource() == exportbtn) {
+            qlhdbh.xuatExcel();
+        } else if(e.getSource() == pdfbtn) {
+            int row = invoiceTable.getTable().getSelectedRow();
+            if(row == -1) {
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn để in !","Thông báo",1);
+                return;
+            } else {
+                int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
+                new WritePDF().writeHoaDonBanHang(mahd);
             }
         }
     }

@@ -128,7 +128,7 @@ public class themnhanvien extends JPanel implements MouseListener {
             String email = txt[4].getText();
             String sdt = txt[5].getText();
             String cv = txt[6].getText();
-            nhanvien nv = new nhanvien(manv, ten, gt, dc, email, sdt, cv);
+            nhanvien nv = new nhanvien(manv, ten, gt, dc, email, sdt, cv,1);
             chucnang_nhanvien.themnhanvien(nv);
             JOptionPane.showMessageDialog(null, "Them thanh cong");
 
