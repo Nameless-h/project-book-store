@@ -288,6 +288,7 @@ public class hienThiThongKeNV extends JFrame implements ActionListener{
                 giamgia = (double)hd.getGiamgia();
                 thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100); */
 
+                System.out.println(NV.toString());
 
                 manvtxt.setText(String.valueOf(this.manv) );
                 tennvtxt.setText(String.valueOf(NV.getTen()));

@@ -33,7 +33,7 @@ import DAO.TheLoaiDAO;
 import DAO.thongKeSachDAO;
 import DTO.Theloai;
 import DTO.sachNhap;
-import GUI.chonnhacungcapGUI;
+import GUI.nhaphangGUI.chonnhacungcapGUI;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.morebutton;
 import java.awt.FlowLayout;

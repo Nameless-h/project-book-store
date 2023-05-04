@@ -250,7 +250,8 @@ public class thongKeSachDAO implements DAOinterface<SachBan> {
                         "", 
                         "",
                         "",
-                        result.getString("chucvu") 
+                        result.getString("chucvu"),
+                        0 
                     ); 
                     list.add(nv);
                 } while (result.next()); 
