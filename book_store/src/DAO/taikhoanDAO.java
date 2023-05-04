@@ -154,7 +154,7 @@ public class taikhoanDAO {
             String sql = "UPDATE taikhoan " +
                     " SET " +
                     "username='" + t.getUsername() + "'" +
-                    ",passwd=" + t.getPassword() +
+                    ",passwd='" + t.getPassword() + "'" +
                     ",maNhanVien='" + t.getManhanvien() + "'" +
                     ",maNhomquyen='" + t.getManhomquyen() + "'" +
                     ",trangthai='" + t.getTinhtrang() + "'" +
