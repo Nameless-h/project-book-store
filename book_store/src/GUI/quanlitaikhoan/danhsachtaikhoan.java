@@ -10,6 +10,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import BUS.quanlitaikhoan;
+import DAO.taikhoanDAO;
 import DTO.chitietnhomquyen;
 import DTO.taikhoan;
 import GUI.*;
@@ -17,9 +18,10 @@ import GUI.main_frame.main;
 
 public class danhsachtaikhoan extends JPanel implements MouseListener {
     main obj;
-    icon_lib ic_lib=new icon_lib();
-    setting_frame set=new setting_frame();
-    quanlitaikhoan chucnang = new quanlitaikhoan();
+    icon_lib ic_lib = new icon_lib();
+    setting_frame set = new setting_frame();
+    quanlitaikhoan quanlitaikhoan = new quanlitaikhoan();
+    taikhoanDAO chucnang_tk = new taikhoanDAO();
     ArrayList<chitietnhomquyen> list_ct;
     // -------------------------------
     String[] collums = { "STT", "Ma tai khoan", "Username", "Password", "Ma nhan vien", "Ma nhom quyen", "Tinh trang" };
@@ -49,17 +51,17 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
         // nut them
-        bun_them = new JButton("Them",ic_lib.icon_add);
+        bun_them = new JButton("Them", ic_lib.icon_add);
         bun_them.setPreferredSize(new Dimension(200, 40));
         bun_them.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_them);
         // nut xoa
-        bun_xoa = new JButton("Xoa",ic_lib.icon_remove);
+        bun_xoa = new JButton("Xoa", ic_lib.icon_remove);
         bun_xoa.setPreferredSize(new Dimension(200, 40));
         bun_xoa.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_xoa);
         // nut sua
-        bun_sua = new JButton("Sua",ic_lib.icon_repair);
+        bun_sua = new JButton("Sua", ic_lib.icon_repair);
         bun_sua.setPreferredSize(new Dimension(200, 40));
         bun_sua.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_sua);
@@ -107,7 +109,7 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         tab_danhsach.setModel(new DefaultTableModel(new Object[][] {}, collums));
 
-        chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+        quanlitaikhoan.hienthidanhsach_taikhoan(tab_danhsach);
         thanhcuon = new JScrollPane(tab_danhsach);
         thanhcuon.setBounds(0, 200, set.w_center, set.h_center - 200);
         this.add(thanhcuon);
@@ -166,18 +168,36 @@ public class danhsachtaikhoan extends JPanel implements MouseListener {
                         JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
                                 JOptionPane.WARNING_MESSAGE);
             // System.out.println(ma+ten);
+        } else if (e.getSource() == bun_xoa) {
+            for (int i = 0; i < list_ct.size(); i++)
+                if (list_ct.get(i).getMachucnang().equalsIgnoreCase("TK") &&
+                        list_ct.get(i).getHanhdong().equalsIgnoreCase("Xoa"))
+                    if (list_ct.get(i).getTinhtrang() == 1) {
+                        int rowCount = tab_danhsach.getRowCount();
+                        Integer ma = Integer.parseInt(tab_danhsach.getValueAt(rowCount - 1, 1).toString());
+                        int choice = JOptionPane.showConfirmDialog(null,
+                                "Ban co muon xoa luon tai khoan khong?", "Confirmation",
+                                JOptionPane.YES_NO_OPTION);
+                        if (choice == JOptionPane.YES_OPTION) {
+                            // System.out.println("User clicked Yes button");
+                            chucnang_tk.delete_id(ma);
+                            quanlitaikhoan.hienthidanhsach_taikhoan(tab_danhsach);
+                        }
+                    } else
+                        JOptionPane.showMessageDialog(this, "Ban khong duoc cap quyen nay", "Thong bao",
+                                JOptionPane.WARNING_MESSAGE);
         } else if (e.getSource() == bun_timkiem) {
             int tk = combo_timkiem.getSelectedIndex();
             String str = txt_timkiem.getText();
-            if (chucnang.timkiem_vitri(tk, str, tab_danhsach) == false) {
+            if (quanlitaikhoan.timkiem_vitri(tk, str, tab_danhsach) == false) {
                 JOptionPane.showMessageDialog(this, "Khong ton tai tai khoan nay", "Thong bao",
                         JOptionPane.WARNING_MESSAGE);
-                chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+                quanlitaikhoan.hienthidanhsach_taikhoan(tab_danhsach);
             }
 
         } else if (e.getSource() == bun_lammoi) {
             txt_timkiem.setText("");
-            chucnang.hienthidanhsach_taikhoan(tab_danhsach);
+            quanlitaikhoan.hienthidanhsach_taikhoan(tab_danhsach);
             combo_timkiem.setSelectedIndex(0);
         }
     }
