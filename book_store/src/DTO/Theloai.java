@@ -25,6 +25,10 @@ public class Theloai {
         this.trangThai = 1;
     }
 
+    public String toString() {
+        return this.maTheloai + "-" + this.tenTheloai;
+    }
+
     public int getMaTheloai() {
         return maTheloai;
     }

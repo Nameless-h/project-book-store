@@ -4,6 +4,7 @@ import java.security.PublicKey;
 import java.util.ArrayList;
 
 import DAO.SanPhamDAO;
+import DTO.ChiTietTacGia;
 import DTO.Sach;
 
 public class SanPhamBUS {
@@ -80,6 +81,35 @@ public class SanPhamBUS {
         resultList.add(book);
       }
     });
+    return resultList;
+  }
+
+  public ArrayList<Sach> searchBooks(String maSach, String tenSach, int maTacgia, int maTheloai, int maNhaXuatBan) {
+    ArrayList<Sach> resultList = new ArrayList<Sach>();
+    ChiTietTacGiaBUS cttg = new ChiTietTacGiaBUS();
+    cttg.listChiTietTacGia();
+    for (Sach tmp : this.product_list) {
+      if (maTacgia == 0 && maTheloai == 0 && maNhaXuatBan == 0
+          && (tenSach.equalsIgnoreCase("") || tmp.getTenSach().toLowerCase().contains(tenSach.toLowerCase()))
+          && (maSach.equalsIgnoreCase("") || String.valueOf(tmp.getMaSach()).matches(maSach))) {
+        resultList.add(tmp);
+        continue;
+      }
+      if ((tenSach.equalsIgnoreCase("") || tmp.getTenSach().toLowerCase().contains(tenSach.toLowerCase()))
+          && (maSach.equalsIgnoreCase("") || String.valueOf(tmp.getMaSach()).contains(maSach.toLowerCase()))
+          && (maTheloai == 0 || tmp.getMaTheloai() == maTheloai)
+          && (maNhaXuatBan == 0 || tmp.getMaNXB() == maNhaXuatBan)) {
+        if (maTacgia != 0) {
+          for (ChiTietTacGia cttgTmp : cttg.getDanhSachChiTietTacGia()) {
+            if ((cttgTmp.getMaTacgia() == maTacgia) && (tmp.getMaSach() == cttgTmp.getMaSach())) {
+              resultList.add(tmp);
+            }
+          }
+        } else {
+          resultList.add(tmp);
+        }
+      }
+    }
     return resultList;
   }
 

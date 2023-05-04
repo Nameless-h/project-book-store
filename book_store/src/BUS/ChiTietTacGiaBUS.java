@@ -11,7 +11,7 @@ public class ChiTietTacGiaBUS {
   private ArrayList<ChiTietTacGia> tg_detail;
   ChiTietTacGiaDAO cttgdao = new ChiTietTacGiaDAO();
 
-  public ArrayList<ChiTietTacGia> getDanhSachChiTietTacGiaChiTietTacGia() {
+  public ArrayList<ChiTietTacGia> getDanhSachChiTietTacGia() {
     return this.tg_detail;
   }
 

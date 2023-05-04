@@ -2,7 +2,10 @@ package BUS;
 
 import java.util.ArrayList;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 import DAO.TheLoaiDAO;
+import DTO.NhaXuatBan;
 import DTO.Theloai;
 
 public class TheLoaiBUS {
@@ -48,6 +51,17 @@ public class TheLoaiBUS {
     }
   }
 
+  public ArrayList<Theloai> searchTheLoai(String maTheloai, String tenTheloai) {
+    ArrayList<Theloai> resultList = new ArrayList<Theloai>();
+    for (Theloai tmp : theloai_list) {
+      if ((maTheloai.equalsIgnoreCase("") || String.valueOf(tmp.getMaTheloai()).contains(maTheloai))
+          && (tenTheloai.equalsIgnoreCase("") || tmp.getTenTheloai().contains(tenTheloai.toLowerCase()))) {
+        resultList.add(tmp);
+      }
+    }
+    return resultList;
+  }
+
   public Theloai timTheLoaiTheoMa(int ma) {
     for (Theloai tltmp : this.theloai_list) {
       if (tltmp.getMaTheloai() == ma) {
@@ -56,4 +70,5 @@ public class TheLoaiBUS {
     }
     return new Theloai(0, "Không thuộc thể loại cụ thể");
   }
+
 }

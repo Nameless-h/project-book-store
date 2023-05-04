@@ -42,8 +42,7 @@ public class NhaXuatBan {
     }
 
     public String toString() {
-        return "nxb{" + "maNxb=" + maNXB + ", tennxb=" + tenNXB + ", hotmail="
-                + email + ", hotline=" + sdt + ", diaChi=" + diaChi + '}';
+        return this.maNXB + "" + this.tenNXB;
     }
 
     public int getMaNXB() {

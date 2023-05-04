@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.lang.Math;
 import java.util.ArrayList;
 import DTO.Theloai;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -29,7 +28,6 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import BUS.ChiTietTacGiaBUS;
 import BUS.NhaXuatBanBUS;
 import BUS.SanPhamBUS;
@@ -46,6 +44,8 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private JScrollPane scrollPaneBook;
   private JScrollPane scrollPaneNxb;
   private JScrollPane scrollPaneTloai;
+  private JScrollPane scrollPaneTacGia;
+  private JTabbedPane tabPane;
 
   private JPanel book_panel;
   private ModifyButtonPanel button_panel_book;
@@ -53,16 +53,14 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private ModifyButtonPanel button_panel_nxb;
   private JPanel tloai_panel;
   private ModifyButtonPanel button_panel_tloai;
+  private JPanel tacgia_panel;
+  private ModifyButtonPanel button_panel_tacgia;
 
-  private SearchPanel search_Panel;
+  private SearchPanel search_sach_panel;
+  private SearchPanel search_nhaxuatban_panel;
+  private SearchPanel search_theloai_panel;
+  private SearchPanel search_tacgia_panel;
 
-  private JTabbedPane tabPane;
-  private JLabel[] book_detail_labels;
-  private JLabel[] nxb_detail_labels;
-  private JLabel[] tloai_detail_labels;
-  private JLabel searchTen;
-  private JLabel searchTheloai;
-  private JLabel searchTacgia;
   private JButton selectTacgia;
   private TacGiaSelectFrame selectTacgiaFrame;
   private JComboBox<String> cbbTheloai;
@@ -79,12 +77,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private JTextField txtDiaChiNxb;
   private JTextField txtMaTheLoai;
   private JTextField txtTenTheLoai;
-  private JTextField txtsearchTen;
+  private JTextField txtMaTacGia;
+  private JTextField txtTenTacGia;
   private JComboBox<String> cbbsearchTheloai;
-  private JTextField txtsearchTacgia;
   private AddbookFrame addBookFrame;
   private AddNxbFrame addNxbFrame;
   private addTheLoaiFrame addTheLoaiFrame;
+  private AddTacGiaFrame addTacGiaFrame;
   public static SanPhamBUS bookBUS = new SanPhamBUS();
   public static NhaXuatBanBUS nxbBUS = new NhaXuatBanBUS();
   public static TacGiaBUS tacgiaBUS = new TacGiaBUS();
@@ -111,88 +110,27 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     scrollPaneBook = new JScrollPane();
     scrollPaneNxb = new JScrollPane();
     scrollPaneTloai = new JScrollPane();
+    scrollPaneTacGia = new JScrollPane();
+
     // init panel
     book_panel = new JPanel();
     nxb_panel = new JPanel();
     tloai_panel = new JPanel();
-    search_Panel = new SearchPanel(new String[] { "Tên sách", "Tác giả", "Thể loại", "Nhà xuất bản" }, 1100,
+    tacgia_panel = new JPanel();
+    search_sach_panel = new SearchPanel(new String[] { "Mã sách", "Tên sách", "Tác giả", "Thể loại", "Nhà xuất bản" },
+        1100,
         (int) Math.floor(700 * 0.1));
+    search_nhaxuatban_panel = new SearchPanel(
+        new String[] { "Mã nhà xuất bản", "Tên nhà xuất bản", "Hotmail", "Hotline", "Địa chỉ" }, 1100,
+        (int) Math.floor(700 * 0.1));
+    search_theloai_panel = new SearchPanel(
+        new String[] { "Mã thể loại", "Tên thể loại" }, 1100, (int) Math.floor(700 * 0.1));
+    search_tacgia_panel = new SearchPanel(
+        new String[] { "Mã tác giả", "Tên tác giả" }, 1100, (int) Math.floor(700 * 0.1));
+
     tabPane = new JTabbedPane();
     tabPane.addChangeListener(this);
-    int posY = 50;
-    int posY2 = 50;
-    // init label of book info
-    /*
-     * String[] book_info_label = { "Mã sách: ", "Tên sách: ", "Thể loại: ",
-     * "Tác giả: ", "Nhà xuất bản: ",
-     * "Năm xuất bản : ",
-     * "Số lượng: ", "Giá tiền: " };
-     * book_detail_labels = new JLabel[book_info_label.length];
-     * 
-     * for (int i = 0; i < book_info_label.length; i++) {
-     * if (i < 4) {
-     * book_detail_labels[i] = new JLabel(book_info_label[i]);
-     * book_detail_labels[i].setBounds(20, posY - 30, 200, 25);
-     * book_detail_labels[i].setFont(fo);
-     * book_panel.add(book_detail_labels[i]);
-     * posY += 50;
-     * } else {
-     * book_detail_labels[i] = new JLabel(book_info_label[i]);
-     * book_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
-     * book_detail_labels[i].setFont(fo);
-     * book_panel.add(book_detail_labels[i]);
-     * posY2 += 50;
-     * }
-     * 
-     * }
-     */
 
-    // init label of nxb info
-    String[] nxb_info_label = { "Mã NXB: ", "Tên nxb:", "Hotmail:", "Hotline:", "Địa chỉ:" };
-    nxb_detail_labels = new JLabel[nxb_info_label.length];
-    posY = 50;
-    posY2 = 50;
-    for (int i = 0; i < nxb_info_label.length; i++) {
-      if (i < 3) {
-        nxb_detail_labels[i] = new JLabel(nxb_info_label[i]);
-        nxb_detail_labels[i].setBounds(20, posY - 30, 200, 25);
-        nxb_detail_labels[i].setFont(fo);
-        nxb_panel.add(nxb_detail_labels[i]);
-        posY += 50;
-      } else {
-        nxb_detail_labels[i] = new JLabel(nxb_info_label[i]);
-        nxb_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
-        nxb_detail_labels[i].setFont(fo);
-        nxb_panel.add(nxb_detail_labels[i]);
-        posY2 += 50;
-      }
-    }
-
-    // init label of the loai info
-    String[] theloai_info_label = { "Mã thể loại: ", "Tên thể loại:" };
-    tloai_detail_labels = new JLabel[nxb_info_label.length];
-    posY = 50;
-    posY2 = 50;
-    for (int i = 0; i < theloai_info_label.length; i++) {
-      if (i < 3) {
-        tloai_detail_labels[i] = new JLabel(theloai_info_label[i]);
-        tloai_detail_labels[i].setBounds(20, posY - 30, 200, 25);
-        tloai_detail_labels[i].setFont(fo);
-        tloai_panel.add(tloai_detail_labels[i]);
-        posY += 50;
-      } else {
-        tloai_detail_labels[i] = new JLabel(theloai_info_label[i]);
-        tloai_detail_labels[i].setBounds(550, posY2 - 30, 200, 25);
-        tloai_detail_labels[i].setFont(fo);
-        tloai_panel.add(tloai_detail_labels[i]);
-        posY2 += 50;
-      }
-
-    }
-
-    searchTen = new JLabel("Tên sách");
-    searchTheloai = new JLabel("Thể loại");
-    searchTacgia = new JLabel("Tác giả");
     // init text field
     txtMaSach = new JTextField();
     txttenSach = new JTextField();
@@ -210,33 +148,23 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     txtDiaChiNxb = new JTextField();
     txtTenTheLoai = new JTextField();
     txtMaTheLoai = new JTextField();
-
-    txtsearchTen = new JTextField();
-    cbbsearchTheloai = new JComboBox<String>();
-    txtsearchTacgia = new JTextField();
+    txtTenTacGia = new JTextField();
+    txtMaTacGia = new JTextField();
     try {
 
-      searchTen.setBounds(10, 5, 70, 30);
-      searchTen.setFont(searchFo);
-
-      searchTheloai.setBounds(300, 5, 70, 30);
-      searchTheloai.setFont(searchFo);
-
-      searchTacgia.setBounds(500, 5, 70, 30);
-      searchTacgia.setFont(searchFo);
       /* set param cho text va combobox */
       /* -------- book panel --------- */
-      txtMaSach.setBounds(20, 50 - 30, 300, 35);
+      txtMaSach.setBounds(20, 50 - 30, 300, 37);
       txtMaSach.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtMaSach.setEditable(false);
       txtMaSach.setBorder(BorderFactory.createTitledBorder("Mã sách"));
       txtMaSach.setForeground(Color.blue);
 
-      txttenSach.setBounds(20, 100 - 30, 300, 35);
+      txttenSach.setBounds(20, 100 - 30, 300, 37);
       txttenSach.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txttenSach.setBorder(BorderFactory.createTitledBorder("Tên sách"));
 
-      cbbTheloai.setBounds(20, 150 - 30, 300, 35);
+      cbbTheloai.setBounds(20, 150 - 30, 300, 37);
       cbbTheloai.setFont(new Font("Time New Roman", Font.PLAIN, 18));
       cbbTheloai.setBorder(BorderFactory.createTitledBorder("Thể loại"));
 
@@ -244,58 +172,66 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       selectTacgiaFrame.setVisible(false);
 
       selectTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 16));
-      selectTacgia.setBounds(20, 200 - 30, 300, 35);
+      selectTacgia.setBounds(20, 200 - 30, 300, 37);
       selectTacgia.setBorder(BorderFactory.createTitledBorder("Tác giả"));
 
-      cbbNXB.setBounds(400, 50 - 30, 300, 35);
+      cbbNXB.setBounds(400, 50 - 30, 300, 37);
       cbbNXB.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       cbbNXB.setBorder(BorderFactory.createTitledBorder("Nhà xuất bản"));
 
-      txtNamxb.setBounds(400, 100 - 30, 300, 35);
+      txtNamxb.setBounds(400, 100 - 30, 300, 37);
       txtNamxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtNamxb.setBorder(BorderFactory.createTitledBorder("Năm xuất bản"));
 
-      txtSoluong.setBounds(400, 150 - 30, 300, 35);
+      txtSoluong.setBounds(400, 150 - 30, 300, 37);
       txtSoluong.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtSoluong.setBorder(BorderFactory.createTitledBorder("Số lượng"));
       txtSoluong.setEnabled(false);
 
-      txtGiatien.setBounds(400, 200 - 30, 300, 35);
+      txtGiatien.setBounds(400, 200 - 30, 300, 37);
       txtGiatien.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtGiatien.setBorder(BorderFactory.createTitledBorder("Giá tiền"));
-      /* -------- book panel --------- */
+      /* -------- nhà xuất bản panel --------- */
 
-      txtMaNxb.setBounds(200, 50 - 30, 300, 25);
-      txtMaNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtMaNxb.setBounds(20, 50 - 30, 300, 37);
+      txtMaNxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       txtMaNxb.setEditable(false);
+      txtMaNxb.setBorder(BorderFactory.createTitledBorder("Mã nhà xuất bản"));
 
-      txtTenNxb.setBounds(200, 100 - 30, 300, 25);
-      txtTenNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtTenNxb.setBounds(20, 100 - 30, 300, 37);
+      txtTenNxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtTenNxb.setBorder(BorderFactory.createTitledBorder("Tên nhà xuất bản"));
 
-      txtMailNxb.setBounds(200, 150 - 30, 300, 25);
-      txtMailNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtMailNxb.setBounds(20, 150 - 30, 300, 37);
+      txtMailNxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtMailNxb.setBorder(BorderFactory.createTitledBorder("Hotmail"));
 
-      txtSdtNxb.setBounds(750, 50 - 30, 300, 25);
-      txtSdtNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtSdtNxb.setBounds(400, 50 - 30, 300, 37);
+      txtSdtNxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtSdtNxb.setBorder(BorderFactory.createTitledBorder("Hotline"));
 
-      txtDiaChiNxb.setBounds(750, 100 - 30, 300, 25);
-      txtDiaChiNxb.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtDiaChiNxb.setBounds(400, 100 - 30, 300, 37);
+      txtDiaChiNxb.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtDiaChiNxb.setBorder(BorderFactory.createTitledBorder("Địa chỉ"));
 
-      txtMaTheLoai.setBounds(200, 50 - 30, 300, 25);
-      txtMaTheLoai.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      /* -------- thể loại panel --------- */
+      txtMaTheLoai.setBounds(20, 50 - 30, 300, 37);
+      txtMaTheLoai.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtMaTheLoai.setBorder(BorderFactory.createTitledBorder("Mã thể loại"));
       txtMaTheLoai.setEditable(false);
 
-      txtTenTheLoai.setBounds(200, 100 - 30, 300, 25);
-      txtTenTheLoai.setFont(new Font("Time New Roman", Font.PLAIN, 20));
+      txtTenTheLoai.setBounds(20, 100 - 30, 300, 37);
+      txtTenTheLoai.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtTenTheLoai.setBorder(BorderFactory.createTitledBorder("Tên thể loại"));
+      /* -------- tác giả panel --------- */
+      txtMaTacGia.setBounds(20, 50 - 30, 300, 37);
+      txtMaTacGia.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtMaTacGia.setBorder(BorderFactory.createTitledBorder("Mã tác giả"));
+      txtMaTacGia.setEditable(false);
 
-      txtsearchTen.setBounds(80, 5, 200, 25);
-      txtsearchTen.setFont(new Font("Time New Roman", Font.PLAIN, 15));
-
-      cbbsearchTheloai.setBounds(370, 5, 100, 25);
-      cbbsearchTheloai.setFont(new Font("Time New Roman", Font.PLAIN, 15));
-
-      txtsearchTacgia.setBounds(570, 5, 200, 25);
-      txtsearchTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 15));
+      txtTenTacGia.setBounds(20, 100 - 30, 300, 37);
+      txtTenTacGia.setFont(new Font("Time New Roman", Font.PLAIN, 16));
+      txtTenTacGia.setBorder(BorderFactory.createTitledBorder("Tên tác giả"));
 
       tabPane.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
 
@@ -308,20 +244,39 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       tloai_panel.setLayout(null);
       tloai_panel.setBackground(new Color(211, 242, 214));
 
-      search_Panel.setBackground(new Color(50, 168, 76));
-      search_Panel.getSearchButton().addActionListener(this);
+      tacgia_panel.setLayout(null);
+      tacgia_panel.setBackground(new Color(211, 242, 214));
 
-      scrollPaneBook.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.41)));
+      search_sach_panel.setBackground(new Color(50, 168, 76));
+      search_sach_panel.getSearchButton().addActionListener(this);
+
+      search_nhaxuatban_panel.setBackground(new Color(50, 168, 76));
+      search_nhaxuatban_panel.setVisible(false);
+      search_nhaxuatban_panel.getSearchButton().addActionListener(this);
+
+      search_theloai_panel.setBackground(new Color(50, 168, 76));
+      search_theloai_panel.setVisible(false);
+      search_theloai_panel.getSearchButton().addActionListener(this);
+
+      search_tacgia_panel.setBackground(new Color(50, 168, 76));
+      search_tacgia_panel.setVisible(false);
+      search_tacgia_panel.getSearchButton().addActionListener(this);
+
+      scrollPaneBook.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
       scrollPaneBook.setVisible(false);
       scrollPaneBook.setBackground(Color.orange);
 
-      scrollPaneNxb.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.41)));
+      scrollPaneNxb.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
       scrollPaneNxb.setVisible(false);
       scrollPaneNxb.setBackground(Color.orange);
 
-      scrollPaneTloai.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.41)));
-      scrollPaneTloai.setVisible(true);
+      scrollPaneTloai.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneTloai.setVisible(false);
       scrollPaneTloai.setBackground(Color.orange);
+
+      scrollPaneTacGia.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneTacGia.setVisible(false);
+      scrollPaneTacGia.setBackground(Color.orange);
 
       button_panel_book = new ModifyButtonPanel(150, 210, 800, 50);
       button_panel_book.getAddBtn().addActionListener(this);
@@ -337,6 +292,11 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       button_panel_tloai.getAddBtn().addActionListener(this);
       button_panel_tloai.getEditBtn().addActionListener(this);
       button_panel_tloai.getDelBtn().addActionListener(this);
+
+      button_panel_tacgia = new ModifyButtonPanel(150, 210, 800, 50);
+      button_panel_tacgia.getAddBtn().addActionListener(this);
+      button_panel_tacgia.getEditBtn().addActionListener(this);
+      button_panel_tacgia.getDelBtn().addActionListener(this);
 
       /* add component */
       book_panel.add(txtMaSach);
@@ -360,21 +320,35 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       tloai_panel.add(txtTenTheLoai);
       tloai_panel.add(button_panel_tloai);
 
+      tacgia_panel.add(txtMaTacGia);
+      tacgia_panel.add(txtTenTacGia);
+      tacgia_panel.add(button_panel_tacgia);
+
       tabPane.add("Sách", book_panel);
       tabPane.add("Nhà xuất bản", nxb_panel);
       tabPane.add("Thể loại", tloai_panel);
+      tabPane.add("Tác giả", tacgia_panel);
 
       JPanel container = new JPanel();
-      container.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.43)));
+      JPanel container_search = new JPanel();
+      container.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
       container.add(scrollPaneBook);
       container.add(scrollPaneNxb);
       container.add(scrollPaneTloai);
+      container.add(scrollPaneTacGia);
+
+      container_search.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.1)));
+      container_search.add(search_sach_panel);
+      container_search.add(search_nhaxuatban_panel);
+      container_search.add(search_theloai_panel);
+      container_search.add(search_tacgia_panel);
+
       this.add(tabPane, BorderLayout.NORTH);
-      this.add(search_Panel, BorderLayout.CENTER);
+      this.add(container_search, BorderLayout.CENTER);
       this.add(container, BorderLayout.SOUTH);
       showCbbTheloai();
       showCbbNxb();
-      showBookList();
+      showBookList(bookBUS.getDanhSachSanPham());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -384,22 +358,23 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private void showCbbTheloai() {
     cbbTheloai.removeAllItems();
     for (Theloai tmp : tloaiBUS.getDanhSachTheLoai()) {
-      cbbTheloai.addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
-      cbbsearchTheloai.addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+      if (tmp.getTrangThai() == 1) {
+        cbbTheloai.addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+      }
     }
-
   }
 
   private void showCbbNxb() {
     cbbNXB.removeAllItems();
     ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
     for (NhaXuatBan tmp : list) {
-      cbbNXB.addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+      if (tmp.getTrangThai() == 1) {
+        cbbNXB.addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+      }
     }
-
   }
 
-  private void showBookList() throws Exception {
+  private void showBookList(ArrayList<Sach> arr_sanpham) throws Exception {
     scrollPaneBook.setViewportView(null);
     try {
       JTable bookTbl = new JTable();
@@ -421,7 +396,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       });
       // insert value into table
       DefaultTableModel bookModel = (DefaultTableModel) bookTbl.getModel();
-      for (Sach tmp : bookBUS.getDanhSachSanPham()) {
+      for (Sach tmp : arr_sanpham) {
         if (tmp.getTrangThai() == 1) {
           Theloai theLoaiTmp = tloaiBUS.timTheLoaiTheoMa(tmp.getMaTheloai());
           NhaXuatBan nxbTmp = nxbBUS.timNhaXuatBanTheoMa(tmp.getMaNXB());
@@ -445,18 +420,19 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
             Sach selectedBook = bookBUS.timSachTheoMa(selectedBookID);
             NhaXuatBan nxb_select = nxbBUS.timNhaXuatBanTheoMa(selectedBook.getMaNXB());
             Theloai tl_select = tloaiBUS.timTheLoaiTheoMa(selectedBook.getMaTheloai());
+            System.out.println(tl_select);
             txtMaSach.setText(String.valueOf(selectedBookID));
             txttenSach.setText(selectedBook.getTenSach());
 
             if (tl_select.getMaTheloai() == 0) {
               cbbTheloai.setSelectedIndex(-1);
             } else {
-              cbbTheloai.setSelectedItem(tl_select);
+              cbbTheloai.setSelectedItem(tl_select.toString());
             }
             if (nxb_select.getMaNXB() == 0) {
               cbbNXB.setSelectedIndex(-1);
             } else {
-              cbbNXB.setSelectedItem(tl_select);
+              cbbNXB.setSelectedItem(nxb_select.toString());
             }
 
             // clear checkbox tac gia
@@ -486,7 +462,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   }
 
-  private void showNxbList() {
+  private void showNxbList(ArrayList<NhaXuatBan> arr_nxb) {
     scrollPaneNxb.setViewportView(null);
     /* create table */
     JTable nxbTbl = new JTable();
@@ -499,17 +475,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         new String[] {
             "Mã nxb", "Tên nxb", "Hotmail", "Hotline", "Địa chỉ"
         }) {
-      /*
-       * Class[] types = new Class[] {
-       * java.lang.Integer.class, java.lang.String.class, java.lang.String.class,
-       * java.lang.String.class,
-       * java.lang.String.class
-       * };
-       * 
-       * public Class getColumnClass(int columnIndex) {
-       * return types[columnIndex];
-       * }
-       */
       @Override
       public boolean isCellEditable(int row, int column) {
         // all cells false
@@ -517,17 +482,15 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       }
     });
     // in ra danh sach nxb
-    ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
     DefaultTableModel nxbModel = (DefaultTableModel) nxbTbl.getModel();
-    for (NhaXuatBan tmp : list) {
+    for (NhaXuatBan tmp : arr_nxb) {
       if (tmp.getTrangThai() == 1) {
         nxbModel.addRow(new Object[] {
             tmp.getMaNXB(), tmp.getTenNXB(),
-            tmp.getEmail(), tmp.getDiaChi(), tmp.getDiaChi() });
+            tmp.getEmail(), tmp.getSdt(), tmp.getDiaChi() });
       }
     }
     nxbTbl.addMouseListener(new java.awt.event.MouseAdapter() {
-
       @Override
       public void mouseClicked(java.awt.event.MouseEvent evt) {
         int row = nxbTbl.rowAtPoint(evt.getPoint());
@@ -549,7 +512,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   }
 
-  private void showTheLoaiList() {
+  private void showTheLoaiList(ArrayList<Theloai> arr_theloai) {
     scrollPaneTloai.setViewportView(null);
     /* create table */
     JTable tLoaiTbl = new JTable();
@@ -570,21 +533,12 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     });
     // in ra danh sach the loai
     DefaultTableModel theLoaiModel = (DefaultTableModel) tLoaiTbl.getModel();
-    for (Theloai tmp : tloaiBUS.getDanhSachTheLoai()) {
+    for (Theloai tmp : arr_theloai) {
       if (tmp.getTrangThai() == 1) {
         theLoaiModel.addRow(new Object[] {
             tmp.getMaTheloai(), tmp.getTenTheloai() });
       }
     }
-    /*
-     * for (NhaXuatBan tmp : list) {
-     * if (tmp.getTrangThai() == 1) {
-     * nxbModel.addRow(new Object[] {
-     * tmp.getMaNXB(), tmp.getTenNXB(),
-     * tmp.getEmail(), tmp.getDiaChi(), tmp.getDiaChi() });
-     * }
-     * }
-     */
     tLoaiTbl.addMouseListener(new java.awt.event.MouseAdapter() {
 
       @Override
@@ -601,6 +555,52 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     });
     scrollPaneTloai.setViewportView(tLoaiTbl);
     setCellsAlignment(tLoaiTbl, SwingConstants.CENTER);
+  }
+
+  private void showTacGiaList(ArrayList<tacgia> arr_Tacgia) {
+    scrollPaneTacGia.setViewportView(null);
+    /* create table */
+    JTable tacGiaTbl = new JTable();
+    tacGiaTbl.setFont(new Font("Time New Roman", Font.PLAIN, 18));
+    tacGiaTbl.getTableHeader().setFont(fo);
+    /* create table */
+    tacGiaTbl.setModel(new javax.swing.table.DefaultTableModel(
+        new Object[][] {
+        },
+        new String[] {
+            "Mã tác giả", "Tên tác giả"
+        }) {
+      @Override
+      public boolean isCellEditable(int row, int column) {
+        // all cells false
+        return false;
+      }
+    });
+    // in ra danh sach the loai
+    DefaultTableModel tacgiaModel = (DefaultTableModel) tacGiaTbl.getModel();
+    for (tacgia tmp : arr_Tacgia) {
+
+      if (tmp.getTrangThai() == 1) {
+        System.out.println(tmp.toString());
+        tacgiaModel.addRow(new Object[] {
+            tmp.getMaTacgia(), tmp.getTenTacgia() });
+      }
+    }
+    tacGiaTbl.addMouseListener(new java.awt.event.MouseAdapter() {
+      @Override
+      public void mouseClicked(java.awt.event.MouseEvent evt) {
+        int row = tacGiaTbl.rowAtPoint(evt.getPoint());
+        int col = tacGiaTbl.columnAtPoint(evt.getPoint());
+        if (row >= 0 && col >= 0) {
+          int selectedTacGiaID = (int) tacGiaTbl.getValueAt(tacGiaTbl.getSelectedRow(), 0);
+          tacgia tmp = tacgiaBUS.timTacgiaTheoMa(selectedTacGiaID);
+          txtMaTacGia.setText(String.valueOf(tmp.getMaTacgia()));
+          txtTenTacGia.setText(tmp.getTenTacgia());
+        }
+      }
+    });
+    scrollPaneTacGia.setViewportView(tacGiaTbl);
+    setCellsAlignment(tacGiaTbl, SwingConstants.CENTER);
 
   }
 
@@ -699,6 +699,16 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     return true;
   }
 
+  public boolean checkInputTacGia() {
+    CheckInput check = new CheckInput();
+    if (!check.checkTen(txtTenTacGia.getText())) {
+      JOptionPane.showConfirmDialog(this, "Tên tác giả đang trống", "Lỗi input !",
+          JOptionPane.CLOSED_OPTION);
+      return false;
+    }
+    return true;
+  }
+
   @Override
   public void actionPerformed(ActionEvent e) {
     /*
@@ -710,7 +720,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     if (e.getSource() == button_panel_book.getAddBtn()) {
       try {
         // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-        if (!addBookFrame.isDisplayable()) {
+        if (!addBookFrame.isVisible()) {
           addBookFrame.setVisible(true);
           addBookFrame.toFront();
         } else {
@@ -719,6 +729,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       } catch (Exception ex) {
         System.err.println("add frame chua khoi tao, bat dau khoi tao add frame");
         addBookFrame = new AddbookFrame(900, 600);
+        addBookFrame.toFront();
       }
     }
     // click tacgia btn
@@ -774,7 +785,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         }
 
         try {
-          showBookList();
+          showBookList(bookBUS.getDanhSachSanPham());
           resetForm();
         } catch (Exception e1) {
           e1.printStackTrace();
@@ -799,7 +810,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         JOptionPane.showConfirmDialog(this, "Xóa sách thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
         resetForm();
         try {
-          showBookList();
+          showBookList(bookBUS.getDanhSachSanPham());
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -815,7 +826,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     if (e.getSource() == button_panel_nxb.getAddBtn()) {
       try {
         // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-        if (!addNxbFrame.isDisplayable()) {
+        if (!addNxbFrame.isVisible()) {
           addNxbFrame.setVisible(true);
           addNxbFrame.toFront();
         } else {
@@ -848,7 +859,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         tmp.setDiaChi(txtDiaChiNxb.getText());
         nxbBUS.editNhaXuatBan(tmp);
         try {
-          showNxbList();
+          showNxbList(nxbBUS.getDanhSachNhaXuatBan());
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -871,7 +882,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         JOptionPane.showConfirmDialog(this, "Xóa sách thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
         resetForm();
         try {
-          showNxbList();
+          showNxbList(nxbBUS.getDanhSachNhaXuatBan());
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -886,7 +897,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     if (e.getSource() == button_panel_tloai.getAddBtn()) {
       try {
         // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-        if (!addTheLoaiFrame.isDisplayable()) {
+        if (!addTheLoaiFrame.isVisible()) {
           addTheLoaiFrame.setVisible(true);
           addTheLoaiFrame.toFront();
         } else {
@@ -916,7 +927,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         tmp.setTenTheloai(txtTenTheLoai.getText());
         tloaiBUS.editTheLoai(tmp);
         try {
-          showTheLoaiList();
+          showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -939,10 +950,144 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         JOptionPane.showConfirmDialog(this, "Xóa sách thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
         resetForm();
         try {
-          showTheLoaiList();
+          showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
         } catch (Exception e1) {
           e1.printStackTrace();
         }
+      }
+    }
+    /*
+     * --------------------------------------------------------------------
+     * ---------------------- tác giả panel --------------------------
+     * --------------------------------------------------------------------
+     */
+    // them
+    if (e.getSource() == button_panel_tacgia.getAddBtn()) {
+      try {
+        // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
+        if (!addTacGiaFrame.isVisible()) {
+          addTacGiaFrame.setVisible(true);
+          addTacGiaFrame.toFront();
+        } else {
+          addTacGiaFrame.toFront();
+        }
+      } catch (Exception ex) {
+        System.err.println("add tác giả frame chua khoi tao, bat dau khoi tao add frame");
+        addTacGiaFrame = new AddTacGiaFrame();
+      }
+    }
+    // sua
+    if (e.getSource() == button_panel_tacgia.getEditBtn()) {
+      if (txtMaTacGia.getText().equalsIgnoreCase("")) {
+        JOptionPane.showConfirmDialog(this,
+            "Bạn chưa chọn tác giả để chỉnh sửa, hãy chọn 1 dòng trong bảng dưới. ", "Thông báo",
+            JOptionPane.CLOSED_OPTION);
+        return;
+      }
+      if (!checkInputTacGia()) {
+        return;
+      }
+      int confirmSave = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn lưu chỉnh sửa ?", "Lưu",
+          JOptionPane.YES_NO_OPTION);
+      if (confirmSave == JOptionPane.YES_OPTION) {
+        tacgia tmp = new tacgia();
+        tmp.setMaTacgia(Integer.parseInt(txtMaTacGia.getText()));
+        tmp.setTenTacgia(txtTenTacGia.getText());
+        tacgiaBUS.editTacGia(tmp);
+        try {
+          showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+      }
+    }
+    // xoa
+    if (e.getSource() == button_panel_tacgia.getDelBtn()) {
+      if (txtMaTheLoai.getText().equalsIgnoreCase("")) {
+        JOptionPane.showConfirmDialog(this,
+            "Bạn chưa chọn tác giả để xóa, hãy chọn 1 sản phẩm trong bảng dưới. ", "Thông báo",
+            JOptionPane.WARNING_MESSAGE);
+        return;
+      }
+      int confirmSave = JOptionPane.showConfirmDialog(this, "Bạn có chắc muốn xóa tác giả này ?", "Xóa",
+          JOptionPane.YES_NO_OPTION);
+      if (confirmSave == JOptionPane.YES_OPTION) {
+        tacgia tmp = new tacgia();
+        tmp.setMaTacgia(Integer.parseInt(txtMaTacGia.getText()));
+        tacgiaBUS.delTacGia(tmp);
+        JOptionPane.showConfirmDialog(this, "Xóa tác giả thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
+        resetForm();
+        try {
+          showTacGiaList(tacgiaBUS.getDanhSachTacGia());
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+      }
+    }
+    /*
+     * --------------------------------------------------------------------
+     * ---------------------- search SÁCH panel --------------------------
+     * --------------------------------------------------------------------
+     */
+    if (e.getSource() == search_sach_panel.getSearchButton()) {
+      try {
+        showBookList(bookBUS.searchBooks(search_sach_panel.getTextField()[0].getText(),
+            search_sach_panel.getTextField()[1].getText(),
+            Integer.parseInt(search_sach_panel.getCbbField()[0].getSelectedItem().toString().split("-")[0]),
+            Integer.parseInt(search_sach_panel.getCbbField()[1].getSelectedItem().toString().split("-")[0]),
+            Integer.parseInt(search_sach_panel.getCbbField()[2].getSelectedItem().toString().split("-")[0])));
+      } catch (NumberFormatException e1) {
+        e1.printStackTrace();
+      } catch (Exception e1) {
+        e1.printStackTrace();
+      }
+    }
+    /*
+     * --------------------------------------------------------------------
+     * ---------------------- search NXB panel --------------------------
+     * --------------------------------------------------------------------
+     */
+    if (e.getSource() == search_nhaxuatban_panel.getSearchButton()) {
+      try {
+        showNxbList(nxbBUS.searchNhaXuatBan(search_nhaxuatban_panel.getTextField()[0].getText(),
+            search_nhaxuatban_panel.getTextField()[1].getText(),
+            search_nhaxuatban_panel.getTextField()[2].getText(),
+            search_nhaxuatban_panel.getTextField()[3].getText(),
+            search_nhaxuatban_panel.getTextField()[4].getText()));
+      } catch (NumberFormatException e1) {
+        e1.printStackTrace();
+      } catch (Exception e1) {
+        e1.printStackTrace();
+      }
+    }
+    /*
+     * --------------------------------------------------------------------
+     * ---------------------- search Thể loại panel --------------------------
+     * --------------------------------------------------------------------
+     */
+    if (e.getSource() == search_theloai_panel.getSearchButton()) {
+      try {
+        showTheLoaiList(tloaiBUS.searchTheLoai(search_theloai_panel.getTextField()[0].getText(),
+            search_theloai_panel.getTextField()[1].getText()));
+      } catch (NumberFormatException e1) {
+        e1.printStackTrace();
+      } catch (Exception e1) {
+        e1.printStackTrace();
+      }
+    }
+    /*
+     * --------------------------------------------------------------------
+     * ---------------------- search tác giả panel --------------------------
+     * --------------------------------------------------------------------
+     */
+    if (e.getSource() == search_tacgia_panel.getSearchButton()) {
+      try {
+        showTacGiaList(tacgiaBUS.searchtacgia(search_tacgia_panel.getTextField()[0].getText(),
+            search_tacgia_panel.getTextField()[1].getText()));
+      } catch (NumberFormatException e1) {
+        e1.printStackTrace();
+      } catch (Exception e1) {
+        e1.printStackTrace();
       }
     }
   }
@@ -955,8 +1100,15 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       scrollPaneBook.setVisible(true);
       scrollPaneNxb.setVisible(false);
       scrollPaneTloai.setVisible(false);
+      scrollPaneTacGia.setVisible(false);
+
+      search_sach_panel.setVisible(true);
+      search_nhaxuatban_panel.setVisible(false);
+      search_theloai_panel.setVisible(false);
+      search_tacgia_panel.setVisible(false);
+
       try {
-        showBookList();
+        showBookList(bookBUS.getDanhSachSanPham());
       } catch (Exception ex) {
         ex.printStackTrace();
       }
@@ -964,8 +1116,14 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       scrollPaneBook.setVisible(false);
       scrollPaneNxb.setVisible(true);
       scrollPaneTloai.setVisible(false);
+      scrollPaneTacGia.setVisible(false);
+
+      search_sach_panel.setVisible(false);
+      search_nhaxuatban_panel.setVisible(true);
+      search_theloai_panel.setVisible(false);
+      search_tacgia_panel.setVisible(false);
       try {
-        showNxbList();
+        showNxbList(nxbBUS.getDanhSachNhaXuatBan());
       } catch (Exception ex) {
         ex.printStackTrace();
       }
@@ -973,8 +1131,30 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       scrollPaneBook.setVisible(false);
       scrollPaneNxb.setVisible(false);
       scrollPaneTloai.setVisible(true);
+      scrollPaneTacGia.setVisible(false);
+
+      search_sach_panel.setVisible(false);
+      search_nhaxuatban_panel.setVisible(false);
+      search_theloai_panel.setVisible(true);
+      search_tacgia_panel.setVisible(false);
       try {
-        showTheLoaiList();
+        showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+      } catch (Exception ex) {
+        ex.printStackTrace();
+      }
+    } else if (tabPane.getSelectedComponent() == tacgia_panel) {
+      scrollPaneBook.setVisible(false);
+      scrollPaneNxb.setVisible(false);
+      scrollPaneTloai.setVisible(false);
+      scrollPaneTacGia.setVisible(true);
+
+      search_sach_panel.setVisible(false);
+      search_nhaxuatban_panel.setVisible(false);
+      search_theloai_panel.setVisible(false);
+      search_tacgia_panel.setVisible(true);
+      try {
+        // System.out.println(tacgiaBUS.getDanhSachTacGia().size());
+        showTacGiaList(tacgiaBUS.getDanhSachTacGia());
       } catch (Exception ex) {
         ex.printStackTrace();
       }

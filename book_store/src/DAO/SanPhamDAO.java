@@ -126,7 +126,6 @@ public class SanPhamDAO implements DAOinterface<Sach> {
         try {
             String sql = "SELECT * FROM book";
             statement = conn.createStatement();
-
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
                 Sach b1 = new Sach(result.getInt("maSach"),
@@ -137,7 +136,6 @@ public class SanPhamDAO implements DAOinterface<Sach> {
                         result.getInt("soLuong"),
                         result.getInt("giaTien"),
                         result.getInt("trangThai"));
-
                 bookList.add(b1);
             }
 
@@ -230,6 +228,5 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             }
         }
         return maSachTmp;
-
     }
 }

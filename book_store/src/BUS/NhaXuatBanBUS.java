@@ -58,4 +58,19 @@ public class NhaXuatBanBUS {
     unknow.setMaNXB(0);
     return unknow;
   }
+
+  public ArrayList<NhaXuatBan> searchNhaXuatBan(String maNhaXuatBan, String tenNhaXuatBan, String Hotmail,
+      String Hotline, String Diachi) {
+    ArrayList<NhaXuatBan> resultList = new ArrayList<NhaXuatBan>();
+    for (NhaXuatBan tmp : this.NhaXuatBan_list) {
+      if ((maNhaXuatBan.equalsIgnoreCase("") || String.valueOf(tmp.getMaNXB()).contains(maNhaXuatBan.toLowerCase()))
+          && (tenNhaXuatBan.equalsIgnoreCase("") || tmp.getTenNXB().toLowerCase().contains(tenNhaXuatBan.toLowerCase()))
+          && (Hotmail.equalsIgnoreCase("") || tmp.getEmail().toLowerCase().contains(Hotmail.toLowerCase()))
+          && (Hotline.equalsIgnoreCase("") || tmp.getSdt().toLowerCase().contains(Hotline.toLowerCase()))
+          && (Diachi.equalsIgnoreCase("") || tmp.getDiaChi().toLowerCase().contains(Diachi.toLowerCase()))) {
+        resultList.add(tmp);
+      }
+    }
+    return resultList;
+  }
 }
