@@ -75,6 +75,16 @@ public class quanlinhanvien {
         return list_ds;
     }
 
+    public ArrayList<Integer> danhsachmanhanvien_tt() {
+        ArrayList<Integer> list_ds = new ArrayList<Integer>();
+        int dem = 0;
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).getTinhtrang() == 1) {
+                list_ds.add(list.get(i).getMa());
+            }
+        return list_ds;
+    }
+
     public boolean timkiem_vitri(int tk, String str, JTable table) {
         boolean kiemtra = false;
         if (tk == 0) {
