@@ -14,20 +14,22 @@ import GUI.main_frame.main;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
-public class themtaikhoan extends JPanel implements MouseListener{
+public class themtaikhoan extends JPanel implements MouseListener {
     main obj;
-    
+
     quanlinhomquyen quanlinhomquyen = new quanlinhomquyen();
     quanlinhanvien quanlinhanvien = new quanlinhanvien();
-    quanlitaikhoan quanlitaikhoan=new quanlitaikhoan();
-    icon_lib ic_lib=new icon_lib();
-    setting_frame set=new setting_frame();
+    quanlitaikhoan quanlitaikhoan = new quanlitaikhoan();
+    icon_lib ic_lib = new icon_lib();
+    setting_frame set = new setting_frame();
     // ----------------------------
     JPanel pan_info;
     Integer[] list_manhomquyen = quanlinhomquyen.danhsach_manhomquyen();
-    Integer[] list_manhanvien = quanlinhanvien.danhsachmanhanvien();
-    String[] list_tennhomquyen=quanlinhomquyen.danhsach_tennhomquyen();
+    ArrayList<Integer> list_manhanvien = quanlinhanvien.danhsachmanhanvien_tt();
+    Integer[] list_mnv = new Integer[list_manhanvien.size()];
+    String[] list_tennhomquyen = quanlinhomquyen.danhsach_tennhomquyen();
     String[] list_lab = { "Ma tai khoan:", "Username:", "Password:", "Ma nhan vien:", "Nhom quyen:" };
     JLabel[] lab = new JLabel[list_lab.length];
     JTextField[] txt = new JTextField[list_lab.length - 1];
@@ -56,6 +58,8 @@ public class themtaikhoan extends JPanel implements MouseListener{
                 TitledBorder.TOP));
         ;
         this.add(pan_info);
+        for (int i = 0; i < list_manhanvien.size(); i++)
+            list_mnv[i] = list_manhanvien.get(i);
         for (int i = 0; i < list_lab.length; i++) {
             lab[i] = new JLabel(list_lab[i]);
             lab[i].setPreferredSize(new Dimension(250, 50));
@@ -69,7 +73,7 @@ public class themtaikhoan extends JPanel implements MouseListener{
                 txt[i].setEnabled(false);
                 pan_info.add(txt[i]);
             } else if (i == 3) {
-                com_manhanvien = new JComboBox(list_manhanvien);
+                com_manhanvien = new JComboBox(list_mnv);
                 com_manhanvien.setPreferredSize(new Dimension(300, 50));
                 com_manhanvien.setFont(new Font(set.font_time_roman, 1, 25));
                 com_manhanvien.setForeground(Color.black);
@@ -90,7 +94,7 @@ public class themtaikhoan extends JPanel implements MouseListener{
                 pan_info.add(txt[i]);
             }
         }
-        bun_them = new JButton("Them tai khoan",ic_lib.icon_add);
+        bun_them = new JButton("Them tai khoan", ic_lib.icon_add);
         bun_them.setBounds(400, 590, 300, 50);
         bun_them.setBackground(Color.red);
         bun_them.setFont(new Font(set.font_time_roman, 1, 25));
@@ -102,36 +106,36 @@ public class themtaikhoan extends JPanel implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-       
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-       if(e.getSource()==bun_them){
-            int ma=this.id;
-            String username=txt[1].getText();
-            String password=txt[2].getText();
+        if (e.getSource() == bun_them) {
+            int ma = this.id;
+            String username = txt[1].getText();
+            String password = txt[2].getText();
             int mnv_select = Integer.parseInt(com_manhanvien.getSelectedItem().toString());
             int mnq_select = list_manhomquyen[com_tennhomquyen.getSelectedIndex()];
-        taikhoan tk=new taikhoan(ma, username, password, mnv_select,mnq_select,1);
-        quanlitaikhoan.themtaikhoan(tk);
-        JOptionPane.showMessageDialog(null,"Them tai khoan thanh cong");
-       }
+            taikhoan tk = new taikhoan(ma, username, password, mnv_select, mnq_select, 1);
+            quanlitaikhoan.themtaikhoan(tk);
+            JOptionPane.showMessageDialog(null, "Them tai khoan thanh cong");
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-      
+
     }
 
 }

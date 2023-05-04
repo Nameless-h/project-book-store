@@ -1,4 +1,4 @@
-package GUI;
+package GUI.banhangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -28,11 +27,13 @@ import BUS.quanlinhanvien;
 import DTO.hoadonbanhang;
 import DTO.khachhang;
 import DTO.nhanvien;
+import GUI.Mytable;
 import GUI.Mybutton.DateButton;
 import GUI.Mybutton.DetailButton;
 import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.ExportPDF;
 import GUI.Mybutton.searchbutton;
+import support.WritePDF;
 
 public class InvoiceGUI extends JPanel implements ActionListener {
 
@@ -172,6 +173,8 @@ public class InvoiceGUI extends JPanel implements ActionListener {
         pdfbtn.setPreferredSize(new Dimension(100, 45));
 
         detailbtn.addActionListener(this);
+        exportbtn.addActionListener(this);
+        pdfbtn.addActionListener(this);
 
         buttonPanel.add(detailbtn);
         buttonPanel.add(exportbtn);
@@ -192,7 +195,7 @@ public class InvoiceGUI extends JPanel implements ActionListener {
             nv=qlnv.getNhanVien(hdbh.getmanv());
             tongtien = hdbh.getTongtien();
             giamgia = (double)hdbh.getGiamgia();
-            thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
+            thanhtien = Math.ceil((tongtien - tongtien * (Math.ceil(giamgia) / 100))/1000)*1000;
             t.addRow(new String[] {
                     String.valueOf(i++),
                     String.valueOf(hdbh.getmahd()),
@@ -205,10 +208,7 @@ public class InvoiceGUI extends JPanel implements ActionListener {
     }
     
     private void searchOnchange() {
-        if(searchinp.getText().equals("") && datefrom.getText().equals("") && dateto.getText().equals("")) {
-            JOptionPane.showMessageDialog(this,"Vui lòng nhập điều kiện lọc!","Thông báo",1);
-            return;
-        } else if(datefrom.getText().equals("") || dateto.getText().equals("")) {
+        if((datefrom.getText().equals("") && !dateto.getText().isEmpty()) || (dateto.getText().equals("") && !datefrom.getText().isEmpty())) {
             JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
             return;
         } else if(qlhdbh.searchHoadonbanhang(searchinp.getText(),datefrom.getText(),dateto.getText()) != null) {
@@ -232,6 +232,17 @@ public class InvoiceGUI extends JPanel implements ActionListener {
             } else {
                 int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
                 new chitiethoadonbanhangGUI(mahd);
+            }
+        } else if(e.getSource() == exportbtn) {
+            qlhdbh.xuatExcel();
+        } else if(e.getSource() == pdfbtn) {
+            int row = invoiceTable.getTable().getSelectedRow();
+            if(row == -1) {
+                JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn để in !","Thông báo",1);
+                return;
+            } else {
+                int mahd = Integer.parseInt((String)invoiceTable.getTable().getValueAt(row,1));
+                new WritePDF().writeHoaDonBanHang(mahd);
             }
         }
     }

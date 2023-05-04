@@ -17,15 +17,18 @@ import BUS.quanlichitietnhomquyen;
 import BUS.quanlinhomquyen;
 import DTO.chitietnhomquyen;
 import DTO.taikhoan;
-import GUI.InvoiceGUI;
-import GUI.SaleGUI;
 import GUI.quanlikhachhang.danhsachkhachhang;
+import GUI.quanlinhacungcap.danhsachnhacungcap;
 import GUI.quanlinhanvien.danhsachnhanvien;
 import GUI.quanlinhomquyen.danhsachnhomquyen;
 import GUI.quanlitaikhoan.danhsachtaikhoan;
 import GUI.quanlysanpham.bookFrame;
 import GUI.statistic.list_statistic;
 import GUI.*;
+import GUI.banhangGUI.InvoiceGUI;
+import GUI.banhangGUI.SaleGUI;
+import GUI.nhaphangGUI.ImportGUI;
+import GUI.nhaphangGUI.danhsachhoadonnhaphangGUI;
 
 public class menu extends JPanel implements MouseListener {
     main obj;
@@ -137,6 +140,20 @@ public class menu extends JPanel implements MouseListener {
             obj.center.repaint();
             obj.center.revalidate();
 
+        } else if (text.equalsIgnoreCase("Nhap hang")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            ImportGUI importgui = new ImportGUI();
+            importgui.setBounds(0, 0, 1100, 700);
+            obj.center.removeAll();
+            obj.center.add(importgui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
         } else if (text.equalsIgnoreCase("Hoa don")) {
             FlatLightLaf.setup();
             try {
@@ -148,6 +165,20 @@ public class menu extends JPanel implements MouseListener {
             invoicegui.setBounds(0, 0, 1100, 700);
             obj.center.removeAll();
             obj.center.add(invoicegui);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+        } else if (text.equalsIgnoreCase("Phieu nhap")) {
+            FlatLightLaf.setup();
+            try {
+                UIManager.setLookAndFeel(new FlatLightLaf());
+            } catch (Exception e) {
+                // TODO: handle exception
+            }
+            danhsachhoadonnhaphangGUI dshdnhgui = new danhsachhoadonnhaphangGUI();
+            dshdnhgui.setBounds(0, 0, 1100, 700);
+            obj.center.removeAll();
+            obj.center.add(dshdnhgui);
             obj.center.repaint();
             obj.center.revalidate();
 
@@ -163,6 +194,30 @@ public class menu extends JPanel implements MouseListener {
 
             obj.center.removeAll();
             obj.center.add(bf);
+            obj.center.repaint();
+            obj.center.revalidate();
+
+        } else if (text.equalsIgnoreCase("Nha cung cap")) {
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NCC") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    danhsachnhacungcap panel = new danhsachnhacungcap(obj, tk_chitietquyen);
+                    panel.setBounds(0, 0, set.w_center, set.h_center);
+                    obj.center.removeAll();
+                    obj.center.add(panel);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
+            }
+        } else if (text.equalsIgnoreCase("Thong ke")) {
+            list_statistic ls = new list_statistic();
+            ls.setBounds(0, 0, 1100, 670);
+            obj.center.removeAll();
+            obj.center.add(ls);
             obj.center.repaint();
             obj.center.revalidate();
 

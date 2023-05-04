@@ -5,10 +5,10 @@ import java.util.ArrayList;
 
 import DTO.nhomquyen;
 
-public class nhomquyenDAO implements DAOinterface<nhomquyen> {
+public class nhomquyenDAO  {
     private int check = 0;
 
-    @Override
+    
     public int insert(nhomquyen t) {
 
         try {
@@ -31,19 +31,32 @@ public class nhomquyenDAO implements DAOinterface<nhomquyen> {
         return 0;
     }
 
-    @Override
-    public int delete(nhomquyen t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    
+    public void delete_id(int ma) {
+        try (
+            // b1:ket noi co so du lieu
+            Connection con = JDBCUtil.getConnection();
+            // b2:tao doi tuong statement
+            Statement st = con.createStatement()) {
+        // b3:thuc thi cau lenh sql
+        // DELETE FROM `taikhoan` WHERE 0
+        String sql = "DELETE FROM chitiet_nhomquyen where maNhomquyen=" + ma + ";";
+
+        this.check += st.executeUpdate(sql);
+        JDBCUtil.closeConnection(con);
+    } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+    }
     }
 
-    @Override
+    
     public int delete_all() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'delete_all'");
     }
 
-    @Override
+    
     public ArrayList<nhomquyen> selecAll() {
         ArrayList<nhomquyen> ketQua = new ArrayList<nhomquyen>();
         try {
@@ -80,25 +93,25 @@ public class nhomquyenDAO implements DAOinterface<nhomquyen> {
         return ketQua;
     }
 
-    @Override
+    
     public nhomquyen selectById(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selectById'");
     }
 
-    @Override
+    
     public ArrayList<nhomquyen> selecByCondition(String condition) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'selecByCondition'");
     }
 
-    @Override
+    
     public ArrayList<nhomquyen> select_all_ById(int t) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
 
-    @Override
+    
     public int update(nhomquyen t) {
         int ketQua = 0;
         try {

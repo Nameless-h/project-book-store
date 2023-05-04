@@ -1,4 +1,4 @@
-package GUI;
+package GUI.nhaphangGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,23 +12,21 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-
-import com.formdev.flatlaf.FlatLightLaf;
 
 import BUS.PriceFormatter;
 import BUS.SanPhamBUS;
-import BUS.quanlichitiethoadonbanhang;
-import BUS.quanlihoadonbanhang;
-import BUS.quanlikhachhang;
+import BUS.quanlichitiethoadonnhaphang;
+import BUS.quanlihoadonnhaphang;
+import BUS.quanlinhacungcap;
 import BUS.quanlinhanvien;
 import DTO.Sach;
 import DTO.chitiethoadon;
-import DTO.hoadonbanhang;
-import DTO.khachhang;
+import DTO.hoadonnhaphang;
+import DTO.nhacungcap;
 import DTO.nhanvien;
+import GUI.Mytable;
 
-public class chitiethoadonbanhangGUI extends JFrame {
+public class chitiethoadonnhaphangGUI extends JFrame {
     private int mahd;
 
     // information panel
@@ -36,26 +34,24 @@ public class chitiethoadonbanhangGUI extends JFrame {
     private JTextField mahdtxt;
     private JTextField manvtxt;
     private JTextField tennvtxt;
-    private JTextField makhtx;
-    private JTextField tenkhtxt;
+    private JTextField mancctx;
+    private JTextField tenncctxt;
     private JTextField ngaytxt;
-    private JTextField tongtientxt;
-    private JTextField giamgiatxt;
     private JTextField thanhtientxt;
 
     // books table
     private Mytable booktable;
 
     //others
-    private quanlihoadonbanhang qlhdbh = new quanlihoadonbanhang();
-    private quanlichitiethoadonbanhang qlcthdbh = new quanlichitiethoadonbanhang();
-    private quanlikhachhang qlkh = new quanlikhachhang();
+    private quanlihoadonnhaphang qlhdnh = new quanlihoadonnhaphang();
+    private quanlichitiethoadonnhaphang qlcthdnh = new quanlichitiethoadonnhaphang();
+    private quanlinhacungcap qlncc = new quanlinhacungcap();
     private quanlinhanvien qlnv = new quanlinhanvien();
     private SanPhamBUS spbus = new SanPhamBUS();
     
-    public chitiethoadonbanhangGUI(int _mahd) {
+    public chitiethoadonnhaphangGUI(int _mahd) {
         this.mahd = _mahd;
-        this.setTitle("Chi tiết hóa đơn "+this.mahd);
+        this.setTitle("Chi tiết phiếu nhập "+this.mahd);
         this.setLayout(new BorderLayout());
         this.setSize(1000, 600);
         this.setLocationRelativeTo(null);
@@ -75,21 +71,17 @@ public class chitiethoadonbanhangGUI extends JFrame {
         mahdtxt = new JTextField();
         manvtxt = new JTextField();
         tennvtxt = new JTextField();
-        makhtx = new JTextField();
-        tenkhtxt = new JTextField();
+        mancctx = new JTextField();
+        tenncctxt = new JTextField();
         ngaytxt = new JTextField();
-        tongtientxt = new JTextField();
-        giamgiatxt = new JTextField();
         thanhtientxt = new JTextField();
 
-        mahdtxt.setBorder(BorderFactory.createTitledBorder("Mã hóa đơn"));
+        mahdtxt.setBorder(BorderFactory.createTitledBorder("Mã phiếu nhập"));
         manvtxt.setBorder(BorderFactory.createTitledBorder("Mã nhân viên"));
         tennvtxt.setBorder(BorderFactory.createTitledBorder("Tên nhân viên"));
-        makhtx.setBorder(BorderFactory.createTitledBorder("Mã khách hàng"));
-        tenkhtxt.setBorder(BorderFactory.createTitledBorder("Tên khách hàng"));
+        mancctx.setBorder(BorderFactory.createTitledBorder("Mã nhà cung cấp"));
+        tenncctxt.setBorder(BorderFactory.createTitledBorder("Tên nhà cung cấp"));
         ngaytxt.setBorder(BorderFactory.createTitledBorder("Ngày tạo"));
-        tongtientxt.setBorder(BorderFactory.createTitledBorder("Tổng tiền"));
-        giamgiatxt.setBorder(BorderFactory.createTitledBorder("Giảm giá (%)"));
         thanhtientxt.setBorder(BorderFactory.createTitledBorder("Thành tiền"));
 
         int w = 250 , h = 50;
@@ -99,43 +91,35 @@ public class chitiethoadonbanhangGUI extends JFrame {
         mahdtxt.setPreferredSize(new Dimension(w, h));
         manvtxt.setPreferredSize(new Dimension(w, h));
         tennvtxt.setPreferredSize(new Dimension(w, h));
-        makhtx.setPreferredSize(new Dimension(w, h));
-        tenkhtxt.setPreferredSize(new Dimension(w, h));
+        mancctx.setPreferredSize(new Dimension(w, h));
+        tenncctxt.setPreferredSize(new Dimension(w, h));
         ngaytxt.setPreferredSize(new Dimension(w, h));
-        tongtientxt.setPreferredSize(new Dimension(w, h));
-        giamgiatxt.setPreferredSize(new Dimension(w, h));
         thanhtientxt.setPreferredSize(new Dimension(w, h));
 
         mahdtxt.setFont(f);
         manvtxt.setFont(f);
         tennvtxt.setFont(f);
-        makhtx.setFont(f);
-        tenkhtxt.setFont(f);
+        mancctx.setFont(f);
+        tenncctxt.setFont(f);
         ngaytxt.setFont(f);
-        tongtientxt.setFont(f);
-        giamgiatxt.setFont(f);
         thanhtientxt.setFont(f);
 
         mahdtxt.setEditable(false);
         manvtxt.setEditable(false);
         tennvtxt.setEditable(false);
-        makhtx.setEditable(false);
-        tenkhtxt.setEditable(false);
+        mancctx.setEditable(false);
+        tenncctxt.setEditable(false);
         ngaytxt.setEditable(false);
-        tongtientxt.setEditable(false);
-        giamgiatxt.setEditable(false);
         thanhtientxt.setEditable(false);
         
         settext();
 
         infopnl.add(mahdtxt);
         infopnl.add(manvtxt);
-        infopnl.add(tongtientxt);
-        infopnl.add(makhtx);
-        infopnl.add(tennvtxt);
-        infopnl.add(giamgiatxt);
-        infopnl.add(tenkhtxt);
+        infopnl.add(mancctx);
         infopnl.add(ngaytxt);
+        infopnl.add(tennvtxt);
+        infopnl.add(tenncctxt);
         infopnl.add(thanhtientxt);
 
         return infopnl;
@@ -145,8 +129,8 @@ public class chitiethoadonbanhangGUI extends JFrame {
         booktable = new Mytable();
         booktable.setTablesize(0, 400);
         booktable.setHeader(new String[]{"STT","Mã sách","Tên sách","Số lượng","Đơn giá","Thành tiền"});
-        qlcthdbh.initList();
-        setDataToTable(qlcthdbh.getList(), booktable);
+        qlcthdnh.initList();
+        setDataToTable(qlcthdnh.getList(), booktable);
         booktable.setPreferredWidth(0,50);
         booktable.setPreferredWidth(1,100);
         booktable.setPreferredWidth(2,300);
@@ -159,15 +143,6 @@ public class chitiethoadonbanhangGUI extends JFrame {
         booktable.setAlignment(1, align);
         booktable.setAlignment(3, align);
         return booktable;
-    }
-    public static void main(String[] args) {
-        FlatLightLaf.setup();
-        try {
-            UIManager.setLookAndFeel(new FlatLightLaf());
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        new chitiethoadonbanhangGUI(1);
     }
 
     private void setDataToTable(ArrayList<chitiethoadon> list , Mytable t) {
@@ -191,26 +166,21 @@ public class chitiethoadonbanhangGUI extends JFrame {
     }
 
     private void settext() {
-        qlhdbh.initList();
-        khachhang kh;
+        qlhdnh.initList();
+        qlncc.initList();
+        nhacungcap ncc;
         nhanvien nv ;
-        double tongtien,giamgia,thanhtien;
-        for(hoadonbanhang hd : qlhdbh.getList()) {
+        for(hoadonnhaphang hd : qlhdnh.getList()) {
             if(hd.getmahd() == this.mahd) {
-                kh = qlkh.getKhachHang(hd.getMakh());
+                ncc = qlncc.getNCC(hd.getMancc());
                 nv = qlnv.getNhanVien(hd.getmanv());
-                tongtien = hd.getTongtien();
-                giamgia = (double)hd.getGiamgia();
-                thanhtien = tongtien - tongtien * (Math.ceil(giamgia) / 100);
                 mahdtxt.setText(String.valueOf(this.mahd) );
                 manvtxt.setText(String.valueOf(nv.getMa()));
                 tennvtxt.setText(nv.getTen());
-                makhtx.setText(String.valueOf(kh.getMa()));
-                tenkhtxt.setText(kh.getTen());
+                mancctx.setText(String.valueOf(ncc.getMa()));
+                tenncctxt.setText(ncc.getTen());
                 ngaytxt.setText(hd.getngay());
-                tongtientxt.setText(PriceFormatter.format(hd.getTongtien()));
-                giamgiatxt.setText(String.valueOf(hd.getGiamgia()));
-                thanhtientxt.setText(PriceFormatter.format(thanhtien)); 
+                thanhtientxt.setText(PriceFormatter.format(hd.getTongtien())); 
                 break;
             }
         }

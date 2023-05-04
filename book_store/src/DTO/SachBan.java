@@ -1,6 +1,6 @@
 package DTO;
 
-public class bookSold {
+public class SachBan {
     private int bookID;
     private String bookName;
     private String bookCategory;
@@ -8,7 +8,7 @@ public class bookSold {
     private int bookSoldQuantity;
 
     // constructor
-    public bookSold() {
+    public SachBan() {
         this.bookID = 0;
         this.bookName = null;
         this.bookCategory = null;
@@ -16,7 +16,7 @@ public class bookSold {
         this.bookSoldQuantity = 0;
     }
 
-    public bookSold(int id,String name,String category,int price,int quantity) {
+    public SachBan(int id,String name,String category,int price,int quantity) {
         this.bookID = id;
         this.bookName = name;
         this.bookCategory = category;

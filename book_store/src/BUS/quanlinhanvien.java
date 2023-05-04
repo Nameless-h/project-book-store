@@ -11,9 +11,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.rmi.dgc.Lease;
-import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -33,8 +30,8 @@ public class quanlinhanvien {
     }
 
     public nhanvien getNhanVien(int manv) {
-        for(nhanvien nv : this.list) {
-            if(nv.getMa() == manv) {
+        for (nhanvien nv : this.list) {
+            if (nv.getMa() == manv) {
                 return nv;
             }
         }
@@ -43,7 +40,7 @@ public class quanlinhanvien {
 
     // hien thi danh sach len 1 table duoc truyen va/
     public void hienthidanhsach_nhanvien(JTable table) {
-
+        list = chucnang_nhanvien.selecAll();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         // them thong tin nhan vien vao bang table
@@ -55,7 +52,7 @@ public class quanlinhanvien {
                 gt = "Nu";
             model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                     list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                    list.get(i).getChucvu() });
+                    list.get(i).getChucvu(), list.get(i).getTinhtrang() });
         }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -75,6 +72,16 @@ public class quanlinhanvien {
         Integer[] list_ds = new Integer[list.size()];
         for (int i = 0; i < list_ds.length; i++)
             list_ds[i] = list.get(i).getMa();
+        return list_ds;
+    }
+
+    public ArrayList<Integer> danhsachmanhanvien_tt() {
+        ArrayList<Integer> list_ds = new ArrayList<Integer>();
+        int dem = 0;
+        for (int i = 0; i < list.size(); i++)
+            if (list.get(i).getTinhtrang() == 1) {
+                list_ds.add(list.get(i).getMa());
+            }
         return list_ds;
     }
 
@@ -98,7 +105,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -120,7 +127,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -146,7 +153,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -168,7 +175,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -190,7 +197,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -212,7 +219,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -234,7 +241,7 @@ public class quanlinhanvien {
                         gt = "Nu";
                     model.addRow(new Object[] { i + 1, list.get(i).getMa(), list.get(i).getTen(), gt,
                             list.get(i).getDiachi(), list.get(i).getEmail(), list.get(i).getSodienthoai(),
-                            list.get(i).getChucvu() });
+                            list.get(i).getChucvu(), list.get(i).getTinhtrang() });
                     kiemtra = true;
                 }
 
@@ -249,7 +256,7 @@ public class quanlinhanvien {
 
     public void xuatds_excel() {
         String[] list_ten = { "STT", "Ma nhan vien", "Ten nhan vien", "Gioi tinh", "Dia chi", "Email", "So dien thoai",
-                "Chuc vu" };
+                "Chuc vu", "Tinh trang" };
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Danh sách nhan vien");
         XSSFRow row;
@@ -302,6 +309,8 @@ public class quanlinhanvien {
                     cell.setCellValue(list.get(i).getSodienthoai());
                 } else if (cell.getColumnIndex() == 7) {
                     cell.setCellValue(list.get(i).getChucvu());
+                } else if (cell.getColumnIndex() == 8) {
+                    cell.setCellValue(list.get(i).getTinhtrang());
                 }
 
             }
@@ -336,5 +345,10 @@ public class quanlinhanvien {
 
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
         }
+    }
+
+    public void nutxoa(int manv, JTable table) {
+        chucnang_nhanvien.update_tt(manv, 0);
+        hienthidanhsach_nhanvien(table);
     }
 }

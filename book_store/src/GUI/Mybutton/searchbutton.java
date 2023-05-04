@@ -5,7 +5,7 @@ import javax.swing.ImageIcon;
 
 public class searchbutton extends JButton{
     public searchbutton() {
-        this.setText("Search");
+        this.setText("Tìm");
         this.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8-search-30.png")));
     }
 }

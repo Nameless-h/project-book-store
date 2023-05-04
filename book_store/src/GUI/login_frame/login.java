@@ -5,7 +5,9 @@
 package GUI.login_frame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
@@ -20,11 +22,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import BUS.quanlitaikhoan;
 import DTO.taikhoan;
-<<<<<<< HEAD:book_store/src/GUI/login.java
-=======
 import GUI.main_frame.main;
-
->>>>>>> main:book_store/src/GUI/login_frame/login.java
 
 /**
  *
@@ -67,6 +65,11 @@ public class login extends JFrame implements MouseListener, KeyListener {
         // set frame va layout
         this.setSize(900, 550);
         this.setLocation(350, 150);
+        // Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        // this.setSize(dim.width, dim.height);
+        // this.setLocation(0,0);
+        // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 -
+        // this.getSize().height / 2);
         this.setUndecorated(true);
         this.setLayout(null);
         // ------------------------------------------------------------------------------------------------------
@@ -281,26 +284,12 @@ public class login extends JFrame implements MouseListener, KeyListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
-    }
 
-    @Override
-    public void mouseEntered(MouseEvent e) {
-       
     }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-       
-    }
-
- 
 
 }

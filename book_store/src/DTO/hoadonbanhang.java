@@ -1,7 +1,5 @@
 package DTO;
 
-import java.util.ArrayList;
-
 public class hoadonbanhang extends hoadon{
     private int makh;
     private int giamGia;
