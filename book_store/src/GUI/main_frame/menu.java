@@ -147,6 +147,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
+
         } else if (text.equalsIgnoreCase("Nhap hang")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NH") &&
@@ -168,6 +169,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
+
         } else if (text.equalsIgnoreCase("Hoa don")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("HD") &&
