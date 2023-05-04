@@ -183,9 +183,7 @@ public class taikhoanDAO {
             String sql = "UPDATE taikhoan " +
                     " SET " +
                     "maNhomquyen=" + 0 + "" +
-                    " WHERE maTk='" + ma +
-                    "\'";
-
+                    " WHERE maTk=" + ma + ";";
             ketQua = st.executeUpdate(sql);
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {
