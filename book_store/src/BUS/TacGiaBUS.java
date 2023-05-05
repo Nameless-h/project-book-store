@@ -25,20 +25,25 @@ public class TacGiaBUS {
 
   public void addTacGia(tacgia bk) {
     tacgiaDAO.insert(bk);
+    bk.setMaTacgia(tacgiaDAO.getLastInsertId());
     Tacgia_list.add(bk);
   }
 
   public void delTacGia(tacgia bk) {
-    Tacgia_list.remove(bk);
+    for (tacgia tmp : this.Tacgia_list) {
+      if (tmp.getMaTacgia() == bk.getMaTacgia()) {
+        Tacgia_list.remove(tmp);
+        break;
+      }
+    }
     tacgiaDAO.delete(bk);
   }
 
-  public void editTacGia(tacgia TacgiaTmp) {
-    tacgiaDAO.update(TacgiaTmp);
-    for (tacgia tmp : this.Tacgia_list) {
-      if (tmp.getMaTacgia() == TacgiaTmp.getMaTacgia()) {
-        delTacGia(tmp);
-        Tacgia_list.add(TacgiaTmp);
+  public void editTacGia(tacgia tacgiaTmp) {
+    tacgiaDAO.update(tacgiaTmp);
+    for (int i = 0; i < Tacgia_list.size(); i++) {
+      if (Tacgia_list.get(i).getMaTacgia() == tacgiaTmp.getMaTacgia()) {
+        Tacgia_list.get(i).setTenTacgia(tacgiaTmp.getTenTacgia());
         return;
       }
     }
@@ -56,5 +61,16 @@ public class TacGiaBUS {
   public tacgia timTacgiaTheoMaSach(int maSach) {
     tacgia tmp = tacgiaDAO.selectById(maSach);
     return tmp;
+  }
+
+  public ArrayList<tacgia> searchtacgia(String matacgia, String tentacgia) {
+    ArrayList<tacgia> resultList = new ArrayList<tacgia>();
+    for (tacgia tmp : Tacgia_list) {
+      if ((matacgia.equalsIgnoreCase("") || String.valueOf(tmp.getMaTacgia()).contains(matacgia))
+          && (tentacgia.equalsIgnoreCase("") || tmp.getTenTacgia().contains(tentacgia.toLowerCase()))) {
+        resultList.add(tmp);
+      }
+    }
+    return resultList;
   }
 }

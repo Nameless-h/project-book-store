@@ -14,20 +14,35 @@ public class NhaXuatBan {
     private String email;
     private String diaChi;
     private String sdt;
+    private int trangThai;
 
-    public NhaXuatBan(int maNXB, String tenNXB, String email, String diaChi, String sdt) {
+    public NhaXuatBan() {
+        this.maNXB = 0;
+        this.tenNXB = "";
+        this.email = "";
+        this.diaChi = "";
+        this.sdt = "";
+    }
+
+    public NhaXuatBan(int maNXB, String tenNXB, String email, String diaChi, String sdt, int trangThai) {
         this.maNXB = maNXB;
         this.tenNXB = tenNXB;
         this.email = email;
         this.diaChi = diaChi;
         this.sdt = sdt;
+        this.trangThai = trangThai;
     }
 
-    public NhaXuatBan(String tenNXB, String email, String diaChi, String sdt) {
+    public NhaXuatBan(String tenNXB, String email, String diaChi, String sdt, int trangThai) {
         this.tenNXB = tenNXB;
         this.email = email;
         this.diaChi = diaChi;
         this.sdt = sdt;
+        this.trangThai = trangThai;
+    }
+
+    public String toString() {
+        return this.maNXB + "" + this.tenNXB;
     }
 
     public int getMaNXB() {
@@ -68,6 +83,14 @@ public class NhaXuatBan {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 
 }

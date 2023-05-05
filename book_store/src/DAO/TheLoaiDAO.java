@@ -28,20 +28,75 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
 
     @Override
     public int insert(Theloai t) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        Connection conn = JDBCUtil.getConnection();
+        PreparedStatement statement = null;
+        Theloai tmp = null;
+        try {
+
+            statement = conn
+                    .prepareStatement(
+                            "INSERT INTO theloai(tenTheloai,trangthai) VALUES (?,?)");
+            statement.setString(1, t.getTenTheloai());
+            statement.setInt(2, t.getTrangThai());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        }
+        return 1;
     }
 
     @Override
     public int update(Theloai update_theloai) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Connection conn = JDBCUtil.getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement(
+                    "UPDATE theloai SET tenTheloai=(?) WHERE maTheloai=(?)");
+            statement.setString(1, update_theloai.getTenTheloai());
+            statement.setInt(2, update_theloai.getMaTheloai());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        }
+        return 1;
     }
 
     @Override
     public int delete(Theloai theloai) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        Connection conn = JDBCUtil.getConnection();
+        PreparedStatement statement = null;
+        try {
+            statement = conn.prepareStatement("UPDATE theloai SET trangThai=0 WHERE maTheloai=(?)");
+            statement.setInt(1, theloai.getMaTheloai());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        }
+        return 1;
     }
 
     @Override
@@ -122,4 +177,34 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
         throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
     }
 
+    public int getLastInsertId() {
+        Statement stm = null;
+        int maTheloaiTmp = -1;
+        try {
+            Connection conn = JDBCUtil.getConnection();
+            stm = conn.createStatement();
+            String sql = "SELECT maTheloai FROM theloai ORDER BY maTheloai DESC LIMIT 1";
+            ResultSet result = stm.executeQuery(sql);
+            if (!result.next()) {
+                return 0;
+            } else {
+                do {
+                    maTheloaiTmp = result.getInt("maTheloai");
+                    break;
+                } while (result.next());
+            }
+        } catch (SQLException e) {
+            Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException e) {
+                    Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+                }
+            }
+        }
+        return maTheloaiTmp;
+
+    }
 }

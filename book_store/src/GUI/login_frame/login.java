@@ -68,7 +68,8 @@ public class login extends JFrame implements MouseListener, KeyListener {
         // Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         // this.setSize(dim.width, dim.height);
         // this.setLocation(0,0);
-        // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        // this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 -
+        // this.getSize().height / 2);
         this.setUndecorated(true);
         this.setLayout(null);
         // ------------------------------------------------------------------------------------------------------

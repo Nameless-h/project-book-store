@@ -4,6 +4,8 @@
  */
 package DTO;
 
+import javax.security.auth.PrivateCredentialPermission;
+
 /**
  *
  * @author JN_PC
@@ -11,15 +13,25 @@ package DTO;
 public class Sach {
     private int maSach;
     private String tenSach;
-    private int maTacgia;
     private int maTheloai;
     private int maNXB;
     private String namXB;
     private int soLuong;
     private int giaTien;
+    private int trangThai;
+
+    public Sach() {
+        this.maSach = 0;
+        this.tenSach = "";
+        this.maTheloai = 0;
+        this.maNXB = 0;
+        this.namXB = "";
+        this.soLuong = 0;
+        this.giaTien = 0;
+    }
 
     public Sach(int maSach, String tenSach, int maTheloai, int maNXB, String namXB, int soLuong,
-            int giaTien) {
+            int giaTien, int trangThai) {
         this.maSach = maSach;
         this.tenSach = tenSach;
         this.maTheloai = maTheloai;
@@ -27,15 +39,17 @@ public class Sach {
         this.namXB = namXB;
         this.soLuong = soLuong;
         this.giaTien = giaTien;
+        this.trangThai = trangThai;
     }
 
-    public Sach(String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien) {
+    public Sach(String tenSach, int maTheloai, int maNXB, String namXB, int soLuong, int giaTien, int trangThai) {
         this.tenSach = tenSach;
         this.maTheloai = maTheloai;
         this.maNXB = maNXB;
         this.namXB = namXB;
         this.soLuong = soLuong;
         this.giaTien = giaTien;
+        this.trangThai = trangThai;
     }
 
     public int getMaSach() {
@@ -49,8 +63,9 @@ public class Sach {
 
     @Override
     public String toString() {
-        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTacgia=" + maTacgia + ", maTheloai="
-                + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + '}';
+        return "book{" + "maSach=" + maSach + ", tenSach=" + tenSach + ", maTheloai="
+                + maTheloai + ", maNXB=" + maNXB + ", namXB=" + namXB + ", giaTien=" + giaTien + ", trangThai="
+                + trangThai + '}';
     }
 
     public void setTenSach(String tenSach) {
@@ -99,5 +114,13 @@ public class Sach {
 
     public void setGiaTien(int giaTien) {
         this.giaTien = giaTien;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 }

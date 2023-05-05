@@ -16,7 +16,7 @@ public class JDBCUtil {
 			// Các thông số
 			String url = "jdbc:mySQL://localhost:3306/bookstore";
 			String username = "root";
-			String password = "";
+			String password = "12345678";
 
 			// Tạo kết nối
 			c = DriverManager.getConnection(url, username, password);
