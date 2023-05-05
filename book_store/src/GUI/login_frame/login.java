@@ -225,9 +225,6 @@ public class login extends JFrame implements MouseListener, KeyListener {
 
             icon_dispass.setVisible(true);
             icon_showpass.setVisible(false);
-        } else if (e.getSource() == for_pass) {
-            this.setVisible(false);
-            new for_pass();
         } else if (e.getSource() == exit) {
             System.exit(0);
         }
