@@ -28,7 +28,7 @@ public class TacGiaSelectFrame extends JFrame {
     this.setSize(WIDTH, HEIGHT);
     this.setLocationRelativeTo(null);
     init(array_tac_gia);
-    this.setVisible(true);
+    this.setVisible(false);
   }
 
   public void init(ArrayList<tacgia> array_tac_gia) {

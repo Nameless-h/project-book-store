@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.lang.Math;
 import java.util.ArrayList;
 import DTO.Theloai;
@@ -14,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -25,9 +28,19 @@ import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import BUS.ChiTietTacGiaBUS;
 import BUS.NhaXuatBanBUS;
 import BUS.SanPhamBUS;
@@ -168,7 +181,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       cbbTheloai.setBorder(BorderFactory.createTitledBorder("Thể loại"));
 
       selectTacgiaFrame = new TacGiaSelectFrame(tacgiaBUS.getDanhSachTacGia(), 700, 400);
-      selectTacgiaFrame.setVisible(false);
 
       selectTacgia.setFont(new Font("Time New Roman", Font.PLAIN, 16));
       selectTacgia.setBounds(20, 200 - 30, 300, 37);
@@ -281,21 +293,25 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       button_panel_book.getAddBtn().addActionListener(this);
       button_panel_book.getEditBtn().addActionListener(this);
       button_panel_book.getDelBtn().addActionListener(this);
+      button_panel_book.getExcBtn().addActionListener(this);
 
       button_panel_nxb = new ModifyButtonPanel(150, 210, 800, 50);
       button_panel_nxb.getAddBtn().addActionListener(this);
       button_panel_nxb.getEditBtn().addActionListener(this);
       button_panel_nxb.getDelBtn().addActionListener(this);
+      button_panel_nxb.getExcBtn().addActionListener(this);
 
       button_panel_tloai = new ModifyButtonPanel(150, 210, 800, 50);
       button_panel_tloai.getAddBtn().addActionListener(this);
       button_panel_tloai.getEditBtn().addActionListener(this);
       button_panel_tloai.getDelBtn().addActionListener(this);
+      button_panel_tloai.getExcBtn().addActionListener(this);
 
       button_panel_tacgia = new ModifyButtonPanel(150, 210, 800, 50);
       button_panel_tacgia.getAddBtn().addActionListener(this);
       button_panel_tacgia.getEditBtn().addActionListener(this);
       button_panel_tacgia.getDelBtn().addActionListener(this);
+      button_panel_tacgia.getExcBtn().addActionListener(this);
 
       /* add component */
       book_panel.add(txtMaSach);
@@ -735,17 +751,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     // them
     if (e.getSource() == button_panel_book.getAddBtn()) {
       // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-      /*
-       * if (addBookFrame == null) {
-       * addBookFrame = new AddbookFrame(900, 600);
-       * addBookFrame.setVisible(true);
-       * } else {
-       * addBookFrame.dispose();
-       * addBookFrame = new AddbookFrame(900, 600);
-       * addBookFrame.setVisible(true);
-       * }
-       * }
-       */
       if (addBookFrame == null) {
         addBookFrame = new AddbookFrame(900, 600);
         addBookFrame.setAlwaysOnTop(true);
@@ -755,31 +760,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         addBookFrame.setAlwaysOnTop(true);
       }
     }
-    /*
-     * try {
-     * // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-     * addBookFrame.dispose();
-     * } catch (Exception ex) {
-     * System.err.println("add frame chua khoi tao, bat dau khoi tao add frame");
-     * addBookFrame = new AddbookFrame(900, 600);
-     * addBookFrame.toFront();
-     * 
-     * } finally {
-     * addBookFrame.getPostPanel().getSavebtn().addActionListener(new
-     * ActionListener() {
-     * 
-     * @Override
-     * public void actionPerformed(ActionEvent e) {
-     * try {
-     * showBookList(bookBUS.getDanhSachSanPham());
-     * } catch (Exception e1) {
-     * e1.printStackTrace();
-     * }
-     * }
-     * });
-     * }
-     * }
-     */
     // click tacgia btn
     if (e.getSource() == selectTacgia)
 
@@ -866,7 +846,98 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         }
       }
     }
+    if (e.getSource() == button_panel_book.getExcBtn()) {
+      String[] list_ten = { "STT", "Mã sách", "Tên sách", "Thể loại", "Nhà xuất bản", "Năm xuất bản", "Số lượng",
+          "Gía tiền" };
+      XSSFWorkbook workbook = new XSSFWorkbook();
+      XSSFSheet sheet = workbook.createSheet("Danh sách SÁCH");
+      XSSFRow row;
+      // tao sheet title
+      row = sheet.createRow(0);
+      // gop 7 o vao lai
+      CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, list_ten.length);
+      sheet.addMergedRegion(mergedRegion);
+      Cell cell_title = row.createCell(0);
+      // cjen chu danh sach nhan vien
+      cell_title.setCellValue("Danh sách SÁCH");
+      CellStyle style = workbook.createCellStyle();
+      // can giua cho chu cai
+      style.setAlignment(CellStyle.ALIGN_CENTER);
+      style.setVerticalAlignment(CellStyle.VERTICAL_BOTTOM);
+      XSSFFont font = workbook.createFont(); // create a new font object
+      font.setFontHeightInPoints((short) 14); // set the font size to 14
+      font.setBold(true); // set the font to bold
+      style.setFont(font); // apply the font to the style
 
+      cell_title.setCellStyle(style);
+
+      // ------------------------
+      row = sheet.createRow(1);
+      for (int i = 0; i < list_ten.length; i++) {
+        Cell cell = row.createCell(i);
+        cell.setCellValue(list_ten[i]);
+      }
+
+      for (int i = 0; i < bookBUS.getDanhSachSanPham().size(); i++) {
+        row = sheet.createRow(i + 2);
+        for (int j = 0; j < list_ten.length; j++) {
+          Cell cell = row.createCell(j);
+          if (cell.getColumnIndex() == 0) {
+            cell.setCellValue(i + 1);
+          } else if (cell.getColumnIndex() == 1) {
+            cell.setCellValue(bookBUS.getDanhSachSanPham().get(i).getMaSach());
+          } else if (cell.getColumnIndex() == 2) {
+            cell.setCellValue(bookBUS.getDanhSachSanPham().get(i).getTenSach());
+          } else if (cell.getColumnIndex() == 3) {
+            cell.setCellValue(
+                tloaiBUS.timTheLoaiTheoMa(bookBUS.getDanhSachSanPham().get(i).getMaTheloai()).getTenTheloai());
+          } else if (cell.getColumnIndex() == 4) {
+            cell.setCellValue(
+                tacgiaBUS.timTacgiaTheoMaSach(bookBUS.getDanhSachSanPham().get(i).getMaSach()).getTenTacgia());
+          } else if (cell.getColumnIndex() == 5) {
+            cell.setCellValue(
+                nxbBUS.timNhaXuatBanTheoMa(bookBUS.getDanhSachSanPham().get(i).getMaNXB()).getTenNXB());
+          } else if (cell.getColumnIndex() == 6) {
+            cell.setCellValue(bookBUS.getDanhSachSanPham().get(i).getNamXB());
+          } else if (cell.getColumnIndex() == 7) {
+            cell.setCellValue(bookBUS.getDanhSachSanPham().get(i).getSoLuong());
+          } else if (cell.getColumnIndex() == 8) {
+            cell.setCellValue(bookBUS.getDanhSachSanPham().get(i).getGiaTien());
+          }
+
+        }
+      }
+
+      for (int i = 0; i < list_ten.length; i++)
+        sheet.autoSizeColumn(i);
+
+      // chon file luu thong tin
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save As");
+
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx", "xls");
+      fileChooser.setFileFilter(filter);
+
+      int userSelection = fileChooser.showSaveDialog(null);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        String fileName = fileToSave.getName();
+
+        if (!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
+          fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+        try {
+          FileOutputStream outputStream = new FileOutputStream(fileToSave);
+          workbook.write(outputStream);
+          workbook.close();
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+
+        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+      }
+    }
     /*
      * --------------------------------------------------------------------
      * ---------------------- nhà xuất bản panel --------------------------
@@ -874,21 +945,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
      */
     // them
     if (e.getSource() == button_panel_nxb.getAddBtn()) {
-      /*
-       * try {
-       * // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-       * if (!addNxbFrame.isVisible()) {
-       * addNxbFrame.setVisible(true);
-       * addNxbFrame.toFront();
-       * } else {
-       * addNxbFrame.toFront();
-       * }
-       * } catch (Exception ex) {
-       * System.err.println("add nxb frame chua khoi tao, bat dau khoi tao add frame"
-       * );
-       * addNxbFrame = new AddNxbFrame();
-       * }
-       */
       if (addNxbFrame == null) {
         addNxbFrame = new AddNxbFrame(900, 600);
       } else {
@@ -947,6 +1003,87 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         } catch (Exception e1) {
           e1.printStackTrace();
         }
+      }
+    }
+    if (e.getSource() == button_panel_nxb.getExcBtn()) {
+      String[] list_ten = { "STT", "Mã nhà xuất bản", "Tên nhà xuất bản", "Hot mail", "Hot line", "Địa chỉ" };
+      XSSFWorkbook workbook = new XSSFWorkbook();
+      XSSFSheet sheet = workbook.createSheet("Danh sách nhà xuất bản");
+      XSSFRow row;
+      // tao sheet title
+      row = sheet.createRow(0);
+      // gop 7 o vao lai
+      CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, list_ten.length);
+      sheet.addMergedRegion(mergedRegion);
+      Cell cell_title = row.createCell(0);
+      // cjen chu danh sach nhan vien
+      cell_title.setCellValue("Danh sách nhà xuất bản");
+      CellStyle style = workbook.createCellStyle();
+      // can giua cho chu cai
+      style.setAlignment(CellStyle.ALIGN_CENTER);
+      style.setVerticalAlignment(CellStyle.VERTICAL_BOTTOM);
+      XSSFFont font = workbook.createFont(); // create a new font object
+      font.setFontHeightInPoints((short) 14); // set the font size to 14
+      font.setBold(true); // set the font to bold
+      style.setFont(font); // apply the font to the style
+
+      cell_title.setCellStyle(style);
+
+      // ------------------------
+      row = sheet.createRow(1);
+      for (int i = 0; i < list_ten.length; i++) {
+        Cell cell = row.createCell(i);
+        cell.setCellValue(list_ten[i]);
+      }
+
+      for (int i = 0; i < nxbBUS.getDanhSachNhaXuatBan().size(); i++) {
+        row = sheet.createRow(i + 2);
+        for (int j = 0; j < list_ten.length; j++) {
+          Cell cell = row.createCell(j);
+          if (cell.getColumnIndex() == 0) {
+            cell.setCellValue(i + 1);
+          } else if (cell.getColumnIndex() == 1) {
+            cell.setCellValue(nxbBUS.getDanhSachNhaXuatBan().get(i).getMaNXB());
+          } else if (cell.getColumnIndex() == 2) {
+            cell.setCellValue(nxbBUS.getDanhSachNhaXuatBan().get(i).getTenNXB());
+          } else if (cell.getColumnIndex() == 3) {
+            cell.setCellValue(nxbBUS.getDanhSachNhaXuatBan().get(i).getEmail());
+          } else if (cell.getColumnIndex() == 4) {
+            cell.setCellValue(nxbBUS.getDanhSachNhaXuatBan().get(i).getSdt());
+          } else if (cell.getColumnIndex() == 5) {
+            cell.setCellValue(nxbBUS.getDanhSachNhaXuatBan().get(i).getDiaChi());
+          }
+        }
+      }
+
+      for (int i = 0; i < list_ten.length; i++)
+        sheet.autoSizeColumn(i);
+
+      // chon file luu thong tin
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save As");
+
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx", "xls");
+      fileChooser.setFileFilter(filter);
+
+      int userSelection = fileChooser.showSaveDialog(null);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        String fileName = fileToSave.getName();
+
+        if (!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
+          fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+        try {
+          FileOutputStream outputStream = new FileOutputStream(fileToSave);
+          workbook.write(outputStream);
+          workbook.close();
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+
+        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
       }
     }
     /*
@@ -1019,6 +1156,82 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         }
       }
     }
+    // excel
+    if (e.getSource() == button_panel_tloai.getExcBtn()) {
+      String[] list_ten = { "STT", "Mã thể loại", "Tên thể loại" };
+      XSSFWorkbook workbook = new XSSFWorkbook();
+      XSSFSheet sheet = workbook.createSheet("Danh sách thể loại");
+      XSSFRow row;
+      // tao sheet title
+      row = sheet.createRow(0);
+      // gop 7 o vao lai
+      CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, list_ten.length);
+      sheet.addMergedRegion(mergedRegion);
+      Cell cell_title = row.createCell(0);
+      // cjen chu danh sach nhan vien
+      cell_title.setCellValue("Danh sách thể loại");
+      CellStyle style = workbook.createCellStyle();
+      // can giua cho chu cai
+      style.setAlignment(CellStyle.ALIGN_CENTER);
+      style.setVerticalAlignment(CellStyle.VERTICAL_BOTTOM);
+      XSSFFont font = workbook.createFont(); // create a new font object
+      font.setFontHeightInPoints((short) 14); // set the font size to 14
+      font.setBold(true); // set the font to bold
+      style.setFont(font); // apply the font to the style
+
+      cell_title.setCellStyle(style);
+
+      // ------------------------
+      row = sheet.createRow(1);
+      for (int i = 0; i < list_ten.length; i++) {
+        Cell cell = row.createCell(i);
+        cell.setCellValue(list_ten[i]);
+      }
+
+      for (int i = 0; i < tloaiBUS.getDanhSachTheLoai().size(); i++) {
+        row = sheet.createRow(i + 2);
+        for (int j = 0; j < list_ten.length; j++) {
+          Cell cell = row.createCell(j);
+          if (cell.getColumnIndex() == 0) {
+            cell.setCellValue(i + 1);
+          } else if (cell.getColumnIndex() == 1) {
+            cell.setCellValue(tloaiBUS.getDanhSachTheLoai().get(i).getMaTheloai());
+          } else if (cell.getColumnIndex() == 2) {
+            cell.setCellValue(tloaiBUS.getDanhSachTheLoai().get(i).getTenTheloai());
+          }
+        }
+      }
+
+      for (int i = 0; i < list_ten.length; i++)
+        sheet.autoSizeColumn(i);
+
+      // chon file luu thong tin
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save As");
+
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx", "xls");
+      fileChooser.setFileFilter(filter);
+
+      int userSelection = fileChooser.showSaveDialog(null);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        String fileName = fileToSave.getName();
+
+        if (!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
+          fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+        try {
+          FileOutputStream outputStream = new FileOutputStream(fileToSave);
+          workbook.write(outputStream);
+          workbook.close();
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+
+        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+      }
+    }
     /*
      * --------------------------------------------------------------------
      * ---------------------- tác giả panel --------------------------
@@ -1087,6 +1300,82 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         } catch (Exception e1) {
           e1.printStackTrace();
         }
+      }
+    }
+    // excel
+    if (e.getSource() == button_panel_tacgia.getExcBtn()) {
+      String[] list_ten = { "STT", "Mã tác giả", "Tên tác giả" };
+      XSSFWorkbook workbook = new XSSFWorkbook();
+      XSSFSheet sheet = workbook.createSheet("Danh sách tác giả");
+      XSSFRow row;
+      // tao sheet title
+      row = sheet.createRow(0);
+      // gop 7 o vao lai
+      CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, list_ten.length);
+      sheet.addMergedRegion(mergedRegion);
+      Cell cell_title = row.createCell(0);
+      // cjen chu danh sach nhan vien
+      cell_title.setCellValue("Danh sách tác giả");
+      CellStyle style = workbook.createCellStyle();
+      // can giua cho chu cai
+      style.setAlignment(CellStyle.ALIGN_CENTER);
+      style.setVerticalAlignment(CellStyle.VERTICAL_BOTTOM);
+      XSSFFont font = workbook.createFont(); // create a new font object
+      font.setFontHeightInPoints((short) 14); // set the font size to 14
+      font.setBold(true); // set the font to bold
+      style.setFont(font); // apply the font to the style
+
+      cell_title.setCellStyle(style);
+
+      // ------------------------
+      row = sheet.createRow(1);
+      for (int i = 0; i < list_ten.length; i++) {
+        Cell cell = row.createCell(i);
+        cell.setCellValue(list_ten[i]);
+      }
+
+      for (int i = 0; i < tacgiaBUS.getDanhSachTacGia().size(); i++) {
+        row = sheet.createRow(i + 2);
+        for (int j = 0; j < list_ten.length; j++) {
+          Cell cell = row.createCell(j);
+          if (cell.getColumnIndex() == 0) {
+            cell.setCellValue(i + 1);
+          } else if (cell.getColumnIndex() == 1) {
+            cell.setCellValue(tacgiaBUS.getDanhSachTacGia().get(i).getMaTacgia());
+          } else if (cell.getColumnIndex() == 2) {
+            cell.setCellValue(tacgiaBUS.getDanhSachTacGia().get(i).getTenTacgia());
+          }
+        }
+      }
+
+      for (int i = 0; i < list_ten.length; i++)
+        sheet.autoSizeColumn(i);
+
+      // chon file luu thong tin
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setDialogTitle("Save As");
+
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel Files", "xlsx", "xls");
+      fileChooser.setFileFilter(filter);
+
+      int userSelection = fileChooser.showSaveDialog(null);
+
+      if (userSelection == JFileChooser.APPROVE_OPTION) {
+        File fileToSave = fileChooser.getSelectedFile();
+        String fileName = fileToSave.getName();
+
+        if (!fileName.endsWith(".xlsx") && !fileName.endsWith(".xls")) {
+          fileToSave = new File(fileToSave.getAbsolutePath() + ".xlsx");
+        }
+        try {
+          FileOutputStream outputStream = new FileOutputStream(fileToSave);
+          workbook.write(outputStream);
+          workbook.close();
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
+
+        System.out.println("Save as file: " + fileToSave.getAbsolutePath());
       }
     }
     /*

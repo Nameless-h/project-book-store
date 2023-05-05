@@ -45,6 +45,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -69,6 +70,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -91,6 +93,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -128,6 +131,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -156,6 +160,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     // TODO: handle exception
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -180,8 +185,8 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
     public int getLastInsertId() {
         Statement stm = null;
         int maTheloaiTmp = -1;
+        Connection conn = JDBCUtil.getConnection();
         try {
-            Connection conn = JDBCUtil.getConnection();
             stm = conn.createStatement();
             String sql = "SELECT maTheloai FROM theloai ORDER BY maTheloai DESC LIMIT 1";
             ResultSet result = stm.executeQuery(sql);
@@ -199,6 +204,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (stm != null) {
                 try {
                     stm.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }

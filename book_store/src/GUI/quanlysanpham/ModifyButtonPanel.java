@@ -1,9 +1,12 @@
 package GUI.quanlysanpham;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+
+import GUI.Mybutton.ExportExcelButton;
 import GUI.Mybutton.addbutton;
 import GUI.Mybutton.deletebutton;
 import GUI.Mybutton.editbutton;
@@ -12,17 +15,21 @@ public class ModifyButtonPanel extends JPanel {
   private addbutton addBtn;
   private editbutton editBtn;
   private deletebutton delBtn;
+  private ExportExcelButton excBtn;
 
   public ModifyButtonPanel(float posX, float posY, float width, float height) {
     addBtn = new addbutton((int) (width * 0.2), (int) (height * 0.6));
     editBtn = new editbutton((int) (width * 0.2), (int) (height * 0.6));
     delBtn = new deletebutton((int) (width * 0.2), (int) (height * 0.6));
+    excBtn = new ExportExcelButton();
+    excBtn.setPreferredSize(new Dimension((int) (width * 0.2), (int) (height * 0.6)));
     this.setBackground(new Color(242, 225, 226));
     this.setBounds((int) posX, (int) posY, (int) width, (int) height);
     this.setLayout(new FlowLayout(FlowLayout.CENTER, 30, (int) (height * 0.23)));
     this.add(addBtn);
     this.add(editBtn);
     this.add(delBtn);
+    this.add(excBtn);
     this.setVisible(true);
   }
 
@@ -48,5 +55,9 @@ public class ModifyButtonPanel extends JPanel {
 
   public JButton getDelBtn() {
     return this.delBtn;
+  }
+
+  public JButton getExcBtn() {
+    return this.excBtn;
   }
 }

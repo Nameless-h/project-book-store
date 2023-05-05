@@ -8,7 +8,8 @@
         "book_store/lib/javax.mail.jar",
         "book_store/lib/flatlaf-3.1.1.jar",
         "book_store/lib/lib_excel/*.jar",
-        "book_store/lib/itextpdf-5.5.12.jar"
+        "book_store/lib/itextpdf-5.5.12.jar",
+        "book_store/lib/lib_excel/*.jar"
     ],
     "sqltools.connections": [
         {

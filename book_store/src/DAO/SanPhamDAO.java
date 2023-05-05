@@ -49,6 +49,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -80,6 +81,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -102,6 +104,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -145,12 +148,14 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return bookList;
+
     }
 
     @Override
@@ -179,6 +184,7 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
@@ -202,8 +208,9 @@ public class SanPhamDAO implements DAOinterface<Sach> {
     public int getLastInsertId() {
         Statement stm = null;
         int maSachTmp = -1;
+        Connection conn = JDBCUtil.getConnection();
         try {
-            Connection conn = JDBCUtil.getConnection();
+
             stm = conn.createStatement();
             String sql = "SELECT maSach FROM book ORDER BY maSach DESC LIMIT 1";
 
@@ -222,11 +229,13 @@ public class SanPhamDAO implements DAOinterface<Sach> {
             if (stm != null) {
                 try {
                     stm.close();
+                    conn.close();
                 } catch (SQLException e) {
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
                 }
             }
         }
+
         return maSachTmp;
     }
 }
