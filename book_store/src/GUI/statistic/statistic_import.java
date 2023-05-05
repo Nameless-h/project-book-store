@@ -44,21 +44,26 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-public class statistic_import extends JPanel implements ActionListener,KeyListener{
+
+public class statistic_import extends JPanel implements ActionListener, KeyListener {
     private JPanel headerFilterContainInput;
-    private JButton headerSearchBtn;
-    private String title_filter[] = {"Khoảng ngày","Top nhập hàng nhiều","Thể loại","Nhà cung cấp"};//menu title filter
-    private String[] columnNames = {"ID","Tên sách","Thể loại","Nhà cung cấp","Giá","Đã nhập"};
-    private JPanel panel_filter_date,panel_filter_bestSeller,panel_filter_supplier,panel_filter_category;
-    private JTextField inputDateStart,inputDateEnd,inputSupplier;
-    private JLabel dateStart,dateEnd;
-    private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);     
+    private JButton headerSearchBtn, refreshButton;
+    private String title_filter[] = { "Khoảng ngày", "Top nhập hàng nhiều", "Thể loại", "Nhà cung cấp" };// menu title
+                                                                                                         // filter
+    private String[] columnNames = { "ID", "Tên sách", "Thể loại", "Nhà cung cấp", "Giá", "Đã nhập" };
+    private JPanel panel_filter_date, panel_filter_bestSeller, panel_filter_supplier, panel_filter_category;
+    private JTextField inputDateStart, inputDateEnd, inputSupplier;
+    private JLabel dateStart, dateEnd;
+    private SpinnerModel model = new SpinnerNumberModel(0, 0, 15, 1);
     private JSpinner inputBestSeller = new JSpinner(model);
     private statisticTable bookSoldTable;
     private morebutton selectSupplier = new morebutton();
     private JComboBox inputcategory;
-    private float sumImportMoney=0;
+    private float sumImportMoney = 0;
 
+    private LocalDate currentDate = LocalDate.now();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private String formattedDate = currentDate.format(formatter);
     private DatePicker dp1;
     private DatePicker dp2;
 
@@ -76,10 +81,10 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         // header search contain input
         headerFilterContainInput = new JPanel();
         headerFilterContainInput.setBackground(Color.lightGray);
-        headerFilterContainInput.setPreferredSize(new Dimension(1000, 0));
+        headerFilterContainInput.setPreferredSize(new Dimension(1080, 0));
         headerFilterContainInput.setLayout(new FlowLayout(SwingConstants.RIGHT));
         headerFilterContainInput.setFont(new Font("Arial", Font.PLAIN, 20));
-        
+
         headerFilterContainInput.setBorder(BorderFactory.createEmptyBorder());
 
         // panel filter date
@@ -91,9 +96,9 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         LineBorder linedBorderDate = new LineBorder(Color.white);
         TitledBorder titledBorderDate = BorderFactory.createTitledBorder(linedBorderDate, title_filter[0]);
         titledBorderDate.setTitleJustification(TitledBorder.CENTER);
-        
+
         panel_filter_date.setBorder(titledBorderDate);
-        
+
         inputDateStart = new JTextField();
         inputDateStart.setHorizontalAlignment(JTextField.CENTER);
         inputDateStart.setPreferredSize(new Dimension(100, 30));
@@ -120,10 +125,10 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         dp2.setBackground(new Color(242, 59, 46));
         dp2.setOpaque(false);
 
-        dp1.addDateChangeListener((dce)->{
+        dp1.addDateChangeListener((dce) -> {
             inputDateStart.setText(dp1.getDateStringOrEmptyString());
         });
-        dp2.addDateChangeListener((dce)->{
+        dp2.addDateChangeListener((dce) -> {
             inputDateEnd.setText(dp2.getDateStringOrEmptyString());
         });
 
@@ -133,10 +138,10 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         panel_filter_date.add(dateEnd);
         panel_filter_date.add(inputDateEnd);
         panel_filter_date.add(dp2);
-        
+
         headerFilterContainInput.add(panel_filter_date);
 
-        //panel filter best seller
+        // panel filter best seller
         panel_filter_bestSeller = new JPanel();
         panel_filter_bestSeller.setPreferredSize(new Dimension(130, 65));
         panel_filter_bestSeller.setBackground(new Color(242, 59, 46));
@@ -153,11 +158,11 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
 
         headerFilterContainInput.add(panel_filter_bestSeller);
 
-         //panel filter category
+        // panel filter category
         panel_filter_category = new JPanel();
         panel_filter_category.setPreferredSize(new Dimension(120, 65));
         panel_filter_category.setBackground(new Color(242, 59, 46));
-       
+
         LineBorder linedBorderCategory = new LineBorder(Color.white);
         TitledBorder titledBorderCategory = BorderFactory.createTitledBorder(linedBorderCategory, title_filter[2]);
         titledBorderCategory.setTitleJustification(TitledBorder.CENTER);
@@ -165,7 +170,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
 
         TheLoaiDAO layTheLoai = new TheLoaiDAO();
         ArrayList<Theloai> dsTheLoai = layTheLoai.selecAll();
-        String category_name[] = new String[dsTheLoai.size()+1];
+        String category_name[] = new String[dsTheLoai.size() + 1];
 
         category_name[0] = "Tất cả";
         int i = 1;
@@ -180,7 +185,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
 
         headerFilterContainInput.add(panel_filter_category);
 
-        //panel filter supplier
+        // panel filter supplier
         panel_filter_supplier = new JPanel();
         panel_filter_supplier.setPreferredSize(new Dimension(130, 65));
         panel_filter_supplier.setBackground(new Color(242, 59, 46));
@@ -195,7 +200,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         inputSupplier.addKeyListener(this);
         inputSupplier.setHorizontalAlignment(JTextField.CENTER);
         inputSupplier.setEditable(false);
-        
+
         panel_filter_supplier.add(inputSupplier);
 
         selectSupplier.setPreferredSize(new Dimension(30, 30));
@@ -218,33 +223,43 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
             searchOnClick();
         });
 
+        refreshButton = new JButton("Xoá NCC");
+        refreshButton.setPreferredSize(new Dimension(100, 30));
+        refreshButton.setFocusable(false);
+        refreshButton.setFont(new Font("Arial", Font.PLAIN, 15));
+        refreshButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        refreshButton.addActionListener(this);
+
+        refreshButton.addActionListener((ae) -> {
+            refresh();
+        });
+
+        headerFilterContainInput.add(refreshButton);
         headerFilterContainInput.add(headerSearchBtn);
-        header.add(headerFilterContainInput,BorderLayout.WEST);
+
+        header.add(headerFilterContainInput, BorderLayout.WEST);
 
         // table
         bookSoldTable = new statisticTable();
-        bookSoldTable.setTablesize(1100,500);
+        bookSoldTable.setTablesize(1100, 500);
         bookSoldTable.setBackground(Color.lightGray);
         bookSoldTable.setHeader(columnNames);
-        LocalDate currentDate = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formattedDate = currentDate.format(formatter);
 
         // get table data
-        bs=new thongKeSachDAO();
-        listBS = bs.selectBookImport("2000-01-01",formattedDate,category_name[0],"",0);
-        
+        bs = new thongKeSachDAO();
+        listBS = bs.selectBookImport("2000-01-01", formattedDate, category_name[0], "", 0);
+
         inputDateStart.setText("2000-01-01");
         inputDateEnd.setText(formattedDate);
 
         for (sachNhap bSold : listBS) {
-            bookSoldTable.addRow(new Object[]{
-                bSold.getBookID(),
-                bSold.getBookName(),
-                bSold.getBookCategory(),
-                bSold.getSupplierName(),
-                PriceFormatter.format(bSold.getBookPrice()),
-                bSold.getBookImportQuantity()
+            bookSoldTable.addRow(new Object[] {
+                    bSold.getBookID(),
+                    bSold.getBookName(),
+                    bSold.getBookCategory(),
+                    bSold.getSupplierName(),
+                    PriceFormatter.format(bSold.getBookPrice()),
+                    bSold.getBookImportQuantity()
             });
             sumImportMoney += bSold.getBookImportQuantity() * bSold.getBookPrice();
         }
@@ -283,7 +298,7 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
         // set size for borderLayout
         header.setPreferredSize(new Dimension(0, 70));
         bookSoldTable.setPreferredSize(new Dimension(0, 0));
-        barSum.setPreferredSize(new Dimension(0,50));
+        barSum.setPreferredSize(new Dimension(0, 50));
 
         add(header, BorderLayout.NORTH);
         add(bookSoldTable, BorderLayout.CENTER);
@@ -291,58 +306,64 @@ public class statistic_import extends JPanel implements ActionListener,KeyListen
 
     }
 
-    private void setDataToTable(ArrayList<sachNhap> list,statisticTable t) {
+    private void setDataToTable(ArrayList<sachNhap> list, statisticTable t) {
         t.clearTable();
         sumImportMoney = 0;
         for (sachNhap bSold : list) {
-            t.addRow(new Object[]{
-                bSold.getBookID(),
-                bSold.getBookName(),
-                bSold.getBookCategory(),
-                bSold.getSupplierName(),
-                PriceFormatter.format(bSold.getBookPrice()),
-                bSold.getBookImportQuantity()
+            t.addRow(new Object[] {
+                    bSold.getBookID(),
+                    bSold.getBookName(),
+                    bSold.getBookCategory(),
+                    bSold.getSupplierName(),
+                    PriceFormatter.format(bSold.getBookPrice()),
+                    bSold.getBookImportQuantity()
             });
-            sumImportMoney += bSold.getBookImportQuantity()*bSold.getBookPrice();
+            sumImportMoney += bSold.getBookImportQuantity() * bSold.getBookPrice();
         }
         sumNumber.setText(PriceFormatter.format(sumImportMoney));
     }
 
     private void searchOnClick() {
-        
-        if((inputDateStart.getText().equals("") || inputDateEnd.getText().isEmpty()) || (inputDateEnd.getText().equals("") || inputDateStart.getText().isEmpty())) {
-            JOptionPane.showMessageDialog(this,"Ngày bị thiếu!","Thông báo",1);
+
+        if ((inputDateStart.getText().equals("") || inputDateEnd.getText().isEmpty())
+                || (inputDateEnd.getText().equals("") || inputDateStart.getText().isEmpty())) {
+            JOptionPane.showMessageDialog(this, "Ngày bị thiếu!", "Thông báo", 1);
             return;
-        } else if(inputSupplier.getText().equals("") || inputSupplier.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this,"Nhà cung cấp bị thiếu!","Thông báo",1);
-            return;
-        } else if(bs.selectBookImport(inputDateStart.getText(),inputDateEnd.getText(),(String) inputcategory.getSelectedItem(),inputSupplier.getText(),(Integer) inputBestSeller.getValue()) != null) {
-            setDataToTable(bs.selectBookImport(inputDateStart.getText(),inputDateEnd.getText(),(String) inputcategory.getSelectedItem(),inputSupplier.getText(),(Integer) inputBestSeller.getValue()), bookSoldTable);
+        } else if (bs.selectBookImport(inputDateStart.getText(), inputDateEnd.getText(),
+                (String) inputcategory.getSelectedItem(), inputSupplier.getText(),
+                (Integer) inputBestSeller.getValue()) != null) {
+            setDataToTable(bs.selectBookImport(inputDateStart.getText(), inputDateEnd.getText(),
+                    (String) inputcategory.getSelectedItem(), inputSupplier.getText(),
+                    (Integer) inputBestSeller.getValue()), bookSoldTable);
         } else {
-            JOptionPane.showMessageDialog(this,"Sai thứ tự ngày!","Thông báo",1);
+            JOptionPane.showMessageDialog(this, "Sai thứ tự ngày!", "Thông báo", 1);
             return;
         }
+    }
+
+    private void refresh() {
+        inputSupplier.setText("");
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         try {
-            if(e.getSource() == headerSearchBtn) {
+            if (e.getSource() == headerSearchBtn) {
                 System.out.print("Search");
             }
-            if(e.getSource() == selectSupplier) {
+            if (e.getSource() == selectSupplier) {
                 System.out.print("supplier");
                 new chonnhacungcapGUI(inputSupplier).addWindowListener(new WindowAdapter() {
                     public void windowClosing(WindowEvent e) {
-                       System.out.print("Closing");
+                        System.out.print("Closing");
                     }
                 });
                 this.setEnabled(false);
             }
         } catch (Exception ex) {
             System.out.println(ex);
-        }    
+        }
     }
 
     @Override
