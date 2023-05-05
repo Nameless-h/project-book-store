@@ -17,7 +17,6 @@ public class main extends JFrame {
     JPanel header, menu;
     public JPanel center;
     setting_frame set = new setting_frame();
-
     taikhoan tk;
 
     public main(taikhoan tk) {

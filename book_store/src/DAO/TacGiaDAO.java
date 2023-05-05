@@ -32,6 +32,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (statement != null) {
         try {
           statement.close();
+          conn.close();
         } catch (SQLException e) {
           Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -56,6 +57,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (statement != null) {
         try {
           statement.close();
+          conn.close();
         } catch (SQLException e) {
           Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -78,6 +80,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (statement != null) {
         try {
           statement.close();
+          conn.close();
         } catch (SQLException e) {
           Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -120,6 +123,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (stm != null) {
         try {
           stm.close();
+          conn.close();
         } catch (SQLException e) {
           Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -166,6 +170,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (stm != null) {
         try {
           stm.close();
+          conn.close();
         } catch (SQLException e) {
           // TODO: handle exception
           Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -189,9 +194,10 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
 
   public int getLastInsertId() {
     Statement stm = null;
+    Connection conn = JDBCUtil.getConnection();
     int maTacGia = -1;
     try {
-      Connection conn = JDBCUtil.getConnection();
+
       stm = conn.createStatement();
       String sql = "SELECT maTacgia FROM tacgia ORDER BY maTacgia DESC LIMIT 1";
 
@@ -210,11 +216,13 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (stm != null) {
         try {
           stm.close();
+          conn.close();
         } catch (SQLException e) {
           Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
+
     return maTacGia;
   }
 
