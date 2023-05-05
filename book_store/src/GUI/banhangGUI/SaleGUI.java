@@ -334,7 +334,6 @@ public class SaleGUI extends JPanel implements ActionListener {
         }
         subtotalinp.setText(PriceFormatter.format(total));
         dateinp.setText(java.time.LocalDate.now().toString());
-        System.out.println(java.time.LocalDate.now().toString());
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if(empnameinp.getText().equals("") || cusidinp.getText().equals("") || listcthd.isEmpty()) {

@@ -319,7 +319,6 @@ public class ImportGUI extends JPanel implements ActionListener {
         }
         grandtotalinp.setText(PriceFormatter.format(total));
         dateinp.setText(java.time.LocalDate.now().toString());
-        System.out.println(java.time.LocalDate.now().toString());
         new Timer().scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 if(empnameinp.getText().equals("") || nccinp.getText().equals("") || listcthd.isEmpty()) {
