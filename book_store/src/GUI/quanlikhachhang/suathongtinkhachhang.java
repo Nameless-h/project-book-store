@@ -11,6 +11,7 @@ import javax.swing.border.*;
 
 import BUS.quanlikhachhang;
 import DTO.khachhang;
+import DTO.kiemTraInput;
 import GUI.*;
 import GUI.main_frame.main;
 
@@ -161,6 +162,19 @@ public class suathongtinkhachhang extends JPanel implements  MouseListener {
                 if (rdb_khongchophep.isSelected())
                     tt = 0;
             int diem = Integer.parseInt(txt[6].getText());
+
+            kiemTraInput check = new kiemTraInput();
+    
+            if(!check.checkEmpty(dc) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[4].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[5].requestFocus();
+                return;
+            }
             khachhang kh = new khachhang(ma, ten, gt, dc, email, sdt, diem, tt);
             // System.out.println(kh);
             quanlikhachhang.suathongtinkhachhang(kh);

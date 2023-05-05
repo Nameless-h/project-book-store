@@ -9,6 +9,7 @@ import javax.swing.border.*;
 
 import BUS.quanlinhanvien;
 import DTO.chucnang;
+import DTO.kiemTraInput;
 import DTO.nhanvien;
 import GUI.icon_lib;
 import GUI.setting_frame;
@@ -143,6 +144,25 @@ public class suathongtinnhanvien extends JPanel {
                     tt = 1;
                 if (rdb_khongchophep.isSelected())
                     tt = 0;
+
+                    kiemTraInput check = new kiemTraInput();
+    
+                    String ten = txt[1].getText();
+            String dc = txt[3].getText();
+            String email = txt[4].getText();
+            String sdt = txt[5].getText();
+            String cv = txt[6].getText();
+
+            if(!check.checkEmpty(ten) || !check.checkEmpty(dc) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt) ||  !check.checkEmpty(cv)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[4].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[5].requestFocus();
+                return;
+            }
                 nhanvien nv = new nhanvien(Integer.parseInt(txt[0].getText()), txt[1].getText(), gt,
                         txt[3].getText(),
                         txt[4].getText(), txt[5].getText(), txt[6].getText(), tt);

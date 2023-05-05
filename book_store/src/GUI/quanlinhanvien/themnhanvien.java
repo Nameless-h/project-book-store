@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import BUS.quanlinhanvien;
+import DTO.kiemTraInput;
 import DTO.nhanvien;
 import GUI.icon_lib;
 import GUI.setting_frame;
@@ -128,6 +129,20 @@ public class themnhanvien extends JPanel implements MouseListener {
             String email = txt[4].getText();
             String sdt = txt[5].getText();
             String cv = txt[6].getText();
+
+            kiemTraInput check = new kiemTraInput();
+    
+            if(!check.checkEmpty(ten) || !check.checkEmpty(cv) || !check.checkEmpty(dc) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[4].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[5].requestFocus();
+                return;
+            }
+
             nhanvien nv = new nhanvien(manv, ten, gt, dc, email, sdt, cv,1);
             chucnang_nhanvien.themnhanvien(nv);
             JOptionPane.showMessageDialog(null, "Them thanh cong");
