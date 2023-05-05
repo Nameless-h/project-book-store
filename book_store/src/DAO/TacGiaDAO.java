@@ -170,14 +170,13 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       if (stm != null) {
         try {
           stm.close();
-          conn.close();
+          JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
           // TODO: handle exception
           Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }
       }
     }
-    JDBCUtil.closeConnection(conn);
     return tmp;
   }
 
