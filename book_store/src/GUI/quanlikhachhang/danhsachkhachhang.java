@@ -124,7 +124,9 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         tab_danhsach.setModel(new DefaultTableModel(new Object[][] {}, collums));
-
+        tab_danhsach.getTableHeader().setBackground(Color.red);
+        tab_danhsach.getTableHeader().setForeground(Color.white);
+        tab_danhsach.setDefaultEditor(Object.class, null); 
         chucnang.hienthidanhsach_khachhang(tab_danhsach);
         thanhcuon = new JScrollPane(tab_danhsach);
         thanhcuon.setBounds(0, 200, set.w_center, set.h_center - 200);

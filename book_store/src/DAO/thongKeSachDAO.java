@@ -179,7 +179,7 @@ public class thongKeSachDAO implements DAOinterface<SachBan> {
                 dateEnd = currentDate.format(formatter);
             }
 
-            if(supID.isEmpty() || supID.equals("0")) {
+            if(supID.isEmpty() || supID.equals("")) {
                 sql = "SELECT phieunhap_chitiet.maSach,book.tenSach,theloai.tenTheloai,ncc.tenNCC,donGia,SUM(phieunhap_chitiet.soLuong) as tongSL,SUM(phieunhap_chitiet.soLuong*donGia) as tongGia FROM phieunhap JOIN phieunhap_chitiet ON phieunhap.maPn = phieunhap_chitiet.maPn JOIN book ON phieunhap_chitiet.maSach = book.maSach JOIN theloai ON book.maTheloai = theloai.maTheloai JOIN ncc ON ncc.maNCC = phieunhap.maNCC GROUP BY book.maSach";
             } else if (top > 0) {
                 if (category == "Tất cả") {

@@ -17,20 +17,73 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
 
   @Override
   public int insert(tacgia t) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    Connection conn = JDBCUtil.getConnection();
+    PreparedStatement statement = null;
+    try {
+
+      statement = conn.prepareStatement(
+          "INSERT INTO tacgia(tenTacgia,trangThai) VALUES (?,?)");
+      statement.setString(1, t.getTenTacgia());
+      statement.setInt(2, t.getTrangThai());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+    } finally {
+      if (statement != null) {
+        try {
+          statement.close();
+        } catch (SQLException e) {
+          Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+      }
+    }
+    return 1;
   }
 
   @Override
   public int update(tacgia tacgia_update) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'update'");
+    Connection conn = JDBCUtil.getConnection();
+    PreparedStatement statement = null;
+    try {
+      statement = conn.prepareStatement(
+          "UPDATE tacgia SET tenTacgia=(?) WHERE maTacgia=(?)");
+      statement.setString(1, tacgia_update.getTenTacgia());
+      statement.setInt(2, tacgia_update.getMaTacgia());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+    } finally {
+      if (statement != null) {
+        try {
+          statement.close();
+        } catch (SQLException e) {
+          Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+      }
+    }
+    return 1;
   }
 
   @Override
   public int delete(tacgia t) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    Connection conn = JDBCUtil.getConnection();
+    PreparedStatement statement = null;
+    try {
+      statement = conn.prepareStatement("UPDATE tacgia SET trangThai=0 WHERE maTacgia=(?)");
+      statement.setInt(1, t.getMaTacgia());
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+    } finally {
+      if (statement != null) {
+        try {
+          statement.close();
+        } catch (SQLException e) {
+          Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+      }
+    }
+    return 1;
   }
 
   @Override
@@ -57,12 +110,12 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
           tacgia tmp = new tacgia();
           tmp.setMaTacgia(result.getInt("maTacgia"));
           tmp.setTenTacgia(result.getString("tenTacgia"));
+          tmp.setTrangThai(result.getInt("trangThai"));
           list_tg.add(tmp);
         } while (result.next());
       }
     } catch (SQLException e) {
       Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
-      System.err.println("excute query null");
     } finally {
       if (stm != null) {
         try {
@@ -132,6 +185,37 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
   public ArrayList<tacgia> select_all_ById(int t) {
     // TODO Auto-generated method stub
     throw new UnsupportedOperationException("Unimplemented method 'select_all_ById'");
+  }
+
+  public int getLastInsertId() {
+    Statement stm = null;
+    int maTacGia = -1;
+    try {
+      Connection conn = JDBCUtil.getConnection();
+      stm = conn.createStatement();
+      String sql = "SELECT maTacgia FROM tacgia ORDER BY maTacgia DESC LIMIT 1";
+
+      ResultSet result = stm.executeQuery(sql);
+      if (!result.next()) {
+        return 0;
+      } else {
+        do {
+          maTacGia = result.getInt("maTacgia");
+          break;
+        } while (result.next());
+      }
+    } catch (SQLException e) {
+      Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+    } finally {
+      if (stm != null) {
+        try {
+          stm.close();
+        } catch (SQLException e) {
+          Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+      }
+    }
+    return maTacGia;
   }
 
 }
