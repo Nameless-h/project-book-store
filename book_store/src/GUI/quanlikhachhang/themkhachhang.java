@@ -9,6 +9,7 @@ import javax.swing.border.*;
 
 import BUS.quanlikhachhang;
 import DTO.khachhang;
+import DTO.kiemTraInput;
 import GUI.*;
 import GUI.main_frame.main;
 
@@ -128,6 +129,19 @@ public class themkhachhang extends JPanel implements MouseListener {
             String email = txt[4].getText();
             String sdt = txt[5].getText();
 
+            kiemTraInput check = new kiemTraInput();
+    
+            if(!check.checkEmpty(ten) || !check.checkEmpty(dc) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[4].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[5].requestFocus();
+                return;
+            }
+            
             khachhang kh = new khachhang(manv, ten, gt, dc, email, sdt, 0, 1);
             quanlikhachhang.themkhachhang(kh);
             JOptionPane.showMessageDialog(null, "Them thanh cong");

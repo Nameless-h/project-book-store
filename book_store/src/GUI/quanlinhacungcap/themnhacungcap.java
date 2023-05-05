@@ -10,6 +10,7 @@ import javax.swing.border.*;
 import BUS.quanlikhachhang;
 import BUS.quanlinhacungcap;
 import DTO.khachhang;
+import DTO.kiemTraInput;
 import DTO.nhacungcap;
 import GUI.*;
 import GUI.main_frame.main;
@@ -98,6 +99,20 @@ public class themnhacungcap extends JPanel implements MouseListener {
             String diachi = txt[2].getText();
             String email = txt[3].getText();
             String sdt = txt[4].getText();
+
+            kiemTraInput check = new kiemTraInput();
+    
+            if(!check.checkEmpty(ten) || !check.checkEmpty(diachi) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[3].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[4].requestFocus();
+                return;
+            }
+            
             nhacungcap temp = new nhacungcap(mancc, ten, diachi, sdt, email, 1);
             quanlinhacungcap.themnhacungcap(temp);
             JOptionPane.showMessageDialog(null, "Them thanh cong");
