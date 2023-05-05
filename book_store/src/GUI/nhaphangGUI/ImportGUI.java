@@ -7,17 +7,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import java.util.Timer;
 import java.lang.Integer;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -55,7 +51,6 @@ public class ImportGUI extends JPanel implements ActionListener {
     private Mytable booktable;
     // book detail
     private JTextField inp[];
-    private JLabel image;
     private addbutton addbtn;
 
     /* right panle */
@@ -181,7 +176,7 @@ public class ImportGUI extends JPanel implements ActionListener {
         pbookdetail.setLayout(null);
         pbookdetail.setPreferredSize(new Dimension(0, 300));
         inputpnl.setLayout(new GridLayout(4, 1, 5, 5));
-        inputpnl.setBounds(235, 0, 300, 210);
+        inputpnl.setBounds(20, 0, 500, 210);
         for (int i = 0; i < bookdetail.length; i++) {
             inp[i] = new JTextField();
             inp[i].setName("input" + i);
@@ -193,26 +188,11 @@ public class ImportGUI extends JPanel implements ActionListener {
                 inp[i].setEditable(false);
             inputpnl.add(inp[i]);
         }
-        try {
-            image = new JLabel();
-            image.setBounds(10,0,220,250);
-            image.setOpaque(true);
-            BufferedImage bufferedImage = ImageIO.read(new File("book_store/src/img/doraemon.jpg"));
-            Image img = bufferedImage.getScaledInstance(220, 250, Image.SCALE_DEFAULT);
-            image.setIcon(new ImageIcon(img));
-            image.setBorder(new LineBorder(Color.BLACK,1,true));
-        } catch (Exception e) {
-            // TODO: handle exception
-            System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        }
-        
-        
 
-        addbtn.setBounds(240, 215, 300, 40);
+        addbtn.setBounds(20, 215, 500, 40);
         addbtn.addActionListener(this);
 
         pbookdetail.add(addbtn);
-        pbookdetail.add(image);
         pbookdetail.add(inputpnl);
         return pbookdetail;
     }
