@@ -38,8 +38,8 @@ public class menu extends JPanel implements MouseListener {
     icon_lib icon = new icon_lib();
     ArrayList<chitietnhomquyen> tk_chitietquyen;
 
-    String[] list_menu = { "Ban hang", "Nhap hang", "San pham", "Hoa don", "Phieu nhap", "Nhan vien", "Khach hang",
-            "Nha cung cap", "Tai khoan", "Quyen", "Thong ke" };
+    String[] list_menu = { "Bán hàng", "Nhập hàng", "Sản phẩm", "Hóa đơn", "Phiếu nhập", "Nhân viên", "Khách hàng",
+            "Nhà cung cấp", "Tài khoản", "Quyền", "Thống kê" };
     String[] list_icon = { "/icon/store.png",
             "/icon/nhaphang.png",
             "/icon/sanpham.png",
@@ -61,7 +61,7 @@ public class menu extends JPanel implements MouseListener {
 
     public void change_panel(String text) throws IOException {
         int kt_dangnhap = 0;
-        if (text.equalsIgnoreCase("Nhan vien")) {
+        if (text.equalsIgnoreCase("Nhân viên")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NV") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -78,7 +78,7 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
 
-        } else if (text.equalsIgnoreCase("Khach hang")) {
+        } else if (text.equalsIgnoreCase("Khách hàng")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("KH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -94,7 +94,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Quyen")) {
+        } else if (text.equalsIgnoreCase("Quyền")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("QH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -110,7 +110,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Tai khoan")) {
+        } else if (text.equalsIgnoreCase("Tài khoản")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("TK") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -126,7 +126,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Ban hang")) {
+        } else if (text.equalsIgnoreCase("Bán hàng")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("BH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -151,7 +151,7 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
 
-        } else if (text.equalsIgnoreCase("Nhap hang")) {
+        } else if (text.equalsIgnoreCase("Nhập hàng")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NH") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -176,7 +176,7 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
 
-        } else if (text.equalsIgnoreCase("Hoa don")) {
+        } else if (text.equalsIgnoreCase("Hóa đơn")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("HD") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -198,7 +198,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Phieu nhap")) {
+        } else if (text.equalsIgnoreCase("Phiếu nhập")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("PN") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -220,7 +220,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("San pham")) {
+        } else if (text.equalsIgnoreCase("Sản phẩm")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("SP") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -243,7 +243,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Nha cung cap")) {
+        } else if (text.equalsIgnoreCase("Nhà cung cấp")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NCC") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
@@ -259,7 +259,7 @@ public class menu extends JPanel implements MouseListener {
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-        } else if (text.equalsIgnoreCase("Thong ke")) {
+        } else if (text.equalsIgnoreCase("Thống kê")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("THK") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
