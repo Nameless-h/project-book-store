@@ -118,6 +118,9 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
         tab_danhsach.setModel(new DefaultTableModel(new Object[][] {}, collums));
+        tab_danhsach.getTableHeader().setBackground(Color.red);
+        tab_danhsach.getTableHeader().setForeground(Color.white);
+        tab_danhsach.setDefaultEditor(Object.class, null); 
         tab_danhsach.addMouseListener(this);
         quanlinhomquyen.hienthidanhsach_nhomquyen(tab_danhsach);
         thanhcuon = new JScrollPane(tab_danhsach);
@@ -191,14 +194,15 @@ public class danhsachnhomquyen extends JPanel implements MouseListener {
                                     JOptionPane.YES_NO_OPTION);
                             if (choice == JOptionPane.YES_OPTION) {
                                 // System.out.println("User clicked Yes button");
+                                chucnang_tk.delete_manhomquyen(ma);
                                 chucnang_nq.delete_id(ma);
                                 chucnang_ctnq.delete_id(ma);
-                                chucnang_tk.delete_manhomquyen(ma);
+
                                 quanlinhomquyen.hienthidanhsach_nhomquyen(tab_danhsach);
                             } else {
+                                quanlitaikhoan.suanhomquyen_tk(ma);
                                 chucnang_nq.delete_id(ma);
                                 chucnang_ctnq.delete_id(ma);
-                                quanlitaikhoan.suanhomquyen_tk(ma);
                                 quanlinhomquyen.hienthidanhsach_nhomquyen(tab_danhsach);
                             }
                         }

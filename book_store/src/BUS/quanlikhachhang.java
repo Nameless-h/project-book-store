@@ -1,6 +1,7 @@
 package BUS;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -9,8 +10,9 @@ import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -270,8 +272,8 @@ public class quanlikhachhang {
             cell.setCellValue(list_ten[i]);
         }
 
-        for (int i = 1; i < list.size(); i++) {
-            row = sheet.createRow(i + 1);
+        for (int i = 0; i < list.size(); i++) {
+            row = sheet.createRow(i + 2);
             for (int j = 0; j < 11; j++) {
                 Cell cell = row.createCell(j);
                 if (cell.getColumnIndex() == 0) {
@@ -328,6 +330,92 @@ public class quanlikhachhang {
             }
 
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        }
+    }
+
+    public ArrayList<khachhang> get_by_excel() {
+        ArrayList<khachhang> list = new ArrayList<khachhang>();
+        String title;
+        String gt_str;
+        ArrayList<String> header = new ArrayList<>();
+        ArrayList<Integer> stt = new ArrayList<>();
+        JFileChooser openFileChooser = new JFileChooser();
+        openFileChooser.setDialogTitle("Open File");
+        openFileChooser.removeChoosableFileFilter(openFileChooser.getFileFilter());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel file (.xlsx)", "xlsx");
+        openFileChooser.setFileFilter(filter);
+
+        if (openFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File inputFile = openFileChooser.getSelectedFile();
+            try (FileInputStream in = new FileInputStream(inputFile)) {
+
+                XSSFWorkbook imporetedfile = new XSSFWorkbook(in);
+                XSSFSheet sheet1 = imporetedfile.getSheetAt(0);
+
+                Iterator<Row> rowiterator = sheet1.iterator();
+
+                while (rowiterator.hasNext()) {
+                    Row row = rowiterator.next();
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    khachhang kh = new khachhang();
+                    while (cellIterator.hasNext()) {
+
+                        Cell cell = cellIterator.next();
+                        if (row.getRowNum() == 0)
+                            title = cell.getStringCellValue();
+                        else if (row.getRowNum() == 1)
+                            header.add(cell.getStringCellValue());
+                        else {
+                            if (cell.getColumnIndex() == 0) {
+                                stt.add((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 1) {
+                                kh.setMa((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 2) {
+                                kh.setTen(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 3) {
+                                gt_str = (cell.getStringCellValue());
+                                if (gt_str.equalsIgnoreCase("Nam"))
+                                    kh.setGioitinh(1);
+                                else
+                                    kh.setGioitinh(0);
+                            } else if (cell.getColumnIndex() == 4) {
+                                kh.setDiachi(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 5) {
+                                kh.setEmail(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 6) {
+                                kh.setSodienthoai(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 7) {
+                                kh.setDiem((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 8) {
+                                kh.setTinhtrang((int) cell.getNumericCellValue());
+                            }
+
+                            list.add(kh);
+                        }
+                    }
+
+                }
+
+            } catch (IOException e) {
+                System.out.println("That bai");
+            }
+        }
+        return list;
+    }
+
+    public void update_by_excel() {
+        list = chucang_khachhang.selecAll();
+        ArrayList<khachhang> list_temp = get_by_excel();
+        for (int i = 0; i < list_temp.size(); i++) {
+            int kt = 0;
+            for (int j = 0; j < list.size(); j++) {
+                if (list_temp.get(i).getMa() == list.get(j).getMa())
+                    kt = 1;
+            }
+            if (kt == 1)
+                chucang_khachhang.update(list_temp.get(i));
+            else
+                chucang_khachhang.insert(list_temp.get(i));
         }
     }
 }

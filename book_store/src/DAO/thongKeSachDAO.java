@@ -179,7 +179,7 @@ public class thongKeSachDAO implements DAOinterface<SachBan> {
                 dateEnd = currentDate.format(formatter);
             }
 
-            if(supID.isEmpty() || supID.equals("0")) {
+            if(supID.isEmpty() || supID.equals("")) {
                 sql = "SELECT phieunhap_chitiet.maSach,book.tenSach,theloai.tenTheloai,ncc.tenNCC,donGia,SUM(phieunhap_chitiet.soLuong) as tongSL,SUM(phieunhap_chitiet.soLuong*donGia) as tongGia FROM phieunhap JOIN phieunhap_chitiet ON phieunhap.maPn = phieunhap_chitiet.maPn JOIN book ON phieunhap_chitiet.maSach = book.maSach JOIN theloai ON book.maTheloai = theloai.maTheloai JOIN ncc ON ncc.maNCC = phieunhap.maNCC GROUP BY book.maSach";
             } else if (top > 0) {
                 if (category == "Tất cả") {
@@ -398,7 +398,7 @@ public class thongKeSachDAO implements DAOinterface<SachBan> {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 dateEnd = currentDate.format(formatter);
             }
-            sql = "SELECT phieunhap.maNhanVien,SUM(phieunhap_chitiet.soLuong) as tongSL,book.tenSach,donGia,SUM(phieunhap_chitiet.soLuong*donGia) as thanhTien FROM phieunhap JOIN phieunhap_chitiet ON phieunhap.maPn = phieunhap_chitiet.maPn JOIN nhanvien ON nhanvien.maNhanVien = phieunhap.maNhanVien JOIN book ON book.maSach = phieunhap_chitiet.maSach WHERE phieunhap.ngayNhap BETWEEN '" + dateStart +"' AND '" + dateEnd +"' AND phieunhap.maNhanVien = '" + emID +"' GROUP BY phieunhap_chitiet.maSach";
+            sql = "SELECT phieuxuat.maNhanVien,SUM(phieuxuat_chitiet.soLuong) as tongSL,book.tenSach,donGia,SUM(phieuxuat_chitiet.soLuong*donGia) as thanhTien FROM phieuxuat JOIN phieuxuat_chitiet ON phieuxuat.maPx = phieuxuat_chitiet.maPx JOIN nhanvien ON nhanvien.maNhanVien = phieuxuat.maNhanVien JOIN book ON book.maSach = phieuxuat_chitiet.maSach WHERE phieuxuat.ngayXuat BETWEEN '" + dateStart +"' AND '" + dateEnd +"' AND phieuxuat.maNhanVien = '" + emID +"' GROUP BY phieuxuat_chitiet.maSach";
             System.out.println(sql);
             statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);

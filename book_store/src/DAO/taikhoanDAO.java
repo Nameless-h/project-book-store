@@ -154,7 +154,7 @@ public class taikhoanDAO {
             String sql = "UPDATE taikhoan " +
                     " SET " +
                     "username='" + t.getUsername() + "'" +
-                    ",passwd=" + t.getPassword() +
+                    ",passwd='" + t.getPassword() + "'" +
                     ",maNhanVien='" + t.getManhanvien() + "'" +
                     ",maNhomquyen='" + t.getManhomquyen() + "'" +
                     ",trangthai='" + t.getTinhtrang() + "'" +
@@ -182,10 +182,8 @@ public class taikhoanDAO {
             // taikhoan(maTk,username,passwd,maNhanVien,maNhomquyen,trangthai)
             String sql = "UPDATE taikhoan " +
                     " SET " +
-                    "maNhomquyen=" + 6 + "" +
-                    " WHERE maTk='" + ma +
-                    "\'";
-
+                    "maNhomquyen=" + 0 + "" +
+                    " WHERE maTk=" + ma + ";";
             ketQua = st.executeUpdate(sql);
             JDBCUtil.closeConnection(con);
         } catch (SQLException e) {

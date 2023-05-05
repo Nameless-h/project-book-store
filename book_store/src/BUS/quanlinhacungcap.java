@@ -1,7 +1,7 @@
 package BUS;
 
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -14,6 +14,16 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.File;
 import java.io.FileOutputStream;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -141,8 +151,8 @@ public class quanlinhacungcap {
             cell.setCellValue(list_ten[i]);
         }
 
-        for (int i = 1; i < listncc.size(); i++) {
-            row = sheet.createRow(i + 1);
+        for (int i = 0; i < listncc.size(); i++) {
+            row = sheet.createRow(i + 2);
             for (int j = 0; j < 11; j++) {
                 Cell cell = row.createCell(j);
                 if (cell.getColumnIndex() == 0) {
@@ -197,5 +207,83 @@ public class quanlinhacungcap {
     public void nutxoa(int mancc, JTable table) {
         nccdao.update_tt(mancc, 0);
         hienthidanhsach_ncc(table);
+    }
+
+    public ArrayList<nhacungcap> get_by_excel() {
+        ArrayList<nhacungcap> list = new ArrayList<nhacungcap>();
+        String title;
+        String gt_str;
+        ArrayList<String> header = new ArrayList<>();
+        ArrayList<Integer> stt = new ArrayList<>();
+        JFileChooser openFileChooser = new JFileChooser();
+        openFileChooser.setDialogTitle("Open File");
+        openFileChooser.removeChoosableFileFilter(openFileChooser.getFileFilter());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel file (.xlsx)", "xlsx");
+        openFileChooser.setFileFilter(filter);
+
+        if (openFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File inputFile = openFileChooser.getSelectedFile();
+            try (FileInputStream in = new FileInputStream(inputFile)) {
+
+                XSSFWorkbook imporetedfile = new XSSFWorkbook(in);
+                XSSFSheet sheet1 = imporetedfile.getSheetAt(0);
+
+                Iterator<Row> rowiterator = sheet1.iterator();
+
+                while (rowiterator.hasNext()) {
+                    Row row = rowiterator.next();
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    nhacungcap ncc = new nhacungcap();
+                    while (cellIterator.hasNext()) {
+
+                        Cell cell = cellIterator.next();
+                        if (row.getRowNum() == 0)
+                            title = cell.getStringCellValue();
+                        else if (row.getRowNum() == 1)
+                            header.add(cell.getStringCellValue());
+                        else {
+                            if (cell.getColumnIndex() == 0) {
+                                stt.add((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 1) {
+                                ncc.setMa((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 2) {
+                                ncc.setTen(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 3) {
+                                ncc.setDiaChi(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 4) {
+                                ncc.setEmail(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 5) {
+                                ncc.setSDT(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 6) {
+                                ncc.setTinhtrang((int) cell.getNumericCellValue());
+                            }
+
+                            list.add(ncc);
+                        }
+                    }
+
+                }
+
+            } catch (IOException e) {
+                System.out.println("That bai");
+            }
+        }
+        return list;
+    }
+
+    public void update_by_excel() {
+        listncc = nccdao.list();
+        ArrayList<nhacungcap> list_temp = get_by_excel();
+        for (int i = 0; i < list_temp.size(); i++) {
+            int kt = 0;
+            for (int j = 0; j < listncc.size(); j++) {
+                if (list_temp.get(i).getMa() == listncc.get(j).getMa())
+                    kt = 1;
+            }
+            if (kt == 1)
+                nccdao.update(list_temp.get(i));
+            else
+                nccdao.insert(list_temp.get(i));
+        }
     }
 }

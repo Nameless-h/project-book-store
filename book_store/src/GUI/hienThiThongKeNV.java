@@ -253,7 +253,7 @@ public class hienThiThongKeNV extends JFrame implements ActionListener{
                     i,
                     s.getBookName(),
                     s.getBookCategory(),
-                    s.getBookPrice(),
+                    PriceFormatter.format(s.getBookPrice()),
                     PriceFormatter.format(s.getBookSoldQuantity())
                 });
                 sumRevenue += s.getBookSoldQuantity();

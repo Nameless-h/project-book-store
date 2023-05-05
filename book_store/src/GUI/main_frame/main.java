@@ -23,7 +23,7 @@ public class main extends JFrame {
         this.tk = tk;
         init();
     }
-
+    
     private void init() {
         // cai dat giao dien man hinh chinh
         this.setSize(set.w_main, set.h_main);

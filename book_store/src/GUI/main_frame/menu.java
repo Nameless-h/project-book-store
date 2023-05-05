@@ -127,76 +127,122 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
         } else if (text.equalsIgnoreCase("Ban hang")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("BH") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    FlatLightLaf.setup();
+                    try {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+
+                    SaleGUI salegui = new SaleGUI(tk);
+
+                    salegui.setBounds(0, 0, 1100, 700);
+                    obj.center.removeAll();
+                    obj.center.add(salegui);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-            SaleGUI salegui = new SaleGUI();
-            salegui.setBounds(0, 0, 1100, 700);
-            obj.center.removeAll();
-            obj.center.add(salegui);
-            obj.center.repaint();
-            obj.center.revalidate();
 
         } else if (text.equalsIgnoreCase("Nhap hang")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NH") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    FlatLightLaf.setup();
+                    try {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+
+                    ImportGUI importgui = new ImportGUI(tk);
+
+                    importgui.setBounds(0, 0, 1100, 700);
+                    obj.center.removeAll();
+                    obj.center.add(importgui);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-            ImportGUI importgui = new ImportGUI();
-            importgui.setBounds(0, 0, 1100, 700);
-            obj.center.removeAll();
-            obj.center.add(importgui);
-            obj.center.repaint();
-            obj.center.revalidate();
 
         } else if (text.equalsIgnoreCase("Hoa don")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("HD") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    FlatLightLaf.setup();
+                    try {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    InvoiceGUI invoicegui = new InvoiceGUI();
+                    invoicegui.setBounds(0, 0, 1100, 700);
+                    obj.center.removeAll();
+                    obj.center.add(invoicegui);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-            InvoiceGUI invoicegui = new InvoiceGUI();
-            invoicegui.setBounds(0, 0, 1100, 700);
-            obj.center.removeAll();
-            obj.center.add(invoicegui);
-            obj.center.repaint();
-            obj.center.revalidate();
-
         } else if (text.equalsIgnoreCase("Phieu nhap")) {
-            FlatLightLaf.setup();
-            try {
-                UIManager.setLookAndFeel(new FlatLightLaf());
-            } catch (Exception e) {
-                // TODO: handle exception
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("PN") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    FlatLightLaf.setup();
+                    try {
+                        UIManager.setLookAndFeel(new FlatLightLaf());
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    danhsachhoadonnhaphangGUI dshdnhgui = new danhsachhoadonnhaphangGUI();
+                    dshdnhgui.setBounds(0, 0, 1100, 700);
+                    obj.center.removeAll();
+                    obj.center.add(dshdnhgui);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
-            danhsachhoadonnhaphangGUI dshdnhgui = new danhsachhoadonnhaphangGUI();
-            dshdnhgui.setBounds(0, 0, 1100, 700);
-            obj.center.removeAll();
-            obj.center.add(dshdnhgui);
-            obj.center.repaint();
-            obj.center.revalidate();
-
         } else if (text.equalsIgnoreCase("San pham")) {
-            // FlatLightLaf.setup();
-            // try {
-            // UIManager.setLookAndFeel(new FlatLightLaf());
-            // } catch (Exception e) {
-            // // TODO: handle exception
-            // }
-            bookFrame bf = new bookFrame();
-            bf.setBounds(0, 0, 1100, 700);
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("SP") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    // FlatLightLaf.setup();
+                    // try {
+                    // UIManager.setLookAndFeel(new FlatLightLaf());
+                    // } catch (Exception e) {
+                    // // TODO: handle exception
+                    // }
+                    bookFrame bf = new bookFrame();
+                    bf.setBounds(0, 0, 1100, 700);
 
-            obj.center.removeAll();
-            obj.center.add(bf);
-            obj.center.repaint();
-            obj.center.revalidate();
-
+                    obj.center.removeAll();
+                    obj.center.add(bf);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
+            }
         } else if (text.equalsIgnoreCase("Nha cung cap")) {
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("NCC") &&
@@ -214,13 +260,21 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
         } else if (text.equalsIgnoreCase("Thong ke")) {
-            list_statistic ls = new list_statistic();
-            ls.setBounds(0, 0, 1100, 670);
-            obj.center.removeAll();
-            obj.center.add(ls);
-            obj.center.repaint();
-            obj.center.revalidate();
-
+            for (int i = 0; i < tk_chitietquyen.size(); i++)
+                if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("THK") &&
+                        tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
+                        tk_chitietquyen.get(i).getTinhtrang() == 1) {
+                    list_statistic ls = new list_statistic();
+                    ls.setBounds(0, 0, 1100, 670);
+                    obj.center.removeAll();
+                    obj.center.add(ls);
+                    obj.center.repaint();
+                    obj.center.revalidate();
+                    kt_dangnhap = 1;
+                }
+            if (kt_dangnhap == 0) {
+                JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
+            }
         }
     }
 
