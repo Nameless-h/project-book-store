@@ -1,6 +1,7 @@
 package GUI.quanlysanpham;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,11 +19,11 @@ public class AddNxbFrame extends JFrame implements ActionListener {
   private PostButtonPanel button_panel;
   private TitlePanel title_panel;
 
-  public AddNxbFrame() {
-    width = 900;
-    height = 600;
+  public AddNxbFrame(int width, int height) {
+    this.width = width;
+    this.height = height;
     this.setLayout(new BorderLayout());
-    this.setSize(width, height);
+    this.setSize(this.width, this.height);
     this.setLocationRelativeTo(null);
     init();
     this.setVisible(true);
@@ -32,16 +33,13 @@ public class AddNxbFrame extends JFrame implements ActionListener {
     String[] label_array = { "Tên nhà xuất bản", "Hotmail", "Hotline", "Địa chỉ", "Trạng thái" };
     title_panel = new TitlePanel("Thêm nhà xuất bản");
     input_panel = new InputPanel(label_array, 600, 200);
+    title_panel.setBackground(Color.red);
     button_panel = new PostButtonPanel(80);
     button_panel.getSavebtn().addActionListener(this);
     button_panel.getResetbtn().addActionListener(this);
     this.add(title_panel, BorderLayout.NORTH);
     this.add(input_panel, BorderLayout.WEST);
     this.add(button_panel, BorderLayout.SOUTH);
-  }
-
-  public static void main(String[] args) {
-    new AddNxbFrame();
   }
 
   @Override
@@ -58,6 +56,7 @@ public class AddNxbFrame extends JFrame implements ActionListener {
       tmp.setTrangThai(Integer.parseInt(input_panel.getCbbField()[0].getSelectedItem().toString().split("-")[0]));
       bookFrame.nxbBUS.addNhaXuatBan(tmp);
       JOptionPane.showConfirmDialog(this, "Thêm nhà xuất bản thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
+      bookFrame.resetBookFrameStatus();
       resetForm();
     }
     if (e.getSource() == button_panel.getResetbtn()) {
@@ -66,8 +65,8 @@ public class AddNxbFrame extends JFrame implements ActionListener {
   }
 
   public void resetForm() {
-    for (JTextField tmp : input_panel.getTextField()) {
-      tmp.setText("");
+    for (int i = 0; i < input_panel.getNumberOfTextField(); i++) {
+      input_panel.getTextField()[i].setText("");
     }
   }
 }

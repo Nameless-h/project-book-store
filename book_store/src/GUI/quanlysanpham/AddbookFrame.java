@@ -24,14 +24,18 @@ public class AddbookFrame extends JFrame implements ActionListener {
   private int HEIGHT;
   private TitlePanel title_panel;
   private InputPanel input_panel;
-  private ImagePanel img_panel;
+
   private PostButtonPanel post_panel;
+
+  public PostButtonPanel getPostPanel() {
+    return this.post_panel;
+  }
 
   public AddbookFrame(int WIDTH, int HEIGHT) {
     this.WIDTH = WIDTH;
     this.HEIGHT = HEIGHT;
     this.setLayout(new BorderLayout());
-    this.setSize(WIDTH, HEIGHT);
+    this.setSize(this.WIDTH, this.HEIGHT);
     this.setLocationRelativeTo(null);
     init();
     this.setVisible(true);
@@ -43,14 +47,12 @@ public class AddbookFrame extends JFrame implements ActionListener {
     title_panel = new TitlePanel("THÊM SẢN PHẨM");
     title_panel.setBackground(Color.red);
     input_panel = new InputPanel(label_array, modifyPanelWidth(this.WIDTH, 0.5), 150);
-    img_panel = new ImagePanel(modifyPanelWidth(this.WIDTH, 0.5));
     post_panel = new PostButtonPanel(70);
     post_panel.getSavebtn().addActionListener(this);
     post_panel.getResetbtn().addActionListener(this);
 
     this.add(title_panel, BorderLayout.NORTH);
     this.add(input_panel, BorderLayout.WEST);
-    this.add(img_panel, BorderLayout.EAST);
     this.add(post_panel, BorderLayout.SOUTH);
   }
 

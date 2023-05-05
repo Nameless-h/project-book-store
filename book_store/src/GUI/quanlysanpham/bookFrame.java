@@ -55,21 +55,19 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private ModifyButtonPanel button_panel_tloai;
   private JPanel tacgia_panel;
   private ModifyButtonPanel button_panel_tacgia;
-
-  private SearchPanel search_sach_panel;
-  private SearchPanel search_nhaxuatban_panel;
-  private SearchPanel search_theloai_panel;
-  private SearchPanel search_tacgia_panel;
-
+  private static SearchPanel search_sach_panel;
+  private static SearchPanel search_nhaxuatban_panel;
+  private static SearchPanel search_theloai_panel;
+  private static SearchPanel search_tacgia_panel;
   private JButton selectTacgia;
-  private TacGiaSelectFrame selectTacgiaFrame;
-  private JComboBox<String> cbbTheloai;
+  private static TacGiaSelectFrame selectTacgiaFrame;
+  private static JComboBox<String> cbbTheloai;
+  private static JComboBox<String> cbbNXB;
   private JTextField txtMaSach;
   private JTextField txttenSach;
   private JTextField txtNamxb;
   private JTextField txtSoluong;
   private JTextField txtGiatien;
-  private JComboBox<String> cbbNXB;
   private JTextField txtMaNxb;
   private JTextField txtTenNxb;
   private JTextField txtMailNxb;
@@ -79,7 +77,6 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   private JTextField txtTenTheLoai;
   private JTextField txtMaTacGia;
   private JTextField txtTenTacGia;
-  private JComboBox<String> cbbsearchTheloai;
   private AddbookFrame addBookFrame;
   private AddNxbFrame addNxbFrame;
   private addTheLoaiFrame addTheLoaiFrame;
@@ -95,6 +92,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   Font searchFo = new Font("Time New Roman", Font.PLAIN, 15);
 
   public bookFrame() {
+
     this.setLayout(new BorderLayout());
     bookBUS.listSanPham();
     nxbBUS.listNhaXuatBan();
@@ -106,6 +104,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
   }
 
   public void init() {
+
     // create table
     scrollPaneBook = new JScrollPane();
     scrollPaneNxb = new JScrollPane();
@@ -236,45 +235,45 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       tabPane.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
 
       book_panel.setLayout(null);
-      book_panel.setBackground(new Color(211, 242, 214));
+      book_panel.setBackground(new Color(242, 225, 226));
 
       nxb_panel.setLayout(null);
-      nxb_panel.setBackground(new Color(211, 242, 214));
+      nxb_panel.setBackground(new Color(242, 225, 226));
 
       tloai_panel.setLayout(null);
-      tloai_panel.setBackground(new Color(211, 242, 214));
+      tloai_panel.setBackground(new Color(242, 225, 226));
 
       tacgia_panel.setLayout(null);
-      tacgia_panel.setBackground(new Color(211, 242, 214));
+      tacgia_panel.setBackground(new Color(242, 225, 226));
 
-      search_sach_panel.setBackground(new Color(50, 168, 76));
+      search_sach_panel.setBackground(Color.red);
       search_sach_panel.getSearchButton().addActionListener(this);
 
-      search_nhaxuatban_panel.setBackground(new Color(50, 168, 76));
+      search_nhaxuatban_panel.setBackground(Color.red);
       search_nhaxuatban_panel.setVisible(false);
       search_nhaxuatban_panel.getSearchButton().addActionListener(this);
 
-      search_theloai_panel.setBackground(new Color(50, 168, 76));
+      search_theloai_panel.setBackground(Color.red);
       search_theloai_panel.setVisible(false);
       search_theloai_panel.getSearchButton().addActionListener(this);
 
-      search_tacgia_panel.setBackground(new Color(50, 168, 76));
+      search_tacgia_panel.setBackground(Color.red);
       search_tacgia_panel.setVisible(false);
       search_tacgia_panel.getSearchButton().addActionListener(this);
 
-      scrollPaneBook.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneBook.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.39)));
       scrollPaneBook.setVisible(false);
       scrollPaneBook.setBackground(Color.orange);
 
-      scrollPaneNxb.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneNxb.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.39)));
       scrollPaneNxb.setVisible(false);
       scrollPaneNxb.setBackground(Color.orange);
 
-      scrollPaneTloai.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneTloai.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.39)));
       scrollPaneTloai.setVisible(false);
       scrollPaneTloai.setBackground(Color.orange);
 
-      scrollPaneTacGia.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.45)));
+      scrollPaneTacGia.setPreferredSize(new Dimension(1100, (int) Math.floor(700 * 0.39)));
       scrollPaneTacGia.setVisible(false);
       scrollPaneTacGia.setBackground(Color.orange);
 
@@ -357,19 +356,36 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
 
   private void showCbbTheloai() {
     cbbTheloai.removeAllItems();
+    search_sach_panel.getCbbField()[1].removeAllItems();
     for (Theloai tmp : tloaiBUS.getDanhSachTheLoai()) {
       if (tmp.getTrangThai() == 1) {
         cbbTheloai.addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+        search_sach_panel.getCbbField()[1].addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
       }
     }
   }
 
   private void showCbbNxb() {
     cbbNXB.removeAllItems();
+    search_sach_panel.getCbbField()[1].removeAllItems();
     ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
     for (NhaXuatBan tmp : list) {
       if (tmp.getTrangThai() == 1) {
         cbbNXB.addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+        search_sach_panel.getCbbField()[1].addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+
+      }
+    }
+  }
+
+  private void showCbbTacgia() {
+    search_sach_panel.getCbbField()[1].removeAllItems();
+    ArrayList<tacgia> list = tacgiaBUS.getDanhSachTacGia();
+    for (tacgia tmp : list) {
+      if (tmp.getTrangThai() == 1) {
+        cbbNXB.addItem(tmp.getMaTacgia() + "-" + tmp.getTenTacgia());
+        search_sach_panel.getCbbField()[1].addItem(tmp.getMaTacgia() + "-" + tmp.getTenTacgia());
+
       }
     }
   }
@@ -436,14 +452,14 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
             }
 
             // clear checkbox tac gia
-            for (JCheckBox tmp2 : selectTacgiaFrame.getCheckBoxList()) {
-              tmp2.setSelected(false);
+            for (int i = 0; i < selectTacgiaFrame.getNumberOfCheckBox(); i++) {
+              selectTacgiaFrame.getCheckBoxList()[i].setSelected(false);
             }
             // checked checkbox tac gia
             for (int tmp : cttgBUS.timTacGiaTheoMaSach(selectedBookID)) {
-              for (JCheckBox tmp2 : selectTacgiaFrame.getCheckBoxList()) {
-                if (Integer.parseInt(tmp2.getText().split("-")[0]) == tmp) {
-                  tmp2.setSelected(true);
+              for (int i = 0; i < selectTacgiaFrame.getNumberOfCheckBox(); i++) {
+                if (Integer.parseInt(selectTacgiaFrame.getCheckBoxList()[i].getText().split("-")[0]) == tmp) {
+                  selectTacgiaFrame.getCheckBoxList()[i].setSelected(true);
                 }
               }
             }
@@ -716,24 +732,58 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
      * ---------------------- sách panel --------------------------
      * --------------------------------------------------------------------
      */
-
+    // them
     if (e.getSource() == button_panel_book.getAddBtn()) {
-      try {
-        // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-        if (!addBookFrame.isVisible()) {
-          addBookFrame.setVisible(true);
-          addBookFrame.toFront();
-        } else {
-          addBookFrame.toFront();
-        }
-      } catch (Exception ex) {
-        System.err.println("add frame chua khoi tao, bat dau khoi tao add frame");
+      // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
+      /*
+       * if (addBookFrame == null) {
+       * addBookFrame = new AddbookFrame(900, 600);
+       * addBookFrame.setVisible(true);
+       * } else {
+       * addBookFrame.dispose();
+       * addBookFrame = new AddbookFrame(900, 600);
+       * addBookFrame.setVisible(true);
+       * }
+       * }
+       */
+      if (addBookFrame == null) {
         addBookFrame = new AddbookFrame(900, 600);
-        addBookFrame.toFront();
+        addBookFrame.setAlwaysOnTop(true);
+      } else {
+        addBookFrame.dispose();
+        addBookFrame = new AddbookFrame(900, 600);
+        addBookFrame.setAlwaysOnTop(true);
       }
     }
+    /*
+     * try {
+     * // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
+     * addBookFrame.dispose();
+     * } catch (Exception ex) {
+     * System.err.println("add frame chua khoi tao, bat dau khoi tao add frame");
+     * addBookFrame = new AddbookFrame(900, 600);
+     * addBookFrame.toFront();
+     * 
+     * } finally {
+     * addBookFrame.getPostPanel().getSavebtn().addActionListener(new
+     * ActionListener() {
+     * 
+     * @Override
+     * public void actionPerformed(ActionEvent e) {
+     * try {
+     * showBookList(bookBUS.getDanhSachSanPham());
+     * } catch (Exception e1) {
+     * e1.printStackTrace();
+     * }
+     * }
+     * });
+     * }
+     * }
+     */
     // click tacgia btn
-    if (e.getSource() == selectTacgia) {
+    if (e.getSource() == selectTacgia)
+
+    {
 
       selectTacgiaFrame.setVisible(true);
       return;
@@ -824,17 +874,26 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
      */
     // them
     if (e.getSource() == button_panel_nxb.getAddBtn()) {
-      try {
-        // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
-        if (!addNxbFrame.isVisible()) {
-          addNxbFrame.setVisible(true);
-          addNxbFrame.toFront();
-        } else {
-          addNxbFrame.toFront();
-        }
-      } catch (Exception ex) {
-        System.err.println("add nxb frame chua khoi tao, bat dau khoi tao add frame");
-        addNxbFrame = new AddNxbFrame();
+      /*
+       * try {
+       * // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
+       * if (!addNxbFrame.isVisible()) {
+       * addNxbFrame.setVisible(true);
+       * addNxbFrame.toFront();
+       * } else {
+       * addNxbFrame.toFront();
+       * }
+       * } catch (Exception ex) {
+       * System.err.println("add nxb frame chua khoi tao, bat dau khoi tao add frame"
+       * );
+       * addNxbFrame = new AddNxbFrame();
+       * }
+       */
+      if (addNxbFrame == null) {
+        addNxbFrame = new AddNxbFrame(900, 600);
+      } else {
+        addNxbFrame.dispose();
+        addNxbFrame = new AddNxbFrame(900, 600);
       }
     }
     // sua
@@ -860,6 +919,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         nxbBUS.editNhaXuatBan(tmp);
         try {
           showNxbList(nxbBUS.getDanhSachNhaXuatBan());
+          showCbbNxb();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -883,6 +943,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         resetForm();
         try {
           showNxbList(nxbBUS.getDanhSachNhaXuatBan());
+          showCbbNxb();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -928,6 +989,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         tloaiBUS.editTheLoai(tmp);
         try {
           showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+          showCbbTheloai();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -951,6 +1013,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         resetForm();
         try {
           showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+          showCbbTheloai();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -995,7 +1058,8 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         tmp.setTenTacgia(txtTenTacGia.getText());
         tacgiaBUS.editTacGia(tmp);
         try {
-          showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+          showTacGiaList(tacgiaBUS.getDanhSachTacGia());
+          showCbbTacgia();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -1003,7 +1067,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
     }
     // xoa
     if (e.getSource() == button_panel_tacgia.getDelBtn()) {
-      if (txtMaTheLoai.getText().equalsIgnoreCase("")) {
+      if (txtMaTacGia.getText().equalsIgnoreCase("")) {
         JOptionPane.showConfirmDialog(this,
             "Bạn chưa chọn tác giả để xóa, hãy chọn 1 sản phẩm trong bảng dưới. ", "Thông báo",
             JOptionPane.WARNING_MESSAGE);
@@ -1019,6 +1083,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         resetForm();
         try {
           showTacGiaList(tacgiaBUS.getDanhSachTacGia());
+          showCbbTacgia();
         } catch (Exception e1) {
           e1.printStackTrace();
         }
@@ -1157,6 +1222,22 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         showTacGiaList(tacgiaBUS.getDanhSachTacGia());
       } catch (Exception ex) {
         ex.printStackTrace();
+      }
+    }
+  }
+
+  public static void resetBookFrameStatus() {
+    cbbNXB.removeAllItems();
+    ArrayList<NhaXuatBan> list = nxbBUS.getDanhSachNhaXuatBan();
+    for (NhaXuatBan tmp : list) {
+      if (tmp.getTrangThai() == 1) {
+        cbbNXB.addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+      }
+    }
+    cbbTheloai.removeAllItems();
+    for (Theloai tmp : tloaiBUS.getDanhSachTheLoai()) {
+      if (tmp.getTrangThai() == 1) {
+        cbbTheloai.addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
       }
     }
   }

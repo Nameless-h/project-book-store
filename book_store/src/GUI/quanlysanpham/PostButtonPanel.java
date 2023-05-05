@@ -15,7 +15,7 @@ public class PostButtonPanel extends JPanel {
     this.height = height;
     this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 10));
     this.setPreferredSize(new Dimension(100, this.height));
-    this.setBackground(Color.blue);
+    this.setBackground(Color.red);
     init();
     this.setVisible(true);
   }

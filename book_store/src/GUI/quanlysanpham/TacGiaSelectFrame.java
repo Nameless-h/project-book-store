@@ -18,6 +18,7 @@ public class TacGiaSelectFrame extends JFrame {
   private int HEIGHT;
   private int WIDTH;
   private JCheckBox[] checkBox_tacgia;
+  private int checkbox_index = 0;
 
   public TacGiaSelectFrame(ArrayList<tacgia> array_tac_gia, int width, int height) {
     super("Tác giả");
@@ -37,11 +38,14 @@ public class TacGiaSelectFrame extends JFrame {
     tacgia_container.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
     tacgia_container.setPreferredSize(new Dimension(this.WIDTH, 900));
     for (int i = 0; i < array_tac_gia.size(); i++) {
-      checkBox_tacgia[i] = new JCheckBox(
-          array_tac_gia.get(i).getMaTacgia() + "-" + array_tac_gia.get(i).getTenTacgia());
-      checkBox_tacgia[i].setPreferredSize(new Dimension(200, 50));
-      checkBox_tacgia[i].setFont(fo);
-      tacgia_container.add(checkBox_tacgia[i]);
+      if (array_tac_gia.get(i).getTrangThai() == 1) {
+        checkBox_tacgia[checkbox_index] = new JCheckBox(
+            array_tac_gia.get(i).getMaTacgia() + "-" + array_tac_gia.get(i).getTenTacgia());
+        checkBox_tacgia[checkbox_index].setPreferredSize(new Dimension(200, 50));
+        checkBox_tacgia[checkbox_index].setFont(fo);
+        tacgia_container.add(checkBox_tacgia[i]);
+        checkbox_index++;
+      }
     }
 
     JScrollPane container = new JScrollPane(tacgia_container);
@@ -53,6 +57,10 @@ public class TacGiaSelectFrame extends JFrame {
 
   public JCheckBox[] getCheckBoxList() {
     return this.checkBox_tacgia;
+  }
+
+  public int getNumberOfCheckBox() {
+    return this.checkbox_index;
   }
 
   public static void main(String[] args) {

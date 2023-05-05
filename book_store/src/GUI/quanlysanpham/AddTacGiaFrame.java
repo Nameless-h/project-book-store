@@ -1,6 +1,7 @@
 package GUI.quanlysanpham;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,6 +31,7 @@ public class AddTacGiaFrame extends JFrame implements ActionListener {
   public void init() {
     String[] label_array = { "Tên tác giả" };
     title_panel = new TitlePanel("Thêm tác giả");
+    title_panel.setBackground(Color.red);
     input_panel = new InputPanel(label_array, 400, 220);
     button_panel = new PostButtonPanel(80);
     button_panel.getSavebtn().addActionListener(this);

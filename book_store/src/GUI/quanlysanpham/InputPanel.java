@@ -88,7 +88,9 @@ public class InputPanel extends JPanel implements ActionListener {
         cbbfield[cbb_field_index].removeAllItems();
         ArrayList<Theloai> data = bookFrame.tloaiBUS.getDanhSachTheLoai();
         for (Theloai tmp : data) {
-          cbbfield[cbb_field_index].addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+          if (tmp.getTrangThai() == 1) {
+            cbbfield[cbb_field_index].addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+          }
         }
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
@@ -102,7 +104,9 @@ public class InputPanel extends JPanel implements ActionListener {
         cbbfield[cbb_field_index].removeAllItems();
         ArrayList<NhaXuatBan> list = bookFrame.nxbBUS.getDanhSachNhaXuatBan();
         for (NhaXuatBan tmp : list) {
-          cbbfield[cbb_field_index].addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+          if (tmp.getTrangThai() == 1) {
+            cbbfield[cbb_field_index].addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
+          }
         }
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
