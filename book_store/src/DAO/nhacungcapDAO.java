@@ -44,7 +44,6 @@ public class nhacungcapDAO {
         sql += "emailNCC='" + ncc.getEmail() + "', ";
         sql += "tinhtrang=" + ncc.getTinhtrang();
         sql += " WHERE maNCC=" + ncc.getMa();
-        System.out.println(sql);
         mySQL.executeUpdate(sql);
     }
 
@@ -57,7 +56,7 @@ public class nhacungcapDAO {
         sql += "'" + ncc.getSDT() + "',";
         sql += "'" + ncc.getEmail() + "',";
         sql += "" + ncc.getTinhtrang() + ",)";
-        System.out.println(sql);
+
         mySQL.executeUpdate(sql);
     }
 
@@ -68,7 +67,7 @@ public class nhacungcapDAO {
                 "tinhtrang=" + tt + "" +
                 " WHERE maNCC=" + mancc +
                 "";
-        System.out.println(sql);
+
         mySQL.executeUpdate(sql);
     }
 }

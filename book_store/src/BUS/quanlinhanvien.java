@@ -1,6 +1,7 @@
 package BUS;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -10,7 +11,9 @@ import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -286,8 +289,8 @@ public class quanlinhanvien {
             cell.setCellValue(list_ten[i]);
         }
 
-        for (int i = 1; i < list.size(); i++) {
-            row = sheet.createRow(i + 1);
+        for (int i = 0; i < list.size(); i++) {
+            row = sheet.createRow(i + 2);
             for (int j = 0; j < 11; j++) {
                 Cell cell = row.createCell(j);
                 if (cell.getColumnIndex() == 0) {
@@ -350,5 +353,91 @@ public class quanlinhanvien {
     public void nutxoa(int manv, JTable table) {
         chucnang_nhanvien.update_tt(manv, 0);
         hienthidanhsach_nhanvien(table);
+    }
+
+    public ArrayList<nhanvien> get_by_excel() {
+        ArrayList<nhanvien> list = new ArrayList<nhanvien>();
+        String title;
+        String gt_str;
+        ArrayList<String> header = new ArrayList<>();
+        ArrayList<Integer> stt = new ArrayList<>();
+        JFileChooser openFileChooser = new JFileChooser();
+        openFileChooser.setDialogTitle("Open File");
+        openFileChooser.removeChoosableFileFilter(openFileChooser.getFileFilter());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel file (.xlsx)", "xlsx");
+        openFileChooser.setFileFilter(filter);
+
+        if (openFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File inputFile = openFileChooser.getSelectedFile();
+            try (FileInputStream in = new FileInputStream(inputFile)) {
+
+                XSSFWorkbook imporetedfile = new XSSFWorkbook(in);
+                XSSFSheet sheet1 = imporetedfile.getSheetAt(0);
+
+                Iterator<Row> rowiterator = sheet1.iterator();
+
+                while (rowiterator.hasNext()) {
+                    Row row = rowiterator.next();
+                    Iterator<Cell> cellIterator = row.cellIterator();
+                    nhanvien nv = new nhanvien();
+                    while (cellIterator.hasNext()) {
+
+                        Cell cell = cellIterator.next();
+                        if (row.getRowNum() == 0)
+                            title = cell.getStringCellValue();
+                        else if (row.getRowNum() == 1)
+                            header.add(cell.getStringCellValue());
+                        else {
+                            if (cell.getColumnIndex() == 0) {
+                                stt.add((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 1) {
+                                nv.setMa((int) cell.getNumericCellValue());
+                            } else if (cell.getColumnIndex() == 2) {
+                                nv.setTen(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 3) {
+                                gt_str = (cell.getStringCellValue());
+                                if (gt_str.equalsIgnoreCase("Nam"))
+                                    nv.setGioitinh(1);
+                                else
+                                    nv.setGioitinh(0);
+                            } else if (cell.getColumnIndex() == 4) {
+                                nv.setDiachi(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 5) {
+                                nv.setEmail(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 6) {
+                                nv.setSodienthoai(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 7) {
+                                nv.setChucvu(cell.getStringCellValue());
+                            } else if (cell.getColumnIndex() == 8) {
+                                nv.setTinhtrang((int) cell.getNumericCellValue());
+                            }
+
+                            list.add(nv);
+                        }
+                    }
+
+                }
+
+            } catch (IOException e) {
+                System.out.println("That bai");
+            }
+        }
+        return list;
+    }
+
+    public void update_by_excel() {
+        list = chucnang_nhanvien.selecAll();
+        ArrayList<nhanvien> list_temp = get_by_excel();
+        for (int i = 0; i < list_temp.size(); i++) {
+            int kt = 0;
+            for (int j = 0; j < list.size(); j++) {
+                if (list_temp.get(i).getMa() == list.get(j).getMa())
+                    kt = 1;
+            }
+            if (kt == 1)
+                chucnang_nhanvien.update(list_temp.get(i));
+            else
+                chucnang_nhanvien.insert(list_temp.get(i));
+        }
     }
 }
