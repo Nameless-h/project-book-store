@@ -137,7 +137,7 @@ public class menu extends JPanel implements MouseListener {
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
-                    SaleGUI salegui = new SaleGUI(tk);
+                    SaleGUI salegui = new SaleGUI(this.tk);
                     salegui.setBounds(0, 0, 1100, 700);
                     obj.center.removeAll();
                     obj.center.add(salegui);
@@ -160,7 +160,7 @@ public class menu extends JPanel implements MouseListener {
                     } catch (Exception e) {
                         // TODO: handle exception
                     }
-                    ImportGUI importgui = new ImportGUI(tk);
+                    ImportGUI importgui = new ImportGUI(this.tk);
                     importgui.setBounds(0, 0, 1100, 700);
                     obj.center.removeAll();
                     obj.center.add(importgui);
