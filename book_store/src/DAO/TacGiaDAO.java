@@ -177,6 +177,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
         }
       }
     }
+    JDBCUtil.closeConnection(conn);
     return tmp;
   }
 
@@ -210,6 +211,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
           break;
         } while (result.next());
       }
+      conn.close();
     } catch (SQLException e) {
       Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {

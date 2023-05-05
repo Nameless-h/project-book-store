@@ -14,9 +14,9 @@ public class JDBCUtil {
 			// Đăng ký MySQL Driver với DriverManager
 
 			// Các thông số
-			String url = "jdbc:mySQL://localhost:3306/bookstore";
+			String url = "jdbc:mySQL://localhost:3307/bookstore";
 			String username = "root";
-			String password = "12345678";
+			String password = "";
 
 			// Tạo kết nối
 			c = DriverManager.getConnection(url, username, password);
