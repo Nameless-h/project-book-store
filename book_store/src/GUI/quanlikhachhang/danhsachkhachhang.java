@@ -31,13 +31,13 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
     String[] collums = { "STT", "Ma khach hang", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT", "Diem tich luy",
             "Tinh trang" };
     String[] list_timkiem = { "Tat ca", "Ma khach hang", "Ten", "Gioi tinh", "Dia chi", "Email", "SDT" };
-    
+
     JComboBox combo_timkiem;
     JTextField txt_timkiem;
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_timkiem, bun_lammoi;
+    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_up_excel, bun_timkiem, bun_lammoi;
 
     public danhsachkhachhang(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
@@ -56,7 +56,7 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
         pan_chucnang1.setLayout(new FlowLayout(FlowLayout.CENTER));
         this.add(pan_chucnang1);
         // nut them
-        bun_them = new JButton("Them",ic_lib.icon_add);
+        bun_them = new JButton("Them", ic_lib.icon_add);
         bun_them.setPreferredSize(new Dimension(200, 40));
         bun_them.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_them);
@@ -75,6 +75,11 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
         bun_in_excel.setPreferredSize(new Dimension(200, 40));
         bun_in_excel.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_in_excel);
+        // nut import excel
+        bun_up_excel = new JButton("Import Excel", ic_lib.icon_export_excel);
+        bun_up_excel.setPreferredSize(new Dimension(200, 40));
+        bun_up_excel.setFont(new Font(set.font_time_roman, 1, 20));
+        pan_chucnang1.add(bun_up_excel);
         // cai dat panel chuc nang 2
         pan_chucnang2 = new JPanel();
         pan_chucnang2.setBounds(0, 60, set.w_center, 100);
@@ -114,6 +119,7 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
         bun_timkiem.addMouseListener(this);
         bun_lammoi.addMouseListener(this);
         bun_in_excel.addMouseListener(this);
+        bun_up_excel.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -198,6 +204,9 @@ public class danhsachkhachhang extends JPanel implements MouseListener {
             combo_timkiem.setSelectedIndex(0);
         } else if (e.getSource() == bun_in_excel) {
             chucnang.xuatds_excel();
+        } else if (e.getSource() == bun_up_excel) {
+            chucnang.update_by_excel();
+            chucnang.hienthidanhsach_khachhang(tab_danhsach);
         }
     }
 

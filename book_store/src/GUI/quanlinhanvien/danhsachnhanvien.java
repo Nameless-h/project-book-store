@@ -39,7 +39,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
     JTable tab_danhsach;
     JScrollPane thanhcuon;
     JPanel pan_chucnang1, pan_chucnang2, pan_timkiem;
-    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_timkiem, bun_lammoi;
+    JButton bun_them, bun_xoa, bun_sua, bun_in_excel, bun_up_excel, bun_timkiem, bun_lammoi;
 
     public danhsachnhanvien(main obj, ArrayList<chitietnhomquyen> list_ct) {
         this.obj = obj;
@@ -77,6 +77,11 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         bun_in_excel.setPreferredSize(new Dimension(200, 40));
         bun_in_excel.setFont(new Font(set.font_time_roman, 1, 20));
         pan_chucnang1.add(bun_in_excel);
+        // bun them bang excel
+        bun_up_excel = new JButton("Import Excel", ic_lib.icon_export_excel);
+        bun_up_excel.setPreferredSize(new Dimension(200, 40));
+        bun_up_excel.setFont(new Font(set.font_time_roman, 1, 20));
+        pan_chucnang1.add(bun_up_excel);
 
         // cai dat panel chuc nang 2
         pan_chucnang2 = new JPanel();
@@ -119,6 +124,7 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
         bun_timkiem.addMouseListener(this);
         bun_lammoi.addMouseListener(this);
         bun_in_excel.addMouseListener(this);
+        bun_up_excel.addMouseListener(this);
         // set bang nhan vien
         tab_danhsach = new JTable();
         tab_danhsach.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
@@ -226,6 +232,9 @@ public class danhsachnhanvien extends JPanel implements MouseListener {
             combo_timkiem.setSelectedIndex(0);
         } else if (e.getSource() == bun_in_excel) {
             chucnang.xuatds_excel();
+        } else if (e.getSource() == bun_up_excel) {
+            chucnang.update_by_excel();
+            chucnang.hienthidanhsach_nhanvien(tab_danhsach);
         }
     }
 

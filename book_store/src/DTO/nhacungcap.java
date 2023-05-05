@@ -8,13 +8,16 @@ public class nhacungcap {
     private String email;
     private int tinhtrang;
 
-    public nhacungcap(int ma,String ten,String diachi, String sdt,String email,int tinhtrang) {
-        this.ma=ma;
-        this.ten=ten;
-        this.diachi=diachi;
-        this.sdt=sdt;
-        this.email=email;
-        this.tinhtrang=tinhtrang;
+    public nhacungcap() {
+    }
+
+    public nhacungcap(int ma, String ten, String diachi, String sdt, String email, int tinhtrang) {
+        this.ma = ma;
+        this.ten = ten;
+        this.diachi = diachi;
+        this.sdt = sdt;
+        this.email = email;
+        this.tinhtrang = tinhtrang;
     }
 
     public void setMa(int ma) {
@@ -56,6 +59,7 @@ public class nhacungcap {
     public String getEmail() {
         return this.email;
     }
+
     public void setTinhtrang(int tinhtrang) {
         this.tinhtrang = tinhtrang;
     }
