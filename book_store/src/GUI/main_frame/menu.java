@@ -143,6 +143,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(salegui);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
@@ -165,6 +166,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(importgui);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
@@ -187,6 +189,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(invoicegui);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
@@ -208,6 +211,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(dshdnhgui);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
@@ -230,6 +234,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(bf);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
@@ -261,6 +266,7 @@ public class menu extends JPanel implements MouseListener {
                     obj.center.add(ls);
                     obj.center.repaint();
                     obj.center.revalidate();
+                    kt_dangnhap = 1;
                 }
             if (kt_dangnhap == 0) {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
