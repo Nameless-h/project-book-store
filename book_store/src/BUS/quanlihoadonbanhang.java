@@ -113,7 +113,7 @@ public class quanlihoadonbanhang {
         CellRangeAddress mergedRegion = new CellRangeAddress(0, 0, 0, list_ten.length-1);
         sheet.addMergedRegion(mergedRegion);
         Cell cell_title = row.createCell(0);
-        // cjen chu danh sach nhan vien
+        // dien chu danh sach nhan vien
         cell_title.setCellValue("DANH SÁCH HÓA ĐƠN BÁN HÀNG");
         CellStyle style = workbook.createCellStyle();
         // can giua cho chu cai
