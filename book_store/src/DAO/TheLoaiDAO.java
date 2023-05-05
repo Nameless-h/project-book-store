@@ -156,6 +156,7 @@ public class TheLoaiDAO implements DAOinterface<Theloai> {
             if (statement != null) {
                 try {
                     statement.close();
+                    conn.close();
                 } catch (SQLException e) {
                     // TODO: handle exception
                     Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
