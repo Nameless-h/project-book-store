@@ -436,8 +436,8 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
           bookModel.addRow(new Object[] {
               tmp.getMaSach(), tmp.getTenSach(),
               tacgiaTmp.getTenTacgia(), theLoaiTmp.getTenTheloai(),
-              nxbTmp.getTenNXB(), tmp.getNamXB(),
-              tmp.getGiaTien(), tmp.getSoLuong() });
+              nxbTmp.getTenNXB(), tmp.getNamXB(),tmp.getSoLuong(),
+              tmp.getGiaTien() });
         }
       }
 
@@ -753,11 +753,17 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       // neu isVisible hoat dong nghia la da khoi tao add frame, dem no len front
       if (addBookFrame == null) {
         addBookFrame = new AddbookFrame(900, 600);
-        addBookFrame.setAlwaysOnTop(true);
+        addBookFrame.toFront();
       } else {
         addBookFrame.dispose();
         addBookFrame = new AddbookFrame(900, 600);
-        addBookFrame.setAlwaysOnTop(true);
+        addBookFrame.toFront();
+      }
+      try {
+        showBookList(bookBUS.getDanhSachSanPham());
+      } catch (Exception e1) {
+        // TODO: handle exception
+        e1.printStackTrace();
       }
     }
     // click tacgia btn
@@ -951,6 +957,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         addNxbFrame.dispose();
         addNxbFrame = new AddNxbFrame(900, 600);
       }
+      try {
+        showNxbList(nxbBUS.getDanhSachNhaXuatBan());
+        showCbbNxb();
+      } catch (Exception e1) {
+        // TODO: handle exception
+        e1.printStackTrace();
+      }
     }
     // sua
     if (e.getSource() == button_panel_nxb.getEditBtn()) {
@@ -1101,6 +1114,12 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
         } else {
           addTheLoaiFrame.toFront();
         }
+        try {
+          showTheLoaiList(tloaiBUS.getDanhSachTheLoai());
+          showCbbTheloai();
+        } catch (Exception e1) {
+          e1.printStackTrace();
+        }
       } catch (Exception ex) {
         System.err.println("add the loai frame chua khoi tao, bat dau khoi tao add frame");
         addTheLoaiFrame = new addTheLoaiFrame();
@@ -1246,6 +1265,13 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
           addTacGiaFrame.toFront();
         } else {
           addTacGiaFrame.toFront();
+        }
+        try {
+          showTacGiaList(tacgiaBUS.getDanhSachTacGia());
+          showCbbTacgia();
+        } catch (Exception e1) {
+          // TODO: handle exception
+          e1.printStackTrace();
         }
       } catch (Exception ex) {
         System.err.println("add tác giả frame chua khoi tao, bat dau khoi tao add frame");
