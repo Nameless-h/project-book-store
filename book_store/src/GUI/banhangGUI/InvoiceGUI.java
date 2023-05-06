@@ -137,20 +137,22 @@ public class InvoiceGUI extends JPanel implements ActionListener {
     public Mytable invoiceTable() {
         invoiceTable = new Mytable();
         invoiceTable.setTablesize(1000, 540);
-        invoiceTable.setHeader(new String[] { "STT", "Mã hóa đơn", "Tên nhân viên", "Tên khách hàng","Ngày tạo", "Thành tiền"});
+        invoiceTable.setHeader(new String[] { "STT", "Mã HĐ","Mã KH" ,"Tên khách hàng","Tên nhân viên","Ngày tạo", "Thành tiền"});
         qlhdbh.initList();
         setDataToTable(qlhdbh.getList(),invoiceTable);
         invoiceTable.setPreferredWidth(0, 50);
-        invoiceTable.setPreferredWidth(1, 100);
-        invoiceTable.setPreferredWidth(2, 250);
+        invoiceTable.setPreferredWidth(1, 50);
+        invoiceTable.setPreferredWidth(2, 50);
         invoiceTable.setPreferredWidth(3, 250);
-        invoiceTable.setPreferredWidth(4, 150);
-        invoiceTable.setPreferredWidth(5, 200);
+        invoiceTable.setPreferredWidth(4, 250);
+        invoiceTable.setPreferredWidth(5, 150);
+        invoiceTable.setPreferredWidth(6, 200);
 
         int align = JLabel.CENTER;
         invoiceTable.setAlignment(0, align);
         invoiceTable.setAlignment(1, align);
-        invoiceTable.setAlignment(4, align);
+        invoiceTable.setAlignment(2, align);
+        invoiceTable.setAlignment(5, align);
         invoiceTable.getTable().addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
                 tableMouseClicked(evt);
@@ -199,8 +201,9 @@ public class InvoiceGUI extends JPanel implements ActionListener {
             t.addRow(new String[] {
                     String.valueOf(i++),
                     String.valueOf(hdbh.getmahd()),
-                    nv.getTen(),
+                    String.valueOf(hdbh.getMakh()),
                     kh.getTen(),
+                    nv.getTen(),
                     hdbh.getngay(),
                     PriceFormatter.format(thanhtien)
             });
