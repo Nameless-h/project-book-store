@@ -359,7 +359,6 @@ public class quanlinhanvien {
         ArrayList<nhanvien> list = new ArrayList<nhanvien>();
         ArrayList<nhanvien> listErr = new ArrayList<nhanvien>();
         String title;
-        
         ArrayList<String> header = new ArrayList<>();
         ArrayList<Integer> stt = new ArrayList<>();
         JFileChooser openFileChooser = new JFileChooser();
@@ -377,15 +376,15 @@ public class quanlinhanvien {
                 XSSFSheet sheet1 = imporetedfile.getSheetAt(0);
 
                 Iterator<Row> rowiterator = sheet1.iterator();
-                
+
                 kiemTraInput check = new kiemTraInput();
-                int ma=0,tt=0;
-                String ten="",dc="",email="",sdt="",cv="",gt_str="";
+                int ma = 0, tt = 0;
+                String ten = "", dc = "", email = "", sdt = "", cv = "", gt_str = "";
                 while (rowiterator.hasNext()) {
                     Row row = rowiterator.next();
                     Iterator<Cell> cellIterator = row.cellIterator();
                     nhanvien nv = new nhanvien();
-                    
+
                     while (cellIterator.hasNext()) {
                         
                         Cell cell = cellIterator.next();
@@ -397,10 +396,10 @@ public class quanlinhanvien {
                             if (cell.getColumnIndex() == 0) {
                                 stt.add((int) cell.getNumericCellValue());
                             } else if (cell.getColumnIndex() == 1) {
-                                ma=(int) cell.getNumericCellValue();
+                                ma = (int) cell.getNumericCellValue();
                                 nv.setMa((int) cell.getNumericCellValue());
                             } else if (cell.getColumnIndex() == 2) {
-                                ten=cell.getStringCellValue();
+                                ten = cell.getStringCellValue();
                                 nv.setTen(cell.getStringCellValue());
                             } else if (cell.getColumnIndex() == 3) {
                                 gt_str = (cell.getStringCellValue());
@@ -409,35 +408,33 @@ public class quanlinhanvien {
                                 else
                                     nv.setGioitinh(0);
                             } else if (cell.getColumnIndex() == 4) {
-                                dc=cell.getStringCellValue();
+                                dc = cell.getStringCellValue();
                                 nv.setDiachi(cell.getStringCellValue());
                             } else if (cell.getColumnIndex() == 5) {
-                                email=cell.getStringCellValue();
+                                email = cell.getStringCellValue();
                                 nv.setEmail(cell.getStringCellValue());
                             } else if (cell.getColumnIndex() == 6) {
-                                sdt=cell.getStringCellValue();
+                                sdt = cell.getStringCellValue();
                                 nv.setSodienthoai(cell.getStringCellValue());
                             } else if (cell.getColumnIndex() == 7) {
-                                cv=cell.getStringCellValue();
+                                cv = cell.getStringCellValue();
                                 nv.setChucvu(cell.getStringCellValue());
                             } else if (cell.getColumnIndex() == 8) {
-                                tt=(int) cell.getNumericCellValue();
+                                tt = (int) cell.getNumericCellValue();
                                 nv.setTinhtrang((int) cell.getNumericCellValue());
                             }
 
                             if (ma == 0 || tt == 0 ||
-                            ten.isEmpty() || 
-                            gt_str.isEmpty() || 
-                            dc.isEmpty() || 
-                            email.isEmpty() || 
-                            sdt.isEmpty() || 
-                            cv.isEmpty()
-                            ) {
+                                    ten.isEmpty() ||
+                                    gt_str.isEmpty() ||
+                                    dc.isEmpty() ||
+                                    email.isEmpty() ||
+                                    sdt.isEmpty() ||
+                                    cv.isEmpty()) {
                                 listErr.add(nv);
-                            }
-                            else {
+                            } else
                                 list.add(nv);
-                            }
+                            System.out.println(listErr);
                         }
                     }
 
