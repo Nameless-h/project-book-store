@@ -357,11 +357,12 @@ public class quanlinhanvien {
 
     public ArrayList<nhanvien> get_by_excel() {
         ArrayList<nhanvien> list = new ArrayList<nhanvien>();
-        ArrayList<nhanvien> listErr = new ArrayList<>();
+        ArrayList<nhanvien> listErr = new ArrayList<nhanvien>();
         String title;
         ArrayList<String> header = new ArrayList<>();
         ArrayList<Integer> stt = new ArrayList<>();
         JFileChooser openFileChooser = new JFileChooser();
+        
         openFileChooser.setDialogTitle("Open File");
         openFileChooser.removeChoosableFileFilter(openFileChooser.getFileFilter());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel file (.xlsx)", "xlsx");
@@ -385,7 +386,7 @@ public class quanlinhanvien {
                     nhanvien nv = new nhanvien();
 
                     while (cellIterator.hasNext()) {
-
+                        
                         Cell cell = cellIterator.next();
                         if (row.getRowNum() == 0)
                             title = cell.getStringCellValue();
