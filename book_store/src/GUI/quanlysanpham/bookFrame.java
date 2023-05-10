@@ -363,7 +363,7 @@ public class bookFrame extends JPanel implements ActionListener, ChangeListener 
       this.add(container, BorderLayout.SOUTH);
       showCbbTheloai();
       showCbbNxb();
-      showBookList(bookBUS.getDanhSachSanPham());
+      // showBookList(bookBUS.getDanhSachSanPham());
     } catch (Exception e) {
       e.printStackTrace();
     }
