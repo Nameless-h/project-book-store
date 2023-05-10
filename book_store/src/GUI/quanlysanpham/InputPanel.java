@@ -111,18 +111,6 @@ public class InputPanel extends JPanel implements ActionListener {
         panel.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
         continue;
-      } else if (label_array[i].toLowerCase().equalsIgnoreCase("Trạng thái")
-          || label_array[i].toLowerCase().equalsIgnoreCase("trangthai")
-          || label_array[i].toLowerCase().equalsIgnoreCase("Trang thai")) {
-        cbbfield[cbb_field_index] = new JComboBox<String>();
-        cbbfield[cbb_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
-        // insert data to cbb trang thai
-        cbbfield[cbb_field_index].removeAllItems();
-        cbbfield[cbb_field_index].addItem("1-HIỆN");
-        cbbfield[cbb_field_index].addItem("0-ẨN");
-        panel.add(cbbfield[cbb_field_index]);
-        cbb_field_index++;
-        continue;
       } else {
         textfield[text_field_index] = new JTextField();
         textfield[text_field_index].setPreferredSize(new Dimension((int) (width * 0.7), 30));
@@ -218,6 +206,10 @@ public class InputPanel extends JPanel implements ActionListener {
 
   public JCheckBox[] getSelectFrameCheckBoxList() {
     return this.selectFrame.getCheckBoxList();
+  }
+
+  public int getNumberOfSelectFrameCheckBoxList() {
+    return this.selectFrame.getNumberOfCheckBox();
   }
 
   public int getNumberOfInput() {

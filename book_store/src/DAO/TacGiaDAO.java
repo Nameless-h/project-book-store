@@ -155,7 +155,6 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
           tmp.setTenTacgia("mã tác giả lỗi");
           return tmp;
         }
-        System.out.println(result2.getString("tenTacgia"));
         names += result2.getString("tenTacgia") + ",";
       } while (result1.next());
       tmp.setTenTacgia(names);

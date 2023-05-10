@@ -28,6 +28,7 @@ public class SearchPanel extends JPanel {
   private JTextField[] textfield;
   private JComboBox<String>[] cbbfield;
   private JButton searchBtn;
+  private JButton refreshBtn;
   private int text_field_index = 0;
   private int cbb_field_index = 0;
 
@@ -50,15 +51,17 @@ public class SearchPanel extends JPanel {
           || label_array[i].toLowerCase().equalsIgnoreCase("theloai")
           || label_array[i].toLowerCase().equalsIgnoreCase("the loai")) {
         cbbfield[cbb_field_index] = new JComboBox<String>();
-
         cbbfield[cbb_field_index].setPreferredSize(new Dimension((int) (WIDTH * 0.15), 35));
         // insert data to cbb theloai
         cbbfield[cbb_field_index].removeAllItems();
         cbbfield[cbb_field_index].addItem("0-ALL");
+
         for (Theloai tmp : bookFrame.tloaiBUS.getDanhSachTheLoai()) {
-          cbbfield[cbb_field_index].addItem(tmp.getMaTheloai() + "-" + tmp.getTenTheloai());
+          cbbfield[cbb_field_index].addItem(tmp.getMaTheloai() + "-" +
+              tmp.getTenTheloai());
         }
         cbbfield[cbb_field_index].setBorder(BorderFactory.createTitledBorder("Thể loại"));
+
         this.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
         continue;
@@ -73,7 +76,6 @@ public class SearchPanel extends JPanel {
         for (NhaXuatBan tmp : bookFrame.nxbBUS.getDanhSachNhaXuatBan()) {
           cbbfield[cbb_field_index].addItem(tmp.getMaNXB() + "-" + tmp.getTenNXB());
         }
-
         cbbfield[cbb_field_index].setBorder(BorderFactory.createTitledBorder("Nhà xuất bản"));
         this.add(cbbfield[cbb_field_index]);
         cbb_field_index++;
@@ -108,7 +110,9 @@ public class SearchPanel extends JPanel {
       }
     }
     searchButton();
-    this.add(searchBtn);
+    refreshButton();
+    this.add(searchButton());
+    this.add(refreshButton());
   }
 
   private JButton searchButton() {
@@ -119,21 +123,11 @@ public class SearchPanel extends JPanel {
     return searchBtn;
   }
 
-  public static void main(String[] args) {
-    bookFrame.bookBUS.listSanPham();
-    bookFrame.nxbBUS.listNhaXuatBan();
-    bookFrame.tacgiaBUS.listTacGia();
-    bookFrame.tloaiBUS.listTheLoai();
-    bookFrame.cttgBUS.listChiTietTacGia();
-    JFrame fr = new JFrame();
-    String[] labels = { "Tên sách", "Tác giả", "Thể loại", "Nhà xuất bản" };
-
-    SearchPanel panel = new SearchPanel(labels, 1000, 200);
-    panel.setBackground(Color.red);
-    fr.setSize(1000, 400);
-    fr.setLayout(new FlowLayout());
-    fr.add(panel);
-    fr.setVisible(true);
+  private JButton refreshButton() {
+    refreshBtn = new JButton();
+    refreshBtn.setIcon(new ImageIcon(this.getClass().getResource("../../icon/icons8-reset-30.png")));
+    refreshBtn.setPreferredSize(new Dimension(100, 30));
+    return refreshBtn;
   }
 
   public JLabel[] getLabels() {
@@ -159,5 +153,9 @@ public class SearchPanel extends JPanel {
 
   public JButton getSearchButton() {
     return this.searchBtn;
+  }
+
+  public JButton getRefreshButton() {
+    return this.refreshBtn;
   }
 }

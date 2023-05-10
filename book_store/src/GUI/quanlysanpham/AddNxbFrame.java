@@ -30,7 +30,7 @@ public class AddNxbFrame extends JFrame implements ActionListener {
   }
 
   public void init() {
-    String[] label_array = { "Tên nhà xuất bản", "Hotmail", "Hotline", "Địa chỉ", "Trạng thái" };
+    String[] label_array = { "Tên nhà xuất bản", "Hotmail", "Hotline", "Địa chỉ" };
     title_panel = new TitlePanel("Thêm nhà xuất bản");
     input_panel = new InputPanel(label_array, 600, 200);
     title_panel.setBackground(Color.red);
@@ -53,10 +53,9 @@ public class AddNxbFrame extends JFrame implements ActionListener {
       tmp.setEmail(input_panel.getTextField()[1].getText());
       tmp.setSdt(input_panel.getTextField()[2].getText());
       tmp.setDiaChi(input_panel.getTextField()[3].getText());
-      tmp.setTrangThai(Integer.parseInt(input_panel.getCbbField()[0].getSelectedItem().toString().split("-")[0]));
+      tmp.setTrangThai(1);
       bookFrame.nxbBUS.addNhaXuatBan(tmp);
       JOptionPane.showConfirmDialog(this, "Thêm nhà xuất bản thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
-      bookFrame.resetBookFrameStatus();
       resetForm();
     }
     if (e.getSource() == button_panel.getResetbtn()) {

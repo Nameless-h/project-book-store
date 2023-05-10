@@ -9,11 +9,11 @@ import DTO.NhaXuatBan;
 import DTO.Theloai;
 
 public class TheLoaiBUS {
-  private ArrayList<Theloai> theloai_list;
   TheLoaiDAO tLoaiDAO = new TheLoaiDAO();
+  private ArrayList<Theloai> theloai_list;
 
   public TheLoaiBUS() {
-
+    theloai_list = tLoaiDAO.selecAll();
   }
 
   public ArrayList<Theloai> getDanhSachTheLoai() {
@@ -21,7 +21,7 @@ public class TheLoaiBUS {
   }
 
   public void listTheLoai() {
-    theloai_list = new ArrayList<Theloai>();
+    theloai_list.clear();
     theloai_list = tLoaiDAO.selecAll();
   }
 

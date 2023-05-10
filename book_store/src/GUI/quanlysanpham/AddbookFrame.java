@@ -1,5 +1,6 @@
 package GUI.quanlysanpham;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -17,6 +18,7 @@ import DTO.tacgia;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.CountDownLatch;
 
 public class AddbookFrame extends JFrame implements ActionListener {
 
@@ -42,8 +44,7 @@ public class AddbookFrame extends JFrame implements ActionListener {
   }
 
   public void init() {
-    String[] label_array = { "Tên sách", "Thể loại", "Tác giả", "Nhà xuất bản", "Năm xuất bản", "Giá tiền",
-        "Trạng thái" };
+    String[] label_array = { "Tên sách", "Thể loại", "Tác giả", "Nhà xuất bản", "Năm xuất bản", "Giá tiền" };
     title_panel = new TitlePanel("THÊM SẢN PHẨM");
     title_panel.setBackground(Color.red);
     input_panel = new InputPanel(label_array, modifyPanelWidth(this.WIDTH, 0.5), 150);
@@ -65,6 +66,7 @@ public class AddbookFrame extends JFrame implements ActionListener {
     if (e.getSource() == post_panel.getSavebtn()) {
       if (this.input_panel.checkInput()) {// check input
         Sach sachMoi = new Sach();
+
         sachMoi.setTenSach(input_panel.getTextField()[0].getText());
         sachMoi.setNamXB(input_panel.getTextField()[1].getText());
         sachMoi.setGiaTien(Integer.parseInt(input_panel.getTextField()[2].getText()));
@@ -74,17 +76,15 @@ public class AddbookFrame extends JFrame implements ActionListener {
         int matheloai = Integer.parseInt(tmp[0]);
         String[] tmp2 = input_panel.getCbbField()[1].getSelectedItem().toString().split("-");
         int manxb = Integer.parseInt(tmp2[0]);
-        String[] tmp3 = input_panel.getCbbField()[2].getSelectedItem().toString().split("-");
-        int trangThai = Integer.parseInt(tmp3[0]);
         sachMoi.setMaTheloai(matheloai);
         sachMoi.setMaNXB(manxb);
-        sachMoi.setTrangThai(trangThai);
+        sachMoi.setTrangThai(1);
 
         bookFrame.bookBUS.addSanPham(sachMoi);
         int maSachMoiThem = bookFrame.bookBUS.getLastInsertId();
-        for (JCheckBox cbTmp : input_panel.getSelectFrameCheckBoxList()) {
-          if (cbTmp.isSelected()) {
-            String[] tmp4 = cbTmp.getText().split("-");
+        for (int i = 0; i < input_panel.getNumberOfSelectFrameCheckBoxList(); i++) {
+          if (input_panel.getSelectFrameCheckBoxList()[i].isSelected()) {
+            String[] tmp4 = input_panel.getSelectFrameCheckBoxList()[i].getText().split("-");
             int maTacgia = Integer.parseInt(tmp4[0]);
             ChiTietTacGia cttg = new ChiTietTacGia(maSachMoiThem, maTacgia);
             bookFrame.cttgBUS.addChiTietTacGia(cttg);
@@ -100,17 +100,18 @@ public class AddbookFrame extends JFrame implements ActionListener {
     }
   }
 
+  public PostButtonPanel getPostButton() {
+    return this.post_panel;
+  }
+
   private void resetForm() {
     input_panel.getTextField()[0].setText("");
     input_panel.getTextField()[1].setText("");
     input_panel.getTextField()[2].setText("");
     input_panel.getCbbField()[0].setSelectedIndex(0);
     input_panel.getCbbField()[1].setSelectedIndex(0);
-    input_panel.getCbbField()[2].setSelectedIndex(0);
-    for (JCheckBox tmp : input_panel.getSelectFrameCheckBoxList()) {
-      if (tmp.isSelected()) {
-        tmp.setSelected(false);
-      }
+    for (int i = 0; i < input_panel.getNumberOfSelectFrameCheckBoxList(); i++) {
+      input_panel.getSelectFrameCheckBoxList()[i].setSelected(false);
     }
   }
 }

@@ -56,6 +56,7 @@ public class AddTacGiaFrame extends JFrame implements ActionListener {
       tmp.setTrangThai(1);
       bookFrame.tacgiaBUS.addTacGia(tmp);
       JOptionPane.showConfirmDialog(this, "Thêm tác giả thành công", "Thông báo !", JOptionPane.CLOSED_OPTION);
+
       resetForm();
     }
     if (e.getSource() == button_panel.getResetbtn()) {

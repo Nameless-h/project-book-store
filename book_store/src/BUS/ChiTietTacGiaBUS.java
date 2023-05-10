@@ -6,17 +6,22 @@ import java.util.ArrayList;
 import DAO.ChiTietTacGiaDAO;
 import DAO.chitietnhomquyenDAO;
 import DTO.ChiTietTacGia;
+import GUI.main_frame.main;
 
 public class ChiTietTacGiaBUS {
-  private ArrayList<ChiTietTacGia> tg_detail;
   ChiTietTacGiaDAO cttgdao = new ChiTietTacGiaDAO();
+  private ArrayList<ChiTietTacGia> tg_detail;
+
+  public ChiTietTacGiaBUS() {
+    tg_detail = cttgdao.selecAll();
+  }
 
   public ArrayList<ChiTietTacGia> getDanhSachChiTietTacGia() {
     return this.tg_detail;
   }
 
   public void listChiTietTacGia() {
-    tg_detail = new ArrayList<>();
+    tg_detail.clear();
     tg_detail = cttgdao.selecAll();
   }
 
@@ -31,9 +36,9 @@ public class ChiTietTacGiaBUS {
   }
 
   public void delAllCTTGCoMaSach(int maSach) {
-    for (ChiTietTacGia tmp : tg_detail) {
-      if (tmp.getMaSach() == maSach) {
-        tg_detail.remove(tmp);
+    for (int i = 0; i < tg_detail.size(); i++) {
+      if (tg_detail.get(i).getMaSach() == maSach) {
+        tg_detail.remove(tg_detail.get(i));
       }
     }
     cttgdao.deleteByMaSach(maSach);
@@ -79,4 +84,8 @@ public class ChiTietTacGiaBUS {
     return dssach;
   }
 
+  public static void main(String[] args) {
+    ChiTietTacGiaBUS tmp2 = new ChiTietTacGiaBUS();
+    tmp2.delAllCTTGCoMaSach(1);
+  }
 }

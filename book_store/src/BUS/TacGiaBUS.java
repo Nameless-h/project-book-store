@@ -3,15 +3,16 @@ package BUS;
 import java.util.ArrayList;
 
 import DAO.TacGiaDAO;
+import DTO.ChiTietTacGia;
 import DTO.Sach;
 import DTO.tacgia;
 
 public class TacGiaBUS {
-  private ArrayList<tacgia> Tacgia_list;
   TacGiaDAO tacgiaDAO = new TacGiaDAO();
+  private ArrayList<tacgia> Tacgia_list;
 
   public TacGiaBUS() {
-
+    Tacgia_list = tacgiaDAO.selecAll();
   }
 
   public ArrayList<tacgia> getDanhSachTacGia() {
@@ -19,7 +20,7 @@ public class TacGiaBUS {
   }
 
   public void listTacGia() {
-    Tacgia_list = new ArrayList<tacgia>();
+    Tacgia_list.clear();
     Tacgia_list = tacgiaDAO.selecAll();
   }
 
@@ -59,7 +60,22 @@ public class TacGiaBUS {
   }
 
   public tacgia timTacgiaTheoMaSach(int maSach) {
-    tacgia tmp = tacgiaDAO.selectById(maSach);
+    ChiTietTacGiaBUS cttgbus = new ChiTietTacGiaBUS();
+    tacgia tmp = new tacgia();
+    String str = "";
+    for (ChiTietTacGia cttg : cttgbus.getDanhSachChiTietTacGia()) {
+      if (cttg.getMaSach() == maSach) {
+        str += timTacgiaTheoMa(cttg.getMaTacgia()).getTenTacgia() + ",";
+        // str += cttg.getMaTacgia() + ", ";
+      }
+    }
+    if (str.length() > 0) {
+      String modifiedStr = str.substring(0, str.length() - 1);
+      tmp.setTenTacgia(modifiedStr);
+    } else {
+      tmp.setTenTacgia(str);
+    }
+
     return tmp;
   }
 
