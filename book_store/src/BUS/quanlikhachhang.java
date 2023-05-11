@@ -29,7 +29,7 @@ public class quanlikhachhang {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         // them thong tin nhan vien vao bang table
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 1; i < list.size(); i++) {
             String gt;
             if (list.get(i).getGioitinh() == 1)
                 gt = "Nam";
