@@ -27,6 +27,7 @@ public class TacGiaSelectFrame extends JFrame {
     this.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 30));
     this.setSize(WIDTH, HEIGHT);
     this.setLocationRelativeTo(null);
+    this.setResizable(false);
     init(array_tac_gia);
     this.setVisible(false);
   }
@@ -43,7 +44,7 @@ public class TacGiaSelectFrame extends JFrame {
             array_tac_gia.get(i).getMaTacgia() + "-" + array_tac_gia.get(i).getTenTacgia());
         checkBox_tacgia[checkbox_index].setPreferredSize(new Dimension(200, 50));
         checkBox_tacgia[checkbox_index].setFont(fo);
-        tacgia_container.add(checkBox_tacgia[i]);
+        tacgia_container.add(checkBox_tacgia[checkbox_index]);
         checkbox_index++;
       }
     }
@@ -63,8 +64,7 @@ public class TacGiaSelectFrame extends JFrame {
     return this.checkbox_index;
   }
 
-  public static void main(String[] args) {
+  public void clearAllCheckbox() {
 
   }
-
 }

@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 import DAO.TacGiaDAO;
 import DTO.ChiTietTacGia;
+import DTO.ChiTietTacGia;
 import DTO.Sach;
 import DTO.tacgia;
 
 public class TacGiaBUS {
-  private ArrayList<tacgia> Tacgia_list;
   TacGiaDAO tacgiaDAO = new TacGiaDAO();
+  private ArrayList<tacgia> Tacgia_list;
   ChiTietTacGiaBUS qlcttg = new ChiTietTacGiaBUS();
 
   public TacGiaBUS() {
-
+    Tacgia_list = tacgiaDAO.selecAll();
   }
 
   public ArrayList<tacgia> getDanhSachTacGia() {
@@ -21,7 +22,7 @@ public class TacGiaBUS {
   }
 
   public void listTacGia() {
-    Tacgia_list = new ArrayList<tacgia>();
+    Tacgia_list.clear();
     Tacgia_list = tacgiaDAO.selecAll();
   }
 
@@ -61,15 +62,17 @@ public class TacGiaBUS {
   }
 
   public String timTacgiaTheoMaSach(int maSach) {
-    /* tacgia tmp = tacgiaDAO.selectById(maSach);
-    return tmp; */
-    String names="";
+    /*
+     * tacgia tmp = tacgiaDAO.selectById(maSach);
+     * return tmp;
+     */
+    String names = "";
     tacgia t;
     qlcttg.listChiTietTacGia();
     for (ChiTietTacGia cttg : qlcttg.getDanhSachChiTietTacGia()) {
-      if(cttg.getMaSach() == maSach) {
-        t=timTacgiaTheoMa(cttg.getMaTacgia());
-        names+=t.getTenTacgia()+",";
+      if (cttg.getMaSach() == maSach) {
+        t = timTacgiaTheoMa(cttg.getMaTacgia());
+        names += t.getTenTacgia() + ",";
       }
     }
     return names;

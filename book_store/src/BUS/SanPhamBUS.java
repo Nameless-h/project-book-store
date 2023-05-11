@@ -8,15 +8,19 @@ import DTO.ChiTietTacGia;
 import DTO.Sach;
 
 public class SanPhamBUS {
-  private ArrayList<Sach> product_list;
   SanPhamDAO spdao = new SanPhamDAO();
+  private ArrayList<Sach> product_list;
+
+  public SanPhamBUS() {
+    product_list = spdao.selecAll();
+  }
 
   public ArrayList<Sach> getDanhSachSanPham() {
     return this.product_list;
   }
 
   public void listSanPham() {
-    product_list = new ArrayList<Sach>();
+    product_list.clear();
     product_list = spdao.selecAll();
   }
 

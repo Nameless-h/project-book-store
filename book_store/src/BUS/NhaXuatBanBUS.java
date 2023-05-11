@@ -10,12 +10,16 @@ public class NhaXuatBanBUS {
   private ArrayList<NhaXuatBan> NhaXuatBan_list;
   NhaXuatBanDAO NhaXuatBanDAO = new NhaXuatBanDAO();
 
+  public NhaXuatBanBUS() {
+    NhaXuatBan_list = NhaXuatBanDAO.selecAll();
+  }
+
   public ArrayList<NhaXuatBan> getDanhSachNhaXuatBan() {
     return this.NhaXuatBan_list;
   }
 
   public void listNhaXuatBan() {
-    NhaXuatBan_list = new ArrayList<NhaXuatBan>();
+    NhaXuatBan_list.clear();
     NhaXuatBan_list = NhaXuatBanDAO.selecAll();
   }
 
@@ -60,14 +64,13 @@ public class NhaXuatBanBUS {
   }
 
   public ArrayList<NhaXuatBan> searchNhaXuatBan(String maNhaXuatBan, String tenNhaXuatBan, String Hotmail,
-      String Hotline, String Diachi) {
+      String Hotline) {
     ArrayList<NhaXuatBan> resultList = new ArrayList<NhaXuatBan>();
     for (NhaXuatBan tmp : this.NhaXuatBan_list) {
       if ((maNhaXuatBan.equalsIgnoreCase("") || String.valueOf(tmp.getMaNXB()).contains(maNhaXuatBan.toLowerCase()))
           && (tenNhaXuatBan.equalsIgnoreCase("") || tmp.getTenNXB().toLowerCase().contains(tenNhaXuatBan.toLowerCase()))
           && (Hotmail.equalsIgnoreCase("") || tmp.getEmail().toLowerCase().contains(Hotmail.toLowerCase()))
-          && (Hotline.equalsIgnoreCase("") || tmp.getSdt().toLowerCase().contains(Hotline.toLowerCase()))
-          && (Diachi.equalsIgnoreCase("") || tmp.getDiaChi().toLowerCase().contains(Diachi.toLowerCase()))) {
+          && (Hotline.equalsIgnoreCase("") || tmp.getSdt().toLowerCase().contains(Hotline.toLowerCase()))) {
         resultList.add(tmp);
       }
     }

@@ -221,19 +221,12 @@ public class menu extends JPanel implements MouseListener {
                 JOptionPane.showMessageDialog(null, "Ban khong duoc cap quyen xem trang nay");
             }
         } else if (text.equalsIgnoreCase("Sản phẩm")) {
+            bookFrame bf = new bookFrame();
             for (int i = 0; i < tk_chitietquyen.size(); i++)
                 if (tk_chitietquyen.get(i).getMachucnang().equalsIgnoreCase("SP") &&
                         tk_chitietquyen.get(i).getHanhdong().equalsIgnoreCase("Xem") &&
                         tk_chitietquyen.get(i).getTinhtrang() == 1) {
-                    // FlatLightLaf.setup();
-                    // try {
-                    // UIManager.setLookAndFeel(new FlatLightLaf());
-                    // } catch (Exception e) {
-                    // // TODO: handle exception
-                    // }
-                    bookFrame bf = new bookFrame();
                     bf.setBounds(0, 0, 1100, 700);
-
                     obj.center.removeAll();
                     obj.center.add(bf);
                     obj.center.repaint();
@@ -286,6 +279,7 @@ public class menu extends JPanel implements MouseListener {
     }
 
     private void init(main obj) {
+
         for (int j = 0; j < list_lab.length; j++)
             list_lab2[j] = 0;
         // cai dat giao dien cho panel menu

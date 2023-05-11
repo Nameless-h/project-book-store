@@ -10,30 +10,29 @@ import java.util.logging.Logger;
 
 public class MySQLConnect {
     private String user = "root";
-    private String password="";
-    private String url="jdbc:mysql://localhost:3307/bookstore?useUnicode=true&characterEncoding=UTF-8";
+    private String password = "";
+    private String url = "jdbc:mysql://localhost:3306/bookstore?useUnicode=true&characterEncoding=UTF-8";
     private Connection conn = null;
     private Statement st = null;
-    
-    public void Connect()
-    {
-         try {
+
+    public void Connect() {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException | SQLException ex) {
-            //Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
+            // Logger.getLogger(NhanVienDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public void disConnect()
-    { 
-        try{
+
+    public void disConnect() {
+        try {
             st.close();
             conn.close();
-        }catch (SQLException E){}
+        } catch (SQLException E) {
+        }
     }
-    
-    public ResultSet executeQuery(String sql)
-    {
+
+    public ResultSet executeQuery(String sql) {
         ResultSet rs = null;
         try {
             Connect();
@@ -44,9 +43,8 @@ public class MySQLConnect {
         }
         return rs;
     }
-    
-    public void executeUpdate(String sql)
-    {
+
+    public void executeUpdate(String sql) {
         try {
             Connect();
             st = conn.createStatement();
@@ -56,13 +54,13 @@ public class MySQLConnect {
             Logger.getLogger(MySQLConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public Connection getConnection()
-    {
+
+    public Connection getConnection() {
         Connect();
         return conn;
     }
-    public boolean isConnect()
-    {
-        return conn!=null?true:false;
+
+    public boolean isConnect() {
+        return conn != null ? true : false;
     }
 }
