@@ -151,6 +151,7 @@ public class ChiTietTacGiaDAO implements DAOinterface<ChiTietTacGia> {
       if (stm != null) {
         try {
           stm.close();
+          JDBCUtil.closeConnection(conn);
         } catch (SQLException e) {
           Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
         }

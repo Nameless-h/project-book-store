@@ -59,7 +59,8 @@ public class quanlihoadonbanhang {
             this.listhdbh.forEach((hdbh) -> {
                     if(qlkh.getKhachHang(hdbh.getMakh()).getTen().toLowerCase().contains(query.toLowerCase()) ||
                         qlnv.getNhanVien(hdbh.getmanv()).getTen().toLowerCase().contains(query.toLowerCase()) ||
-                        String.valueOf(hdbh.getmahd()).equals(query)) {
+                        String.valueOf(hdbh.getmahd()).equals(query) ||
+                        String.valueOf(hdbh.getMakh()).equals(query)) {
                             resultList.add(hdbh);
                     }
             });
