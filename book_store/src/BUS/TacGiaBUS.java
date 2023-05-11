@@ -3,12 +3,14 @@ package BUS;
 import java.util.ArrayList;
 
 import DAO.TacGiaDAO;
+import DTO.ChiTietTacGia;
 import DTO.Sach;
 import DTO.tacgia;
 
 public class TacGiaBUS {
   private ArrayList<tacgia> Tacgia_list;
   TacGiaDAO tacgiaDAO = new TacGiaDAO();
+  ChiTietTacGiaBUS qlcttg = new ChiTietTacGiaBUS();
 
   public TacGiaBUS() {
 
@@ -58,9 +60,19 @@ public class TacGiaBUS {
     return null;
   }
 
-  public tacgia timTacgiaTheoMaSach(int maSach) {
-    tacgia tmp = tacgiaDAO.selectById(maSach);
-    return tmp;
+  public String timTacgiaTheoMaSach(int maSach) {
+    /* tacgia tmp = tacgiaDAO.selectById(maSach);
+    return tmp; */
+    String names="";
+    tacgia t;
+    qlcttg.listChiTietTacGia();
+    for (ChiTietTacGia cttg : qlcttg.getDanhSachChiTietTacGia()) {
+      if(cttg.getMaSach() == maSach) {
+        t=timTacgiaTheoMa(cttg.getMaTacgia());
+        names+=t.getTenTacgia()+",";
+      }
+    }
+    return names;
   }
 
   public ArrayList<tacgia> searchtacgia(String matacgia, String tentacgia) {

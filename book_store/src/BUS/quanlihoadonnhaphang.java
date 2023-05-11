@@ -60,7 +60,8 @@ public class quanlihoadonnhaphang {
             this.listhdnh.forEach((hdnh) -> {
                 if(qlncc.getNCC(hdnh.getMancc()).getTen().toLowerCase().contains(query.toLowerCase()) ||
                     qlnv.getNhanVien(hdnh.getmanv()).getTen().toLowerCase().contains(query.toLowerCase())||
-                    String.valueOf(hdnh.getmahd()).equals(query)) {
+                    String.valueOf(hdnh.getmahd()).equals(query) ||
+                    String.valueOf(hdnh.getMancc()).equals(query)) {
                         resultList.add(hdnh);
                 }
             });
