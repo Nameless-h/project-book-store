@@ -155,6 +155,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
           tmp.setTenTacgia("mã tác giả lỗi");
           return tmp;
         }
+
         names += result2.getString("tenTacgia") + ",";
       } while (result1.next());
       tmp.setTenTacgia(names);
@@ -166,10 +167,10 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
       // TODO: handle exception
       Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {
+      JDBCUtil.closeConnection(conn);
       if (stm != null) {
         try {
           stm.close();
-          conn.close();
         } catch (SQLException e) {
           // TODO: handle exception
           Logger.getLogger(NhaXuatBanDAO.class.getName()).log(Level.SEVERE, null, e);
@@ -209,6 +210,7 @@ public class TacGiaDAO implements DAOinterface<tacgia> {
           break;
         } while (result.next());
       }
+      conn.close();
     } catch (SQLException e) {
       Logger.getLogger(SanPhamDAO.class.getName()).log(Level.SEVERE, null, e);
     } finally {

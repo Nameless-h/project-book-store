@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 import DAO.TacGiaDAO;
 import DTO.ChiTietTacGia;
+import DTO.ChiTietTacGia;
 import DTO.Sach;
 import DTO.tacgia;
 
 public class TacGiaBUS {
   TacGiaDAO tacgiaDAO = new TacGiaDAO();
   private ArrayList<tacgia> Tacgia_list;
+  ChiTietTacGiaBUS qlcttg = new ChiTietTacGiaBUS();
 
   public TacGiaBUS() {
     Tacgia_list = tacgiaDAO.selecAll();
@@ -59,24 +61,21 @@ public class TacGiaBUS {
     return null;
   }
 
-  public tacgia timTacgiaTheoMaSach(int maSach) {
-    ChiTietTacGiaBUS cttgbus = new ChiTietTacGiaBUS();
-    tacgia tmp = new tacgia();
-    String str = "";
-    for (ChiTietTacGia cttg : cttgbus.getDanhSachChiTietTacGia()) {
+  public String timTacgiaTheoMaSach(int maSach) {
+    /*
+     * tacgia tmp = tacgiaDAO.selectById(maSach);
+     * return tmp;
+     */
+    String names = "";
+    tacgia t;
+    qlcttg.listChiTietTacGia();
+    for (ChiTietTacGia cttg : qlcttg.getDanhSachChiTietTacGia()) {
       if (cttg.getMaSach() == maSach) {
-        str += timTacgiaTheoMa(cttg.getMaTacgia()).getTenTacgia() + ",";
-        // str += cttg.getMaTacgia() + ", ";
+        t = timTacgiaTheoMa(cttg.getMaTacgia());
+        names += t.getTenTacgia() + ",";
       }
     }
-    if (str.length() > 0) {
-      String modifiedStr = str.substring(0, str.length() - 1);
-      tmp.setTenTacgia(modifiedStr);
-    } else {
-      tmp.setTenTacgia(str);
-    }
-
-    return tmp;
+    return names;
   }
 
   public ArrayList<tacgia> searchtacgia(String matacgia, String tentacgia) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import DAO.nhanvienDAO;
 import DTO.*;
@@ -357,11 +359,13 @@ public class quanlinhanvien {
 
     public ArrayList<nhanvien> get_by_excel() {
         ArrayList<nhanvien> list = new ArrayList<nhanvien>();
+        ArrayList<nhanvien> listErr = new ArrayList<nhanvien>();
+        ArrayList<Integer> list_err = new ArrayList<Integer>();
         String title;
-        String gt_str;
         ArrayList<String> header = new ArrayList<>();
         ArrayList<Integer> stt = new ArrayList<>();
         JFileChooser openFileChooser = new JFileChooser();
+
         openFileChooser.setDialogTitle("Open File");
         openFileChooser.removeChoosableFileFilter(openFileChooser.getFileFilter());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel file (.xlsx)", "xlsx");
@@ -369,6 +373,7 @@ public class quanlinhanvien {
 
         if (openFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
             File inputFile = openFileChooser.getSelectedFile();
+            // System.out.println(inputFile.getName());
             try (FileInputStream in = new FileInputStream(inputFile)) {
 
                 XSSFWorkbook imporetedfile = new XSSFWorkbook(in);
@@ -376,58 +381,87 @@ public class quanlinhanvien {
 
                 Iterator<Row> rowiterator = sheet1.iterator();
 
-                while (rowiterator.hasNext()) {
-                    Row row = rowiterator.next();
-                    Iterator<Cell> cellIterator = row.cellIterator();
+                kiemTraInput check = new kiemTraInput();
+                int ma = 0, tt = 0;
+                String ten = "", dc = "", email = "", sdt = "", cv = "", gt_str = "";
+                for (Row row : sheet1) {
                     nhanvien nv = new nhanvien();
-                    while (cellIterator.hasNext()) {
-
-                        Cell cell = cellIterator.next();
+                    for (Cell cell : row) {
                         if (row.getRowNum() == 0)
                             title = cell.getStringCellValue();
                         else if (row.getRowNum() == 1)
                             header.add(cell.getStringCellValue());
                         else {
-                            if (cell.getColumnIndex() == 0) {
-                                stt.add((int) cell.getNumericCellValue());
-                            } else if (cell.getColumnIndex() == 1) {
-                                nv.setMa((int) cell.getNumericCellValue());
-                            } else if (cell.getColumnIndex() == 2) {
-                                nv.setTen(cell.getStringCellValue());
-                            } else if (cell.getColumnIndex() == 3) {
-                                gt_str = (cell.getStringCellValue());
-                                if (gt_str.equalsIgnoreCase("Nam"))
-                                    nv.setGioitinh(1);
-                                else
-                                    nv.setGioitinh(0);
-                            } else if (cell.getColumnIndex() == 4) {
-                                nv.setDiachi(cell.getStringCellValue());
-                            } else if (cell.getColumnIndex() == 5) {
-                                nv.setEmail(cell.getStringCellValue());
-                            } else if (cell.getColumnIndex() == 6) {
-                                nv.setSodienthoai(cell.getStringCellValue());
-                            } else if (cell.getColumnIndex() == 7) {
-                                nv.setChucvu(cell.getStringCellValue());
-                            } else if (cell.getColumnIndex() == 8) {
-                                nv.setTinhtrang((int) cell.getNumericCellValue());
+                            if (row.getRowNum() == 0)
+                                title = cell.getStringCellValue();
+                            else if (row.getRowNum() == 1)
+                                header.add(cell.getStringCellValue());
+                            else {
+                                if (cell.getColumnIndex() == 0) {
+                                    stt.add((int) cell.getNumericCellValue());
+                                } else if (cell.getColumnIndex() == 1) {
+                                    ma = (int) cell.getNumericCellValue();
+                                    nv.setMa((int) cell.getNumericCellValue());
+                                } else if (cell.getColumnIndex() == 2) {
+                                    ten = cell.getStringCellValue();
+                                    nv.setTen(cell.getStringCellValue());
+                                } else if (cell.getColumnIndex() == 3) {
+                                    gt_str = (cell.getStringCellValue());
+                                    if (gt_str.equalsIgnoreCase("Nam"))
+                                        nv.setGioitinh(1);
+                                    else
+                                        nv.setGioitinh(0);
+                                } else if (cell.getColumnIndex() == 4) {
+                                    dc = cell.getStringCellValue();
+                                    nv.setDiachi(cell.getStringCellValue());
+                                } else if (cell.getColumnIndex() == 5) {
+                                    email = cell.getStringCellValue();
+                                    nv.setEmail(cell.getStringCellValue());
+                                } else if (cell.getColumnIndex() == 6) {
+                                    sdt = cell.getStringCellValue();
+                                    nv.setSodienthoai(cell.getStringCellValue());
+                                } else if (cell.getColumnIndex() == 7) {
+                                    cv = cell.getStringCellValue();
+                                    nv.setChucvu(cell.getStringCellValue());
+                                } else if (cell.getColumnIndex() == 8) {
+                                    tt = (int) cell.getNumericCellValue();
+                                    nv.setTinhtrang((int) cell.getNumericCellValue());
+                                }
                             }
-
-                            list.add(nv);
                         }
                     }
-
+                    if (row.getRowNum() != 1 && row.getRowNum() != 0)
+                        if (ma == 0 ||
+                                ten.isEmpty() ||
+                                gt_str.isEmpty() ||
+                                dc.isEmpty() ||
+                                email.isEmpty() ||
+                                sdt.isEmpty() ||
+                                cv.isEmpty()) {
+                            listErr.add(nv);
+                            list_err.add(row.getRowNum());
+                        } else
+                            list.add(nv);
                 }
+            } catch (
 
-            } catch (IOException e) {
+            IOException e) {
                 System.out.println("That bai");
             }
         }
+        // for (int i = 0; i < list_err.size(); i++) {
+        JOptionPane.showMessageDialog(null, "Co loi o vi tri " + list_err,
+                "Canh bao co loi trong file excel", JOptionPane.WARNING_MESSAGE);
+        // }
+
         return list;
+
     }
 
     public void update_by_excel() {
         list = chucnang_nhanvien.selecAll();
         ArrayList<nhanvien> list_temp = get_by_excel();
+        // System.out.println(list_temp.size());
         for (int i = 0; i < list_temp.size(); i++) {
             int kt = 0;
             for (int j = 0; j < list.size(); j++) {
@@ -438,6 +472,7 @@ public class quanlinhanvien {
                 chucnang_nhanvien.update(list_temp.get(i));
             else
                 chucnang_nhanvien.insert(list_temp.get(i));
+            // System.out.println(list_temp.get(i).getMa());
         }
     }
 }

@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 import BUS.quanlinhacungcap;
+import DTO.kiemTraInput;
 import DTO.nhacungcap;
 import GUI.*;
 import GUI.main_frame.main;
@@ -132,6 +133,20 @@ public class suathongtinnhacungcap extends JPanel implements MouseListener {
                 tt = 1;
             if (rdb_khongchophep.isSelected())
                 tt = 0;
+
+            kiemTraInput check = new kiemTraInput();
+    
+            if(!check.checkEmpty(ten) || !check.checkEmpty(dc) ||
+            !check.checkEmpty(email) ||!check.checkEmpty(sdt)) {
+                return;
+            } else if(!check.validateEmail(email)) {
+                txt[3].requestFocus();
+                return;
+            } else if(!check.validatePhoneNumber(sdt)) {
+                txt[4].requestFocus();
+                return;
+            }    
+            
             nhacungcap ncc = new nhacungcap(ma, ten, dc, email, sdt, tt);
             // System.out.println(ncc);
             quanlinhacungcap.suanhacungcap(ncc);
